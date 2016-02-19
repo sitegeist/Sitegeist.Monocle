@@ -1,0 +1,25 @@
+{namespace monocle=Sitegeist\Monocle\ViewHelpers}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <f:for each="{styleguideSections.sections}" as="section">
+        <f:render section="section" arguments="{section:section, node:node}"></f:render>
+    </f:for>
+</body>
+</html>
+
+<f:section name="section">
+    <h1>{section.title} -> <f:link.action action="show" arguments="{node:node, path:section.path}">#</f:link.action></h1>
+    <f:for each="{section.sections}" as="subsection">
+        <f:render section="section" arguments="{section:subsection, node:node}"></f:render>
+    </f:for>
+    <f:for each="{section.items}" as="item">
+        <h2>{item.title} - prototype({item.prototypeName})</h2>
+        {monocle:renderPrototype(prototypeName:item.prototypeName, node:node) -> f:format.raw()}
+    </f:for>
+</f:section>

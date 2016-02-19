@@ -1,0 +1,18 @@
+privilegeTargets:
+  'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+
+    'Sitegeist.Monocle:Backend.Module.Styleguide':
+      matcher: 'method(Sitegeist\Monocle\Controller\Module\StyleguideController->(index)Action())'
+    'Sitegeist.Monocle:Backend.Preview':
+      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(show)Action())'
+roles:
+  'TYPO3.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Backend.Preview'
+        permission: GRANT
+  'TYPO3.Neos:Editor':
+    privileges:
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Backend.Module.Styleguide'
+        permission: GRANT

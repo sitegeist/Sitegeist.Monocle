@@ -1,0 +1,11 @@
+TYPO3:
+  Neos:
+    modules:
+      administration:
+        submodules:
+          workspaces:
+            label: 'Monocle Styleguide'
+            controller: '\Sitegeist\Monocle\Controller\Module\StyleguideController'
+            description: 'A Styleguide implementation based on TypoScript prototypes'
+            icon: 'icon-magic'
+            privilegeTarget: 'Sitegeist.Monocle:Backend.Module.Styleguide'
