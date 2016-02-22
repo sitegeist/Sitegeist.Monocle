@@ -1,0 +1,75 @@
+.monocle {
+    padding: 1em;
+}
+
+.monocle__section {
+    margin-bottom: 2em;
+}
+
+.monocle__section__headline {
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 28px;
+    margin: .5em 0;
+}
+
+.monocle__section__path {
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 10px;
+}
+
+.monocle__item {
+    margin-bottom: 2em;
+}
+
+.monocle__item__title {
+    margin-top: .5em;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+.monocle__item__prototype {
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 10px;
+    margin-bottom: .5em;
+}
+
+.monocle__item__block {
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 1em;
+    margin: 1em 0;
+    position:relative;
+    background-color: white;
+}
+
+.monocle__item__block__label {
+    position: absolute;
+    left: 10px;
+    top: -8px;
+    background-color: white;
+
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 10px;
+    padding: 0 5px;
+
+}
+
+.monocle__item__block--description {
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 10px;
+}
+
+.monocle__item__block--preview {
+
+}
+
+.monocle__item__block--code {
+
+}
+

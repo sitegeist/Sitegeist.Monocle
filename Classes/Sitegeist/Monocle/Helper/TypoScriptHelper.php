@@ -26,8 +26,8 @@ class TypoScriptHelper
             foreach ($mergedTypoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObjectTree) {
                 if (array_key_exists('__meta', $prototypeObjectTree) && is_array($prototypeObjectTree['__meta']) && array_key_exists('styleguide', $prototypeObjectTree['__meta'])) {
                     $styleguideConfiguration = $prototypeObjectTree['__meta']['styleguide'];
-                    if (array_key_exists('section', $styleguideConfiguration)) {
-                        $sectionPath = $styleguideConfiguration['section'];
+                    if (array_key_exists('type', $styleguideConfiguration) && array_key_exists('section', $styleguideConfiguration)) {
+                        $sectionPath = $styleguideConfiguration['type'] . '/' . $styleguideConfiguration['section'];
                         $title = $styleguideConfiguration['title'] ?: $prototypeName;
                         $description = $styleguideConfiguration['description'] ?: '';
 

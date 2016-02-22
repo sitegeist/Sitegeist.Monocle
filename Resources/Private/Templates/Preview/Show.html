@@ -5,21 +5,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="{f:uri.resource(path:'resource://Sitegeist.Monocle/Public/Styles/Preview.css')}">
+
+    <f:if condition="{additionalResources.styleSheets}">
+        <f:for each="{additionalResources.styleSheets}" as="resource">
+            <link rel="stylesheet" href="{f:uri.resource(path: resource)}" />
+        </f:for>
+    </f:if>
+
+    <f:if condition="{additionalResources.javaScripts}">
+        <f:for each="{additionalResources.javaScripts}" as="resource">
+            <script src="{f:uri.resource(path: resource)}"></script>
+        </f:for>
+    </f:if>
+
 </head>
 <body>
-    <f:for each="{styleguideSections.sections}" as="section">
-        <f:render section="section" arguments="{section:section, node:node}"></f:render>
-    </f:for>
+    <div class="monocle">
+        <f:render section="section" arguments="{section:styleguideSections, node:node, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription  }"></f:render>
+    </div>
 </body>
 </html>
 
 <f:section name="section">
-    <h1>{section.title} -> <f:link.action action="show" arguments="{node:node, path:section.path}">#</f:link.action></h1>
-    <f:for each="{section.sections}" as="subsection">
-        <f:render section="section" arguments="{section:subsection, node:node}"></f:render>
-    </f:for>
-    <f:for each="{section.items}" as="item">
-        <h2>{item.title} - prototype({item.prototypeName})</h2>
-        {monocle:renderPrototype(prototypeName:item.prototypeName, node:node) -> f:format.raw()}
-    </f:for>
+    <div class="monocle__section">
+
+        <div class="monocle__section__headline">Section: {section.title -> f:format.case(mode:'capitalWords')}</div>
+
+        <f:for each="{section.sections}" as="subsection">
+            <f:render section="section" arguments="{section:subsection, node:node, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription }"></f:render>
+        </f:for>
+        <f:for each="{section.items}" as="item">
+            <div class="monocle__item">
+                <div class="monocle__item__title">{item.title}</div>
+                <div class="monocle__item__prototype">{item.prototypeName}</div>
+                <f:if condition="{showRenderedResult}">
+                    <div class="monocle__item__block monocle__item__block--preview" >
+                        <div class="monocle__item__block__label">Preview</div>
+                        {monocle:renderPrototype(prototypeName:item.prototypeName, node:node) -> f:format.raw()}
+                    </div>
+                </f:if>
+                <f:if condition="{showRenderedCode}">
+                    <div class="monocle__item__block monocle__item__block--code" >
+                        <div class="monocle__item__block__label">Code</div>
+                        <pre>{monocle:renderPrototype(prototypeName:item.prototypeName, node:node)}</pre>
+                    </div>
+                </f:if>
+                <f:if condition="{showDescription}">
+                    <div class="monocle__item__block monocle__item__block--description" >
+                        <div class="monocle__item__block__label">Description</div>
+                        <f:if condition="{item.description}"><p>{item.description}</p></f:if>
+                    </div>
+                </f:if>
+            </div>
+        </f:for>
+    </div>
 </f:section>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sitegeist\Monocle\Controller\Module;
+namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
@@ -12,6 +12,9 @@ use Sitegeist\Monocle\Helper\ContextHelper;
 
 class StyleguideController extends AbstractModuleController
 {
+
+
+
     /**
      * @Flow\Inject
      * @var TypoScriptHelper
@@ -25,24 +28,24 @@ class StyleguideController extends AbstractModuleController
     protected $contextHelper;
 
     /**
-     * @param string $path
      * @param NodeInterface $node
+     * @param string $type
+     * @param string $path
+     * @param boolean $showRenderedResult
+     * @param boolean $showRenderedCode
+     * @param boolean $showDescription
      * @return void
      */
-    public function indexAction($path = NULL, NodeInterface $node = NULL) {
-        $context = $this->contextHelper->getContext($node);
+    public function indexAction($type = NULL, $path = NULL, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+        $context = $this->contextHelper->getContext();
         $site = $context->getCurrentSiteNode();
 
-        if ($node == NULL) {
-            $node = $site;
-        }
-
-        $styleguideRootSection = $this->typoScriptHelper->buildStylegideSectionsForNode($node);
+        $styleguideRootSection = $this->typoScriptHelper->buildStylegideSectionsForNode($site);
 
         $this->view->assign('styleguideRootSection', $styleguideRootSection);
 
-        $this->view->assign('path', $path);
-        $this->view->assign('node', $node);
-        $this->view->assign('site', $site);
+        $this->view->assign('showRenderedResult', $showRenderedResult);
+        $this->view->assign('showRenderedCode', $showRenderedCode);
+        $this->view->assign('showDescription', $showDescription);
     }
 }

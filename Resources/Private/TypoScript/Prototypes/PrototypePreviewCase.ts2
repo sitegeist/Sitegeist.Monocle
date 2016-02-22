@@ -1,0 +1,6 @@
+prototype(Sitegeist.Monocle:PrototypePreviewCase) < prototype(TYPO3.TypoScript:Case) {
+	default {
+		condition = TRUE
+		type = ${prototypeName}
+	}
+}

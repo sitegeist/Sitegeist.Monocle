@@ -1,0 +1,20 @@
+prototype(Sitegeist.Monocle:InlineEditableTag) < prototype(TYPO3.TypoScript:Tag) {
+	@context {
+		propertyName = ${this.propertyName}
+	}
+
+	attributes {
+		class {
+			10 = 'neos-inline-editable'
+			10.@if.hasPropertyName = ${propertyName ? TRUE : FALSE}
+		}
+		property = ${'typo3:' + propertyName }
+		property.@if.hasPropertyName = ${propertyName ? TRUE : FALSE}
+
+		data-neos-node-type =  ${node != NULL ? q(node).property('_nodeType.name') : ''}
+		data-neos-node-type.@if.hasNodeTypeName = ${nodeTypeName ? TRUE : FALSE}
+	}
+
+	content = ''
+	content.@process.hasPropertyName = ${propertyName ? q(node).property(propertyName) : value}
+}

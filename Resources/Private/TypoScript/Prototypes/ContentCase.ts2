@@ -1,0 +1,6 @@
+prototype(TYPO3.Neos:ContentCase) {
+	styleguide {
+		condition = ${q(node).is('[instanceof Sitegeist.Monocle:StyleguideMixin]') ? TRUE : FALSE}
+		type = ${q(node).property('_nodeType.name') + 'Content'}
+	}
+}

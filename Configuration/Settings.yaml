@@ -1,11 +1,28 @@
 TYPO3:
   Neos:
+    typoScript:
+      autoInclude:
+        'Sitegeist.Monocle': TRUE
     modules:
       administration:
         submodules:
-          workspaces:
-            label: 'Monocle Styleguide'
-            controller: '\Sitegeist\Monocle\Controller\Module\StyleguideController'
-            description: 'A Styleguide implementation based on TypoScript prototypes'
+          monocle:
+            label: 'Monocle'
+            controller: '\Sitegeist\Monocle\Controller\StyleguideController'
+            description: 'A Styleguide implementation based on TypoScript prototypes and the idea of atomic-design'
             icon: 'icon-magic'
-            privilegeTarget: 'Sitegeist.Monocle:Backend.Module.Styleguide'
+            privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
+            additionalResources:
+              styleSheets:
+                module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
+
+
+Sitegeist:
+  Monocle:
+    preview:
+      defaultPath: 'atoms'
+      additionalResources:
+        styleSheets:
+          # example:  'resource://Vendor.Site/Public/Styles/Main.css'
+        javaScripts:
+          # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
