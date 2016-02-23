@@ -3,11 +3,13 @@ prototype(Sitegeist.Monocle:InlineEditableTag) < prototype(TYPO3.TypoScript:Tag)
 		propertyName = ${this.propertyName}
 	}
 
-	attributes {
-		class {
-			10 = 'neos-inline-editable'
-			10.@if.hasPropertyName = ${propertyName ? TRUE : FALSE}
+	attributes = TYPO3.TypoScript:Attributes {
+
+		class = TYPO3.TypoScript:RawArray {
+			inlineEditableClass = 'neos-inline-editable'
+			inlineEditableClass.@if.hasPropertyName = ${propertyName ? TRUE : FALSE}
 		}
+
 		property = ${'typo3:' + propertyName }
 		property.@if.hasPropertyName = ${propertyName ? TRUE : FALSE}
 
