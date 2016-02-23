@@ -44,6 +44,9 @@ class StyleguideController extends AbstractModuleController
 
         $this->view->assign('styleguideRootSection', $styleguideRootSection);
 
+        $this->view->assign('type', $type);
+        $this->view->assign('path', $path);
+
         $this->view->assign('showRenderedResult', $showRenderedResult);
         $this->view->assign('showRenderedCode', $showRenderedCode);
         $this->view->assign('showDescription', $showDescription);

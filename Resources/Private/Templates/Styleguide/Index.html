@@ -7,7 +7,7 @@
         <f:for each="{styleguideRootSection.sections}" as="section" >
             <div class="neos-button-group">
 
-            <a target="monocleIframe" class="neos-button" href="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{type:type, path:section.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}">
+            <a class="neos-button" href="{f:uri.action(action:'index', arguments:'{type:type, path:section.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}">
                 {section.title -> f:format.case(mode:'capitalWords')}
             </a>
             <button type="button" class="neos-button dropdown-toggle" data-neos-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-angle-down"></i></button>
@@ -16,7 +16,7 @@
                 <ul class="neos-dropdown-menu" role="menu">
                     <f:for each="{section.sections}" as="subsection" >
                         <li>
-                            <a target="monocleIframe" href="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{type:type, path:subsection.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" >
+                            <a href="{f:uri.action(action:'index', arguments:'{type:type, path:subsection.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" >
                                 {subsection.title -> f:format.case(mode:'capitalWords')}
                             </a>
                         </li>
@@ -53,7 +53,7 @@
                         <f:link.action action="index" arguments="{type:type, path:path, showDescription:0, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button neos-active" ><i class="icon-file-text-alt" ></i></f:link.action>
                     </f:then>
                     <f:else>
-                        <f:link.action action="index" arguments="{ntype:type, path:path, showDescription:1, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-file-text" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:1, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-file-text" ></i></f:link.action>
                     </f:else>
                 </f:if>
             </div>
@@ -65,6 +65,6 @@
     </div>
 
     <div class="neos-content" >
-        <iframe name="monocleIframe" src="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" style="margin: 20px 0; width:100%; background-color: white; height:800px; overflow-y:scroll; overflow-x:auto" ></iframe>
+        <iframe src="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" style="margin: 20px 0; width:100%; background-color: white; height:800px; overflow-y:scroll; overflow-x:auto" ></iframe>
     </div>
 </f:section>

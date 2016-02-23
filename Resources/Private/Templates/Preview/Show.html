@@ -49,7 +49,9 @@
                 <f:if condition="{showRenderedCode}">
                     <div class="monocle__item__block monocle__item__block--code" >
                         <div class="monocle__item__block__label">Code</div>
-                        <pre>{monocle:renderPrototype(prototypeName:item.prototypeName, node:node)}</pre>
+                        <pre class="language-html">
+                            <code class="language-html">{monocle:renderPrototype(prototypeName:item.prototypeName, node:node)}</code>
+                        </pre>
                     </div>
                 </f:if>
                 <f:if condition="{showDescription}">
