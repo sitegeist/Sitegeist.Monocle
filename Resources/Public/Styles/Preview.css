@@ -66,7 +66,7 @@
 }
 
 .monocle__item__block--preview {
-
+    position: relative;
 }
 
 .monocle__item__block--code {
