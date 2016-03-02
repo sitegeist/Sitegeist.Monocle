@@ -16,7 +16,7 @@ prototype(Sitegeist.Monocle:InlineEditableTag) < prototype(TYPO3.TypoScript:Tag)
 		property.@if.hasPropertyName = ${(node.context.workspaceName != 'live' && propertyName) ? TRUE : FALSE}
 
 		data-neos-node-type =  ${node != NULL ? q(node).property('_nodeType.name') : ''}
-		data-neos-node-type.@if.hasNodeTypeName = ${(node.context.workspaceName != 'live' && nodeTypeName) ? TRUE : FALSE}
+		data-neos-node-type.@if.hasNodeTypeName = ${((node != NULL) && (node.context.workspaceName != 'live')) ? TRUE : FALSE}
 	}
 
 	content = ''
