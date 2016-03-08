@@ -4,7 +4,7 @@ privilegeTargets:
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
     'Sitegeist.Monocle:Backend.Preview':
-      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(show)Action())'
+      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(show|showPath|showPrototype)Action())'
 roles:
   'TYPO3.Flow:Everybody':
     privileges:

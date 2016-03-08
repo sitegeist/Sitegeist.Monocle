@@ -1,45 +1,34 @@
 {namespace monocle=Sitegeist\Monocle\ViewHelpers}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<f:layout name="PreviewIframe" ></f:layout>
 
-    <link rel="stylesheet" href="{f:uri.resource(path:'resource://Sitegeist.Monocle/Public/Styles/Preview.css')}">
-
-    <f:if condition="{additionalResources.styleSheets}">
-        <f:for each="{additionalResources.styleSheets}" as="resource">
-            <link rel="stylesheet" href="{f:uri.resource(path: resource)}" />
-        </f:for>
-    </f:if>
-
-    <f:if condition="{additionalResources.javaScripts}">
-        <f:for each="{additionalResources.javaScripts}" as="resource">
-            <script src="{f:uri.resource(path: resource)}"></script>
-        </f:for>
-    </f:if>
-
-</head>
-<body>
-    <div class="monocle">
-        <f:render section="section" arguments="{section:styleguideSections, node:node, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription  }"></f:render>
-    </div>
-</body>
-</html>
+<f:section name="content">
+    <f:render section="section" arguments="{section:styleguideSections, node:node, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription  }"></f:render>
+</f:section>
 
 <f:section name="section">
     <div class="monocle__section">
 
-        <div class="monocle__section__headline">Section: {section.title -> f:format.case(mode:'capitalWords')}</div>
+        <div class="monocle__section__headline">Section:
+            {section.title -> f:format.case(mode:'capitalWords')}
+            <f:link.action action="showPath" controller="preview" arguments="{path: section.dotPath}" >
+                {section.dotPath}
+            </f:link.action>
+        </div>
 
         <f:for each="{section.sections}" as="subsection">
             <f:render section="section" arguments="{section:subsection, node:node, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription }"></f:render>
         </f:for>
         <f:for each="{section.items}" as="item">
             <div class="monocle__item">
-                <div class="monocle__item__title">{item.title}</div>
-                <div class="monocle__item__prototype">{item.prototypeName}</div>
+                <div class="monocle__item__title">{item.title}
+                    <f:link.action action="showPath" controller="preview" arguments="{path: item.dotPath}" >
+                        {item.dotPath}
+                    </f:link.action>
+                </div>
+                <div class="monocle__item__prototype">
+                    <f:link.action action="showPrototype" controller="preview" arguments="{prototypeName :item.prototypeName}" >{item.prototypeName}</f:link.action>
+                </div>
                 <f:if condition="{showRenderedResult}">
                     <div class="monocle__item__block monocle__item__block--preview" >
                         <div class="monocle__item__block__label">Preview</div>

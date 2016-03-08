@@ -50,4 +50,11 @@ class Item
     {
         return $this->path;
     }
+
+    public function getDotPath() {
+        $dotPath = $this->getPath();
+        $dotPath = str_replace(['.',':'], ['_','_'], $dotPath);
+        $dotPath = str_replace(['/'], ['.'],$dotPath);
+        return $dotPath;
+    }
 }

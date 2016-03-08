@@ -1,0 +1,43 @@
+{namespace monocle=Sitegeist\Monocle\ViewHelpers}
+
+<f:layout name="PreviewIframe" ></f:layout>
+
+<f:section name="content">
+    <f:render section="Section" arguments="{objectTree:styleguideObjectTree, path: path, node:node}"></f:render>
+    <f:debug>{path}</f:debug>
+    <f:debug>{styleguideObjectTree}</f:debug>
+</f:section>
+
+<f:section name="Section">
+    <f:for each="{objectTree}" as="subitem" key="subkey">
+        <f:if condition="{subitem.__item}">
+            <f:then>
+                <f:render section="Item" arguments="{item:subitem.__item, path: '{path}.{subkey}', node:node}" />
+            </f:then>
+            <f:else>
+                <f:render section="Section" arguments="{objectTree:subitem, path: '{path}.{subkey}', node:node}" />
+            </f:else>
+        </f:if>
+    </f:for>
+</f:section>
+
+<f:section name="Item">
+    <div class="monocle__section">
+        <div class="monocle__section__headline">
+           {item.styleguideConfiguration.title}
+        </div>
+        <div class="monocle__item__prototype">
+            <f:link.action action="showPrototype" controller="preview" arguments="{prototypeName: item.prototypeName}" >{item.prototypeName}</f:link.action>
+        </div>
+        <div class="monocle__item__block monocle__item__block--preview" >
+            <f:if condition="{item.styleguideConfiguration.display} == 'iframe'">
+                <f:then>
+                    <f:render partial="RenderPrototypeIframe" arguments="{prototypeName: item.prototypeName, node:node, height: item.styleguideConfiguration.height}"></f:render>
+                </f:then>
+                <f:else>
+                    <f:render partial="RenderPrototypeInline" arguments="{prototypeName: item.prototypeName, node:node}"></f:render>
+                </f:else>
+            </f:if>
+        </div>
+    </div>
+</f:section>
