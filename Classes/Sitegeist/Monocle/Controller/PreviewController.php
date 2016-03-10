@@ -90,6 +90,4 @@ class PreviewController extends ActionController
 
         $this->view->assign('additionalResources', $this->additionalResources);
     }
-
-
 }

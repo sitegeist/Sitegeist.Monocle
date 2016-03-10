@@ -47,15 +47,13 @@ class StyleguideController extends AbstractModuleController
     protected $breakpoints;
 
     /**
-     * @param NodeInterface $node
-     * @param string $type
      * @param string $path
      * @param boolean $showRenderedResult
      * @param boolean $showRenderedCode
      * @param boolean $showDescription
      * @return void
      */
-    public function indexAction($type = NULL, $path = NULL, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+    public function indexAction($path = NULL, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
 
         if ($path == NULL) {
             $path=$this->defaultPath;
@@ -71,7 +69,6 @@ class StyleguideController extends AbstractModuleController
 
         $this->view->assign('styleguideObjectTree', $styleguideObjectTree);
 
-        $this->view->assign('type', $type);
         $this->view->assign('path', $path);
 
         $this->view->assign('showRenderedResult', $showRenderedResult);
