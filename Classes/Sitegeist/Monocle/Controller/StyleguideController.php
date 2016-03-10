@@ -62,13 +62,14 @@ class StyleguideController extends AbstractModuleController
         }
 
         $context = $this->contextHelper->getContext();
-        $site = $context->getCurrentSiteNode();
+        $siteNode = $context->getCurrentSiteNode();
 
-        $styleguideRootSection = $this->typoScriptHelper->buildStylegideSectionsForNode($site);
+        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
+        $styleguideObjectTree = $this->typoScriptHelper->buildStyleguideObjectTree($typoScriptObjectTree);
 
-        $this->view->assign('initialState', $this->getInitialState($site));
+        $this->view->assign('initialState', $this->getInitialState($siteNode));
 
-        $this->view->assign('styleguideRootSection', $styleguideRootSection);
+        $this->view->assign('styleguideObjectTree', $styleguideObjectTree);
 
         $this->view->assign('type', $type);
         $this->view->assign('path', $path);
@@ -87,13 +88,14 @@ class StyleguideController extends AbstractModuleController
             'ui' => [
                 'showCode' => TRUE,
                 'showPreview' => TRUE,
-                'showDescription' => TRUE
+                'showDescription' => TRUE,
+                'breakpoint' => NULL,
+                'path' => ''
             ],
             'breakpoints' => $this->breakpoints,
             'styleguideObjectTree' => $styleguideObjectTree,
             'ts' => $typoScriptObjectTree
         ];
-
 
         return $initialState;
     }

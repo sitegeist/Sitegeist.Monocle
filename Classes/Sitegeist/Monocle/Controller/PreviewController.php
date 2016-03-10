@@ -45,39 +45,6 @@ class PreviewController extends ActionController
     protected $contextHelper;
 
     /**
-     * @param string $type
-     * @param string $path
-     * @param boolean $showRenderedResult
-     * @param boolean $showRenderedCode
-     * @param boolean $showDescription
-     * @return void
-     */
-    public function showAction($type = NULL ,$path = NULL, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
-
-        if ($path == NULL) {
-            $path=$this->defaultPath;
-        }
-
-        $context = $this->contextHelper->getContext();
-        $site = $context->getCurrentSiteNode();
-
-        $rootStyleguideSections = $this->typoScriptHelper->buildStylegideSectionsForNode($site);
-        $styleguideSections = $rootStyleguideSections->byPath($path);
-
-        $this->view->assign('type', $type);
-        $this->view->assign('path', $path);
-        $this->view->assign('node',  $site);
-
-        $this->view->assign('styleguideRootSections', $rootStyleguideSections);
-        $this->view->assign('styleguideSections', $styleguideSections);
-        $this->view->assign('showRenderedResult', $showRenderedResult);
-        $this->view->assign('showRenderedCode', $showRenderedCode);
-        $this->view->assign('showDescription', $showDescription);
-
-        $this->view->assign('additionalResources', $this->additionalResources);
-    }
-
-    /**
      * @param string $path
      * @param boolean $showRenderedResult
      * @param boolean $showRenderedCode
