@@ -3,11 +3,13 @@
 namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
+use TYPO3\Flow\Utility\Arrays;
 use TYPO3\Flow\Mvc\Controller\ActionController;
+use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
 use Sitegeist\Monocle\Helper\TypoScriptHelper;
 use Sitegeist\Monocle\Helper\ContextHelper;
+use Sitegeist\Monocle\TypoScript\TypoScriptService;
 
 class PreviewController extends ActionController
 {
@@ -26,6 +28,12 @@ class PreviewController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var TypoScriptService
+     */
+    protected $typoScriptService;
+
+    /**
+     * @Flow\Inject
      * @var TypoScriptHelper
      */
     protected $typoScriptHelper;
@@ -37,32 +45,45 @@ class PreviewController extends ActionController
     protected $contextHelper;
 
     /**
-     * @param NodeInterface $node
-     * @param string $type
      * @param string $path
      * @param boolean $showRenderedResult
      * @param boolean $showRenderedCode
      * @param boolean $showDescription
      * @return void
      */
-    public function showAction($type = NULL ,$path = NULL, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+    public function showPathAction($path, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+        $context = $this->contextHelper->getContext();
+        $siteNode = $context->getCurrentSiteNode();
 
-        if ($path == NULL) {
-            $path=$this->defaultPath;
-        }
+        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
+        $styleguideObjectTree = $this->typoScriptHelper->buildStyleguideObjectTree($typoScriptObjectTree);
+
+        $this->view->assign('path', $path);
+        $this->view->assign('node',  $siteNode);
+
+        $this->view->assign('styleguideObjectTree', Arrays::getValueByPath($styleguideObjectTree, $path));
+        $this->view->assign('showRenderedResult', $showRenderedResult);
+        $this->view->assign('showRenderedCode', $showRenderedCode);
+        $this->view->assign('showDescription', $showDescription);
+
+        $this->view->assign('additionalResources', $this->additionalResources);
+    }
+
+    /**
+     * @param string $prototypeName
+     * @param boolean $showRenderedResult
+     * @param boolean $showRenderedCode
+     * @param boolean $showDescription
+     * @return void
+     */
+    public function showPrototypeAction($prototypeName, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
 
         $context = $this->contextHelper->getContext();
-        $site = $context->getCurrentSiteNode();
+        $siteNode = $context->getCurrentSiteNode();
 
-        $rootStyleguideSections = $this->typoScriptHelper->buildStylegideSectionsForNode($site);
-        $styleguideSections = $rootStyleguideSections->byPath($path);
+        $this->view->assign('prototypeName', $prototypeName);
+        $this->view->assign('node',  $siteNode);
 
-        $this->view->assign('type', $type);
-        $this->view->assign('path', $path);
-        $this->view->assign('node',  $site);
-
-        $this->view->assign('styleguideRootSections', $rootStyleguideSections);
-        $this->view->assign('styleguideSections', $styleguideSections);
         $this->view->assign('showRenderedResult', $showRenderedResult);
         $this->view->assign('showRenderedCode', $showRenderedCode);
         $this->view->assign('showDescription', $showDescription);

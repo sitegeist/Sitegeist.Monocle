@@ -16,9 +16,20 @@ TYPO3:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
 
-
 Sitegeist:
   Monocle:
+
+    breakpoints:
+      xs:
+        label: 'xtra small'
+        width: 400
+      md:
+        label: 'medium'
+        width: 600
+      wide:
+        label: 'wide'
+        width: 800
+
     preview:
       defaultPath: 'atoms'
       additionalResources:

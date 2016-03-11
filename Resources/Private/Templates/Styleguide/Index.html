@@ -2,69 +2,92 @@
 
 <f:section name="content">
 
+    <f:comment><!--
+    <f:debug>{initialState}</f:debug>
+    --></f:comment>
+
     <div class="neos-header">
 
-        <f:for each="{styleguideRootSection.sections}" as="section" >
-            <div class="neos-button-group">
-
-            <a class="neos-button" href="{f:uri.action(action:'index', arguments:'{type:type, path:section.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}">
-                {section.title -> f:format.case(mode:'capitalWords')}
-            </a>
-            <button type="button" class="neos-button dropdown-toggle" data-neos-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-angle-down"></i></button>
-
-            <f:if condition="{section.sections}">
-                <ul class="neos-dropdown-menu" role="menu">
-                    <f:for each="{section.sections}" as="subsection" >
-                        <li>
-                            <a href="{f:uri.action(action:'index', arguments:'{type:type, path:subsection.path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" >
-                                {subsection.title -> f:format.case(mode:'capitalWords')}
-                            </a>
-                        </li>
-                    </f:for>
-                </ul>
-            </f:if>
-            </div>
-        </f:for>
+        <f:render section="ObjectTreeMenu" arguments="{objectTree:styleguideObjectTree, node:node, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}"></f:render>
 
         <div class="neos-pull-right">
 
-            <!-- toggle view modes -->
             <div class="neos-button-group">
                 <f:if condition="{showRenderedResult}">
                     <f:then>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:showDescription, showRenderedResult:0, showRenderedCode:showRenderedCode}" class="neos-button neos-active" ><i class="icon-eye-open" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:showDescription, showRenderedResult:0, showRenderedCode:showRenderedCode}" class="neos-button neos-active" ><i class="icon-eye-open" ></i></f:link.action>
                     </f:then>
                     <f:else>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:showDescription, showRenderedResult:1, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-eye-close" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:showDescription, showRenderedResult:1, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-eye-close" ></i></f:link.action>
                     </f:else>
                 </f:if>
 
                 <f:if condition="{showRenderedCode}">
                     <f:then>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:0}" class="neos-button neos-active" ><i class="icon-code" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:0}" class="neos-button neos-active" ><i class="icon-code" ></i></f:link.action>
                     </f:then>
                     <f:else>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:1}" class="neos-button" ><i class="icon-code" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:1}" class="neos-button" ><i class="icon-code" ></i></f:link.action>
                     </f:else>
                 </f:if>
 
                 <f:if condition="{showDescription}">
                     <f:then>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:0, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button neos-active" ><i class="icon-file-text-alt" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:0, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button neos-active" ><i class="icon-file-text-alt" ></i></f:link.action>
                     </f:then>
                     <f:else>
-                        <f:link.action action="index" arguments="{type:type, path:path, showDescription:1, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-file-text" ></i></f:link.action>
+                        <f:link.action action="index" arguments="{path:path, showDescription:1, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}" class="neos-button" ><i class="icon-file-text" ></i></f:link.action>
                     </f:else>
                 </f:if>
             </div>
 
             <div class="neos-button-group">
-                <a target="_blank" href="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{type:type, path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" ><i class="icon-external-link"></i></a>
+                <a target="_blank" href="{f:uri.action(action:'showPath', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" ><i class="icon-external-link"></i></a>
             </div>
         </div>
     </div>
 
     <div class="neos-content" >
-        <iframe src="{f:uri.action(action:'show', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" style="margin: 20px 0; width:100%; background-color: white; height:800px; overflow-y:scroll; overflow-x:auto" ></iframe>
+        <iframe src="{f:uri.action(action:'showPath', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" style="margin: 20px 0; width:100%; background-color: white; height:800px; overflow-y:scroll; overflow-x:auto" ></iframe>
     </div>
+</f:section>
+
+<f:section name="ObjectTreeMenu">
+    <f:for each="{objectTree}" as="item" key="path">
+        <f:if condition="{item.__item}">
+            <f:then>
+                <a class="neos-button" href="{f:uri.action(action:'index', arguments:'{path: path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}">
+                    {path -> f:format.case(mode:'capitalWords')}
+                </a>
+            </f:then>
+            <f:else>
+                <div class="neos-button-group">
+                    <a class="neos-button" href="{f:uri.action(action:'index', arguments:'{path: path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}">
+                        {path -> f:format.case(mode:'capitalWords')}
+                    </a>
+                    <button type="button" class="neos-button dropdown-toggle" data-neos-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="icon-angle-down"></i></button>
+                    <ul class="neos-dropdown-menu" role="menu">
+                        <f:for each="{item}" as="subitem" key="subkey">
+                            <f:alias map="{subpath:'{path}.{subkey}'}">
+                            <li>
+                                <f:if condition="{subitem.__item}">
+                                    <f:then>
+                                        <a href="{f:uri.action(action:'index', arguments:'{path:subpath, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" >
+                                            {subkey -> f:format.case(mode:'capitalWords')}
+                                        </a>
+                                    </f:then>
+                                    <f:else>
+                                        <a href="{f:uri.action(action:'index', arguments:'{path:subpath, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" class="neos-button" >
+                                            {subkey -> f:format.case(mode:'capitalWords')}
+                                        </a>
+                                    </f:else>
+                                 </f:if>
+                            </li>
+                            </f:alias>
+                        </f:for>
+                    </ul>
+                </div>
+            </f:else>
+        </f:if>
+    </f:for>
 </f:section>
