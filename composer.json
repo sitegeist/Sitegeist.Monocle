@@ -2,6 +2,14 @@
     "name": "sitegeist/monocle",
     "type": "typo3-flow-package",
     "description": "An ts2 based styleguide implementation for neos based on the ideas of atomic-design",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Ficzel",
+            "email": "ficzel@sitegeist.de",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "typo3/neos": "*"
     },
