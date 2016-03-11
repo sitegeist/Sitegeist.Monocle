@@ -12,7 +12,7 @@ TypoScript2 prototypes that are annotated with `@styleguide`.
 
 *The development and the public-releases of this package is generously sponsored by our employer http://www.sitegeist.de.*
 
-## Create items for the stylegudie
+## Create items for the styleguide
 
 To render a prototype as a styleguide-item it simply has to be annotated:
 
@@ -30,7 +30,7 @@ prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
 ## Best practices
 
 It is a good idea and our intention to use Sitegeist.Monocle together with 
-"atomic design" (see: http://patternlab.io/about.html) "CSS BEM" 
+"atomic design" (see: http://patternlab.io/about.html) and "CSS BEM" 
 (see: http://getbem.com/introduction/). Nevertheless Sitegeist.Monocle
 will not enforce any of this.
 
