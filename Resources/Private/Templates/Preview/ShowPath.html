@@ -48,17 +48,17 @@
             </f:comment>
         </div>
 
-        <f:if condition="showRenderedResult">
+        <f:if condition="{showRenderedResult}">
             <div class="monocle__item__preview" >
                 <f:render partial="RenderPrototype" arguments="{item: item, node:node}"></f:render>
             </div>
         </f:if>
-        <f:if condition="showRenderedCode">
+        <f:if condition="{showRenderedCode}">
             <div class="monocle__item__code" >
                 <f:render partial="RenderPrototypeSource" arguments="{prototypeName:item.prototypeName, node:node}"></f:render>
             </div>
         </f:if>
-        <f:if condition="showDescription">
+        <f:if condition="{showDescription}">
             <div class="monocle__item__description" >
                 <f:if condition="{item.styleguideConfiguration.description}">
                     <f:then>

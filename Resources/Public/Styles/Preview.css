@@ -3,15 +3,22 @@
     margin: 0;
 }
 
+/*
+ #00b5ff blue
+ #ff8700 orange
+ #00a338 green
+*/
+
+
 .monocle__section {
     margin-bottom: 2em;
 }
 
 .monocle__section__info {
-    padding: 0.5em;
+    padding: 5px 15px;
     background: #3f3f3f;
     color:white;
-    border-bottom: 2px solid #2d2d2d;
+    border-bottom: 4px solid #00b5ff;
 }
 
 .monocle__section__info__headline {
@@ -31,11 +38,10 @@
 }
 
 .monocle__item__info {
-    padding: 0.5em;
+    padding: 5px 15px;
     background: #3f3f3f;
     color:white;
-    padding: 0.5em;
-    font-size: 10px;
+    font-size: 14px;
 }
 
 .monocle__item__info__headline {
@@ -44,21 +50,11 @@
     font-size: 18px;
 }
 
-.monocle__item__description {
-    padding: 0.5em;
-    background-color: #3f3f3f;
-    color:white;
-    padding: 0.5em;
 
-    font-family: sans-serif;
-    font-weight: lighter;
-    font-size: 10px;
-}
 
 .monocle__item__preview {
     position: relative;
 }
-
 
 .monocle__item__preview iframe {
     width: 100%;
@@ -68,11 +64,29 @@
     padding: 0.5em;
     background-color: #3f3f3f;
     color:white;
-    padding: 0.5em;
+    padding: 10px;
 
     font-family: monospace;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 14px;
+
+    border-left: 3px solid #ff8700;
+    border-right: 3px solid #ff8700;
+
+}
+
+.monocle__item__description {
+    padding: 0.5em;
+    background-color: #3f3f3f;
+    color:white;
+    padding: 10px;
+
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 14px;
+
+    border-left: 3px solid #00a338;
+    border-right: 3px solid #00a338;
 }
 
 .monocle__item__info a,
