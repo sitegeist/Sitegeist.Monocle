@@ -20,9 +20,16 @@ prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
     @styleguide {
         path = 'atoms.basic'
         title = 'My Custom Prototype'
-        description = 'A '
+        description = 'A Prototype ....'
+
+        // ts props to override for the styleguide rendering 
+        props {
+            content = 'Hello World'
+        }
     }
-    // ... other prototype settings ...
+    
+    // normal ts props
+    content = ''
 }    
 ```
 
