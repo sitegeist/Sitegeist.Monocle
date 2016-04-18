@@ -68,11 +68,81 @@ Sitegeist:
           # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
 ```
 
-## Best practices
+# Best practices
+
+## Atomic-Design with TS2
 
 It is a good idea and our intention to use Sitegeist.Monocle together with 
 "atomic design" (see: http://patternlab.io/about.html) and "CSS BEM" 
 (see: http://getbem.com/introduction/). Nevertheless Sitegeist.Monocle
 will not enforce any of this.
 
+### Define and extend atoms
 
+```
+prototype(Vendor.Site:Atoms.Link) < prototype(TYPO3.TypoScript:Tag) {
+  tagName = 'a'
+  ...
+}
+prototype(Vendor.Site:Atoms.Button) < prototype(Vendor.Site:Atoms.Link) {
+attributes.class = TYPO3.TypoScript:RawArray {
+  button = 'btn'
+}
+  ...
+}
+```
+
+### Aggregate atoms to higher order components
+
+```
+prototype(Vendor.Site:Molecules.ButtonGroup) < prototype(TYPO3.TypoScript:Tag) {
+  content = TYPO3.TypoScript:Array {
+    button1 = Vendor.Site:Atoms.Button
+    button2 = Vendor.Site:Atoms.Button
+  }
+  prototype(Vendor.Site:Atoms.Button) {
+    attributes.class.buttonGroup = 'buttonGroup'
+  }
+}
+
+prototype(Vendor.Site:Organisms.Header) < prototype(TYPO3.TypoScript:Tag) {
+   content = TYPO3.TypoScript:Array {
+     funcNav = Vendor.Site:Mulecules.FuncNav
+     mainNav = Vendor.Site:Mulecules.MainNav
+   }
+}
+
+prototype(Vendor.Site:Templates.Page) < prototype(TYPO3.Neos:Page) {
+   content = TYPO3.TypoScript:Array {
+     header = Vendor.Site:Organisms.Header
+     main = TYPO3.Neos:PrimaryContent
+     footer = Vendor.Site:Organisms.Header
+   }
+}
+```
+
+### Use component for page rendering
+
+```
+page = TYPO3.TypoScript:Case {
+  specificPage {
+    condition = ${q(documentNode).is('[instanceof Vendor.Site:SpecificPageMixin]')}
+    renderPath = Vendor.Site:Templates.PageSpecific
+  }
+  default {
+    condition = true
+    renderer = Vendor.Site:Templates.Page
+  }  
+}
+```
+
+### Use component for custom nodetype
+
+```
+prototype(Vendor.Site:ExampleNode) < prototype(Vendor.Site:Molecules.Example) {
+  # this has to be done because of auto generated TS
+  templatePaths = NULL 
+  # map node properties
+  exampleProperty = ${q(node).property('propertyName')}
+}
+```
