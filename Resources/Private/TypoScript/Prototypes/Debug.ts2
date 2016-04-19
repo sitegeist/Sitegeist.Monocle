@@ -1,0 +1,4 @@
+prototype(Sitegeist.Monocle:Debug) {
+	@class = 'Sitegeist\\Monocle\\TypoScript\\DebugImplementation'
+	title = 'Debug'
+}
