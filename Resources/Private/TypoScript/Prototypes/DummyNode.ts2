@@ -1,5 +1,5 @@
 prototype(Sitegeist.Monocle:DummyNode) {
-	@class = 'Sitegeist\\Monocle\\TypoScript\\DummyNode'
+	@class = 'Sitegeist\\Monocle\\TypoScript\\DummyNodeImplementation'
 
 	name = 'unnamed'
 	nodeType = 'unstructured'
@@ -11,7 +11,7 @@ prototype(Sitegeist.Monocle:DummyNode) {
 prototype(Sitegeist.Monocle:DummyNode.Preview) < prototype(TYPO3.TypoScript:Array) {
 
 	@styleguide {
-		path = 'test'
+		path = 'test.node'
 		title = 'test node'
 		description = 'create a node'
 	}

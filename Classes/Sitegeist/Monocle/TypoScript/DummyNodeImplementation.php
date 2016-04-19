@@ -5,8 +5,9 @@ namespace Sitegeist\Monocle\TypoScript;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\TypoScript\TypoScriptObjects\AbstractTypoScriptObject;
 use TYPO3\TYPO3CR\Domain\Service\NodeTypeManager;
+use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
-class DummyNode extends AbstractTypoScriptObject
+class DummyNodeImplementation extends AbstractTypoScriptObject
 {
 
     /**
@@ -18,7 +19,7 @@ class DummyNode extends AbstractTypoScriptObject
     /**
      * A node object or a string node path or NULL to resolve the current document node
      *
-     * @return mixed
+     * @return NodeType
      */
     public function getNodeType()
     {
@@ -32,23 +33,45 @@ class DummyNode extends AbstractTypoScriptObject
     }
 
     /**
-     * Render the Uri.
+     * The node name
      *
-     * @return string The rendered URI or NULL if no URI could be resolved for the given node
+     * @var string
+     */
+    public function getName() {
+        return $this->tsValue('name');
+    }
+
+    /**
+     * The properties of the node
+     *
+     * @var array
+     */
+    public function getProperties() {
+        return $this->tsValue('properties');
+    }
+
+    /**
+     * The child nodes of the node
+     *
+     * @var array
+     */
+    public function getChildNodes() {
+        return $this->tsValue('childNodes');
+    }
+
+    /**
+     * Generate a dummy node for testing and prototyping purposes
+     *
+     * @return NodeInterface
      * @throws NeosException
      */
     public function evaluate()
     {
-        $nodeType = $this->getNodeType();
-        $name = $this->tsValue('name');
-        $properties = $this->tsValue('properties');
-        $childNodes = $this->tsValue('childNodes');
-
         $dummyNode = new \Sitegeist\Monocle\MockObjects\Node();
-        $dummyNode->setNodeType($nodeType);
-        $dummyNode->setName($name);
-        $dummyNode->setProperties($properties);
-        $dummyNode->setChildNodes($childNodes);
+        $dummyNode->setNodeType($this->getNodeType());
+        $dummyNode->setName($this->getName());
+        $dummyNode->setProperties($this->getProperties());
+        $dummyNode->setChildNodes($this->getChildNodes());
 
         return $dummyNode;
     }
