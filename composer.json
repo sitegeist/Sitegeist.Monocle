@@ -1,8 +1,8 @@
 {
     "name": "sitegeist/monocle",
-    "type": "typo3-flow-package",
+    "type": "typo3-flow-plugin",
     "description": "An ts2 based styleguide implementation for Neos",
-    "license": "MIT",
+    "license": "GPL-3.0+",
     "authors": [
         {
             "name": "Martin Ficzel",
