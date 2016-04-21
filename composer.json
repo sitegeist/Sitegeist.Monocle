@@ -1,7 +1,7 @@
 {
     "name": "sitegeist/monocle",
     "type": "typo3-flow-package",
-    "description": "An ts2 based styleguide implementation for neos based on the ideas of atomic-design",
+    "description": "An ts2 based styleguide implementation for Neos",
     "license": "MIT",
     "authors": [
         {
