@@ -1,6 +1,6 @@
 {namespace monocle=Sitegeist\Monocle\ViewHelpers}
 
-<f:layout name="PreviewIframe" ></f:layout>
+<f:layout name="PreviewIframe" />
 
 <f:section name="content">
     <f:if condition="{styleguideObjectTree.__item}">
@@ -8,7 +8,7 @@
             <f:render section="Item" arguments="{item:styleguideObjectTree.__item, path: '{path}', node:node, showRenderedResult: showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription}" />
         </f:then>
         <f:else>
-            <f:render section="Section" arguments="{objectTree:styleguideObjectTree, path: path, node:node, showRenderedResult: showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription}"></f:render>
+            <f:render section="Section" arguments="{objectTree:styleguideObjectTree, path: path, node:node, showRenderedResult: showRenderedResult, showRenderedCode:showRenderedCode, showDescription:showDescription}" />
         </f:else>
     </f:if>
 </f:section>
@@ -49,13 +49,13 @@
         </div>
 
         <f:if condition="{showRenderedResult}">
-            <div class="monocle__item__preview" >
-                <f:render partial="RenderPrototype" arguments="{item: item, node:node}"></f:render>
+            <div class="monocle__item__preview {item.styleguideConfiguration.previewContainerClass}">
+                <f:render partial="RenderPrototype" arguments="{item: item, node:node}" />
             </div>
         </f:if>
         <f:if condition="{showRenderedCode}">
             <div class="monocle__item__code" >
-                <f:render partial="RenderPrototypeSource" arguments="{prototypeName:item.prototypeName, node:node}"></f:render>
+                <f:render partial="RenderPrototypeSource" arguments="{prototypeName:item.prototypeName, node:node}" />
             </div>
         </f:if>
         <f:if condition="{showDescription}">
