@@ -10,7 +10,7 @@
 
         <f:render section="ObjectTreeMenu" arguments="{objectTree:styleguideObjectTree, node:node, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}"></f:render>
 
-		<div id="app"></div>
+		<div id="app" data-endpoint="{f:uri.action(action:'styleguideObjects', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"></div>
 
         <div class="neos-pull-right">
 

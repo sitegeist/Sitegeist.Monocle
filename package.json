@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/sitegeist/Sitegeist.Monocle#readme",
   "devDependencies": {
+    "autoprefixer": "^6.3.7",
     "babel-core": "^6.11.4",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
@@ -44,12 +45,15 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "imports-loader": "^0.6.5",
+    "postcss-loader": "^0.9.1",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "ramda": "^0.21.0",
     "react": "^15.2.1",
+    "react-click-outside": "^2.1.0",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
