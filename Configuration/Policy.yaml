@@ -5,12 +5,18 @@ privilegeTargets:
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
     'Sitegeist.Monocle:Backend.Preview':
       matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(showPath|showPrototype)Action())'
+    'Sitegeist.Monocle:Backend.Api':
+      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects)Action())'
 roles:
   'TYPO3.Flow:Everybody':
     privileges:
       -
         privilegeTarget: 'Sitegeist.Monocle:Backend.Preview'
         permission: GRANT
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Backend.Api'
+        permission: GRANT
+
   'TYPO3.Neos:Editor':
     privileges:
       -
