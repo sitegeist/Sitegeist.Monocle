@@ -6,7 +6,7 @@ privilegeTargets:
     'Sitegeist.Monocle:Backend.Preview':
       matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(showPath|showPrototype)Action())'
     'Sitegeist.Monocle:Backend.Api':
-      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects)Action())'
+      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|sites|breakpoints)Action())'
 roles:
   'TYPO3.Flow:Everybody':
     privileges:
