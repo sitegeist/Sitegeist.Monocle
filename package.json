@@ -1,0 +1,59 @@
+{
+  "name": "@sitegeist/monocle-ui",
+  "version": "1.0.0",
+  "description": "UI Components for Sitegeist.Monocle",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "lint": "npm run lint:scripts && npm run lint:css",
+    "lint:css": "stylelint 'Resources/Private/JavaScript/**/*.css'",
+    "lint:scripts": "eslint Resources/Private/JavaScript/**",
+    "test": "exit 0",
+    "watch": "npm run build -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitegeist/Sitegeist.Monocle.git"
+  },
+  "keywords": [
+    "ui",
+    "styleguide",
+    "atomic-design"
+  ],
+  "author": "Martin Ficzel <ficzel@sitegeist.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sitegeist/Sitegeist.Monocle/issues"
+  },
+  "homepage": "https://github.com/sitegeist/Sitegeist.Monocle#readme",
+  "devDependencies": {
+    "babel-core": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^3.1.1",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "imports-loader": "^0.6.5",
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "ramda": "^0.21.0",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-actions": "^0.10.1",
+    "seamless-immutable": "^6.1.1"
+  }
+}

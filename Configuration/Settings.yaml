@@ -15,6 +15,9 @@ TYPO3:
             additionalResources:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
+              javaScripts:
+                app: 'resource://Sitegeist.Monocle/Public/JavaScript/App.js'
+
 
 Sitegeist:
   Monocle:
