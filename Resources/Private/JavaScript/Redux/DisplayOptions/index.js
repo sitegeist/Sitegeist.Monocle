@@ -24,7 +24,8 @@ const actions = {
 	toggleFullscreen
 };
 
-const reducer = (state, action) => {
+const reducer = (state = {}, action) => {
+    console.log(state);
 	switch(action.type)	{
 		case TOGGLE_RENDERED_ELEMENTS:
 			const {renderedElements} = state.displayOptions;

@@ -40,7 +40,7 @@ export default class DropDown extends Component {
     }
 
 	render() {
-		const {label, items} = this.props;
+		const {label, items, onSelectItem} = this.props;
 		const {isOpen} = this.state;
 		const classNames = mergeClassNames({
 			[style.dropDownContainer]: true,
@@ -56,7 +56,7 @@ export default class DropDown extends Component {
 			<ul className="neos-dropdown-menu">
 				{items.map(item => (
 					<li key={item.key}>
-						<a href="javascript:void();" onClick={() => onSelectItem && onSelectItem(item.key)}>
+						<a href="javascript:void();" onClick={() => onSelectItem && onSelectItem(item.key) && this.close()}>
 							{item.label}
 						</a>
 					</li>

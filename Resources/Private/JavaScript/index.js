@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Navigation, Toolbar, App} from './Containers/index';
+import {Toolbar, App, PreviewSection } from './Containers/index';
 
 import store, {redux} from './Redux/index';
 
@@ -14,12 +14,21 @@ const initialize = () => {
 	.then(response => response.json())
 	.then(json => console.log(json));
 
+    // add the available breakpoints to the current state
+    fetch(appContainer.dataset.breakpoint_endpoint, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(json => (store.dispatch(redux.Breakpoints.actions.setAvailableBreakpoints(json))));
+
+
+
 	ReactDOM.render(
 		<div>
 			<Provider store={store}>
                 <App>
-                    <Navigation />
 				    <Toolbar />
+                    <PreviewSection />
                 </App>
 			</Provider>
 		</div>,

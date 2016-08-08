@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import mergeClassNames from 'classnames';
 
+import styles from './style.css';
+
 export default class Button extends Component {
 	static propTypes = {
 		children: PropTypes.node.isRequired,
@@ -13,10 +15,10 @@ export default class Button extends Component {
 		const {children, className, onClick, active} = this.props;
 
         const classNames = mergeClassNames({
-            ['neos-active']: active,
-            [className]: true
+            [styles.button]: true,
+            [className]: true,
+            ['neos-active']: active
         });
-
 
 		return <button onClick={() => onClick()} className={classNames}>
 			{children}

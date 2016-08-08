@@ -1,5 +1,15 @@
+.style__button___14D8X {
+    color:red;
+}
+
+.style__button___14D8X:focus {
+    outline: none;
+}
 .style__dropDownContainer___3X1Nj {
-	position: relative;
+    position: relative;
+}
+.style__navigation___jABUW {
+    display: inline-block;
 }
 .style__app___13X5q {
     transition: margin-top 0.25s ease-in-out, margin-left 0.25s ease-in-out, margin-right 0.25s ease-in-out;

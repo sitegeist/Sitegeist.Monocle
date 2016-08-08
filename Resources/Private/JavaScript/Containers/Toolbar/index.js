@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import {redux} from 'Redux/index';
 import {IconButton} from 'Components/index';
+import {Navigation, BreakpointSelector} from 'Containers/index';
 
 @connect(state => {
 	return {
@@ -45,7 +46,9 @@ export default class Toolbar extends Component {
 
 		return (
 		    <div className="neos-header" >
-		        <div className="neos-pull-right" >
+                <Navigation />
+
+                <div className="neos-pull-right" >
                     <div className="neos-button-group">
                         <IconButton type="eye-open" onClick={toggleRenderedElements} active={showRenderedElements} />
                         <IconButton type="code" onClick={toggleSourceCode} active={showSourceCode} />
@@ -53,6 +56,11 @@ export default class Toolbar extends Component {
                         <IconButton type="expand" onClick={toggleFullscreen} active={showFullScreen} />
                     </div>
                 </div>
+
+                <div className="neos-pull-right" >
+                    <BreakpointSelector />
+                </div>
+
 			</div>
         );
 	}
