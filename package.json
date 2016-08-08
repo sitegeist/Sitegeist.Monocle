@@ -48,12 +48,14 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "postcss-loader": "^0.9.1",
     "ramda": "^0.21.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.1",
-    "seamless-immutable": "^6.1.1"
+    "seamless-immutable": "^6.1.1",
+    "style-loader": "^0.13.1"
   }
 }

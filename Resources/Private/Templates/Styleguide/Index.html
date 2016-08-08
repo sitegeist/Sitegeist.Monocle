@@ -6,11 +6,11 @@
     <f:debug>{initialState}</f:debug>
     --></f:comment>
 
+    <div id="app"></div>
+<f:comment><!--
     <div class="neos-header">
 
         <f:render section="ObjectTreeMenu" arguments="{objectTree:styleguideObjectTree, node:node, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}"></f:render>
-
-		<div id="app"></div>
 
         <div class="neos-pull-right">
 
@@ -52,6 +52,7 @@
     <div class="neos-content" >
         <iframe src="{f:uri.action(action:'showPath', controller:'preview', package:'Sitegeist.Monocle', useParentRequest:1, arguments:'{path:path, showDescription:showDescription, showRenderedResult:showRenderedResult, showRenderedCode:showRenderedCode}')}" style="margin: 20px 0; width:100%; background-color: white; height:800px; overflow-y:scroll; overflow-x:auto" ></iframe>
     </div>
+    --></f:comment>
 </f:section>
 
 <f:section name="ObjectTreeMenu">

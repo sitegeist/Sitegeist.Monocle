@@ -1,0 +1,15 @@
+.style__app___13X5q {
+    transition: margin-top 0.25s ease-in-out, margin-left 0.25s ease-in-out, margin-right 0.25s ease-in-out;
+    background-color: #222;
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+}
+
+.style__isFullscreen___1_m04 {
+    margin-top: -70px !important;
+    margin-left: -30px!important;
+    margin-right: -30px!important;
+}
+
+/*# sourceMappingURL=App.css.map*/

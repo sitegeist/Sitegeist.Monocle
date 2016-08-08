@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
 import {Toolbar} from './Containers/index';
+import {App} from './Containers/index';
 
 import store, {redux} from './Redux/index';
 
@@ -12,7 +13,9 @@ const initialize = () => {
 	ReactDOM.render(
 		<div>
 			<Provider store={store}>
-				<Toolbar />
+                <App>
+				    <Toolbar />
+                </App>
 			</Provider>
 		</div>,
 		appContainer

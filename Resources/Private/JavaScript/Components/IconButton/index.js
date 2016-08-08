@@ -7,13 +7,14 @@ export default class IconButton extends Component {
 	static propTypes = {
 		type: PropTypes.string,
 		className: PropTypes.string,
-		onClick: PropTypes.func
+		onClick: PropTypes.func,
+        active: PropTypes.bool
 	};
 
 	render() {
-		const {type, className, onClick} = this.props;
+		const {type, className, onClick, active} = this.props;
 
-		return <Button className={className} onClick={() => onClick()}>
+		return <Button className={className} onClick={() => onClick()} active={active}>
 			<Icon type={type} />
 		</Button>;
 	}
