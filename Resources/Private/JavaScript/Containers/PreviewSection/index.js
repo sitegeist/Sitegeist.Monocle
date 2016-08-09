@@ -22,7 +22,7 @@ export default class PreviewSection extends Component {
         activePreset: PropTypes.string,
         availablePresets: PropTypes.object,
         path: PropTypes.string,
-        prototypes: PropTypes.object
+        prototypes: PropTypes.object,
 	};
 
     render() {

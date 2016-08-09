@@ -10,6 +10,7 @@ use TYPO3\Neos\Domain\Model\Site;
 use Sitegeist\Monocle\Helper\TypoScriptHelper;
 use Sitegeist\Monocle\Helper\ContextHelper;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
+use Sitegeist\Monocle\TypoScript\TypoScriptView;
 
 class ApiController extends ActionController
 {
@@ -45,9 +46,9 @@ class ApiController extends ActionController
 
     /**
      * @var array
-     * @Flow\InjectConfiguration("breakpoints")
+     * @Flow\InjectConfiguration("viewportPresets")
      */
-    protected $breakpointConfiguration;
+    protected $viewportPresets;
 
     /**
      * Get all styleguide objects
@@ -74,6 +75,8 @@ class ApiController extends ActionController
         }
         $this->view->assign('value', $styleguideObjects);
     }
+
+
 
     /**
      * Get all active sites
@@ -102,7 +105,29 @@ class ApiController extends ActionController
      *
      * @return void
      */
-    public function breakpointsAction() {
-        $this->view->assign('value', $this->breakpointConfiguration);
+    public function viewportPresetsAction() {
+        $this->view->assign('value', $this->viewportPresets);
+    }
+
+    /**
+     * Render the given prototype
+     *
+     * @param string $prototypeName
+     * @return void
+     */
+    public function renderPrototypeAction($prototypeName) {
+        $context = $this->contextHelper->getContext();
+        $siteNode = $context->getCurrentSiteNode();
+
+        $typoScriptView = new TypoScriptView();
+        $typoScriptView->setControllerContext($this->controllerContext);
+        $typoScriptView->setTypoScriptPath('monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName));
+        $typoScriptView->assignMultiple([
+            'value' => $siteNode
+        ]);
+
+        $renderedSourceCode = $typoScriptView->render();
+
+        $this->view->assign('value', $renderedSourceCode);
     }
 }

@@ -24,7 +24,7 @@ TYPO3:
 Sitegeist:
   Monocle:
 
-    breakpoints:
+    viewportPresets:
       xs:
         label: 'xtra small'
         width: 400

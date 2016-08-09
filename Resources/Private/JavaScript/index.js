@@ -8,6 +8,8 @@ import store, {redux} from './Redux/index';
 const initialize = () => {
 	const appContainer = document.getElementById('app');
 
+    store.dispatch(redux.Styleguide.actions.setRenderPrototypesEndpoint(appContainer.dataset.renderPrototypesEndpoint));
+
 	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST'
 	})
@@ -27,6 +29,8 @@ const initialize = () => {
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));
+
+
 
 	ReactDOM.render(
 		<div>
