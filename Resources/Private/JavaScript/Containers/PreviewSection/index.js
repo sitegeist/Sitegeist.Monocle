@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 
 import {redux} from 'Redux/index';
 
+import {PrototypeDisplay} from 'Containers/index';
+
+
 import styles from './style.css';
 
 @connect(state => {
@@ -34,17 +37,14 @@ export default class PreviewSection extends Component {
             if (prototypes.hasOwnProperty(key)) {
                 const prototype = prototypes[key];
                 if (prototype['path'].startsWith(path)) {
-                    displayPrototypes.push(prototypes[key]);
+                    displayPrototypes.push(key);
                 }
             }
         }
 
         return <div className={styles.section}>
-            <h1>Preview: {path} {activePreset} {label} {width}</h1>
             {displayPrototypes.map(item => (
-                <div>
-                    <h1>{item.title}</h1>
-                </div>
+                <PrototypeDisplay prototype={item} />
             ))}
         </div>;
     }
