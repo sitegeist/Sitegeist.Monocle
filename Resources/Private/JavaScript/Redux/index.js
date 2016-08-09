@@ -3,12 +3,14 @@ import Immutable from 'seamless-immutable';
 
 import DisplayOptions from './DisplayOptions/index';
 import ViewportOptions from './ViewportOptions/index';
+import SiteOptions from './SiteOptions/index';
+import Styleguide from './Styleguide/index';
 
 const initialState = {
-    // sites: {
-    //     active: null,
-    //     available: []
-    // },
+    siteOptions: {
+        activeSite: null,
+        availableSites: {}
+    },
     viewportOptions: {
         activePreset: null,
         availablePresets: {},
@@ -19,12 +21,11 @@ const initialState = {
         sourceCode: false,
         description: false,
         fullscreen: false
+    },
+    styleguide: {
+        path: 'atoms.basic',
+        prototypes: {}
     }
-    // ,
-    // styleguide: {
-    //     path: null,
-    //     prototypes: []
-    // }
 };
 
 // const reducer = (state, action) => [
@@ -34,16 +35,20 @@ const initialState = {
 
 const reducer = combineReducers({
     viewportOptions: ViewportOptions.reducer,
-    displayOptions: DisplayOptions.reducer
+    displayOptions: DisplayOptions.reducer,
+    siteOptions: SiteOptions.reducer,
+    styleguide: Styleguide.reducer
 });
 
 export default createStore(
     reducer,
     Immutable(initialState),
-    window.devToolsExtension ?  window.devToolsExtension() : undefined
+    window.devToolsExtension ? window.devToolsExtension() : undefined
 );
 
 export const redux = {
     DisplayOptions,
-    ViewportOptions
+    ViewportOptions,
+    SiteOptions,
+    Styleguide
 };

@@ -8,18 +8,25 @@ import store, {redux} from './Redux/index';
 const initialize = () => {
 	const appContainer = document.getElementById('app');
 
-	fetch(appContainer.dataset.endpoint, {
+	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST'
 	})
 	.then(response => response.json())
-	.then(json => console.log(json));
+	.then(json => (store.dispatch(redux.Styleguide.actions.setPrototypes(json))));
 
-    // add the available breakpoints to the current state
-    fetch(appContainer.dataset.breakpoint_endpoint, {
+    // fetch the available breakpoints to the current state
+    fetch(appContainer.dataset.viewportPresetsEndpoint, {
         method: 'POST'
     })
-    .then(response => response.json())
-    .then(json => (store.dispatch(redux.ViewportOptions.actions.setAvailablePresets(json))));
+        .then(response => response.json())
+        .then(json => (store.dispatch(redux.ViewportOptions.actions.setAvailablePresets(json))));
+
+    // fetch the available sites
+    fetch(appContainer.dataset.sitesEndpoint, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));
 
 	ReactDOM.render(
 		<div>

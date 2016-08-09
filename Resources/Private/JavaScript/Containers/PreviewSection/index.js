@@ -3,28 +3,49 @@ import {connect} from 'react-redux';
 
 import {redux} from 'Redux/index';
 
+import styles from './style.css';
+
 @connect(state => {
 	return {
         activePreset: state.viewportOptions.activePreset,
-        availablePresets: state.viewportOptions.availablePresets
+        availablePresets: state.viewportOptions.availablePresets,
+
+        path: state.styleguide.path,
+        prototypes: state.styleguide.prototypes
 	};
 })
 export default class PreviewSection extends Component {
 	static propTypes = {
-        children: PropTypes.node,
         activePreset: PropTypes.string,
-        availablePresets: PropTypes.object
+        availablePresets: PropTypes.object,
+        path: PropTypes.string,
+        prototypes: PropTypes.object
 	};
 
     render() {
-        const {children, activePreset, availablePresets} = this.props;
+        const {activePreset, availablePresets} = this.props;
+        const {path, prototypes} = this.props;
 
         const width = (availablePresets[activePreset]) ? availablePresets[activePreset]['width'] : '';
         const label = (availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : '';
 
-        return <div>
-            <h1>Preview: {activePreset} {label} {width}</h1>
-            {children}
+        const displayPrototypes = [];
+        for (var key in prototypes) {
+            if (prototypes.hasOwnProperty(key)) {
+                const prototype = prototypes[key];
+                if (prototype['path'].startsWith(path)) {
+                    displayPrototypes.push(prototypes[key]);
+                }
+            }
+        }
+
+        return <div className={styles.section}>
+            <h1>Preview: {path} {activePreset} {label} {width}</h1>
+            {displayPrototypes.map(item => (
+                <div>
+                    <h1>{item.title}</h1>
+                </div>
+            ))}
         </div>;
     }
 }

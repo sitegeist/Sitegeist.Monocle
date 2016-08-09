@@ -9,7 +9,12 @@
     position: relative;
 }
 .style__navigation___jABUW {
-    display: inline-block;
+
+}
+
+.style__item___3eW-3 {
+    float: left;
+    margin-right: 10px !important;
 }
 .style__app___13X5q {
     transition: margin-top 0.25s ease-in-out, margin-left 0.25s ease-in-out, margin-right 0.25s ease-in-out;
@@ -23,6 +28,10 @@
     margin-top: -70px !important;
     margin-left: -30px!important;
     margin-right: -30px!important;
+}
+.style__section___3weWh {
+    clear: both;
+    padding-top: 20px !important;
 }
 
 /*# sourceMappingURL=App.css.map*/

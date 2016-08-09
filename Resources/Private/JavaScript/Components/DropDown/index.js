@@ -42,7 +42,7 @@ export default class DropDown extends Component {
 	render() {
 		const {label, items, onSelectItem} = this.props;
 		const {isOpen} = this.state;
-		const classNames = mergeClassNames({
+        const classNames = mergeClassNames({
 			[style.dropDownContainer]: true,
 			'neos-open': isOpen
 		});

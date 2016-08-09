@@ -1,7 +1,7 @@
 import {createAction} from 'redux-actions';
 
-const SET_ACTIVE_PRESET = '@sitegeist/monocle-ui/Breakpoints/SET_ACTIVE_PRESET';
-const SET_AVAILABLE_PRESETS = '@sitegeist/monocle-ui/Breakpoints/SET_AVAILABLE_PRESETS';
+const SET_ACTIVE_PRESET = '@sitegeist/monocle-ui/ViewportOptions/SET_ACTIVE_PRESET';
+const SET_AVAILABLE_PRESETS = '@sitegeist/monocle-ui/ViewportOptions/SET_AVAILABLE_PRESETS';
 
 
 const actionTypes =  {
