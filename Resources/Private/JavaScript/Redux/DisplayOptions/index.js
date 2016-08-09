@@ -25,25 +25,23 @@ const actions = {
 };
 
 const reducer = (state = {}, action) => {
-    console.log(state);
 	switch(action.type)	{
 		case TOGGLE_RENDERED_ELEMENTS:
-			const {renderedElements} = state.displayOptions;
-			return state.setIn(['displayOptions', 'renderedElements'], !renderedElements);
+			const renderedElements = state.renderedElements;
+			return state.setIn(['renderedElements'], !renderedElements);
 
 		case TOGGLE_SOURCE_CODE:
-			const {sourceCode} = state.displayOptions;
-			return state.setIn(['displayOptions', 'sourceCode'], !sourceCode);
+			const sourceCode = state.sourceCode;
+			return state.setIn(['sourceCode'], !sourceCode);
 
 		case TOGGLE_DESCRIPTION:
-			const {description} = state.displayOptions;
-			return state.setIn(['displayOptions', 'description'], !description);
+			const description = state.description;
+			return state.setIn(['description'], !description);
 
 		case TOGGLE_FULLSCREEN:
-			const {fullscreen} = state.displayOptions;
-			return state.setIn(['displayOptions', 'fullscreen'], !fullscreen);
+			const fullscreen = state.fullscreen;
+			return state.setIn(['fullscreen'], !fullscreen);
 	}
-
 	return state;
 };
 

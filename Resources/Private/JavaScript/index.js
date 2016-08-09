@@ -19,9 +19,7 @@ const initialize = () => {
         method: 'POST'
     })
     .then(response => response.json())
-    .then(json => (store.dispatch(redux.Breakpoints.actions.setAvailableBreakpoints(json))));
-
-
+    .then(json => (store.dispatch(redux.ViewportOptions.actions.setAvailablePresets(json))));
 
 	ReactDOM.render(
 		<div>

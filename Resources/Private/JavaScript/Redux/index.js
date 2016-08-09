@@ -1,42 +1,49 @@
-import {createStore, compose} from 'redux';
+import {createStore, compose, combineReducers} from 'redux';
 import Immutable from 'seamless-immutable';
 
 import DisplayOptions from './DisplayOptions/index';
-import Breakpoints from './Breakpoints/index';
+import ViewportOptions from './ViewportOptions/index';
 
 const initialState = {
-    sites: {
-        active: null,
-        available: []
-    },
-    breakpoints: {
-        active: null,
-        available: []
+    // sites: {
+    //     active: null,
+    //     available: []
+    // },
+    viewportOptions: {
+        activePreset: null,
+        availablePresets: {},
+        width: null,
     },
     displayOptions: {
         renderedElements: true,
         sourceCode: false,
         description: false,
         fullscreen: false
-    },
-    styleguide: {
-        path: null,
-        prototypes: []
     }
+    // ,
+    // styleguide: {
+    //     path: null,
+    //     prototypes: []
+    // }
 };
 
-const reducer = (state, action) => [
-    DisplayOptions.reducer,
-    Breakpoints.reducer
-].reduce((state, reducer) => reducer(state, action), state);
+// const reducer = (state, action) => [
+//     ViewportOptions.reducer,
+//     DisplayOptions.reducer
+// ].reduce((state, reducer) => reducer(state, action), state);
+
+const reducer = combineReducers({
+    viewportOptions: ViewportOptions.reducer,
+    displayOptions: DisplayOptions.reducer
+});
 
 export default createStore(
     reducer,
-    Immutable(initialState)
-    //window.devToolsExtension ?  window.devToolsExtension : undefined
+    Immutable(initialState),
+    window.devToolsExtension ?  window.devToolsExtension() : undefined
 );
 
 export const redux = {
     DisplayOptions,
-    Breakpoints
+    ViewportOptions
 };

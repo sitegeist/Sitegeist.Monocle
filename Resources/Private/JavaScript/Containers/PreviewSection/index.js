@@ -5,25 +5,25 @@ import {redux} from 'Redux/index';
 
 @connect(state => {
 	return {
-        activeBreakpoint: state.breakpoints.active,
-        availableBreakpoints: state.breakpoints.available
+        activePreset: state.viewportOptions.activePreset,
+        availablePresets: state.viewportOptions.availablePresets
 	};
 })
 export default class PreviewSection extends Component {
 	static propTypes = {
         children: PropTypes.node,
-        activeBreakpoint: PropTypes.string,
-        availableBreakpoints: PropTypes.object
+        activePreset: PropTypes.string,
+        availablePresets: PropTypes.object
 	};
 
     render() {
-        const {children, activeBreakpoint, availableBreakpoints} = this.props;
+        const {children, activePreset, availablePresets} = this.props;
 
-        const width = (availableBreakpoints[activeBreakpoint]) ? availableBreakpoints[activeBreakpoint]['width'] : '';
-        const label = (availableBreakpoints[activeBreakpoint]) ? availableBreakpoints[activeBreakpoint]['label'] : '';
+        const width = (availablePresets[activePreset]) ? availablePresets[activePreset]['width'] : '';
+        const label = (availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : '';
 
         return <div>
-            <h1>Preview: {activeBreakpoint} {label} {width}</h1>
+            <h1>Preview: {activePreset} {label} {width}</h1>
             {children}
         </div>;
     }

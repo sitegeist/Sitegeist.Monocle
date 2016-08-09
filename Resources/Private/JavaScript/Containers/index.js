@@ -1,7 +1,8 @@
 import Navigation from './Navigation/index';
 import Toolbar from './Toolbar/index';
 import App from './App/index';
-import BreakpointSelector from './BreakpointSelector/index'
+import ViewportOptions from './ViewportOptions/index'
+import DisplayOptions from './DisplayOptions/index'
 import PreviewSection from './PreviewSection/index'
 
 export {
@@ -9,5 +10,6 @@ export {
     App,
 	Navigation,
     PreviewSection,
-    BreakpointSelector
+    ViewportOptions,
+    DisplayOptions,
 };

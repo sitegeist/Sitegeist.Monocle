@@ -81,7 +81,7 @@
 		}).then(function (response) {
 			return response.json();
 		}).then(function (json) {
-			return _index3.default.dispatch(_index2.redux.Breakpoints.actions.setAvailableBreakpoints(json));
+			return _index3.default.dispatch(_index2.redux.ViewportOptions.actions.setAvailablePresets(json));
 		});
 	
 		_reactDom2.default.render(_react2.default.createElement(
@@ -2762,45 +2762,49 @@
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _index3 = __webpack_require__(115);
+	var _index3 = __webpack_require__(234);
 	
 	var _index4 = _interopRequireDefault(_index3);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-	    sites: {
-	        active: null,
-	        available: []
-	    },
-	    breakpoints: {
-	        active: null,
-	        available: []
+	    // sites: {
+	    //     active: null,
+	    //     available: []
+	    // },
+	    viewportOptions: {
+	        activePreset: null,
+	        availablePresets: {},
+	        width: null
 	    },
 	    displayOptions: {
 	        renderedElements: true,
 	        sourceCode: false,
 	        description: false,
 	        fullscreen: false
-	    },
-	    styleguide: {
-	        path: null,
-	        prototypes: []
 	    }
+	    // ,
+	    // styleguide: {
+	    //     path: null,
+	    //     prototypes: []
+	    // }
 	};
 	
-	var reducer = function reducer(state, action) {
-	    return [_index2.default.reducer, _index4.default.reducer].reduce(function (state, reducer) {
-	        return reducer(state, action);
-	    }, state);
-	};
+	// const reducer = (state, action) => [
+	//     ViewportOptions.reducer,
+	//     DisplayOptions.reducer
+	// ].reduce((state, reducer) => reducer(state, action), state);
 	
-	exports.default = (0, _redux.createStore)(reducer, (0, _seamlessImmutable2.default)(initialState)
-	//window.devToolsExtension ?  window.devToolsExtension : undefined
-	);
+	var reducer = (0, _redux.combineReducers)({
+	    viewportOptions: _index4.default.reducer,
+	    displayOptions: _index2.default.reducer
+	});
+	
+	exports.default = (0, _redux.createStore)(reducer, (0, _seamlessImmutable2.default)(initialState), window.devToolsExtension ? window.devToolsExtension() : undefined);
 	var redux = exports.redux = {
 	    DisplayOptions: _index2.default,
-	    Breakpoints: _index4.default
+	    ViewportOptions: _index4.default
 	};
 
 /***/ },
@@ -7235,7 +7239,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	   value: true
 	});
-	exports.BreakpointSelector = exports.PreviewSection = exports.Navigation = exports.App = exports.Toolbar = undefined;
+	exports.DisplayOptions = exports.ViewportOptions = exports.PreviewSection = exports.Navigation = exports.App = exports.Toolbar = undefined;
 	
 	var _index = __webpack_require__(112);
 	
@@ -7249,21 +7253,26 @@
 	
 	var _index6 = _interopRequireDefault(_index5);
 	
-	var _index7 = __webpack_require__(111);
+	var _index7 = __webpack_require__(232);
 	
 	var _index8 = _interopRequireDefault(_index7);
 	
-	var _index9 = __webpack_require__(113);
+	var _index9 = __webpack_require__(233);
 	
 	var _index10 = _interopRequireDefault(_index9);
+	
+	var _index11 = __webpack_require__(113);
+	
+	var _index12 = _interopRequireDefault(_index11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.Toolbar = _index4.default;
 	exports.App = _index6.default;
 	exports.Navigation = _index2.default;
-	exports.PreviewSection = _index10.default;
-	exports.BreakpointSelector = _index8.default;
+	exports.PreviewSection = _index12.default;
+	exports.ViewportOptions = _index8.default;
+	exports.DisplayOptions = _index10.default;
 
 /***/ },
 /* 67 */
@@ -12414,89 +12423,7 @@
 	exports.default = App;
 
 /***/ },
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _dec, _class, _class2, _temp;
-	
-	var _react = __webpack_require__(8);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(23);
-	
-	var _index = __webpack_require__(22);
-	
-	var _index2 = __webpack_require__(41);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BreakpointSelector = (_dec = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        activeBreakpoint: state.breakpoints.active,
-	        availableBreakpoints: state.breakpoints.available
-	    };
-	}, {
-	    setActiveBreakpoint: _index.redux.Breakpoints.actions.setActiveBreakpoint
-	}), _dec(_class = (_temp = _class2 = function (_Component) {
-	    _inherits(BreakpointSelector, _Component);
-	
-	    function BreakpointSelector() {
-	        _classCallCheck(this, BreakpointSelector);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BreakpointSelector).apply(this, arguments));
-	    }
-	
-	    _createClass(BreakpointSelector, [{
-	        key: 'render',
-	        value: function render() {
-	            var _props = this.props;
-	            var activeBreakpoint = _props.activeBreakpoint;
-	            var availableBreakpoints = _props.availableBreakpoints;
-	            var setActiveBreakpoint = _props.setActiveBreakpoint;
-	
-	            // available items
-	
-	            var items = [];
-	            for (var key in availableBreakpoints) {
-	                if (availableBreakpoints.hasOwnProperty(key)) {
-	                    items.push({ key: key, label: availableBreakpoints[key]['label'] });
-	                }
-	            }
-	
-	            // active label
-	            var label = availableBreakpoints[activeBreakpoint] ? availableBreakpoints[activeBreakpoint]['label'] : '--';
-	
-	            console.log(items);
-	
-	            return _react2.default.createElement(_index2.DropDown, { label: label, items: items, onSelectItem: setActiveBreakpoint });
-	        }
-	    }]);
-	
-	    return BreakpointSelector;
-	}(_react.Component), _class2.propTypes = {
-	    activeBreakpoint: _react.PropTypes.string.isRequired,
-	    availableBreakpoints: _react.PropTypes.object.isRequired,
-	    setActiveBreakpoint: _react.PropTypes.func.isRequired
-	}, _temp)) || _class);
-	exports.default = BreakpointSelector;
-
-/***/ },
+/* 111 */,
 /* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -12585,8 +12512,8 @@
 	
 	var PreviewSection = (_dec = (0, _reactRedux.connect)(function (state) {
 	    return {
-	        activeBreakpoint: state.breakpoints.active,
-	        availableBreakpoints: state.breakpoints.available
+	        activePreset: state.viewportOptions.activePreset,
+	        availablePresets: state.viewportOptions.availablePresets
 	    };
 	}), _dec(_class = (_temp = _class2 = function (_Component) {
 	    _inherits(PreviewSection, _Component);
@@ -12602,12 +12529,12 @@
 	        value: function render() {
 	            var _props = this.props;
 	            var children = _props.children;
-	            var activeBreakpoint = _props.activeBreakpoint;
-	            var availableBreakpoints = _props.availableBreakpoints;
+	            var activePreset = _props.activePreset;
+	            var availablePresets = _props.availablePresets;
 	
 	
-	            var width = availableBreakpoints[activeBreakpoint] ? availableBreakpoints[activeBreakpoint]['width'] : '';
-	            var label = availableBreakpoints[activeBreakpoint] ? availableBreakpoints[activeBreakpoint]['label'] : '';
+	            var width = availablePresets[activePreset] ? availablePresets[activePreset]['width'] : '';
+	            var label = availablePresets[activePreset] ? availablePresets[activePreset]['label'] : '';
 	
 	            return _react2.default.createElement(
 	                'div',
@@ -12616,7 +12543,7 @@
 	                    'h1',
 	                    null,
 	                    'Preview: ',
-	                    activeBreakpoint,
+	                    activePreset,
 	                    ' ',
 	                    label,
 	                    ' ',
@@ -12630,8 +12557,8 @@
 	    return PreviewSection;
 	}(_react.Component), _class2.propTypes = {
 	    children: _react.PropTypes.node,
-	    activeBreakpoint: _react.PropTypes.string,
-	    availableBreakpoints: _react.PropTypes.object
+	    activePreset: _react.PropTypes.string,
+	    availablePresets: _react.PropTypes.object
 	}, _temp)) || _class);
 	exports.default = PreviewSection;
 
@@ -12647,8 +12574,6 @@
 	exports.default = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _dec, _class, _class2, _temp;
 	
 	var _react = __webpack_require__(8);
 	
@@ -12672,19 +12597,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Toolbar = (_dec = (0, _reactRedux.connect)(function (state) {
-	    return {
-	        showRenderedElements: state.displayOptions.renderedElements,
-	        showSourceCode: state.displayOptions.sourceCode,
-	        showDescription: state.displayOptions.description,
-	        showFullScreen: state.displayOptions.fullscreen
-	    };
-	}, {
-	    toggleRenderedElements: _index.redux.DisplayOptions.actions.toggleRenderedElements,
-	    toggleSourceCode: _index.redux.DisplayOptions.actions.toggleSourceCode,
-	    toggleDescription: _index.redux.DisplayOptions.actions.toggleDescription,
-	    toggleFullscreen: _index.redux.DisplayOptions.actions.toggleFullscreen
-	}), _dec(_class = (_temp = _class2 = function (_Component) {
+	var Toolbar = function (_Component) {
 	    _inherits(Toolbar, _Component);
 	
 	    function Toolbar() {
@@ -12696,17 +12609,6 @@
 	    _createClass(Toolbar, [{
 	        key: 'render',
 	        value: function render() {
-	            var _props = this.props;
-	            var showRenderedElements = _props.showRenderedElements;
-	            var showSourceCode = _props.showSourceCode;
-	            var showDescription = _props.showDescription;
-	            var showFullScreen = _props.showFullScreen;
-	            var toggleRenderedElements = _props.toggleRenderedElements;
-	            var toggleSourceCode = _props.toggleSourceCode;
-	            var toggleDescription = _props.toggleDescription;
-	            var toggleFullscreen = _props.toggleFullscreen;
-	
-	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'neos-header' },
@@ -12714,89 +12616,24 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'neos-pull-right' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'neos-button-group' },
-	                        _react2.default.createElement(_index2.IconButton, { type: 'eye-open', onClick: toggleRenderedElements, active: showRenderedElements }),
-	                        _react2.default.createElement(_index2.IconButton, { type: 'code', onClick: toggleSourceCode, active: showSourceCode }),
-	                        _react2.default.createElement(_index2.IconButton, { type: 'file-text', onClick: toggleDescription, active: showDescription }),
-	                        _react2.default.createElement(_index2.IconButton, { type: 'expand', onClick: toggleFullscreen, active: showFullScreen })
-	                    )
+	                    _react2.default.createElement(_index3.DisplayOptions, null)
 	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'neos-pull-right' },
-	                    _react2.default.createElement(_index3.BreakpointSelector, null)
+	                    _react2.default.createElement(_index3.ViewportOptions, null)
 	                )
 	            );
 	        }
 	    }]);
 	
 	    return Toolbar;
-	}(_react.Component), _class2.propTypes = {
-	    showRenderedElements: _react.PropTypes.bool.isRequired,
-	    showSourceCode: _react.PropTypes.bool.isRequired,
-	    showDescription: _react.PropTypes.bool.isRequired,
-	    showFullScreen: _react.PropTypes.bool.isRequired,
+	}(_react.Component);
 	
-	    toggleRenderedElements: _react.PropTypes.func.isRequired,
-	    toggleSourceCode: _react.PropTypes.func.isRequired,
-	    toggleDescription: _react.PropTypes.func.isRequired,
-	    toggleFullscreen: _react.PropTypes.func.isRequired
-	}, _temp)) || _class);
 	exports.default = Toolbar;
 
 /***/ },
-/* 115 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _reduxActions = __webpack_require__(102);
-	
-	var SET_ACTIVE_BREAKPOINT = '@sitegeist/monocle-ui/Breakpoints/SET_ACTIVE_BREAKPOINT';
-	var SET_AVAILABLE_BREAKPOINTS = '@sitegeist/monocle-ui/Breakpoints/SET_AVAILABLE_BREAKPOINTS';
-	
-	var actionTypes = {
-		SET_ACTIVE_BREAKPOINT: SET_ACTIVE_BREAKPOINT,
-		SET_AVAILABLE_BREAKPOINTS: SET_AVAILABLE_BREAKPOINTS
-	};
-	
-	var setActiveBreakpoint = (0, _reduxActions.createAction)(SET_ACTIVE_BREAKPOINT, function (activeBreakpoint) {
-		return activeBreakpoint;
-	});
-	var setAvailableBreakpoints = (0, _reduxActions.createAction)(SET_AVAILABLE_BREAKPOINTS, function (availableBreakpoints) {
-		return availableBreakpoints;
-	});
-	
-	var actions = {
-		setActiveBreakpoint: setActiveBreakpoint,
-		setAvailableBreakpoints: setAvailableBreakpoints
-	};
-	
-	var reducer = function reducer(state, action) {
-		switch (action.type) {
-			case SET_ACTIVE_BREAKPOINT:
-				return state.setIn(['breakpoints', 'active'], action.payload);
-			case SET_AVAILABLE_BREAKPOINTS:
-				console.log([state, action]);
-				return state.setIn(['breakpoints', 'available'], action.payload);
-		}
-	
-		return state;
-	};
-	
-	exports.default = {
-		actionTypes: actionTypes,
-		actions: actions,
-		reducer: reducer
-	};
-
-/***/ },
+/* 115 */,
 /* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -12836,29 +12673,23 @@
 		var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 		var action = arguments[1];
 	
-		console.log(state);
 		switch (action.type) {
 			case TOGGLE_RENDERED_ELEMENTS:
-				var renderedElements = state.displayOptions.renderedElements;
-	
-				return state.setIn(['displayOptions', 'renderedElements'], !renderedElements);
+				var renderedElements = state.renderedElements;
+				return state.setIn(['renderedElements'], !renderedElements);
 	
 			case TOGGLE_SOURCE_CODE:
-				var sourceCode = state.displayOptions.sourceCode;
-	
-				return state.setIn(['displayOptions', 'sourceCode'], !sourceCode);
+				var sourceCode = state.sourceCode;
+				return state.setIn(['sourceCode'], !sourceCode);
 	
 			case TOGGLE_DESCRIPTION:
-				var description = state.displayOptions.description;
-	
-				return state.setIn(['displayOptions', 'description'], !description);
+				var description = state.description;
+				return state.setIn(['description'], !description);
 	
 			case TOGGLE_FULLSCREEN:
-				var fullscreen = state.displayOptions.fullscreen;
-	
-				return state.setIn(['displayOptions', 'fullscreen'], !fullscreen);
+				var fullscreen = state.fullscreen;
+				return state.setIn(['fullscreen'], !fullscreen);
 		}
-	
 		return state;
 	};
 	
@@ -25306,6 +25137,236 @@
 			module.webpackPolyfill = 1;
 		}
 		return module;
+	};
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _dec, _class, _class2, _temp;
+	
+	var _react = __webpack_require__(8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(23);
+	
+	var _index = __webpack_require__(22);
+	
+	var _index2 = __webpack_require__(41);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ViewportOptions = (_dec = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        activePreset: state.viewportOptions.activePreset,
+	        availablePresets: state.viewportOptions.availablePresets
+	    };
+	}, {
+	    setActivePreset: _index.redux.ViewportOptions.actions.setActivePreset
+	}), _dec(_class = (_temp = _class2 = function (_Component) {
+	    _inherits(ViewportOptions, _Component);
+	
+	    function ViewportOptions() {
+	        _classCallCheck(this, ViewportOptions);
+	
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(ViewportOptions).apply(this, arguments));
+	    }
+	
+	    _createClass(ViewportOptions, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var activePreset = _props.activePreset;
+	            var availablePresets = _props.availablePresets;
+	            var setActivePreset = _props.setActivePreset;
+	
+	            // available items
+	
+	            var presetOptions = [{ key: null, label: '--' }];
+	            for (var key in availablePresets) {
+	                if (availablePresets.hasOwnProperty(key)) {
+	                    presetOptions.push({ key: key, label: availablePresets[key]['label'] });
+	                }
+	            }
+	            // active label
+	            var presetLabel = activePreset && availablePresets[activePreset] ? availablePresets[activePreset]['label'] : '--';
+	
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_index2.DropDown, { label: presetLabel, items: presetOptions, onSelectItem: setActivePreset })
+	            );
+	        }
+	    }]);
+	
+	    return ViewportOptions;
+	}(_react.Component), _class2.propTypes = {
+	    activePreset: _react.PropTypes.string,
+	    availablePresets: _react.PropTypes.object.isRequired,
+	    setActivePreset: _react.PropTypes.func.isRequired
+	}, _temp)) || _class);
+	exports.default = ViewportOptions;
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _dec, _class, _class2, _temp;
+	
+	var _react = __webpack_require__(8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _redux = __webpack_require__(65);
+	
+	var _reactRedux = __webpack_require__(23);
+	
+	var _index = __webpack_require__(22);
+	
+	var _index2 = __webpack_require__(41);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var DisplayOptions = (_dec = (0, _reactRedux.connect)(function (state) {
+	  return {
+	    showRenderedElements: state.displayOptions.renderedElements,
+	    showSourceCode: state.displayOptions.sourceCode,
+	    showDescription: state.displayOptions.description,
+	    showFullScreen: state.displayOptions.fullscreen
+	  };
+	}, {
+	  toggleRenderedElements: _index.redux.DisplayOptions.actions.toggleRenderedElements,
+	  toggleSourceCode: _index.redux.DisplayOptions.actions.toggleSourceCode,
+	  toggleDescription: _index.redux.DisplayOptions.actions.toggleDescription,
+	  toggleFullscreen: _index.redux.DisplayOptions.actions.toggleFullscreen
+	}), _dec(_class = (_temp = _class2 = function (_Component) {
+	  _inherits(DisplayOptions, _Component);
+	
+	  function DisplayOptions() {
+	    _classCallCheck(this, DisplayOptions);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayOptions).apply(this, arguments));
+	  }
+	
+	  _createClass(DisplayOptions, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var showRenderedElements = _props.showRenderedElements;
+	      var showSourceCode = _props.showSourceCode;
+	      var showDescription = _props.showDescription;
+	      var showFullScreen = _props.showFullScreen;
+	      var toggleRenderedElements = _props.toggleRenderedElements;
+	      var toggleSourceCode = _props.toggleSourceCode;
+	      var toggleDescription = _props.toggleDescription;
+	      var toggleFullscreen = _props.toggleFullscreen;
+	
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'neos-button-group' },
+	        _react2.default.createElement(_index2.IconButton, { type: 'eye-open', onClick: toggleRenderedElements, active: showRenderedElements }),
+	        _react2.default.createElement(_index2.IconButton, { type: 'code', onClick: toggleSourceCode, active: showSourceCode }),
+	        _react2.default.createElement(_index2.IconButton, { type: 'file-text', onClick: toggleDescription, active: showDescription }),
+	        _react2.default.createElement(_index2.IconButton, { type: 'expand', onClick: toggleFullscreen, active: showFullScreen })
+	      );
+	    }
+	  }]);
+	
+	  return DisplayOptions;
+	}(_react.Component), _class2.propTypes = {
+	  showRenderedElements: _react.PropTypes.bool.isRequired,
+	  showSourceCode: _react.PropTypes.bool.isRequired,
+	  showDescription: _react.PropTypes.bool.isRequired,
+	  showFullScreen: _react.PropTypes.bool.isRequired,
+	
+	  toggleRenderedElements: _react.PropTypes.func.isRequired,
+	  toggleSourceCode: _react.PropTypes.func.isRequired,
+	  toggleDescription: _react.PropTypes.func.isRequired,
+	  toggleFullscreen: _react.PropTypes.func.isRequired
+	}, _temp)) || _class);
+	exports.default = DisplayOptions;
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _reduxActions = __webpack_require__(102);
+	
+	var SET_ACTIVE_PRESET = '@sitegeist/monocle-ui/Breakpoints/SET_ACTIVE_PRESET';
+	var SET_AVAILABLE_PRESETS = '@sitegeist/monocle-ui/Breakpoints/SET_AVAILABLE_PRESETS';
+	
+	var actionTypes = {
+		SET_ACTIVE_PRESET: SET_ACTIVE_PRESET,
+		SET_AVAILABLE_PRESETS: SET_AVAILABLE_PRESETS
+	};
+	
+	var setActivePreset = (0, _reduxActions.createAction)(SET_ACTIVE_PRESET, function (activePreset) {
+		return activePreset;
+	});
+	var setAvailablePresets = (0, _reduxActions.createAction)(SET_AVAILABLE_PRESETS, function (availablePresets) {
+		return availablePresets;
+	});
+	
+	var actions = {
+		setActivePreset: setActivePreset,
+		setAvailablePresets: setAvailablePresets
+	};
+	
+	var reducer = function reducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+		var action = arguments[1];
+	
+		switch (action.type) {
+			case SET_ACTIVE_PRESET:
+				return state.setIn(['activePreset'], action.payload);
+			case SET_AVAILABLE_PRESETS:
+				return state.setIn(['availablePresets'], action.payload);
+		}
+		return state;
+	};
+	
+	exports.default = {
+		actionTypes: actionTypes,
+		actions: actions,
+		reducer: reducer
 	};
 
 /***/ }
