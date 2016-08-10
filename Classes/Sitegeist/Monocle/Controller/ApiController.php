@@ -4,6 +4,8 @@ namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
+use TYPO3\Flow\Resource\ResourceManager;
+
 use TYPO3\Neos\Domain\Repository\SiteRepository;
 use TYPO3\Neos\Domain\Model\Site;
 
@@ -45,10 +47,22 @@ class ApiController extends ActionController
     protected $siteRepository;
 
     /**
+     * @Flow\Inject
+     * @var ResourceManager
+     */
+    protected $resourceManager;
+
+    /**
      * @var array
      * @Flow\InjectConfiguration("viewportPresets")
      */
     protected $viewportPresets;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.additionalResources")
+     */
+    protected $additionalResources;
 
     /**
      * Get all styleguide objects
@@ -76,7 +90,34 @@ class ApiController extends ActionController
         $this->view->assign('value', $styleguideObjects);
     }
 
+    /**
+     * Get all the configured resources
+     */
+    public function styleguideResourcesAction() {
+        $styleSheets = $this->additionalResources['styleSheets'];
+        $javaScripts = $this->additionalResources['javaScripts'];
 
+        $result = [
+            'styleSheets' => [],
+            'javaScripts' => []
+        ];
+
+        foreach ($styleSheets as $styleSheetPath) {
+            $resolvedPath = $this->resolveResourcePathes($styleSheetPath);
+            if ($resolvedPath) {
+                $result['styleSheets'][] = $resolvedPath;
+            }
+        }
+
+        foreach ($javaScripts as $javaScriptPath) {
+            $resolvedPath = $this->resolveResourcePathes($javaScriptPath);
+            if ($resolvedPath) {
+                $result['javaScripts'][] = $resolvedPath;
+            }
+        }
+
+        $this->view->assign('value', $result);
+    }
 
     /**
      * Get all active sites
@@ -126,8 +167,22 @@ class ApiController extends ActionController
             'value' => $siteNode
         ]);
 
-        $renderedSourceCode = $typoScriptView->render();
+        $result = [
+            'prototypeName' => $prototypeName,
+            'renderedHtml' =>  $typoScriptView->render()
+        ];
 
-        $this->view->assign('value', $renderedSourceCode);
+        $this->view->assign('value', $result);
+    }
+
+    protected function resolveResourcePathes($path) {
+        if (strpos($path, 'resource://') === 0) {
+            try {
+                list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
+                return $this->resourceManager->getPublicPackageResourceUri($package, $path);
+            } catch (Exception $exception) {
+            }
+        }
+        return $path;
     }
 }

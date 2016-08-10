@@ -13,8 +13,15 @@ const initialize = () => {
 	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST'
 	})
-	.then(response => response.json())
-	.then(json => (store.dispatch(redux.Styleguide.actions.setPrototypes(json))));
+        .then(response => response.json())
+        .then(json => (store.dispatch(redux.Styleguide.actions.setPrototypes(json))));
+
+    // fetch the available sites
+    fetch(appContainer.dataset.resourcesEndpoint, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(json => (store.dispatch(redux.Styleguide.actions.setResources(json))));
 
     // fetch the available breakpoints to the current state
     fetch(appContainer.dataset.viewportPresetsEndpoint, {
@@ -29,8 +36,6 @@ const initialize = () => {
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));
-
-
 
 	ReactDOM.render(
 		<div>

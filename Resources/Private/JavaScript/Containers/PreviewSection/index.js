@@ -44,7 +44,7 @@ export default class PreviewSection extends Component {
 
         return <div className={styles.section}>
             {displayPrototypes.map(item => (
-                <PrototypeDisplay prototype={item} />
+                <PrototypeDisplay prototypeName={item} />
             ))}
         </div>;
     }
