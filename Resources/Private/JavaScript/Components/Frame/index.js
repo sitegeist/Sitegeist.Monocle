@@ -9,13 +9,23 @@ export default class Frame extends Component {
         javaScripts: PropTypes.array
     };
 
+    state = {
+        style: {
+            height: null
+        }
+    }
+
     render() {
         const {className, style} = this.props;
-        return (<iframe ref='iframe' className={className} style={style}/>);
+        const localStyle = this.state.style;
+        const mergedStyles = Object.assign({},style,localStyle);
+        return (<iframe ref='iframe' className={className} style={mergedStyles}/>);
     }
 
     componentDidMount () {
         const {iframe} = this.refs;
+
+        const frameWindow = iframe.contentWindow || iframe;
         const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
 
         if (frameDocument && frameDocument.readyState === 'complete') {
@@ -31,6 +41,12 @@ export default class Frame extends Component {
                 }
             });
         }
+
+        if (frameDocument.fonts) {
+            frameDocument.fonts.onloadingdone = () => (this.resizeFrame());
+        }
+
+        frameWindow.addEventListener('resize', () => (this.resizeFrame()));
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -52,6 +68,21 @@ export default class Frame extends Component {
     initializeFrame() {
         this._isMounted = true;
         this.renderFrame();
+        setTimeout(this.resizeFrame, 5);
+    }
+
+    resizeFrame() {
+        if (!this._isMounted) {
+            return;
+        }
+
+        const {iframe} = this.refs;
+        const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+        const container = frameDocument.getElementById('iframe_content_container');
+        const height = container.clientHeight;
+
+        this.setState(Object.assign({}, this.state, {style: {height: '' + height + 'px'}}));
     }
 
     renderFrame() {
@@ -106,6 +137,11 @@ export default class Frame extends Component {
         const {content} = this.props;
 
         const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-        frameDocument.body.innerHTML = content;
+
+        const container = frameDocument.createElement('div');
+        container.setAttribute('id', 'iframe_content_container');
+        container.innerHTML = content;
+
+        frameDocument.body.appendChild(container);
     }
 }

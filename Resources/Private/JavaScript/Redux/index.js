@@ -23,7 +23,7 @@ const initialState = {
         fullscreen: false
     },
     styleguide: {
-        path: 'atoms.basic',
+        path: 'atoms',
         renderPrototypesEndpoint: null,
         prototypes: {},
         resources: {}

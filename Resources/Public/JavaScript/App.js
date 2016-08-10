@@ -67,7 +67,9 @@
 	var initialize = function initialize() {
 	    var appContainer = document.getElementById('app');
 	
+	    // set defaults from data
 	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setRenderPrototypesEndpoint(appContainer.dataset.renderPrototypesEndpoint));
+	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setPath(appContainer.dataset.defaultPath));
 	
 	    fetch(appContainer.dataset.prototypesEndpoint, {
 	        method: 'POST'
@@ -2131,7 +2133,7 @@
 	        fullscreen: false
 	    },
 	    styleguide: {
-	        path: 'atoms.basic',
+	        path: 'atoms',
 	        renderPrototypesEndpoint: null,
 	        prototypes: {},
 	        resources: {}
@@ -12324,7 +12326,7 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _class, _temp;
+	var _class, _temp2;
 	
 	var _react = __webpack_require__(8);
 	
@@ -12338,13 +12340,25 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Frame = (_temp = _class = function (_Component) {
+	var Frame = (_temp2 = _class = function (_Component) {
 	    _inherits(Frame, _Component);
 	
 	    function Frame() {
+	        var _Object$getPrototypeO;
+	
+	        var _temp, _this, _ret;
+	
 	        _classCallCheck(this, Frame);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Frame).apply(this, arguments));
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Frame)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+	            style: {
+	                height: null
+	            }
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Frame, [{
@@ -12354,7 +12368,9 @@
 	            var className = _props.className;
 	            var style = _props.style;
 	
-	            return _react2.default.createElement('iframe', { ref: 'iframe', className: className, style: style });
+	            var localStyle = this.state.style;
+	            var mergedStyles = Object.assign({}, style, localStyle);
+	            return _react2.default.createElement('iframe', { ref: 'iframe', className: className, style: mergedStyles });
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -12363,6 +12379,8 @@
 	
 	            var iframe = this.refs.iframe;
 	
+	
+	            var frameWindow = iframe.contentWindow || iframe;
 	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
 	
 	            if (frameDocument && frameDocument.readyState === 'complete') {
@@ -12380,6 +12398,16 @@
 	                    }
 	                });
 	            }
+	
+	            if (frameDocument.fonts) {
+	                frameDocument.fonts.onloadingdone = function () {
+	                    return _this2.resizeFrame();
+	                };
+	            }
+	
+	            frameWindow.addEventListener('resize', function () {
+	                return _this2.resizeFrame();
+	            });
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
@@ -12407,6 +12435,23 @@
 	        value: function initializeFrame() {
 	            this._isMounted = true;
 	            this.renderFrame();
+	            setTimeout(this.resizeFrame, 5);
+	        }
+	    }, {
+	        key: 'resizeFrame',
+	        value: function resizeFrame() {
+	            if (!this._isMounted) {
+	                return;
+	            }
+	
+	            var iframe = this.refs.iframe;
+	
+	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
+	
+	            var container = frameDocument.getElementById('iframe_content_container');
+	            var height = container.clientHeight;
+	
+	            this.setState(Object.assign({}, this.state, { style: { height: '' + height + 'px' } }));
 	        }
 	    }, {
 	        key: 'renderFrame',
@@ -12471,7 +12516,12 @@
 	
 	
 	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-	            frameDocument.body.innerHTML = content;
+	
+	            var container = frameDocument.createElement('div');
+	            container.setAttribute('id', 'iframe_content_container');
+	            container.innerHTML = content;
+	
+	            frameDocument.body.appendChild(container);
 	        }
 	    }]);
 	
@@ -12482,7 +12532,7 @@
 	    content: _react.PropTypes.string,
 	    styleSheets: _react.PropTypes.array,
 	    javaScripts: _react.PropTypes.array
-	}, _temp);
+	}, _temp2);
 	exports.default = Frame;
 
 /***/ },

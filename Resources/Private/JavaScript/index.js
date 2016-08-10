@@ -8,7 +8,9 @@ import store, {redux} from './Redux/index';
 const initialize = () => {
 	const appContainer = document.getElementById('app');
 
+    // set defaults from data
     store.dispatch(redux.Styleguide.actions.setRenderPrototypesEndpoint(appContainer.dataset.renderPrototypesEndpoint));
+    store.dispatch(redux.Styleguide.actions.setPath(appContainer.dataset.defaultPath));
 
 	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST'

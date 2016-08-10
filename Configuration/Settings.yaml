@@ -36,7 +36,7 @@ Sitegeist:
         width: 800
 
     preview:
-      defaultPath: 'atoms'
+      defaultPath: 'atoms.basic'
       additionalResources:
         styleSheets:
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'
