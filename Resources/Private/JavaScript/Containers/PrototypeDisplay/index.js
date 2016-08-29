@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 
-import {Frame} from 'Components/index';
+import {Frame,Code} from 'Components/index';
 
 import styles from './style.css';
 
@@ -57,7 +57,7 @@ export default class PrototypeDisplay extends Component {
         return <div className={styles.prototype}>
             <h1 className={styles.headline}>{currentPrototype['title']} - prototype({prototypeName})</h1>
             { (showRenderedElements && this.state.isRendered) ? <Frame style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
-            { (showSourceCode && this.state.isRendered) ? <pre><code dangerouslySetInnerHTML={{__html: '<![CDATA[' + this.state.renderedHtml + ']]>'}} /></pre> : '' }
+            { (showSourceCode && this.state.isRendered) ? <Code content={this.state.renderedHtml}  language="html" /> : '' }
             { showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
         </div>;
     }
