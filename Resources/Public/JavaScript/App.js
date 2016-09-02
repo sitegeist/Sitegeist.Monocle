@@ -14281,6 +14281,8 @@
 	    _createClass(PrototypeDisplay, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var _props = this.props;
 	            var prototypeName = _props.prototypeName;
 	            var prototypes = _props.prototypes;
@@ -14314,7 +14316,9 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: _style2.default.handles },
-	                        _react2.default.createElement(_index2.IconButton, { type: 'refresh', className: _style2.default.handle }),
+	                        _react2.default.createElement(_index2.IconButton, { type: 'refresh', className: _style2.default.handle, onClick: function onClick() {
+	                                return _this2.fetchPrototype();
+	                            } }),
 	                        _react2.default.createElement(_index2.IconButton, { type: 'external-link', className: _style2.default.handle })
 	                    )
 	                ),
@@ -14347,7 +14351,7 @@
 	    }, {
 	        key: 'fetchPrototype',
 	        value: function fetchPrototype() {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            var _props2 = this.props;
 	            var prototypeName = _props2.prototypeName;
@@ -14361,7 +14365,7 @@
 	            }).then(function (response) {
 	                return response.json();
 	            }).then(function (json) {
-	                return _this2.setState({ isRendered: true, renderedHtml: json.renderedHtml });
+	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml });
 	            });
 	        }
 	    }]);

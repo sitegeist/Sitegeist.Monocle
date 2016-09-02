@@ -60,7 +60,7 @@ export default class PrototypeDisplay extends Component {
 				<small className={styles.subheadline}>prototype({prototypeName})</small>
 
 				<div className={styles.handles}>
-					<IconButton type="refresh" className={styles.handle} />
+					<IconButton type="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
 					<IconButton type="external-link"  className={styles.handle} />
 				</div>
 			</h1>
