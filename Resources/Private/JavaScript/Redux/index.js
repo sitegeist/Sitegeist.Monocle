@@ -19,7 +19,7 @@ const initialState = {
     displayOptions: {
         renderedElements: true,
         sourceCode: false,
-        description: false,
+        description: true,
         fullscreen: false
     },
     styleguide: {

@@ -4,16 +4,14 @@ export default class Frame extends Component {
     static propTypes = {
         style: PropTypes.string,
         className: PropTypes.string,
-        content: PropTypes.string,
-        styleSheets: PropTypes.array,
-        javaScripts: PropTypes.array
+        content: PropTypes.string
     };
 
     state = {
         style: {
             height: null
         }
-    }
+    };
 
     render() {
         const {className, style} = this.props;
@@ -81,47 +79,7 @@ export default class Frame extends Component {
         if (!this._isMounted) {
             return;
         }
-        //this.renderFrameStyleSheets();
-        //this.renderFrameJavaScripts()
         this.renderFrameContents();
-    }
-
-    renderFrameStyleSheets() {
-        const {iframe} = this.refs;
-        const {styleSheets} = this.props;
-
-        const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-        const styles = [].slice.call(frameDocument.head.querySelectorAll('link'));
-        styles.map(link => (link.parentNode.removeChild(link)));
-
-
-        if (styleSheets && styleSheets.length) {
-            styleSheets.map( styleSheet => {
-                const link = document.createElement('link');
-                link.setAttribute('rel', 'stylesheet');
-                link.setAttribute('type', 'text/css');
-                link.setAttribute('href', styleSheet);
-                frameDocument.head.appendChild(link);
-            });
-        }
-    }
-
-    renderFrameJavaScripts() {
-        const {iframe} = this.refs;
-        const {javaScripts} = this.props;
-
-        const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-        const scripts = [].slice.call(frameDocument.head.querySelectorAll('script'));
-        scripts.map(script => (script.parentNode.removeChild(script)));
-
-        if (javaScripts && javaScripts.length) {
-            javaScripts.map( javaScript => {
-                const link = document.createElement('script');
-                link.setAttribute('type', 'text/javascript');
-                link.setAttribute('src', javaScript);
-                frameDocument.head.appendChild(link);
-            });
-        }
     }
 
     renderFrameContents() {

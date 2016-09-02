@@ -1,16 +1,41 @@
 .prototype {
-    margin: 20px 0 !important;
+    margin: 20px 0 120px !important;
 }
 
 .headline {
+	position: relative;
     margin: 30px 0 10px 0!important;
     padding-bottom: 5px !important;
     border-bottom: 1px solid #3f3f3f;
 }
 
+.subheadline {
+	display: block;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.handles {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.handle {
+	width: auto!important;
+	height: auto!important;
+	line-height: 12px!important;
+	padding: .6em!important;
+	box-sizing: content-box!important;
+	margin-left: .3em!important;
+}
+
+.handle i {
+	font-size: 12px!important;
+}
+
 .iframe {
     margin: 10px 0 !important;
     transition: max-width 0.25s ease-in-out;
-    max-width: 1500px;
+    max-width: 1920px;
     width: 100%;
 }

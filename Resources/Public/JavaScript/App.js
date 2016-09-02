@@ -2318,7 +2318,7 @@
 	    displayOptions: {
 	        renderedElements: true,
 	        sourceCode: false,
-	        description: false,
+	        description: true,
 	        fullscreen: false
 	    },
 	    styleguide: {
@@ -13711,54 +13711,7 @@
 	            if (!this._isMounted) {
 	                return;
 	            }
-	            //this.renderFrameStyleSheets();
-	            //this.renderFrameJavaScripts()
 	            this.renderFrameContents();
-	        }
-	    }, {
-	        key: "renderFrameStyleSheets",
-	        value: function renderFrameStyleSheets() {
-	            var iframe = this.refs.iframe;
-	            var styleSheets = this.props.styleSheets;
-	
-	
-	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-	            var styles = [].slice.call(frameDocument.head.querySelectorAll('link'));
-	            styles.map(function (link) {
-	                return link.parentNode.removeChild(link);
-	            });
-	
-	            if (styleSheets && styleSheets.length) {
-	                styleSheets.map(function (styleSheet) {
-	                    var link = document.createElement('link');
-	                    link.setAttribute('rel', 'stylesheet');
-	                    link.setAttribute('type', 'text/css');
-	                    link.setAttribute('href', styleSheet);
-	                    frameDocument.head.appendChild(link);
-	                });
-	            }
-	        }
-	    }, {
-	        key: "renderFrameJavaScripts",
-	        value: function renderFrameJavaScripts() {
-	            var iframe = this.refs.iframe;
-	            var javaScripts = this.props.javaScripts;
-	
-	
-	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-	            var scripts = [].slice.call(frameDocument.head.querySelectorAll('script'));
-	            scripts.map(function (script) {
-	                return script.parentNode.removeChild(script);
-	            });
-	
-	            if (javaScripts && javaScripts.length) {
-	                javaScripts.map(function (javaScript) {
-	                    var link = document.createElement('script');
-	                    link.setAttribute('type', 'text/javascript');
-	                    link.setAttribute('src', javaScript);
-	                    frameDocument.head.appendChild(link);
-	                });
-	            }
 	        }
 	    }, {
 	        key: "renderFrameContents",
@@ -13782,9 +13735,7 @@
 	}(_react.Component), _class.propTypes = {
 	    style: _react.PropTypes.string,
 	    className: _react.PropTypes.string,
-	    content: _react.PropTypes.string,
-	    styleSheets: _react.PropTypes.array,
-	    javaScripts: _react.PropTypes.array
+	    content: _react.PropTypes.string
 	}, _temp2);
 	exports.default = Frame;
 
@@ -14350,17 +14301,27 @@
 	                    'h1',
 	                    { className: _style2.default.headline },
 	                    currentPrototype['title'],
-	                    ' - prototype(',
-	                    prototypeName,
-	                    ')'
+	                    _react2.default.createElement(
+	                        'small',
+	                        { className: _style2.default.subheadline },
+	                        'prototype(',
+	                        prototypeName,
+	                        ')'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: _style2.default.handles },
+	                        _react2.default.createElement(_index2.IconButton, { type: 'refresh', className: _style2.default.handle }),
+	                        _react2.default.createElement(_index2.IconButton, { type: 'external-link', className: _style2.default.handle })
+	                    )
 	                ),
-	                showRenderedElements && this.state.isRendered ? _react2.default.createElement(_index2.Frame, { style: iFrameStyle, className: _style2.default.iframe, content: this.state.renderedHtml, styleSheets: styleSheets, javaScripts: javaScripts }) : '',
-	                showSourceCode && this.state.isRendered ? _react2.default.createElement(_index2.Code, { content: this.state.renderedHtml, language: 'html' }) : '',
 	                showDescription ? _react2.default.createElement(
 	                    'p',
 	                    null,
 	                    currentPrototype['description'] ? currentPrototype['description'] : 'no description found'
-	                ) : ''
+	                ) : '',
+	                showRenderedElements && this.state.isRendered ? _react2.default.createElement(_index2.Frame, { style: iFrameStyle, className: _style2.default.iframe, content: this.state.renderedHtml, styleSheets: styleSheets, javaScripts: javaScripts }) : '',
+	                showSourceCode && this.state.isRendered ? _react2.default.createElement(_index2.Code, { content: this.state.renderedHtml, language: 'html' }) : ''
 	            );
 	        }
 	    }, {
@@ -14874,7 +14835,7 @@
 	"use strict";
 	
 	// removed by extract-text-webpack-plugin
-	module.exports = { "prototype": "style__prototype___2zaQk", "headline": "style__headline___2K-rB", "iframe": "style__iframe___2k4IK" };
+	module.exports = { "prototype": "style__prototype___2zaQk", "headline": "style__headline___2K-rB", "subheadline": "style__subheadline___3yh4n", "handles": "style__handles___2niy8", "handle": "style__handle___5RLE8", "iframe": "style__iframe___2k4IK" };
 
 /***/ },
 /* 129 */
