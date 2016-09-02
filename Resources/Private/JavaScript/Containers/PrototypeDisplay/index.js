@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
+import pretty from 'pretty';
 
 import {Frame,Code,IconButton} from 'Components/index';
 
@@ -15,7 +16,6 @@ import styles from './style.css';
         showSourceCode: state.displayOptions.sourceCode,
         showDescription: state.displayOptions.description,
         viewportWidth: state.viewportOptions.width
-
     };
 })
 export default class PrototypeDisplay extends Component {
@@ -66,7 +66,7 @@ export default class PrototypeDisplay extends Component {
 			</h1>
 			{ showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
             { (showRenderedElements && this.state.isRendered) ? <Frame style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
-            { (showSourceCode && this.state.isRendered) ? <Code content={this.state.renderedHtml}  language="html" /> : '' }
+            { (showSourceCode && this.state.isRendered) ? <Code content={pretty(this.state.renderedHtml)}  language="html" /> : '' }
         </div>;
     }
 
@@ -92,9 +92,9 @@ export default class PrototypeDisplay extends Component {
         fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName , {
             method: 'GET'
         })
-            .then(response => response.json())
-            .then(json => (
-                this.setState({isRendered: true, renderedHtml: json.renderedHtml})
-            ));
+        .then(response => response.json())
+        .then(json => (
+            this.setState({isRendered: true, renderedHtml: json.renderedHtml})
+        ));
     }
 }

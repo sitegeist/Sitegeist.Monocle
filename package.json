@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "pretty": "^1.0.0",
     "ramda": "^0.21.0",
     "react": "^15.2.1",
     "react-click-outside": "^2.1.0",
