@@ -11,6 +11,7 @@ use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 use Sitegeist\Monocle\Helper\TypoScriptHelper;
 use Sitegeist\Monocle\Helper\ContextHelper;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
+use Sitegeist\Monocle\TypoScript\TypoScriptView;
 
 class PreviewController extends ActionController
 {
@@ -110,6 +111,27 @@ class PreviewController extends ActionController
 	 */
 	public function iframeAction()
 	{
-		
+	}
+
+	/**
+	 * @param  string $prototypeName
+	 * @return void
+	 */
+	public function componentAction($prototypeName)
+	{
+		$context = $this->contextHelper->getContext();
+        $siteNode = $context->getCurrentSiteNode();
+
+        $typoScriptView = new TypoScriptView();
+        $typoScriptView->setControllerContext($this->controllerContext);
+        $typoScriptView->setTypoScriptPath('monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName));
+        $typoScriptView->assignMultiple([
+            'value' => $siteNode
+        ]);
+
+        $this->view->assignMultiple([
+            'prototypeName' => $prototypeName,
+            'renderedHtml' =>  $typoScriptView->render()
+        ]);
 	}
 }

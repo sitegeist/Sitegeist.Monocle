@@ -36,7 +36,6 @@ export default class PrototypeDisplay extends Component {
     };
 
     render() {
-
         const {
             prototypeName,
             prototypes,
@@ -61,7 +60,7 @@ export default class PrototypeDisplay extends Component {
 
 				<div className={styles.handles}>
 					<IconButton type="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
-					<IconButton type="external-link"  className={styles.handle} />
+					<IconButton type="external-link" className={styles.handle} onClick={() => this.openPreview()} />
 				</div>
 			</h1>
 			{ showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
@@ -97,4 +96,11 @@ export default class PrototypeDisplay extends Component {
             this.setState({isRendered: true, renderedHtml: json.renderedHtml})
         ));
     }
+
+	openPreview() {
+		const {prototypeName} = this.props;
+		const previewUri = `/sitegeist.monocle/preview/component?prototypeName=${prototypeName}`;
+
+		window.open(previewUri, '_blank');
+	}
 }

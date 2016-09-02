@@ -14319,7 +14319,9 @@
 	                        _react2.default.createElement(_index2.IconButton, { type: 'refresh', className: _style2.default.handle, onClick: function onClick() {
 	                                return _this2.fetchPrototype();
 	                            } }),
-	                        _react2.default.createElement(_index2.IconButton, { type: 'external-link', className: _style2.default.handle })
+	                        _react2.default.createElement(_index2.IconButton, { type: 'external-link', className: _style2.default.handle, onClick: function onClick() {
+	                                return _this2.openPreview();
+	                            } })
 	                    )
 	                ),
 	                showDescription ? _react2.default.createElement(
@@ -14367,6 +14369,15 @@
 	            }).then(function (json) {
 	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml });
 	            });
+	        }
+	    }, {
+	        key: 'openPreview',
+	        value: function openPreview() {
+	            var prototypeName = this.props.prototypeName;
+	
+	            var previewUri = '/sitegeist.monocle/preview/component?prototypeName=' + prototypeName;
+	
+	            window.open(previewUri, '_blank');
 	        }
 	    }]);
 	
