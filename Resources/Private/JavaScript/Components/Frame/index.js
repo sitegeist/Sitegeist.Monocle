@@ -74,6 +74,7 @@ export default class Frame extends Component {
         const height = container.clientHeight;
 
         this.setState(Object.assign({}, this.state, {style: {height: '' + height + 'px'}}));
+		frameDocument.body.style.height = `${height}px`;
     }
 
     renderFrame() {
