@@ -69,6 +69,8 @@
 	
 	    // set defaults from data
 	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setRenderPrototypesEndpoint(appContainer.dataset.renderPrototypesEndpoint));
+	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setIframeUri(appContainer.dataset.iframeUri));
+	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setPreviewUri(appContainer.dataset.previewUri));
 	    _index3.default.dispatch(_index2.redux.Styleguide.actions.setPath(appContainer.dataset.defaultPath));
 	
 	    fetch(appContainer.dataset.prototypesEndpoint, {
@@ -13578,7 +13580,7 @@
 /* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -13623,19 +13625,20 @@
 	    }
 	
 	    _createClass(Frame, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 	
 	            var _props = this.props;
 	            var className = _props.className;
 	            var style = _props.style;
+	            var uri = _props.uri;
 	
 	            var localStyle = this.state.style;
 	            var mergedStyles = Object.assign({}, style, localStyle);
-	            return _react2.default.createElement("iframe", {
-	                ref: "iframe",
-	                src: "/sitegeist.monocle/preview/iframe",
+	            return _react2.default.createElement('iframe', {
+	                ref: 'iframe',
+	                src: uri,
 	                className: className,
 	                style: mergedStyles,
 	                onLoad: function onLoad() {
@@ -13644,7 +13647,7 @@
 	            });
 	        }
 	    }, {
-	        key: "onIframeLoad",
+	        key: 'onIframeLoad',
 	        value: function onIframeLoad() {
 	            var _this3 = this;
 	
@@ -13672,7 +13675,7 @@
 	            });
 	        }
 	    }, {
-	        key: "componentDidUpdate",
+	        key: 'componentDidUpdate',
 	        value: function componentDidUpdate(prevProps, prevState) {
 	            var content = this.props.content;
 	
@@ -13682,14 +13685,14 @@
 	            }
 	        }
 	    }, {
-	        key: "initializeFrame",
+	        key: 'initializeFrame',
 	        value: function initializeFrame() {
 	            this._isMounted = true;
 	            this.renderFrame();
 	            setTimeout(this.resizeFrame, 5);
 	        }
 	    }, {
-	        key: "resizeFrame",
+	        key: 'resizeFrame',
 	        value: function resizeFrame() {
 	            if (!this._isMounted) {
 	                return;
@@ -13703,10 +13706,10 @@
 	            var height = container.clientHeight;
 	
 	            this.setState(Object.assign({}, this.state, { style: { height: '' + height + 'px' } }));
-	            frameDocument.body.style.height = height + "px";
+	            frameDocument.body.style.height = height + 'px';
 	        }
 	    }, {
-	        key: "renderFrame",
+	        key: 'renderFrame',
 	        value: function renderFrame() {
 	            if (!this._isMounted) {
 	                return;
@@ -13714,7 +13717,7 @@
 	            this.renderFrameContents();
 	        }
 	    }, {
-	        key: "renderFrameContents",
+	        key: 'renderFrameContents',
 	        value: function renderFrameContents() {
 	            var iframe = this.refs.iframe;
 	            var content = this.props.content;
@@ -13735,7 +13738,8 @@
 	}(_react.Component), _class.propTypes = {
 	    style: _react.PropTypes.string,
 	    className: _react.PropTypes.string,
-	    content: _react.PropTypes.string
+	    content: _react.PropTypes.string,
+	    uri: _react.PropTypes.string.isRequired
 	}, _temp2);
 	exports.default = Frame;
 
@@ -14254,6 +14258,8 @@
 	        resources: state.styleguide.resources,
 	        showRenderedElements: state.displayOptions.renderedElements,
 	        renderPrototypesEndpoint: state.styleguide.renderPrototypesEndpoint,
+	        iframeUri: state.styleguide.iframeUri,
+	        previewUri: state.styleguide.previewUri,
 	        showSourceCode: state.displayOptions.sourceCode,
 	        showDescription: state.displayOptions.description,
 	        viewportWidth: state.viewportOptions.width
@@ -14291,6 +14297,7 @@
 	            var showSourceCode = _props.showSourceCode;
 	            var showDescription = _props.showDescription;
 	            var viewportWidth = _props.viewportWidth;
+	            var iframeUri = _props.iframeUri;
 	
 	
 	            var currentPrototype = prototypes[prototypeName] ? prototypes[prototypeName] : null;
@@ -14329,7 +14336,7 @@
 	                    null,
 	                    currentPrototype['description'] ? currentPrototype['description'] : 'no description found'
 	                ) : '',
-	                showRenderedElements && this.state.isRendered ? _react2.default.createElement(_index2.Frame, { style: iFrameStyle, className: _style2.default.iframe, content: this.state.renderedHtml, styleSheets: styleSheets, javaScripts: javaScripts }) : '',
+	                showRenderedElements && this.state.isRendered ? _react2.default.createElement(_index2.Frame, { uri: iframeUri, style: iFrameStyle, className: _style2.default.iframe, content: this.state.renderedHtml, styleSheets: styleSheets, javaScripts: javaScripts }) : '',
 	                showSourceCode && this.state.isRendered ? _react2.default.createElement(_index2.Code, { content: (0, _pretty2.default)(this.state.renderedHtml), language: 'html' }) : ''
 	            );
 	        }
@@ -14373,11 +14380,13 @@
 	    }, {
 	        key: 'openPreview',
 	        value: function openPreview() {
-	            var prototypeName = this.props.prototypeName;
+	            var _props3 = this.props;
+	            var prototypeName = _props3.prototypeName;
+	            var previewUri = _props3.previewUri;
 	
-	            var previewUri = '/sitegeist.monocle/preview/component?prototypeName=' + prototypeName;
+	            var previewUriWithParamaters = previewUri + '?prototypeName=' + prototypeName;
 	
-	            window.open(previewUri, '_blank');
+	            window.open(previewUriWithParamaters, '_blank');
 	        }
 	    }]);
 	
@@ -14681,12 +14690,16 @@
 	var SET_PROTOTYPES = '@sitegeist/monocle-ui/Styleguide/SET_PROTOTYPES';
 	var SET_RESOURCES = '@sitegeist/monocle-ui/Styleguide/SET_RESOURCES';
 	var SET_RENDER_PROTOTYPES_ENDPOINT = '@sitegeist/monocle-ui/Styleguide/SET_RENDER_PROTOTYPES_ENDPOINT';
+	var SET_IFRAME_URI = '@sitegeist/monocle-ui/Styleguide/SET_IFRAME_URI';
+	var SET_PREVIEW_URI = '@sitegeist/monocle-ui/Styleguide/SET_PREVIEW_URI';
 	
 	var actionTypes = {
 	    SET_PATH: SET_PATH,
 	    SET_PROTOTYPES: SET_PROTOTYPES,
 	    SET_RESOURCES: SET_RESOURCES,
-	    SET_RENDER_PROTOTYPES_ENDPOINT: SET_RENDER_PROTOTYPES_ENDPOINT
+	    SET_RENDER_PROTOTYPES_ENDPOINT: SET_RENDER_PROTOTYPES_ENDPOINT,
+	    SET_IFRAME_URI: SET_IFRAME_URI,
+	    SET_PREVIEW_URI: SET_PREVIEW_URI
 	};
 	
 	var setPath = (0, _reduxActions.createAction)(SET_PATH, function (path) {
@@ -14701,12 +14714,20 @@
 	var setRenderPrototypesEndpoint = (0, _reduxActions.createAction)(SET_RENDER_PROTOTYPES_ENDPOINT, function (prototypes) {
 	    return prototypes;
 	});
+	var setIframeUri = (0, _reduxActions.createAction)(SET_IFRAME_URI, function (uri) {
+	    return uri;
+	});
+	var setPreviewUri = (0, _reduxActions.createAction)(SET_PREVIEW_URI, function (uri) {
+	    return uri;
+	});
 	
 	var actions = {
 	    setPath: setPath,
 	    setPrototypes: setPrototypes,
 	    setResources: setResources,
-	    setRenderPrototypesEndpoint: setRenderPrototypesEndpoint
+	    setRenderPrototypesEndpoint: setRenderPrototypesEndpoint,
+	    setIframeUri: setIframeUri,
+	    setPreviewUri: setPreviewUri
 	};
 	
 	var reducer = function reducer() {
@@ -14722,6 +14743,10 @@
 	            return state.setIn(['resources'], action.payload);
 	        case SET_RENDER_PROTOTYPES_ENDPOINT:
 	            return state.setIn(['renderPrototypesEndpoint'], action.payload);
+	        case SET_IFRAME_URI:
+	            return state.setIn(['iframeUri'], action.payload);
+	        case SET_PREVIEW_URI:
+	            return state.setIn(['previewUri'], action.payload);
 	    }
 	    return state;
 	};

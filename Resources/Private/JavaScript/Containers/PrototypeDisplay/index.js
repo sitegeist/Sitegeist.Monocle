@@ -13,6 +13,8 @@ import styles from './style.css';
         resources: state.styleguide.resources,
         showRenderedElements: state.displayOptions.renderedElements,
         renderPrototypesEndpoint: state.styleguide.renderPrototypesEndpoint,
+        iframeUri: state.styleguide.iframeUri,
+        previewUri: state.styleguide.previewUri,
         showSourceCode: state.displayOptions.sourceCode,
         showDescription: state.displayOptions.description,
         viewportWidth: state.viewportOptions.width
@@ -43,7 +45,8 @@ export default class PrototypeDisplay extends Component {
             showRenderedElements,
             showSourceCode,
             showDescription,
-            viewportWidth
+            viewportWidth,
+			iframeUri
         } = this.props;
 
 
@@ -64,7 +67,7 @@ export default class PrototypeDisplay extends Component {
 				</div>
 			</h1>
 			{ showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
-            { (showRenderedElements && this.state.isRendered) ? <Frame style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
+            { (showRenderedElements && this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
             { (showSourceCode && this.state.isRendered) ? <Code content={pretty(this.state.renderedHtml)}  language="html" /> : '' }
         </div>;
     }
@@ -98,9 +101,9 @@ export default class PrototypeDisplay extends Component {
     }
 
 	openPreview() {
-		const {prototypeName} = this.props;
-		const previewUri = `/sitegeist.monocle/preview/component?prototypeName=${prototypeName}`;
+		const {prototypeName, previewUri} = this.props;
+		const previewUriWithParamaters = `${previewUri}?prototypeName=${prototypeName}`;
 
-		window.open(previewUri, '_blank');
+		window.open(previewUriWithParamaters, '_blank');
 	}
 }

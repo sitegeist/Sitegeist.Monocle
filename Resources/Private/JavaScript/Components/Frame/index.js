@@ -4,7 +4,8 @@ export default class Frame extends Component {
     static propTypes = {
         style: PropTypes.string,
         className: PropTypes.string,
-        content: PropTypes.string
+        content: PropTypes.string,
+        uri: PropTypes.string.isRequired
     };
 
     state = {
@@ -14,13 +15,13 @@ export default class Frame extends Component {
     };
 
     render() {
-        const {className, style} = this.props;
+        const {className, style, uri} = this.props;
         const localStyle = this.state.style;
         const mergedStyles = Object.assign({},style,localStyle);
         return (
 			<iframe
 				ref="iframe"
-				src="/sitegeist.monocle/preview/iframe"
+				src={uri}
 				className={className}
 				style={mergedStyles}
 				onLoad={() => this.onIframeLoad()}
