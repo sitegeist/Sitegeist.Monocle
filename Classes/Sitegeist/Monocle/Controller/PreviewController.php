@@ -4,6 +4,7 @@ namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Utility\Arrays;
+use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
@@ -51,7 +52,8 @@ class PreviewController extends ActionController
      * @param boolean $showDescription
      * @return void
      */
-    public function showPathAction($path, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+    public function showPathAction($path, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE)
+	{
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
 
@@ -76,7 +78,8 @@ class PreviewController extends ActionController
      * @param boolean $showDescription
      * @return void
      */
-    public function showPrototypeAction($prototypeName, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE) {
+    public function showPrototypeAction($prototypeName, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE)
+	{
 
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
@@ -90,4 +93,23 @@ class PreviewController extends ActionController
 
         $this->view->assign('additionalResources', $this->additionalResources);
     }
+
+	/**
+	 * Initialize the view
+	 *
+	 * @param  ViewInterface $view
+	 * @return void
+	 */
+	public function initializeView(ViewInterface $view)
+	{
+		$view->assign('additionalResources', $this->additionalResources);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function iframeAction()
+	{
+		
+	}
 }

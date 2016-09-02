@@ -3,6 +3,8 @@ privilegeTargets:
 
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
+    'Sitegeist.Monocle:Backend.Preview':
+      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(iframe)Action())'
     'Sitegeist.Monocle:Backend.Api':
       matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sites|viewportPresets|renderPrototype)Action())'
 roles:
@@ -10,6 +12,9 @@ roles:
     privileges:
       -
         privilegeTarget: 'Sitegeist.Monocle:Backend.Api'
+        permission: GRANT
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Backend.Preview'
         permission: GRANT
 
   'TYPO3.Neos:Editor':

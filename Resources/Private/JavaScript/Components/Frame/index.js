@@ -19,49 +19,40 @@ export default class Frame extends Component {
         const {className, style} = this.props;
         const localStyle = this.state.style;
         const mergedStyles = Object.assign({},style,localStyle);
-        return (<iframe ref='iframe' className={className} style={mergedStyles}/>);
+        return (
+			<iframe
+				ref="iframe"
+				src="/sitegeist.monocle/preview/iframe"
+				className={className}
+				style={mergedStyles}
+				onLoad={() => this.onIframeLoad()}
+				/>
+		);
     }
 
-    componentDidMount () {
-        const {iframe} = this.refs;
-
+	onIframeLoad() {
+		const {iframe} = this.refs;
         const frameWindow = iframe.contentWindow || iframe;
         const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-        if (frameDocument && frameDocument.readyState === 'complete') {
-            this.initializeFrame();
-        } else {
-            iframe.addEventListener('load', () => {
-                console.log('load' );
-                const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-                if (frameDocument && frameDocument.readyState === 'complete') {
-                    this.initializeFrame();
-                } else {
-                    frameDocument.addEventListener('DOMContentLoaded', () => this.initializeFrame());
-                }
-            });
-        }
+		if (frameDocument && frameDocument.readyState === 'complete') {
+			this.initializeFrame();
+		} else {
+			frameDocument.addEventListener('DOMContentLoaded', () => this.initializeFrame());
+		}
 
-        if (frameDocument.fonts) {
+		if (frameDocument.fonts) {
             frameDocument.fonts.onloadingdone = () => (this.resizeFrame());
         }
 
         frameWindow.addEventListener('resize', () => (this.resizeFrame()));
-    }
+	}
 
     componentDidUpdate(prevProps, prevState) {
-        const {content, styleSheets, javaScripts} = this.props;
+        const {content} = this.props;
 
         if (prevProps.content !== content) {
             this.renderFrameContents();
-        }
-
-        if (prevProps.styleSheets.join('') !== styleSheets.join('')) {
-            this.renderFrameStyleSheets();
-        }
-
-        if (prevProps.javaScripts.join('') !== javaScripts.join('')) {
-            this.renderFrameJavaScripts();
         }
     }
 
@@ -89,8 +80,8 @@ export default class Frame extends Component {
         if (!this._isMounted) {
             return;
         }
-        this.renderFrameStyleSheets();
-        this.renderFrameJavaScripts()
+        //this.renderFrameStyleSheets();
+        //this.renderFrameJavaScripts()
         this.renderFrameContents();
     }
 
@@ -143,5 +134,6 @@ export default class Frame extends Component {
         container.innerHTML = content;
 
         frameDocument.body.appendChild(container);
+		this.resizeFrame();
     }
 }

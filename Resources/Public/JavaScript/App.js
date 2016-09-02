@@ -13578,7 +13578,7 @@
 /* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -13623,23 +13623,32 @@
 	    }
 	
 	    _createClass(Frame, [{
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var _props = this.props;
 	            var className = _props.className;
 	            var style = _props.style;
 	
 	            var localStyle = this.state.style;
 	            var mergedStyles = Object.assign({}, style, localStyle);
-	            return _react2.default.createElement('iframe', { ref: 'iframe', className: className, style: mergedStyles });
+	            return _react2.default.createElement("iframe", {
+	                ref: "iframe",
+	                src: "/sitegeist.monocle/preview/iframe",
+	                className: className,
+	                style: mergedStyles,
+	                onLoad: function onLoad() {
+	                    return _this2.onIframeLoad();
+	                }
+	            });
 	        }
 	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	        key: "onIframeLoad",
+	        value: function onIframeLoad() {
+	            var _this3 = this;
 	
 	            var iframe = this.refs.iframe;
-	
 	
 	            var frameWindow = iframe.contentWindow || iframe;
 	            var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
@@ -13647,59 +13656,40 @@
 	            if (frameDocument && frameDocument.readyState === 'complete') {
 	                this.initializeFrame();
 	            } else {
-	                iframe.addEventListener('load', function () {
-	                    console.log('load');
-	                    var frameDocument = iframe.contentDocument || iframe.contentWindow.document;
-	                    if (frameDocument && frameDocument.readyState === 'complete') {
-	                        _this2.initializeFrame();
-	                    } else {
-	                        frameDocument.addEventListener('DOMContentLoaded', function () {
-	                            return _this2.initializeFrame();
-	                        });
-	                    }
+	                frameDocument.addEventListener('DOMContentLoaded', function () {
+	                    return _this3.initializeFrame();
 	                });
 	            }
 	
 	            if (frameDocument.fonts) {
 	                frameDocument.fonts.onloadingdone = function () {
-	                    return _this2.resizeFrame();
+	                    return _this3.resizeFrame();
 	                };
 	            }
 	
 	            frameWindow.addEventListener('resize', function () {
-	                return _this2.resizeFrame();
+	                return _this3.resizeFrame();
 	            });
 	        }
 	    }, {
-	        key: 'componentDidUpdate',
+	        key: "componentDidUpdate",
 	        value: function componentDidUpdate(prevProps, prevState) {
-	            var _props2 = this.props;
-	            var content = _props2.content;
-	            var styleSheets = _props2.styleSheets;
-	            var javaScripts = _props2.javaScripts;
+	            var content = this.props.content;
 	
 	
 	            if (prevProps.content !== content) {
 	                this.renderFrameContents();
 	            }
-	
-	            if (prevProps.styleSheets.join('') !== styleSheets.join('')) {
-	                this.renderFrameStyleSheets();
-	            }
-	
-	            if (prevProps.javaScripts.join('') !== javaScripts.join('')) {
-	                this.renderFrameJavaScripts();
-	            }
 	        }
 	    }, {
-	        key: 'initializeFrame',
+	        key: "initializeFrame",
 	        value: function initializeFrame() {
 	            this._isMounted = true;
 	            this.renderFrame();
 	            setTimeout(this.resizeFrame, 5);
 	        }
 	    }, {
-	        key: 'resizeFrame',
+	        key: "resizeFrame",
 	        value: function resizeFrame() {
 	            if (!this._isMounted) {
 	                return;
@@ -13715,17 +13705,17 @@
 	            this.setState(Object.assign({}, this.state, { style: { height: '' + height + 'px' } }));
 	        }
 	    }, {
-	        key: 'renderFrame',
+	        key: "renderFrame",
 	        value: function renderFrame() {
 	            if (!this._isMounted) {
 	                return;
 	            }
-	            this.renderFrameStyleSheets();
-	            this.renderFrameJavaScripts();
+	            //this.renderFrameStyleSheets();
+	            //this.renderFrameJavaScripts()
 	            this.renderFrameContents();
 	        }
 	    }, {
-	        key: 'renderFrameStyleSheets',
+	        key: "renderFrameStyleSheets",
 	        value: function renderFrameStyleSheets() {
 	            var iframe = this.refs.iframe;
 	            var styleSheets = this.props.styleSheets;
@@ -13748,7 +13738,7 @@
 	            }
 	        }
 	    }, {
-	        key: 'renderFrameJavaScripts',
+	        key: "renderFrameJavaScripts",
 	        value: function renderFrameJavaScripts() {
 	            var iframe = this.refs.iframe;
 	            var javaScripts = this.props.javaScripts;
@@ -13770,7 +13760,7 @@
 	            }
 	        }
 	    }, {
-	        key: 'renderFrameContents',
+	        key: "renderFrameContents",
 	        value: function renderFrameContents() {
 	            var iframe = this.refs.iframe;
 	            var content = this.props.content;
@@ -13783,6 +13773,7 @@
 	            container.innerHTML = content;
 	
 	            frameDocument.body.appendChild(container);
+	            this.resizeFrame();
 	        }
 	    }]);
 	
