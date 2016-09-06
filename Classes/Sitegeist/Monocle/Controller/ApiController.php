@@ -67,6 +67,7 @@ class ApiController extends ActionController
     /**
      * Get all styleguide objects
      *
+     * @Flow\SkipCsrfProtection
      * @return void
      */
     public function styleguideObjectsAction() {
@@ -92,6 +93,9 @@ class ApiController extends ActionController
 
     /**
      * Get all the configured resources
+     *
+     * @Flow\SkipCsrfProtection
+     * @return void
      */
     public function styleguideResourcesAction() {
         $styleSheets = $this->additionalResources['styleSheets'];
@@ -122,6 +126,7 @@ class ApiController extends ActionController
     /**
      * Get all active sites
      *
+     * @Flow\SkipCsrfProtection
      * @return void
      */
     public function sitesAction() {
@@ -144,6 +149,7 @@ class ApiController extends ActionController
     /**
      * Get all configured breakpoints
      *
+     * @Flow\SkipCsrfProtection
      * @return void
      */
     public function viewportPresetsAction() {
@@ -153,6 +159,7 @@ class ApiController extends ActionController
     /**
      * Render the given prototype
      *
+     * @Flow\SkipCsrfProtection
      * @param string $prototypeName
      * @return void
      */

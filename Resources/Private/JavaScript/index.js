@@ -15,28 +15,32 @@ const initialize = () => {
     store.dispatch(redux.Styleguide.actions.setPath(appContainer.dataset.defaultPath));
 
 	fetch(appContainer.dataset.prototypesEndpoint, {
-		method: 'POST'
+		method: 'POST',
+        credentials: 'same-origin'
 	})
         .then(response => response.json())
         .then(json => (store.dispatch(redux.Styleguide.actions.setPrototypes(json))));
 
     // fetch the available sites
     fetch(appContainer.dataset.resourcesEndpoint, {
-        method: 'POST'
+        method: 'POST',
+        credentials: 'same-origin'
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.Styleguide.actions.setResources(json))));
 
     // fetch the available breakpoints to the current state
     fetch(appContainer.dataset.viewportPresetsEndpoint, {
-        method: 'POST'
+        method: 'POST',
+        credentials: 'same-origin'
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.ViewportOptions.actions.setAvailablePresets(json))));
 
     // fetch the available sites
     fetch(appContainer.dataset.sitesEndpoint, {
-        method: 'POST'
+        method: 'POST',
+        credentials: 'same-origin'
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));

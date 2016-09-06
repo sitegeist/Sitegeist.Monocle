@@ -19,6 +19,17 @@ TYPO3:
               javaScripts:
                 app: 'resource://Sitegeist.Monocle/Public/JavaScript/App.js'
 
+  Flow:
+    security:
+      authentication:
+        providers:
+          Typo3BackendProvider:
+            requestPatterns:
+              'Sitegeist.Monocle:monocleControllers':
+                pattern: 'ControllerObjectName'
+                patternOptions:
+                  controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
+
 Sitegeist:
   Monocle:
 

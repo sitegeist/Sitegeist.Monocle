@@ -92,7 +92,8 @@ export default class PrototypeDisplay extends Component {
         this.setState({isRendered: false, renderedHtml: ''});
 
         fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName , {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'same-origin'
         })
         .then(response => response.json())
         .then(json => (
