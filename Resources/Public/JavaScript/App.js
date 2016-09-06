@@ -16791,7 +16791,8 @@
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PrototypeDisplay.__proto__ || Object.getPrototypeOf(PrototypeDisplay)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            isRendered: false,
-	            renderedHtml: ''
+	            renderedHtml: '',
+	            renderedCode: ''
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -16848,7 +16849,26 @@
 	                    currentPrototype['description'] ? currentPrototype['description'] : 'no description found'
 	                ) : '',
 	                showRenderedElements && this.state.isRendered ? _react2.default.createElement(_index2.Frame, { uri: iframeUri, style: iFrameStyle, className: _style2.default.iframe, content: this.state.renderedHtml, styleSheets: styleSheets, javaScripts: javaScripts }) : '',
-	                showSourceCode && this.state.isRendered ? _react2.default.createElement(_index2.Code, { content: (0, _pretty2.default)(this.state.renderedHtml), language: 'html' }) : ''
+	                showSourceCode && this.state.isRendered ? _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Html'
+	                    ),
+	                    _react2.default.createElement(_index2.Code, { content: (0, _pretty2.default)(this.state.renderedHtml), language: 'html' })
+	                ) : '',
+	                showSourceCode && this.state.isRendered ? _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Fusion'
+	                    ),
+	                    _react2.default.createElement(_index2.Code, { content: this.state.renderedCode, language: 'vim' })
+	                ) : ''
 	            );
 	        }
 	    }, {
@@ -16878,7 +16898,7 @@
 	            var renderPrototypesEndpoint = _props2.renderPrototypesEndpoint;
 	
 	
-	            this.setState({ isRendered: false, renderedHtml: '' });
+	            this.setState({ isRendered: false, renderedHtml: '', renderedCode: '' });
 	
 	            fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName, {
 	                method: 'GET',
@@ -16886,7 +16906,7 @@
 	            }).then(function (response) {
 	                return response.json();
 	            }).then(function (json) {
-	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml });
+	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode });
 	            });
 	        }
 	    }, {

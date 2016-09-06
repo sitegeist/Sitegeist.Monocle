@@ -13,6 +13,7 @@ use Sitegeist\Monocle\Helper\TypoScriptHelper;
 use Sitegeist\Monocle\Helper\ContextHelper;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
+use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
 
 class ApiController extends ActionController
 {
@@ -167,6 +168,7 @@ class ApiController extends ActionController
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
 
+        // render html
         $typoScriptView = new TypoScriptView();
         $typoScriptView->setControllerContext($this->controllerContext);
         $typoScriptView->setTypoScriptPath('monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName));
@@ -174,9 +176,16 @@ class ApiController extends ActionController
             'value' => $siteNode
         ]);
 
+        // render fusion source
+        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
+        $typoScriptAst =  $typoScriptObjectTree['__prototypes'][$prototypeName];
+        $typoScriptCode = ReverseTypoScriptParser::restorePrototypeCode($prototypeName, $typoScriptAst);
+
         $result = [
             'prototypeName' => $prototypeName,
-            'renderedHtml' =>  $typoScriptView->render()
+            'renderedHtml' =>  $typoScriptView->render(),
+            'renderedCode' => $typoScriptCode,
+            'parsedCode' => json_encode($typoScriptAst)
         ];
 
         $this->view->assign('value', $result);

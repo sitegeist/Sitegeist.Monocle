@@ -34,7 +34,8 @@ export default class PrototypeDisplay extends Component {
 
     state = {
         isRendered: false,
-        renderedHtml: ''
+        renderedHtml: '',
+        renderedCode: '',
     };
 
     render() {
@@ -68,7 +69,8 @@ export default class PrototypeDisplay extends Component {
 			</h1>
 			{ showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
             { (showRenderedElements && this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
-            { (showSourceCode && this.state.isRendered) ? <Code content={pretty(this.state.renderedHtml)}  language="html" /> : '' }
+            { (showSourceCode && this.state.isRendered) ? <div><h3>Html</h3><Code content={pretty(this.state.renderedHtml)}  language="html" /></div> : '' }
+            { (showSourceCode && this.state.isRendered) ?  <div><h3>Fusion</h3><Code content={this.state.renderedCode}  language="vim" /></div> : '' }
         </div>;
     }
 
@@ -89,7 +91,7 @@ export default class PrototypeDisplay extends Component {
     fetchPrototype() {
         const {prototypeName, renderPrototypesEndpoint} = this.props;
 
-        this.setState({isRendered: false, renderedHtml: ''});
+        this.setState({isRendered: false, renderedHtml: '', renderedCode: ''});
 
         fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName , {
             method: 'GET',
@@ -97,7 +99,7 @@ export default class PrototypeDisplay extends Component {
         })
         .then(response => response.json())
         .then(json => (
-            this.setState({isRendered: true, renderedHtml: json.renderedHtml})
+            this.setState({isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode})
         ));
     }
 
