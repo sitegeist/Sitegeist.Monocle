@@ -15,6 +15,8 @@ use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
 use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
 
+use Symfony\Component\Yaml\Yaml;
+
 class ApiController extends ActionController
 {
 
@@ -185,7 +187,7 @@ class ApiController extends ActionController
             'prototypeName' => $prototypeName,
             'renderedHtml' =>  $typoScriptView->render(),
             'renderedCode' => $typoScriptCode,
-            'parsedCode' => json_encode($typoScriptAst)
+            'parsedCode' => Yaml::dump($typoScriptAst, 99)
         ];
 
         $this->view->assign('value', $result);

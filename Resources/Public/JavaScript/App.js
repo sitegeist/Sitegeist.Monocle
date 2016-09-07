@@ -16792,7 +16792,8 @@
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PrototypeDisplay.__proto__ || Object.getPrototypeOf(PrototypeDisplay)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            isRendered: false,
 	            renderedHtml: '',
-	            renderedCode: ''
+	            renderedCode: '',
+	            parsedCode: ''
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -16868,6 +16869,16 @@
 	                        'Fusion'
 	                    ),
 	                    _react2.default.createElement(_index2.Code, { content: this.state.renderedCode, language: 'vim' })
+	                ) : '',
+	                showSourceCode && this.state.isRendered ? _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'AST'
+	                    ),
+	                    _react2.default.createElement(_index2.Code, { content: this.state.parsedCode, language: 'yaml' })
 	                ) : ''
 	            );
 	        }
@@ -16898,7 +16909,7 @@
 	            var renderPrototypesEndpoint = _props2.renderPrototypesEndpoint;
 	
 	
-	            this.setState({ isRendered: false, renderedHtml: '', renderedCode: '' });
+	            this.setState({ isRendered: false, renderedHtml: '', renderedCode: '', parsedCode: '' });
 	
 	            fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName, {
 	                method: 'GET',
@@ -16906,7 +16917,7 @@
 	            }).then(function (response) {
 	                return response.json();
 	            }).then(function (json) {
-	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode });
+	                return _this3.setState({ isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode, parsedCode: json.parsedCode });
 	            });
 	        }
 	    }, {
