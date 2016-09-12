@@ -19,8 +19,7 @@ const initialState = {
     displayOptions: {
         renderedElements: true,
         sourceCode: false,
-        description: true,
-        fullscreen: false
+        description: true
     },
     styleguide: {
         path: 'atoms',

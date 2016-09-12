@@ -47,55 +47,6 @@ class PreviewController extends ActionController
     protected $contextHelper;
 
     /**
-     * @param string $path
-     * @param boolean $showRenderedResult
-     * @param boolean $showRenderedCode
-     * @param boolean $showDescription
-     * @return void
-     */
-    public function showPathAction($path, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE)
-	{
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
-
-        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
-        $styleguideObjectTree = $this->typoScriptHelper->buildStyleguideObjectTree($typoScriptObjectTree);
-
-        $this->view->assign('path', $path);
-        $this->view->assign('node',  $siteNode);
-
-        $this->view->assign('styleguideObjectTree', Arrays::getValueByPath($styleguideObjectTree, $path));
-        $this->view->assign('showRenderedResult', $showRenderedResult);
-        $this->view->assign('showRenderedCode', $showRenderedCode);
-        $this->view->assign('showDescription', $showDescription);
-
-        $this->view->assign('additionalResources', $this->additionalResources);
-    }
-
-    /**
-     * @param string $prototypeName
-     * @param boolean $showRenderedResult
-     * @param boolean $showRenderedCode
-     * @param boolean $showDescription
-     * @return void
-     */
-    public function showPrototypeAction($prototypeName, $showRenderedResult = TRUE, $showRenderedCode = FALSE, $showDescription = FALSE)
-	{
-
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
-
-        $this->view->assign('prototypeName', $prototypeName);
-        $this->view->assign('node',  $siteNode);
-
-        $this->view->assign('showRenderedResult', $showRenderedResult);
-        $this->view->assign('showRenderedCode', $showRenderedCode);
-        $this->view->assign('showDescription', $showDescription);
-
-        $this->view->assign('additionalResources', $this->additionalResources);
-    }
-
-	/**
 	 * Initialize the view
 	 *
 	 * @param  ViewInterface $view
@@ -103,8 +54,16 @@ class PreviewController extends ActionController
 	 */
 	public function initializeView(ViewInterface $view)
 	{
+        $view->assign('defaultPath', $this->defaultPath);
 		$view->assign('additionalResources', $this->additionalResources);
 	}
+
+    /**
+     * @return void
+     */
+    public function moduleAction()
+    {
+    }
 
 	/**
 	 * @return void

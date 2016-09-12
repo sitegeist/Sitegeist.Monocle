@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 
-import {DropDown} from 'Components/index';
+import SelectBox from '@neos-project/react-ui-components/lib/SelectBox';
 
 import styles from './style.css';
 
@@ -42,7 +42,7 @@ export default class Navigation extends Component {
                         const nextLevel =  prototypePathSegments[index];
                         if (nextLevel && assignedKeys.indexOf(nextLevel) == -1){
                             items.push({
-                                key:  prototypePathSegments.slice(0,index + 1).join('.'),
+                                value:  prototypePathSegments.slice(0,index + 1).join('.'),
                                 label: nextLevel
                             });
                             assignedKeys.push(nextLevel);
@@ -52,11 +52,11 @@ export default class Navigation extends Component {
             }
             if (items.length > 0) {
                 items.unshift({
-                    key:  subpath,
+                    value:  subpath,
                     label: '--'
                 });
                 levels.push({
-                    key: currentLevel,
+                    value: currentLevel,
                     items: items
                 })
             };
@@ -65,7 +65,12 @@ export default class Navigation extends Component {
         return <div className={styles.navigation}>
             {levels.map(level => (
                 <div className={styles.item}>
-                    <DropDown label={level['key']} items={level['items']} onSelectItem={setPath} />
+                    <SelectBox
+                        options={level['items']}
+                        placeholder={level['value']}
+                        placeholderIcon=""
+                        onSelect={setPath}
+                    />
                 </div>
             ))}
 		</div>;

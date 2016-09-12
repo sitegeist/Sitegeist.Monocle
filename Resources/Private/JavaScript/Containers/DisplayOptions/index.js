@@ -3,20 +3,18 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {redux} from 'Redux/index';
-import {IconButton} from 'Components/index';
+import IconButton from '@neos-project/react-ui-components/lib/IconButton';
 
 @connect(state => {
 	return {
         showRenderedElements: state.displayOptions.renderedElements,
         showSourceCode: state.displayOptions.sourceCode,
-        showDescription : state.displayOptions.description,
-        showFullScreen: state.displayOptions.fullscreen
+        showDescription : state.displayOptions.description
 	};
 }, {
     toggleRenderedElements: redux.DisplayOptions.actions.toggleRenderedElements,
     toggleSourceCode: redux.DisplayOptions.actions.toggleSourceCode,
-    toggleDescription: redux.DisplayOptions.actions.toggleDescription,
-    toggleFullscreen: redux.DisplayOptions.actions.toggleFullscreen
+    toggleDescription: redux.DisplayOptions.actions.toggleDescription
 })
 export default class DisplayOptions extends Component {
 	static propTypes = {
@@ -27,8 +25,7 @@ export default class DisplayOptions extends Component {
 
         toggleRenderedElements: PropTypes.func.isRequired,
         toggleSourceCode: PropTypes.func.isRequired,
-        toggleDescription: PropTypes.func.isRequired,
-		toggleFullscreen: PropTypes.func.isRequired
+        toggleDescription: PropTypes.func.isRequired
 	};
 
 	render() {
@@ -39,17 +36,15 @@ export default class DisplayOptions extends Component {
             showFullScreen,
             toggleRenderedElements,
             toggleSourceCode,
-            toggleDescription,
-            toggleFullscreen
+            toggleDescription
 		} = this.props;
 
 		return (
-            <div className="neos-button-group">
-                <IconButton type="eye-open" onClick={toggleRenderedElements} active={showRenderedElements} />
-                <IconButton type="code" onClick={toggleSourceCode} active={showSourceCode} />
-                <IconButton type="file-text" onClick={toggleDescription} active={showDescription} />
-                <IconButton type="expand" onClick={toggleFullscreen} active={showFullScreen} />
-            </div>
+            <span>
+                <IconButton icon="eye" onClick={toggleRenderedElements} className={showRenderedElements ? 'neos-active':''} isActive={showRenderedElements} />
+                <IconButton icon="code" onClick={toggleSourceCode} className={showSourceCode ? 'neos-active':''} isActive={showSourceCode} />
+                <IconButton icon="file-text" onClick={toggleDescription} className={showDescription ? 'neos-active':''} isActive={showDescription} />
+            </span>
         );
 	}
 }

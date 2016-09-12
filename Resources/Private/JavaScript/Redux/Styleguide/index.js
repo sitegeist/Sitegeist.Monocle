@@ -6,6 +6,7 @@ const SET_RESOURCES = '@sitegeist/monocle-ui/Styleguide/SET_RESOURCES';
 const SET_RENDER_PROTOTYPES_ENDPOINT = '@sitegeist/monocle-ui/Styleguide/SET_RENDER_PROTOTYPES_ENDPOINT';
 const SET_IFRAME_URI = '@sitegeist/monocle-ui/Styleguide/SET_IFRAME_URI';
 const SET_PREVIEW_URI = '@sitegeist/monocle-ui/Styleguide/SET_PREVIEW_URI';
+const SET_FULLSCREEN_URI = '@sitegeist/monocle-ui/Styleguide/SET_FULLSCREEN_URI';
 
 
 const actionTypes =  {
@@ -14,7 +15,8 @@ const actionTypes =  {
     SET_RESOURCES,
     SET_RENDER_PROTOTYPES_ENDPOINT,
 	SET_IFRAME_URI,
-	SET_PREVIEW_URI
+	SET_PREVIEW_URI,
+    SET_FULLSCREEN_URI
 };
 
 const setPath = createAction(SET_PATH, path => path);
@@ -23,6 +25,7 @@ const setResources = createAction(SET_RESOURCES, resources => resources);
 const setRenderPrototypesEndpoint = createAction(SET_RENDER_PROTOTYPES_ENDPOINT, prototypes => prototypes);
 const setIframeUri = createAction(SET_IFRAME_URI, uri => uri);
 const setPreviewUri = createAction(SET_PREVIEW_URI, uri => uri);
+const setFullscreenUri = createAction(SET_FULLSCREEN_URI, uri => uri);
 
 const actions = {
     setPath,
@@ -30,7 +33,8 @@ const actions = {
     setResources,
     setRenderPrototypesEndpoint,
 	setIframeUri,
-	setPreviewUri
+	setPreviewUri,
+    setFullscreenUri
 };
 
 const reducer = (state = {}, action) => {
@@ -47,6 +51,8 @@ const reducer = (state = {}, action) => {
             return state.setIn(['iframeUri'], action.payload);
         case SET_PREVIEW_URI:
             return state.setIn(['previewUri'], action.payload);
+        case SET_FULLSCREEN_URI:
+            return state.setIn(['fullscreenUri'], action.payload);
 	}
 	return state;
 };

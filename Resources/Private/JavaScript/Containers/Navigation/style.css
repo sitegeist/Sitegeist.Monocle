@@ -1,8 +1,7 @@
 .navigation {
-
+    display: inline-block;
 }
 
 .item {
-    float: left;
-    margin-right: 10px !important;
+    display: inline-block;
 }

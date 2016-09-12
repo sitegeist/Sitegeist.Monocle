@@ -2,8 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 
-import {DropDown} from 'Components/index';
-
+import SelectBox from '@neos-project/react-ui-components/lib/SelectBox';
 
 @connect(state => {
     return {
@@ -29,18 +28,24 @@ export default class ViewportOptions extends Component {
         } = this.props;
 
         // available items
-        const presetOptions = [{key:null, label:'--'}];
+        const options = [{value: null, label: 'fullscreen'}];
         for (var key in availablePresets) {
             if (availablePresets.hasOwnProperty(key)) {
-                presetOptions.push({key: key, label: availablePresets[key]['label']});
+                options.push({value: key, label: availablePresets[key]['label']});
             }
         }
+
         // active label
-        const presetLabel = (activePreset && availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : '--';
+        const presetLabel = (activePreset && availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : 'fullscreen';
 
         return (
             <div>
-               <DropDown label={presetLabel} items={presetOptions} onSelectItem={setActivePreset}/>
+                <SelectBox
+                    options={options}
+                    placeholder={presetLabel}
+                    placeholderIcon=""
+                    onSelect={setActivePreset}
+                />
             </div>
         );
     }

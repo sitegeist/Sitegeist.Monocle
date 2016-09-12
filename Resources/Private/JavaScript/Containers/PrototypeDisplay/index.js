@@ -3,7 +3,9 @@ import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 import pretty from 'pretty';
 
-import {Frame,Code,IconButton} from 'Components/index';
+import {Frame,Code} from 'Components/index';
+import Tabs from '@neos-project/react-ui-components/lib/Tabs';
+import IconButton from '@neos-project/react-ui-components/lib/IconButton';
 
 import styles from './style.css';
 
@@ -64,15 +66,21 @@ export default class PrototypeDisplay extends Component {
 				<small className={styles.subheadline}>prototype({prototypeName})</small>
 
 				<div className={styles.handles}>
-					<IconButton type="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
-					<IconButton type="external-link" className={styles.handle} onClick={() => this.openPreview()} />
+					<IconButton icon="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
+					<IconButton icon="external-link" className={styles.handle} onClick={() => this.openPreview()} />
 				</div>
 			</h1>
-			{ showDescription ? <p>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
+			{ showDescription ? <p className={styles.description}>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
+
             { (showRenderedElements && this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
-            { (showSourceCode && this.state.isRendered) ? <div><h3>Html</h3><Code content={pretty(this.state.renderedHtml)}  language="html" /></div> : '' }
-            { (showSourceCode && this.state.isRendered) ?  <div><h3>Fusion</h3><Code content={this.state.renderedCode}  language="vim" /></div> : '' }
-            { (showSourceCode && this.state.isRendered) ?  <div><h3>AST</h3><Code content={this.state.parsedCode}  language="yaml" /></div> : '' }
+
+            { (showSourceCode && this.state.isRendered) ?
+                <Tabs>
+                    <Tabs.Panel title="HTML" icon="code"><div className={styles.codePanel}><Code content={pretty(this.state.renderedHtml)}  language="html" /></div></Tabs.Panel>
+                    <Tabs.Panel title="Fusion" icon="terminal"><div className={styles.codePanel}><Code content={this.state.renderedCode}  language="vim" /></div></Tabs.Panel>
+                    <Tabs.Panel title="Fusion AST" icon="terminal"><div className={styles.codePanel}><Code content={this.state.parsedCode}  language="yaml" /></div></Tabs.Panel>
+                </Tabs>
+            : '' }
         </div>;
     }
 

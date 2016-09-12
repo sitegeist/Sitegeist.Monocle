@@ -2,16 +2,6 @@
 
 <f:section name="content">
 
-    <div
-    	id="app"
-        data-default-path="{defaultPath}"
-        data-iframe-uri="{f:uri.action(action:'iframe', controller:'preview', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-        data-preview-uri="{f:uri.action(action:'component', controller:'preview', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-        data-prototypes-endpoint="{f:uri.action(action:'styleguideObjects', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-        data-resources-endpoint="{f:uri.action(action:'styleguideResources', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"
+    <iframe style="width:100%; height:600px;" src="{f:uri.action(action:'module', controller:'preview', package:'Sitegeist.Monocle', useParentRequest: 1)}" />
 
-        data-viewport-presets-endpoint="{f:uri.action(action:'viewportPresets', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-        data-sites-endpoint="{f:uri.action(action:'sites', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-        data-render-prototypes-endpoint="{f:uri.action(action:'renderPrototype', controller:'api', package:'Sitegeist.Monocle', useParentRequest: 1)}"
-    	></div>
 </f:section>

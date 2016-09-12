@@ -2,6 +2,9 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
+const brand = require('@neos-project/brand');
+const brandVars = brand.generateCssVarsObject(brand.config, 'brand');
+
 module.exports = {
     // https://github.com/webpack/docs/wiki/build-performance#sourcemaps
     devtool: 'source-map',
@@ -51,5 +54,36 @@ module.exports = {
     stats: {
         assets: false,
         children: false
-    }
+    },
+
+    //
+    // Note these plugins if you want to use webpack with to compile your application.
+    //
+    postcss: [
+        require('autoprefixer')({
+            browsers: ['last 2 versions']
+        }),
+        require('postcss-css-variables')({
+            variables: Object.assign({
+                //
+                // Spacings
+                //
+                '--goldenUnit': '40px',
+                '--spacing': '16px',
+                '--halfSpacing': '8px',
+
+                //
+                // Sizes
+                //
+                '--sidebarWidth': '320px',
+
+                //
+                // Font sizes
+                //
+                '--baseFontSize': '14px'
+            }, brandVars)
+        }),
+        require('postcss-nested')(),
+        require('postcss-hexrgba')()
+    ]
 };

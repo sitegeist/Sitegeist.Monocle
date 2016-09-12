@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/styles';
+import { darkula } from 'react-syntax-highlighter/dist/styles';
 
 
 export default class Code extends Component {
@@ -11,6 +11,6 @@ export default class Code extends Component {
 
     render() {
         const {content, language} = this.props;
-        return <SyntaxHighlighter language={language} style={docco}>{content}</SyntaxHighlighter>;
+        return <SyntaxHighlighter language={language} style={darkula}>{content}</SyntaxHighlighter>;
     }
 }
