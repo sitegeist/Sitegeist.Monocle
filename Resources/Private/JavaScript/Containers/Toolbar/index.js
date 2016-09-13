@@ -23,7 +23,7 @@ export default class Toolbar extends Component {
         const {fullscreenUri} = this.props;
 
 		return (
-            <Bar position="top">
+            <Bar position="top" className={styles.bar}>
                 <div className={styles.navigation}>
                     <Navigation />
                 </div>

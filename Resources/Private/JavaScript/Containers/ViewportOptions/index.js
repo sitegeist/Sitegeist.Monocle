@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 
 import SelectBox from '@neos-project/react-ui-components/lib/SelectBox';
+import selectBoxTheme from './selectBoxTheme.css';
 
 @connect(state => {
     return {
@@ -41,6 +42,7 @@ export default class ViewportOptions extends Component {
         return (
             <div>
                 <SelectBox
+                    theme={selectBoxTheme}
                     options={options}
                     placeholder={presetLabel}
                     placeholderIcon=""

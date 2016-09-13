@@ -1,4 +1,9 @@
-.section {
-    clear: both;
-    padding-top: 20px !important;
+.previewSection {
+    padding: 20px;
+    overflow:auto;
+    position:absolute;
+    top: 0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
 }

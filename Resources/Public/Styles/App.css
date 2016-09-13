@@ -2102,6 +2102,18 @@
 .style__item___3eW-3 {
     display: inline-block;
 }
+.selectBoxTheme__dropDown___2qH7e {
+
+}
+
+.selectBoxTheme__dropDown__btn___e3Q4Y {
+    width: auto;
+    min-width: 40px;
+}
+
+.selectBoxTheme__dropDown__contents___2KGtF {
+    width: 200px;
+}
 .style__bar___3CSe- {
     position: absolute;
     left: 0;
@@ -2194,6 +2206,9 @@
 .style__btn--darkenHover___2Qb8N:hover {
     background: rgba(0, 0, 0, .1);
 }
+.style__bar___xdGNU {
+}
+
 .style__navigation___2bmgm {
     float: left;
 }
@@ -2201,12 +2216,11 @@
 .style__options___3AlQV {
     display: inline-block;
     float: right;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .style__viewports___1K9md {
-
     display: inline-block;
     float: right;
 }
@@ -2215,22 +2229,26 @@
     display: inline-block;
     float: right;
 }
-.style__app___13X5q {
-    transition: margin-top 0.25s ease-in-out, margin-left 0.25s ease-in-out, margin-right 0.25s ease-in-out;
-    background-color: #222;
-    position: relative;
-    overflow: hidden;
-    min-height: 300px;
+.selectBoxTheme__dropDown___1Wrzx {
+
 }
 
-.style__isFullscreen___1_m04 {
-    margin-top: -70px !important;
-    margin-left: -30px!important;
-    margin-right: -30px!important;
+.selectBoxTheme__dropDown__btn___2oQCE {
+    width: auto;
+    min-width: 40px;
 }
-.style__section___3weWh {
-    clear: both;
-    padding-top: 20px !important;
+
+.selectBoxTheme__dropDown__contents___1_stc {
+    width: 200px;
+}
+.style__previewSection___1x_-N {
+    padding: 20px;
+    overflow:auto;
+    position:absolute;
+    top: 0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
 }
 .style__tabs___1P-ia {
     height: 100%;

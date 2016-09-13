@@ -21,7 +21,6 @@ export default class DisplayOptions extends Component {
         showRenderedElements: PropTypes.bool.isRequired,
         showSourceCode: PropTypes.bool.isRequired,
         showDescription: PropTypes.bool.isRequired,
-        showFullScreen: PropTypes.bool.isRequired,
 
         toggleRenderedElements: PropTypes.func.isRequired,
         toggleSourceCode: PropTypes.func.isRequired,
@@ -33,7 +32,6 @@ export default class DisplayOptions extends Component {
 		    showRenderedElements,
             showSourceCode,
             showDescription,
-            showFullScreen,
             toggleRenderedElements,
             toggleSourceCode,
             toggleDescription

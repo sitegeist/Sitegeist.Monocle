@@ -1,3 +1,6 @@
+.bar {
+}
+
 .navigation {
     float: left;
 }
@@ -5,12 +8,11 @@
 .options {
     display: inline-block;
     float: right;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .viewports {
-
     display: inline-block;
     float: right;
 }

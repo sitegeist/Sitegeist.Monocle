@@ -1,4 +1,7 @@
-.neos.neos-module-administration-monocle .neos-header .neos-button-group > .neos-button {
-    font-size: 14px;
+body {
+    padding: 0 20px;
+    margin: 0;
+    background-color: #222;
+    height: 100%;
+    overflow: hidden;
 }
-

@@ -5,6 +5,7 @@ import {redux} from 'Redux/index';
 import SelectBox from '@neos-project/react-ui-components/lib/SelectBox';
 
 import styles from './style.css';
+import selectBoxTheme from './selectBoxTheme.css';
 
 @connect(state => {
     return {
@@ -66,6 +67,7 @@ export default class Navigation extends Component {
             {levels.map(level => (
                 <div className={styles.item}>
                     <SelectBox
+                        theme={selectBoxTheme}
                         options={level['items']}
                         placeholder={level['value']}
                         placeholderIcon=""

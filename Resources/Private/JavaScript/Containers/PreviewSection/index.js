@@ -4,8 +4,6 @@ import {connect} from 'react-redux';
 import {redux} from 'Redux/index';
 
 import {PrototypeDisplay} from 'Containers/index';
-
-
 import styles from './style.css';
 
 @connect(state => {
@@ -42,7 +40,7 @@ export default class PreviewSection extends Component {
             }
         }
 
-        return <div className={styles.section}>
+        return <div className={styles.previewSection}>
             {displayPrototypes.map(item => (
                 <PrototypeDisplay prototypeName={item} />
             ))}
