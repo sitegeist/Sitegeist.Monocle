@@ -17776,7 +17776,7 @@
 	
 	    return Frame;
 	}(_react.Component), _class.propTypes = {
-	    style: _react.PropTypes.string,
+	    style: _react.PropTypes.object,
 	    className: _react.PropTypes.string,
 	    content: _react.PropTypes.string,
 	    uri: _react.PropTypes.string.isRequired
@@ -18045,6 +18045,7 @@
 	                            var nextLevel = prototypePathSegments[index];
 	                            if (nextLevel && assignedKeys.indexOf(nextLevel) == -1) {
 	                                items.push({
+	                                    key: key,
 	                                    value: prototypePathSegments.slice(0, index + 1).join('.'),
 	                                    label: nextLevel
 	                                });
@@ -18055,10 +18056,12 @@
 	                }
 	                if (items.length > 0) {
 	                    items.unshift({
+	                        key: '',
 	                        value: subpath,
 	                        label: '--'
 	                    });
 	                    levels.push({
+	                        key: 'level_' + index,
 	                        value: currentLevel,
 	                        items: items
 	                    });
@@ -18071,11 +18074,11 @@
 	                levels.map(function (level) {
 	                    return _react2.default.createElement(
 	                        'div',
-	                        { className: _style2.default.item },
+	                        { key: level.key, className: _style2.default.item },
 	                        _react2.default.createElement(_SelectBox2.default, {
 	                            theme: _selectBoxTheme2.default,
-	                            options: level['items'],
-	                            placeholder: level['value'],
+	                            options: level.items,
+	                            placeholder: level.value,
 	                            placeholderIcon: '',
 	                            onSelect: setPath
 	                        })
@@ -18162,11 +18165,11 @@
 	            var label = availablePresets[activePreset] ? availablePresets[activePreset]['label'] : '';
 	
 	            var displayPrototypes = [];
-	            for (var key in prototypes) {
-	                if (prototypes.hasOwnProperty(key)) {
-	                    var prototype = prototypes[key];
+	            for (var prototypeKey in prototypes) {
+	                if (prototypes.hasOwnProperty(prototypeKey)) {
+	                    var prototype = prototypes[prototypeKey];
 	                    if (prototype['path'].startsWith(path)) {
-	                        displayPrototypes.push(key);
+	                        displayPrototypes.push({ key: prototypeKey, prototypeKey: prototypeKey });
 	                    }
 	                }
 	            }
@@ -18175,7 +18178,7 @@
 	                'div',
 	                { className: _style2.default.previewSection },
 	                displayPrototypes.map(function (item) {
-	                    return _react2.default.createElement(_index2.PrototypeDisplay, { prototypeName: item });
+	                    return _react2.default.createElement(_index2.PrototypeDisplay, { key: item.prototypeKey, prototypeName: item.prototypeKey });
 	                })
 	            );
 	        }
@@ -18589,7 +18592,7 @@
 	
 	            // available items
 	
-	            var options = [{ value: null, label: 'fullscreen' }];
+	            var options = [{ value: '', label: 'fullscreen' }];
 	            for (var key in availablePresets) {
 	                if (availablePresets.hasOwnProperty(key)) {
 	                    options.push({ value: key, label: availablePresets[key]['label'] });

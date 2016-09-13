@@ -29,7 +29,7 @@ export default class ViewportOptions extends Component {
         } = this.props;
 
         // available items
-        const options = [{value: null, label: 'fullscreen'}];
+        const options = [{value: '', label: 'fullscreen'}];
         for (var key in availablePresets) {
             if (availablePresets.hasOwnProperty(key)) {
                 options.push({value: key, label: availablePresets[key]['label']});

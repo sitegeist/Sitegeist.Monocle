@@ -43,6 +43,7 @@ export default class Navigation extends Component {
                         const nextLevel =  prototypePathSegments[index];
                         if (nextLevel && assignedKeys.indexOf(nextLevel) == -1){
                             items.push({
+                                key: key,
                                 value:  prototypePathSegments.slice(0,index + 1).join('.'),
                                 label: nextLevel
                             });
@@ -53,10 +54,12 @@ export default class Navigation extends Component {
             }
             if (items.length > 0) {
                 items.unshift({
+                    key: '',
                     value:  subpath,
                     label: '--'
                 });
                 levels.push({
+                    key: 'level_' + index,
                     value: currentLevel,
                     items: items
                 })
@@ -65,11 +68,11 @@ export default class Navigation extends Component {
 
         return <div className={styles.navigation}>
             {levels.map(level => (
-                <div className={styles.item}>
+                <div key={level.key} className={styles.item}>
                     <SelectBox
                         theme={selectBoxTheme}
-                        options={level['items']}
-                        placeholder={level['value']}
+                        options={level.items}
+                        placeholder={level.value}
                         placeholderIcon=""
                         onSelect={setPath}
                     />

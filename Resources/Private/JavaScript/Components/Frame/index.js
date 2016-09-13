@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 export default class Frame extends Component {
     static propTypes = {
-        style: PropTypes.string,
+        style: PropTypes.object,
         className: PropTypes.string,
         content: PropTypes.string,
         uri: PropTypes.string.isRequired

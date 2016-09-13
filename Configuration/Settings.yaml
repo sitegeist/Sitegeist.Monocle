@@ -14,10 +14,7 @@ TYPO3:
             privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
             additionalResources:
               styleSheets:
-                app: 'resource://Sitegeist.Monocle/Public/Styles/App.css'
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
-              javaScripts:
-                app: 'resource://Sitegeist.Monocle/Public/JavaScript/App.js'
 
   Flow:
     security:
