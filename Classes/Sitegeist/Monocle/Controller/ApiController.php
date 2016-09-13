@@ -83,7 +83,8 @@ class ApiController extends ActionController
             foreach ($typoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObjectTree) {
                 if (array_key_exists('__meta', $prototypeObjectTree) && is_array($prototypeObjectTree['__meta']) && array_key_exists('styleguide', $prototypeObjectTree['__meta'])) {
                     $styleguideConfiguration = $prototypeObjectTree['__meta']['styleguide'];
-                    $styleguideObjects[$prototypeName] = [
+                    $styleguideObjects[] = [
+                        'prototypeName' => $prototypeName,
                         'title' => (isset($styleguideConfiguration['title'])) ? $styleguideConfiguration['title'] : '',
                         'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : 'other',
                         'description' => (isset($styleguideConfiguration['description'])) ? $styleguideConfiguration['description'] : ''

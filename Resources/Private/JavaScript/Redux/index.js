@@ -24,7 +24,7 @@ const initialState = {
     styleguide: {
         path: 'atoms',
         renderPrototypesEndpoint: null,
-        prototypes: {},
+        prototypes: [],
         resources: {}
     }
 };

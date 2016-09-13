@@ -18,7 +18,7 @@ import selectBoxTheme from './selectBoxTheme.css';
 export default class Navigation extends Component {
     static propTypes = {
         path: PropTypes.string,
-        prototypes: PropTypes.object,
+        prototypes: PropTypes.array,
         setPath: PropTypes.func.isRequired
     };
 
@@ -30,27 +30,50 @@ export default class Navigation extends Component {
         const pathSegments = path.split('.');
 
         const levels = [];
+
+/**
+        const levels2 = pathSegments.map((segment, index) => {
+
+            const levelKey = segment;
+            const levelPath = pathSegments.slice(0,index + 1).join('.');
+            const levelItems = [{
+                key: '',
+                value:  levelPath,
+                label: '--'
+            }];
+
+            // const levelItems = prototypes.filter((prototype,prototypeKey)=>{return 'foo'});
+
+            return {
+                key: levelKey,
+                value: levelPath,
+                items: levelItems
+            };
+        });
+*/
+
         for (let index = 0; index <= pathSegments.length; index ++) {
             const subpath = pathSegments.slice(0,index).join('.');
             const currentLevel = pathSegments[index];
             const items = [];
             const assignedKeys = [];
-            for (var key in prototypes) {
-                if (prototypes.hasOwnProperty(key)) {
-                    const prototype = prototypes[key];
-                    if (prototype['path'].startsWith(subpath)) {
-                        const prototypePathSegments = prototype['path'].split('.')
-                        const nextLevel =  prototypePathSegments[index];
-                        if (nextLevel && assignedKeys.indexOf(nextLevel) == -1){
-                            items.push({
-                                key: key,
-                                value:  prototypePathSegments.slice(0,index + 1).join('.'),
-                                label: nextLevel
-                            });
-                            assignedKeys.push(nextLevel);
-                        }
+            for (let key in prototypes) {
+                const prototype = prototypes[key];
+
+                // const prototype = prototypes[key];
+                if (prototype['path'].startsWith(subpath)) {
+                    const prototypePathSegments = prototype['path'].split('.')
+                    const nextLevel =  prototypePathSegments[index];
+                    if (nextLevel && assignedKeys.indexOf(nextLevel) == -1){
+                        items.push({
+                            key: prototype.prototypeName,
+                            value:  prototypePathSegments.slice(0,index + 1).join('.'),
+                            label: nextLevel
+                        });
+                        assignedKeys.push(nextLevel);
                     }
                 }
+
             }
             if (items.length > 0) {
                 items.unshift({

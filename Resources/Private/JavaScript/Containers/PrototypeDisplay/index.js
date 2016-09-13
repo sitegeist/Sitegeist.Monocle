@@ -25,7 +25,7 @@ import styles from './style.css';
 export default class PrototypeDisplay extends Component {
     static propTypes = {
         prototypeName: PropTypes.string.isRequired,
-        prototypes: PropTypes.object.isRequired,
+        prototypes: PropTypes.array.isRequired,
         resources: PropTypes.object.isRequired,
         renderPrototypesEndpoint: PropTypes.string,
         showRenderedElements: PropTypes.bool.isRequired,
@@ -54,7 +54,7 @@ export default class PrototypeDisplay extends Component {
         } = this.props;
 
 
-        const currentPrototype = (prototypes[prototypeName]) ? prototypes[prototypeName] : null;
+        const currentPrototype = prototypes.find((prototype)=>(prototype.prototypeName == prototypeName));
         const styleSheets = resources['styleSheets'] ? resources['styleSheets'] : null;
         const javaScripts= resources['javaScripts'] ? resources['javaScripts'] : null;
 

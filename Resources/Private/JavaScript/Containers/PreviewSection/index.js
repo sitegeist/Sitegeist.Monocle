@@ -20,7 +20,7 @@ export default class PreviewSection extends Component {
         activePreset: PropTypes.string,
         availablePresets: PropTypes.object,
         path: PropTypes.string,
-        prototypes: PropTypes.object
+        prototypes: PropTypes.array
 	};
 
     render() {
@@ -30,19 +30,11 @@ export default class PreviewSection extends Component {
         const width = (availablePresets[activePreset]) ? availablePresets[activePreset]['width'] : '';
         const label = (availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : '';
 
-        const displayPrototypes = [];
-        for (var prototypeKey in prototypes) {
-            if (prototypes.hasOwnProperty(prototypeKey)) {
-                const prototype = prototypes[prototypeKey];
-                if (prototype['path'].startsWith(path)) {
-                    displayPrototypes.push({key: prototypeKey, prototypeKey: prototypeKey});
-                }
-            }
-        }
+        const displayPrototypes = prototypes.filter((prototype)=>(prototype.path.startsWith(path))) ;
 
         return <div className={styles.previewSection}>
             {displayPrototypes.map(item => (
-                <PrototypeDisplay key={item.prototypeKey} prototypeName={item.prototypeKey} />
+                <PrototypeDisplay key={item.prototypeName} prototypeName={item.prototypeName} />
             ))}
         </div>;
     }
