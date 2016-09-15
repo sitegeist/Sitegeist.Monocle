@@ -22,85 +22,59 @@ export default class Navigation extends Component {
         setPath: PropTypes.func.isRequired
     };
 
-	render() {
-        const {path, prototypes, setPath} = this.props;
+    getPathItems(path) {
+        const {prototypes} = this.props;
+        const level = path ? path.split('.').length : 0;
+        const items = prototypes
+            .filter(prototype => (path ? prototype.path.startsWith( path + '.') : true))
+            .map(prototype => prototype.path.split('.').slice(0, level + 1).join('.'))
+            .filter((path, index, pathes) => (pathes.indexOf(path) == index))
+            .map(path => {
+                const segment = path.split('.').pop();
+                return {
+                    value: path,
+                    label: segment.charAt(0).toUpperCase() + segment.slice(1)
+                }
+            });
+        return items;
+    }
 
-        // build the levels of the styeguide navigation
-        // @todo refactor this in a fuctional manner
+	render() {
+        const {path, setPath} = this.props;
+
         const pathSegments = path.split('.');
 
-        const levels = [];
-
-/**
-        const levels2 = pathSegments.map((segment, index) => {
-
-            const levelKey = segment;
-            const levelPath = pathSegments.slice(0,index + 1).join('.');
-            const levelItems = [{
-                key: '',
-                value:  levelPath,
-                label: '--'
-            }];
-
-            // const levelItems = prototypes.filter((prototype,prototypeKey)=>{return 'foo'});
-
+        const rootline = pathSegments.map((segment, level, segments) => {
+            const title = segment.charAt(0).toUpperCase() + segment.slice(1);
+            const path = segments.slice(0, level).join('.');
             return {
-                key: levelKey,
-                value: levelPath,
-                items: levelItems
+                key: level,
+                title: segment.charAt(0).toUpperCase() + segment.slice(1),
+                items: this.getPathItems(path)
             };
         });
-*/
 
-        for (let index = 0; index <= pathSegments.length; index ++) {
-            const subpath = pathSegments.slice(0,index).join('.');
-            const currentLevel = pathSegments[index];
-            const items = [];
-            const assignedKeys = [];
-            for (let key in prototypes) {
-                const prototype = prototypes[key];
-
-                // const prototype = prototypes[key];
-                if (prototype['path'].startsWith(subpath)) {
-                    const prototypePathSegments = prototype['path'].split('.')
-                    const nextLevel =  prototypePathSegments[index];
-                    if (nextLevel && assignedKeys.indexOf(nextLevel) == -1){
-                        items.push({
-                            key: prototype.prototypeName,
-                            value:  prototypePathSegments.slice(0,index + 1).join('.'),
-                            label: nextLevel
-                        });
-                        assignedKeys.push(nextLevel);
-                    }
-                }
-
-            }
-            if (items.length > 0) {
-                items.unshift({
-                    key: '',
-                    value:  subpath,
-                    label: '--'
-                });
-                levels.push({
-                    key: 'level_' + index,
-                    value: currentLevel,
-                    items: items
-                })
-            };
-        }
+        const children = this.getPathItems(path);
 
         return <div className={styles.navigation}>
-            {levels.map(level => (
+            {rootline.map(level => (
                 <div key={level.key} className={styles.item}>
                     <SelectBox
                         theme={selectBoxTheme}
                         options={level.items}
-                        placeholder={level.value}
+                        placeholder={level.title}
                         placeholderIcon=""
                         onSelect={setPath}
                     />
                 </div>
             ))}
+
+            {if (children.length > 0 && path) {
+            <div key={path} className={styles.item}>
+                 <SelectBox theme={selectBoxTheme} options={children} onSelect={setPath} />
+            </div>
+            )}
+
 		</div>;
 	}
 }

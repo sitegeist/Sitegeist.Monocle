@@ -61,6 +61,7 @@
     "lodash.isfunction": "^3.0.8",
     "lodash.omit": "^4.5.0",
     "moment": "^2.14.1",
+    "normalize.css": "^4.2.0",
     "object-assign": "^4.1.0",
     "pretty": "^1.0.0",
     "ramda": "^0.21.0",

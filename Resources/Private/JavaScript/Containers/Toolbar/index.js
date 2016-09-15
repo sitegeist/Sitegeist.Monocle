@@ -6,7 +6,7 @@ import {redux} from 'Redux/index';
 import Bar from '@neos-project/react-ui-components/lib/Bar';
 import IconButton from '@neos-project/react-ui-components/lib/IconButton';
 
-import {Navigation, ViewportOptions, DisplayOptions} from 'Containers/index';
+import {Navigation, ViewportOptions} from 'Containers/index';
 import styles from './style.css';
 
 @connect(state => {
@@ -30,10 +30,6 @@ export default class Toolbar extends Component {
 
                 <div className={styles.fullscreen}>
                     <IconButton icon="external-link" onClick={()=>(window.open(fullscreenUri,'_blank'))} />
-                </div>
-
-                <div className={styles.options}>
-                    <DisplayOptions />
                 </div>
 
                 <div className={styles.viewports}>

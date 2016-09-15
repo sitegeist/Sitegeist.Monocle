@@ -13,12 +13,9 @@ import styles from './style.css';
     return {
         prototypes: state.styleguide.prototypes,
         resources: state.styleguide.resources,
-        showRenderedElements: state.displayOptions.renderedElements,
         renderPrototypesEndpoint: state.styleguide.renderPrototypesEndpoint,
         iframeUri: state.styleguide.iframeUri,
         previewUri: state.styleguide.previewUri,
-        showSourceCode: state.displayOptions.sourceCode,
-        showDescription: state.displayOptions.description,
         viewportWidth: state.viewportOptions.width
     };
 })
@@ -28,9 +25,6 @@ export default class PrototypeDisplay extends Component {
         prototypes: PropTypes.array.isRequired,
         resources: PropTypes.object.isRequired,
         renderPrototypesEndpoint: PropTypes.string,
-        showRenderedElements: PropTypes.bool.isRequired,
-        showSourceCode: PropTypes.bool.isRequired,
-        showDescription: PropTypes.bool.isRequired,
         viewportWidth: PropTypes.number,
     };
 
@@ -38,7 +32,8 @@ export default class PrototypeDisplay extends Component {
         isRendered: false,
         renderedHtml: '',
         renderedCode: '',
-        parsedCode: ''
+        parsedCode: '',
+        showSourceCode: false,
     };
 
     render() {
@@ -46,9 +41,6 @@ export default class PrototypeDisplay extends Component {
             prototypeName,
             prototypes,
             resources,
-            showRenderedElements,
-            showSourceCode,
-            showDescription,
             viewportWidth,
 			iframeUri
         } = this.props;
@@ -66,15 +58,16 @@ export default class PrototypeDisplay extends Component {
 				<small className={styles.subheadline}>prototype({prototypeName})</small>
 
 				<div className={styles.handles}>
+                    <IconButton icon="code" className={styles.handle} isActive={this.state.showSourceCode} onClick={() => this.toggleShowSourceCode()} />
 					<IconButton icon="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
 					<IconButton icon="external-link" className={styles.handle} onClick={() => this.openPreview()} />
 				</div>
 			</h1>
-			{ showDescription ? <p className={styles.description}>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p> : '' }
+			<p className={styles.description}>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p>
 
-            { (showRenderedElements && this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
+            { (this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
 
-            { (showSourceCode && this.state.isRendered) ?
+            { (this.state.showSourceCode && this.state.isRendered) ?
                 <Tabs>
                     <Tabs.Panel title="HTML" icon="code"><div className={styles.codePanel}><Code content={pretty(this.state.renderedHtml)}  language="html" /></div></Tabs.Panel>
                     <Tabs.Panel title="Fusion" icon="terminal"><div className={styles.codePanel}><Code content={this.state.renderedCode}  language="vim" /></div></Tabs.Panel>
@@ -96,6 +89,10 @@ export default class PrototypeDisplay extends Component {
         if (prevProps.prototypeName !== prototypeName) {
             this.fetchPrototype();
         }
+    }
+
+    toggleShowSourceCode() {
+        this.setState({showSourceCode: !this.state.showSourceCode});
     }
 
     fetchPrototype() {
