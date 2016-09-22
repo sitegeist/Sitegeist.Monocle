@@ -1,27 +1,27 @@
-# ATTENTION: THIS IS A PROTOTYPE EVERYTHING IN HERE MIGHT CHANGE! 
+# ATTENTION: THIS IS A PROTOTYPE EVERYTHING IN HERE MIGHT CHANGE!
 
 # Sitegeist.Monocle
 
 ## A living styleguide for Neos
 
-This package adds a styleguide module to Neos that renders the 
+This package adds a styleguide module to Neos that renders the
 TypoScript2 prototypes in isolation that are annotated with `@styleguide`.
 
 ### Authors & Sponsors
 
 * Martin Ficzel - ficzel@sitegeist.de
 
-*The development and the public-releases of this package is generously sponsored 
+*The development and the public-releases of this package is generously sponsored
 by our employer http://www.sitegeist.de.*
 
 ### Living Styleguide
 
-The Monocle-Module uses the real TypoScript2 code to render the annotated 
-prototypes in isolation. That way the styleguide is always up to date and cannot 
-diverge over time from the real codebase. 
+The Monocle-Module uses the real TypoScript2 code to render the annotated
+prototypes in isolation. That way the styleguide is always up to date and cannot
+diverge over time from the real codebase.
 
-The Monocle was defined with Atomic-Design and pure TypoScript2 without Fluid in 
-mind but the implementation is Coding-Style and Template-Engine agnostic. You can 
+The Monocle was defined with Atomic-Design and pure TypoScript2 without Fluid in
+mind but the implementation is Coding-Style and Template-Engine agnostic. You can
 use Monocle to render Fluid based Prototypes without any limitation.
 
 ## Usage
@@ -40,13 +40,13 @@ prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
         # an optional class for the wrapping div of the preview
         # previewContainerClass = 'class-with-nice-background'
 
-        # render the prototype in a single iframe 
+        # render the prototype in a single iframe
         # display = 'iframe'
 
         # define the height of the prototype iframe
         # height = 600
 
-        # ts props to override for the styleguide rendering 
+        # ts props to override for the styleguide rendering
         props {
             content = 'Hello World'
         }
@@ -75,28 +75,27 @@ Sitegeist:
 
 ### Routes
 
-If not already present, you have to include the standard Flow routes into the `Routes.yaml` of
-your distribution.
+If the default flow subroutes are not included in your main Routes.yaml you can add the following
+routes to your global Routes.yaml and only enable the monocle-subroutes.
 
 ```YAML
 ##
-# Flow subroutes
+# Sitegeist.Monocle subroutes
+
 -
-  name: 'Flow'
-  uriPattern: 'flow/<FlowSubroutes>'
-  defaults:
-    '@format': 'html'
+  name: 'Monocle'
+  uriPattern: 'sitegeist/monocle/<MonocleSubroutes>'
   subRoutes:
-    FlowSubroutes:
-      package: TYPO3.Flow
+    'MonocleSubroutes':
+      package: 'Sitegeist.Monocle'
 ```
 
 # Best practices
 
 ## Atomic-Design with TS2
 
-It is a good idea and our intention to use Sitegeist.Monocle together with 
-"atomic design" (see: http://patternlab.io/about.html) and "CSS BEM" 
+It is a good idea and our intention to use Sitegeist.Monocle together with
+"atomic design" (see: http://patternlab.io/about.html) and "CSS BEM"
 (see: http://getbem.com/introduction/). Nevertheless Sitegeist.Monocle
 will not enforce any of this.
 
@@ -164,7 +163,7 @@ page = TYPO3.TypoScript:Case {
 ```
 prototype(Vendor.Site:ExampleNode) < prototype(Vendor.Site:Molecules.Example) {
   # this has to be done because of auto generated TS
-  templatePaths = NULL 
+  templatePaths = NULL
   # map node properties
   exampleProperty = ${q(node).property('propertyName')}
 }
