@@ -3,35 +3,39 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {redux} from 'Redux/index';
-import {IconButton} from 'Components/index';
+import Bar from '@neos-project/react-ui-components/lib/Bar';
+import IconButton from '@neos-project/react-ui-components/lib/IconButton';
+
+import {Navigation, ViewportOptions} from 'Containers/index';
+import styles from './style.css';
 
 @connect(state => {
 	return {
-		aIsActive: state.displayOptions.fullscreen
+        fullscreenUri: state.styleguide.fullscreenUri,
 	};
-}, {
-	toggleFullscreen: redux.DisplayOptions.actions.toggleFullscreen
 })
 export default class Toolbar extends Component {
-	static propTypes = {
-		aIsActive: PropTypes.bool.isRequired,
-
-		toggleFullscreen: PropTypes.func.isRequired
+    static propTypes = {
+        fullscreenUri: PropTypes.string.isRequired
 	};
 
 	render() {
-		const {aIsActive, toggleFullscreen} = this.props;
+        const {fullscreenUri} = this.props;
 
-		return (<ul>
-			<li>
-				<IconButton type="eye-open" />
-			</li>
-			<li>
-				<IconButton type="code" />
-			</li>
-			<li>
-				<IconButton type="file-text" />
-			</li>
-		</ul>);
+		return (
+            <Bar position="top" className={styles.bar}>
+                <div className={styles.navigation}>
+                    <Navigation />
+                </div>
+
+                <div className={styles.fullscreen}>
+                    <IconButton icon="external-link" onClick={()=>(window.open(fullscreenUri,'_blank'))} />
+                </div>
+
+                <div className={styles.viewports}>
+                    <ViewportOptions/>
+                </div>
+            </Bar>
+        );
 	}
 }
