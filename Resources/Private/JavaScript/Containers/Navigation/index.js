@@ -41,9 +41,7 @@ export default class Navigation extends Component {
 
 	render() {
         const {path, setPath} = this.props;
-
         const pathSegments = path.split('.');
-
         const rootline = pathSegments.map((segment, level, segments) => {
             const title = segment.charAt(0).toUpperCase() + segment.slice(1);
             const path = segments.slice(0, level).join('.');
@@ -69,11 +67,9 @@ export default class Navigation extends Component {
                 </div>
             ))}
 
-            {if (children.length > 0 && path) {
             <div key={path} className={styles.item}>
                  <SelectBox theme={selectBoxTheme} options={children} onSelect={setPath} />
             </div>
-            )}
 
 		</div>;
 	}
