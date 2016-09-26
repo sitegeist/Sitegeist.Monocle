@@ -1,9 +1,13 @@
-import {createStore, compose, combineReducers} from 'redux';
+import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga'
+
 import Immutable from 'seamless-immutable';
 
 import ViewportOptions from './ViewportOptions/index';
 import SiteOptions from './SiteOptions/index';
 import Styleguide from './Styleguide/index';
+
+import rootSaga from '../Sagas/index'
 
 const initialState = {
     siteOptions: {
@@ -29,14 +33,30 @@ const reducer = combineReducers({
     styleguide: Styleguide.reducer
 });
 
-export default createStore(
-    reducer,
-    Immutable(initialState),
-    window.devToolsExtension ? window.devToolsExtension() : undefined
-);
-
 export const redux = {
     ViewportOptions,
     SiteOptions,
     Styleguide
 };
+
+export default (function(){
+
+    const storeEnhancers = [];
+
+    const sagaMiddleware = createSagaMiddleware();
+    storeEnhancers.push(applyMiddleware(sagaMiddleware));
+
+    if (window.devToolsExtension){
+        storeEnhancers.push( window.devToolsExtension() );
+    }
+
+    const store = createStore(
+        reducer,
+        Immutable(initialState),
+        compose(...storeEnhancers)
+    );
+
+    sagaMiddleware.run(rootSaga);
+
+    return store;
+}());

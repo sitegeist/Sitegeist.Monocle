@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
@@ -13,7 +15,7 @@ const initialize = () => {
     store.dispatch(redux.Styleguide.actions.setIframeUri(appContainer.dataset.iframeUri));
     store.dispatch(redux.Styleguide.actions.setPreviewUri(appContainer.dataset.previewUri));
     store.dispatch(redux.Styleguide.actions.setFullscreenUri(appContainer.dataset.fullscreenUri));
-    store.dispatch(redux.Styleguide.actions.setPath((window.location.hash && window.location.hash !== '#') ? window.location.hash.substring(1) : appContainer.dataset.defaultPath));
+//    store.dispatch(redux.Styleguide.actions.setPath((window.location.hash && window.location.hash !== '#') ? window.location.hash.substring(1) : appContainer.dataset.defaultPath));
 
 	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST',

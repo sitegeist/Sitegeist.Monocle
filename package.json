@@ -34,6 +34,8 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-react": "^6.11.1",
@@ -80,6 +82,8 @@
     "react-textarea-autosize": "^4.0.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.1",
+    "redux-saga": "^0.11.1",
+    "regenerator": "^0.8.46",
     "seamless-immutable": "^6.1.1"
   }
 }

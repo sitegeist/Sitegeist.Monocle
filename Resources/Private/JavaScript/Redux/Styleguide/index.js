@@ -40,7 +40,6 @@ const actions = {
 const reducer = (state = {}, action) => {
 	switch(action.type)	{
 		case SET_PATH:
-            window.location.hash = action.payload;
 			return state.setIn(['path'], action.payload);
         case SET_PROTOTYPES:
             return state.setIn(['prototypes'], action.payload);
