@@ -67,9 +67,9 @@ export default class Navigation extends Component {
                 </div>
             ))}
 
-            <div key={path} className={styles.item}>
+            {(children.length > 0) ? <div key={path} className={styles.item}>
                  <SelectBox theme={selectBoxTheme} options={children} onSelect={setPath} />
-            </div>
+            </div> : ''}
 
 		</div>;
 	}
