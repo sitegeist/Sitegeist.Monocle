@@ -1,11 +1,11 @@
 <?php
-
 namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Utility\Arrays;
 use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Mvc\Controller\ActionController;
+use TYPO3\Flow\Resource\ResourceManager;
 use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
 use Sitegeist\Monocle\Helper\TypoScriptHelper;
@@ -47,6 +47,12 @@ class PreviewController extends ActionController
     protected $contextHelper;
 
     /**
+     * @Flow\Inject
+     * @var ResourceManager
+     */
+    protected $resourceManager;
+
+    /**
 	 * Initialize the view
 	 *
 	 * @param  ViewInterface $view
@@ -55,7 +61,21 @@ class PreviewController extends ActionController
 	public function initializeView(ViewInterface $view)
 	{
         $view->assign('defaultPath', $this->defaultPath);
-		$view->assign('additionalResources', $this->additionalResources);
+
+        //
+        // Resolve resource uris in beforehand
+        //
+		$view->assign('additionalResources', array_map(function ($resourceList) {
+            return array_map(function ($path) {
+                if (strpos($path, 'resource://') === 0) {
+                    list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
+                    return $this->resourceManager->getPublicPackageResourceUri($package, $path);
+                }
+
+                return $path;
+            }, $resourceList);
+        }, $this->additionalResources));
+
 	}
 
     /**
