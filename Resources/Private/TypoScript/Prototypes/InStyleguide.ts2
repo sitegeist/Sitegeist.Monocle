@@ -1,0 +1,3 @@
+prototype(Sitegeist.Monocle:InStyleguide) {
+	@class = 'Sitegeist\\Monocle\\TypoScript\\InStyleguideImplementation'
+}
