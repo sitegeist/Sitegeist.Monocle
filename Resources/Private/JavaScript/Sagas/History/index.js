@@ -7,18 +7,15 @@ function* pathChanged(action) {
 }
 
 function* historySaga() {
-    const appContainer = document.getElementById('app');
     let path = '';
 
     if (window.location.hash && window.location.hash !== '#') {
         path = window.location.hash.substring(1);
-    } else {
-        path = appContainer.dataset.defaultPath;
     }
 
     // initially restore the previous path
     yield put(redux.Styleguide.actions.setPath(path))
-    
+
     // register for all path actions to persist the path
     yield* takeEvery(redux.Styleguide.actionTypes.SET_PATH, pathChanged);
 }

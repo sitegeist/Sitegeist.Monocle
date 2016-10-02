@@ -19955,29 +19955,26 @@
 	}
 	
 	function historySaga() {
-	    var appContainer, path;
+	    var path;
 	    return regeneratorRuntime.wrap(function historySaga$(_context2) {
 	        while (1) {
 	            switch (_context2.prev = _context2.next) {
 	                case 0:
-	                    appContainer = document.getElementById('app');
 	                    path = '';
 	
 	
 	                    if (window.location.hash && window.location.hash !== '#') {
 	                        path = window.location.hash.substring(1);
-	                    } else {
-	                        path = appContainer.dataset.defaultPath;
 	                    }
 	
 	                    // initially restore the previous path
-	                    _context2.next = 5;
+	                    _context2.next = 4;
 	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(path));
 	
-	                case 5:
-	                    return _context2.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.Styleguide.actionTypes.SET_PATH, pathChanged), 't0', 6);
+	                case 4:
+	                    return _context2.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.Styleguide.actionTypes.SET_PATH, pathChanged), 't0', 5);
 	
-	                case 6:
+	                case 5:
 	                case 'end':
 	                    return _context2.stop();
 	            }
