@@ -80,6 +80,8 @@ const initialize = () => {
         .then(response => response.json())
         .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));
 
+    // dispatch boot event
+    store.dispatch(redux.actions.boot(appContainer.dataset));
 
 	ReactDOM.render(
 		<div>

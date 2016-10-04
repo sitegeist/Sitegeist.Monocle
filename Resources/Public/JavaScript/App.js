@@ -150,6 +150,9 @@
 	        return store.dispatch(_index2.redux.SiteOptions.actions.setAvailableSites(json));
 	    });
 	
+	    // dispatch boot event
+	    store.dispatch(_index2.redux.actions.boot(appContainer.dataset));
+	
 	    _reactDom2.default.render(_react2.default.createElement(
 	        'div',
 	        null,
@@ -2591,9 +2594,7 @@
 	
 	var _redux = __webpack_require__(48);
 	
-	var _seamlessImmutable = __webpack_require__(123);
-	
-	var _seamlessImmutable2 = _interopRequireDefault(_seamlessImmutable);
+	var _reduxActions = __webpack_require__(75);
 	
 	var _index = __webpack_require__(137);
 	
@@ -2608,6 +2609,20 @@
 	var _index6 = _interopRequireDefault(_index5);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var BOOT = '@sitegeist/monocle-ui/Styleguide/BOOT';
+	
+	var actionTypes = {
+	    BOOT: BOOT
+	};
+	
+	var boot = (0, _reduxActions.createAction)(BOOT, function (payload) {
+	    return payload;
+	});
+	
+	var actions = {
+	    boot: boot
+	};
 	
 	var initialState = exports.initialState = {
 	    siteOptions: {
@@ -2636,7 +2651,9 @@
 	var redux = exports.redux = {
 	    ViewportOptions: _index2.default,
 	    SiteOptions: _index4.default,
-	    Styleguide: _index6.default
+	    Styleguide: _index6.default,
+	    actionTypes: actionTypes,
+	    actions: actions
 	};
 
 /***/ },
@@ -20506,16 +20523,35 @@
 	
 	var _index = __webpack_require__(19);
 	
-	var _marked = [pathChanged, historySaga].map(regeneratorRuntime.mark);
+	var _marked = [boot, pathChanged, historySaga].map(regeneratorRuntime.mark);
 	
-	function pathChanged(action) {
-	    return regeneratorRuntime.wrap(function pathChanged$(_context) {
+	function boot(action) {
+	    return regeneratorRuntime.wrap(function boot$(_context) {
 	        while (1) {
 	            switch (_context.prev = _context.next) {
 	                case 0:
-	                    window.location.hash = action.payload;
+	                    if (!(window.location.hash && window.location.hash !== '#')) {
+	                        _context.next = 5;
+	                        break;
+	                    }
 	
-	                case 1:
+	                    _context.next = 3;
+	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(window.location.hash.substring(1)));
+	
+	                case 3:
+	                    _context.next = 8;
+	                    break;
+	
+	                case 5:
+	                    if (!(action.payload && action.payload.defaultPath)) {
+	                        _context.next = 8;
+	                        break;
+	                    }
+	
+	                    _context.next = 8;
+	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(action.payload.defaultPath));
+	
+	                case 8:
 	                case 'end':
 	                    return _context.stop();
 	            }
@@ -20523,32 +20559,37 @@
 	    }, _marked[0], this);
 	}
 	
-	function historySaga() {
-	    var path;
-	    return regeneratorRuntime.wrap(function historySaga$(_context2) {
+	function pathChanged(action) {
+	    return regeneratorRuntime.wrap(function pathChanged$(_context2) {
 	        while (1) {
 	            switch (_context2.prev = _context2.next) {
 	                case 0:
-	                    path = '';
+	                    window.location.hash = action.payload;
 	
-	
-	                    if (window.location.hash && window.location.hash !== '#') {
-	                        path = window.location.hash.substring(1);
-	                    }
-	
-	                    // initially restore the previous path
-	                    _context2.next = 4;
-	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(path));
-	
-	                case 4:
-	                    return _context2.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.Styleguide.actionTypes.SET_PATH, pathChanged), 't0', 5);
-	
-	                case 5:
+	                case 1:
 	                case 'end':
 	                    return _context2.stop();
 	            }
 	        }
 	    }, _marked[1], this);
+	}
+	
+	function historySaga() {
+	    return regeneratorRuntime.wrap(function historySaga$(_context3) {
+	        while (1) {
+	            switch (_context3.prev = _context3.next) {
+	                case 0:
+	                    return _context3.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.actionTypes.BOOT, boot), 't0', 1);
+	
+	                case 1:
+	                    return _context3.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.Styleguide.actionTypes.SET_PATH, pathChanged), 't1', 2);
+	
+	                case 2:
+	                case 'end':
+	                    return _context3.stop();
+	            }
+	        }
+	    }, _marked[2], this);
 	}
 	
 	exports.default = historySaga;

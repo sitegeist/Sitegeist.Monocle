@@ -1,10 +1,21 @@
 import {combineReducers} from 'redux';
-
-import Immutable from 'seamless-immutable';
+import {createAction} from 'redux-actions';
 
 import ViewportOptions from './ViewportOptions/index';
 import SiteOptions from './SiteOptions/index';
 import Styleguide from './Styleguide/index';
+
+const BOOT = '@sitegeist/monocle-ui/Styleguide/BOOT';
+
+const actionTypes =  {
+    BOOT
+};
+
+const boot = createAction(BOOT, payload => payload);
+
+const actions = {
+    boot
+};
 
 export const initialState = {
     siteOptions: {
@@ -33,5 +44,7 @@ export const reducer = combineReducers({
 export const redux = {
     ViewportOptions,
     SiteOptions,
-    Styleguide
+    Styleguide,
+    actionTypes,
+    actions
 };
