@@ -30,16 +30,20 @@ TYPO3:
 Sitegeist:
   Monocle:
 
-    viewportPresets:
-      xs:
-        label: 'xtra small'
-        width: 400
-      md:
-        label: 'medium'
-        width: 600
-      wide:
-        label: 'wide'
-        width: 800
+    viewportPresets: []
+#    viewportPresets:
+#      xs:
+#        label: 'xtra small'
+#        width: 400
+#        height: 600
+#      md:
+#        label: 'medium'
+#        width: 600
+#        height: 400
+#      l:
+#        label: 'wide'
+#        width: 800
+#        height: 600
 
     preview:
       defaultPath: 'atoms.basic'
