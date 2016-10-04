@@ -7,6 +7,7 @@ use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
 class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
 {
+    const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
 
     /**
      * @Flow\InjectConfiguration(path="typoScript.autoInclude", package="TYPO3.Neos")
@@ -56,7 +57,7 @@ class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
 
         // create render pathes
         foreach($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
-            $result['monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName)] = $prototypeConfiguration;
+            $result[self::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName)] = $prototypeConfiguration;
         }
 
         return  $result;
