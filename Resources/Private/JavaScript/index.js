@@ -3,11 +3,44 @@ import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga'
+import Immutable from 'seamless-immutable';
+
 import {Toolbar, App, PreviewSection } from './Containers/index';
 
-import store, {redux} from './Redux/index';
+import {redux, reducer, initialState} from './Redux/index';
+import rootSaga from './Sagas/index'
+
+const createEnhancedReduxStore = () => {
+    const storeEnhancers = [];
+
+    // saga middleqware
+    const sagaMiddleware = createSagaMiddleware();
+    storeEnhancers.push(applyMiddleware(sagaMiddleware));
+
+    // dev tools extension
+    if (window.devToolsExtension){
+        storeEnhancers.push( window.devToolsExtension() );
+    }
+
+    // create store
+    const store = createStore(
+        reducer,
+        Immutable(initialState),
+        compose(...storeEnhancers)
+    );
+
+    // run saga
+    sagaMiddleware.run(rootSaga);
+    return store;
+}
 
 const initialize = () => {
+    // create store
+    const store = createEnhancedReduxStore();
+
+    // init app
 	const appContainer = document.getElementById('app');
 
     // set defaults from data
@@ -15,7 +48,6 @@ const initialize = () => {
     store.dispatch(redux.Styleguide.actions.setIframeUri(appContainer.dataset.iframeUri));
     store.dispatch(redux.Styleguide.actions.setPreviewUri(appContainer.dataset.previewUri));
     store.dispatch(redux.Styleguide.actions.setFullscreenUri(appContainer.dataset.fullscreenUri));
-//    store.dispatch(redux.Styleguide.actions.setPath((window.location.hash && window.location.hash !== '#') ? window.location.hash.substring(1) : appContainer.dataset.defaultPath));
 
 	fetch(appContainer.dataset.prototypesEndpoint, {
 		method: 'POST',
@@ -47,6 +79,7 @@ const initialize = () => {
     })
         .then(response => response.json())
         .then(json => (store.dispatch(redux.SiteOptions.actions.setAvailableSites(json))));
+
 
 	ReactDOM.render(
 		<div>
