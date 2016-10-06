@@ -2129,83 +2129,6 @@
 .style__bar--bottom___1OIC1 {
     bottom: 0;
 }
-.style__iconButton___TIbnT {
-    vertical-align: top;
-    width: 40px;
-    padding-left: 0;
-    padding-right: 0;
-}
-.style__btn___1o8Yq {
-    position: relative;
-    display: inline-block;
-    height: 40px;
-    min-width: 40px;
-    padding: 0 16px;
-    border: 0;
-    -webkit-font-smoothing: antialiased;
-    vertical-align: middle;
-    width: auto;
-    color: #FFF;
-    cursor: pointer;
-    background: #323232;
-    font-size: 14px;
-}
-.style__btn___1o8Yq:focus {
-    outline: 1px dotted #FFF;
-}
-.style__btn___1o8Yq[disabled] {
-    opacity: .5;
-    cursor: not-allowed;
-}
-.style__btn___1o8Yq[disabled]:hover {
-    color: #FFF;
-}
-.style__btn--size-small___2zqu5 {
-    height: 32px;
-    font-size: 13px;
-    padding: 0 8px;
-}
-
-.style__btn--clean___5owLr {
-    background-color: #222;
-}
-
-.style__btn--clean___5owLr[disabled]:hover {
-    background-color: #222;
-}
-.style__btn--lighter___2ipcg {
-    background-color: #3f3f3f;
-}
-.style__btn--lighter___2ipcg[disabled]:hover {
-    background-color: #3f3f3f;
-}
-.style__btn--transparent___3oM6- {
-    background: 0;
-}
-.style__btn--brand___1d7mz {
-    background-color: #00ADEE;
-}
-.style__btn--brand___1d7mz[disabled]:hover {
-    background-color: #00ADEE;
-}
-.style__btn--brandHover___34TWc:hover {
-    background-color: #00ADEE;
-}
-.style__btn--brandHover___34TWc.style__btn--isPressed___XkazS {
-    background-color: #00ADEE;
-}
-
-.style__btn--cleanHover___1qsup.style__btn--isPressed___XkazS {
-    color: #00ADEE;
-}
-
-.style__btn--cleanHover___1qsup:hover {
-    color: #00ADEE;
-}
-.style__btn--darkenHover___2Qb8N.style__btn--isPressed___XkazS,
-.style__btn--darkenHover___2Qb8N:hover {
-    background: rgba(0, 0, 0, .1);
-}
 .style__bar___xdGNU {
 }
 
@@ -2311,6 +2234,83 @@
 .style__panel___1fjIi {
     padding: 11px 0;
     overflow-y: auto;
+}
+.style__iconButton___TIbnT {
+    vertical-align: top;
+    width: 40px;
+    padding-left: 0;
+    padding-right: 0;
+}
+.style__btn___1o8Yq {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    min-width: 40px;
+    padding: 0 16px;
+    border: 0;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    width: auto;
+    color: #FFF;
+    cursor: pointer;
+    background: #323232;
+    font-size: 14px;
+}
+.style__btn___1o8Yq:focus {
+    outline: 1px dotted #FFF;
+}
+.style__btn___1o8Yq[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+}
+.style__btn___1o8Yq[disabled]:hover {
+    color: #FFF;
+}
+.style__btn--size-small___2zqu5 {
+    height: 32px;
+    font-size: 13px;
+    padding: 0 8px;
+}
+
+.style__btn--clean___5owLr {
+    background-color: #222;
+}
+
+.style__btn--clean___5owLr[disabled]:hover {
+    background-color: #222;
+}
+.style__btn--lighter___2ipcg {
+    background-color: #3f3f3f;
+}
+.style__btn--lighter___2ipcg[disabled]:hover {
+    background-color: #3f3f3f;
+}
+.style__btn--transparent___3oM6- {
+    background: 0;
+}
+.style__btn--brand___1d7mz {
+    background-color: #00ADEE;
+}
+.style__btn--brand___1d7mz[disabled]:hover {
+    background-color: #00ADEE;
+}
+.style__btn--brandHover___34TWc:hover {
+    background-color: #00ADEE;
+}
+.style__btn--brandHover___34TWc.style__btn--isPressed___XkazS {
+    background-color: #00ADEE;
+}
+
+.style__btn--cleanHover___1qsup.style__btn--isPressed___XkazS {
+    color: #00ADEE;
+}
+
+.style__btn--cleanHover___1qsup:hover {
+    color: #00ADEE;
+}
+.style__btn--darkenHover___2Qb8N.style__btn--isPressed___XkazS,
+.style__btn--darkenHover___2Qb8N:hover {
+    background: rgba(0, 0, 0, .1);
 }
 .style__prototype___2zaQk {
     margin: 80px 0;
