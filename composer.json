@@ -8,6 +8,11 @@
             "name": "Martin Ficzel",
             "email": "ficzel@sitegeist.de",
             "role": "Developer"
+        },
+        {
+            "name": "Wilhelm Behncke",
+            "email": "behncke@sitegeist.de",
+            "role": "Developer"
         }
     ],
     "require": {
