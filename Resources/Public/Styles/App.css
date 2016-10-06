@@ -2367,6 +2367,7 @@
     transition: max-width 0.25s ease-in-out;
     max-width: 1920px;
     width: 100%;
+    border: none;
 }
 
 .style__codePanel___1vaFk {
