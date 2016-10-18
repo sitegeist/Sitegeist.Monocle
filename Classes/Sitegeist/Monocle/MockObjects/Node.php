@@ -79,7 +79,6 @@ class Node implements NodeInterface
     public function getLabel()
     {
         return $this->getNodeType()->getNodeLabelGenerator()->getLabel($this);
-
     }
 
     /**
@@ -610,7 +609,8 @@ class Node implements NodeInterface
         return count($this->childNodes > 0);
     }
 
-    public function setChildNodes(array $childNodes) {
+    public function setChildNodes(array $childNodes)
+    {
         $this->childNodes = $childNodes;
     }
 
