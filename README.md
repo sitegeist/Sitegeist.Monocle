@@ -1,9 +1,4 @@
-|StyleCI|
-
-.. |StyleCI| image:: https://styleci.io/repos/56759262/shield?style=flat
-   :target: https://styleci.io/repos/56759262
-
-# ATTENTION: THIS IS A PROTOTYPE EVERYTHING IN HERE MIGHT CHANGE!
+[![StyleCI](https://styleci.io/repos/56759262/shield?style=flat)](https://styleci.io/repos/56759262)
 
 # Sitegeist.Monocle
 
@@ -15,6 +10,7 @@ TypoScript2 prototypes in isolation that are annotated with `@styleguide`.
 ### Authors & Sponsors
 
 * Martin Ficzel - ficzel@sitegeist.de
+* Wilhelm Behncke - behncke@sitegeist.de
 
 *The development and the public-releases of this package is generously sponsored
 by our employer http://www.sitegeist.de.*
