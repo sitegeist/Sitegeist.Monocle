@@ -7,6 +7,7 @@ use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
 
 class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
 {
+    const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
 
     /**
      * @Flow\InjectConfiguration(path="typoScript.autoInclude", package="TYPO3.Neos")
@@ -31,11 +32,11 @@ class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
         }
 
         // create rendering protoytpes with dummy data
-        foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration ) {
+        foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
             $renderPrototypeTypoScript = [
                 '__objectType' => $prototypeName,
-                '__value' => NULL,
-                '__eelExpression' => NULL
+                '__value' => null,
+                '__eelExpression' => null
             ];
             if (array_key_exists('props', $prototypeConfiguration['__meta']['styleguide']) && is_array($prototypeConfiguration['__meta']['styleguide']['props'])) {
                 $styleguidePenderingProops[$prototypeName] = $prototypeConfiguration['__meta']['styleguide']['props'];
@@ -45,7 +46,7 @@ class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
 
         // apply props to the prototypes
         foreach ($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
-            foreach ($styleguidePenderingProops as $propPrototypeName => $props){
+            foreach ($styleguidePenderingProops as $propPrototypeName => $props) {
                 if ($propPrototypeName == $prototypeName) {
                     $styleguideRenderingPrototypes[$prototypeName] = array_merge_recursive($styleguideRenderingPrototypes[$prototypeName], $props);
                 } else {
@@ -55,11 +56,10 @@ class TypoScriptService extends \TYPO3\Neos\Domain\Service\TypoScriptService
         }
 
         // create render pathes
-        foreach($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
-            $result['monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName)] = $prototypeConfiguration;
+        foreach ($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
+            $result[self::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName)] = $prototypeConfiguration;
         }
 
         return  $result;
     }
-
 }

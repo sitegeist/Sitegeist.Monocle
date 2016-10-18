@@ -32,7 +32,7 @@ class Node implements NodeInterface
     /**
      * @var bool
      */
-    protected $hidden = FALSE;
+    protected $hidden = false;
 
     /**
      * @var \DateTime
@@ -47,7 +47,7 @@ class Node implements NodeInterface
     /**
      * @var bool
      */
-    protected $hiddenInIndex = FALSE;
+    protected $hiddenInIndex = false;
 
     /**
      * Set the name of the node to $newName, keeping it's position as it is
@@ -79,7 +79,6 @@ class Node implements NodeInterface
     public function getLabel()
     {
         return $this->getNodeType()->getNodeLabelGenerator()->getLabel($this);
-
     }
 
     /**
@@ -610,7 +609,8 @@ class Node implements NodeInterface
         return count($this->childNodes > 0);
     }
 
-    public function setChildNodes(array $childNodes) {
+    public function setChildNodes(array $childNodes)
+    {
         $this->childNodes = $childNodes;
     }
 
@@ -839,5 +839,4 @@ class Node implements NodeInterface
     {
         // TODO: Implement getOtherNodeVariants() method.
     }
-
 }

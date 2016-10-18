@@ -1,0 +1,62 @@
+.prototype {
+    margin: 80px 0;
+}
+
+.headline {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: lighter;
+    font-size: 1.4em;
+	position: relative;
+    margin: 30px 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #3f3f3f;
+    color: white;
+}
+
+.subheadline {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: lighter;
+    font-size: .6em;
+	display: block;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.description {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: lighter;
+    font-size: 1em;
+    color: white;
+}
+
+.handles {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.handle {
+	width: auto;
+    height: auto;
+    min-width: 1em;
+	line-height: 12px;
+	padding: .6em;
+	box-sizing: content-box;
+	margin-left: .3em;
+}
+
+.handle i {
+	font-size: 12px;
+}
+
+.iframe {
+    margin: 10px 0;
+    transition: max-width 0.25s ease-in-out;
+    max-width: 1920px;
+    width: 100%;
+    border: none;
+}
+
+.codePanel {
+    padding: 20px 0;
+    border-bottom: 1px solid #3f3f3f;
+}

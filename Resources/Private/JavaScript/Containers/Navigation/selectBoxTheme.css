@@ -1,0 +1,12 @@
+.dropDown {
+
+}
+
+.dropDown__btn {
+    width: auto;
+    min-width: 40px;
+}
+
+.dropDown__contents {
+    width: 200px;
+}

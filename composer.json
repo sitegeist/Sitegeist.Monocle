@@ -8,10 +8,15 @@
             "name": "Martin Ficzel",
             "email": "ficzel@sitegeist.de",
             "role": "Developer"
+        },
+        {
+            "name": "Wilhelm Behncke",
+            "email": "behncke@sitegeist.de",
+            "role": "Developer"
         }
     ],
     "require": {
-        "typo3/neos": "*"
+        "typo3/neos": "~2.3.0"
     },
     "autoload": {
         "psr-0": {

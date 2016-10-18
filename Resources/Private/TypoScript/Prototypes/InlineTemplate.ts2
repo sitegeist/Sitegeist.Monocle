@@ -1,3 +1,0 @@
-prototype(Sitegeist.Monocle:InlineTemplate) {
-	@class = 'Sitegeist\\Monocle\\TypoScript\\InlineTemplateImplementation'
-}

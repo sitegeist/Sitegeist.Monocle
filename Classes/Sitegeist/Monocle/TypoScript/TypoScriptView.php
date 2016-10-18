@@ -11,5 +11,4 @@ class TypoScriptView extends \TYPO3\Neos\View\TypoScriptView
      * @var \Sitegeist\Monocle\TypoScript\TypoScriptService
      */
     protected $typoScriptService;
-
 }

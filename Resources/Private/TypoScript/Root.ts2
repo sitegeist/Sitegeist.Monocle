@@ -1,12 +1,2 @@
-
-#sitegeistMonoclePreview = TYPO3.TypoScript:Template {
-#	templatePath = 'resource://Sitegeist.Monocle/Private/Templates/Preview/Show.html'
-#	node = ${node}
-#	styleguideSections = ${styleguideSections}
-#	path = ${path}
-#}
-
-sitegeistMonoclePrototypePreviewCase = Sitegeist.Monocle:PrototypePreviewCase
-
 # Include all .ts2 files in Prototypes
 include: Prototypes/*

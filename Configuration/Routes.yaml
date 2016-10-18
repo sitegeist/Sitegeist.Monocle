@@ -1,0 +1,32 @@
+#
+# This has to be added to the main routes .yaml if the default flow routes are not present
+#
+
+# -
+#   name: 'Monocle'
+#   uriPattern: 'sitegeist/monocle/<MonocleSubroutes>'
+#   subRoutes:
+#     'MonocleSubroutes':
+#       package: 'Sitegeist.Monocle'
+
+
+##
+# Monocle
+
+-
+  name:  'Monocle API'
+  uriPattern: 'api/{@action}'
+  defaults:
+    '@package': 'Sitegeist.Monocle'
+    '@subpackage': ''
+    '@controller' : 'Api'
+  httpMethods: ['GET','POST']
+
+-
+  name:  'Monocle Preview'
+  uriPattern: 'preview/{@action}'
+  defaults:
+    '@package': 'Sitegeist.Monocle'
+    '@subpackage': ''
+    '@controller' : 'Preview'
+  httpMethods: ['GET','POST']

@@ -1,0 +1,21 @@
+{namespace monocle=Sitegeist\Monocle\ViewHelpers}
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="UTF-8">
+
+	    <f:if condition="{additionalResources.styleSheets}">
+	        <f:for each="{additionalResources.styleSheets}" as="resource">
+	            <link rel="stylesheet" href="{resource}" />
+	        </f:for>
+	    </f:if>
+
+	    <f:if condition="{additionalResources.javaScripts}">
+	        <f:for each="{additionalResources.javaScripts}" as="resource">
+	            <script src="{resource}"></script>
+	        </f:for>
+	    </f:if>
+	</head>
+	<body style="overflow:hidden;padding:1px;">
+	</body>
+</html>

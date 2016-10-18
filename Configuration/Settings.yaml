@@ -16,24 +16,39 @@ TYPO3:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
 
+  Flow:
+    security:
+      authentication:
+        providers:
+          Typo3BackendProvider:
+            requestPatterns:
+              'Sitegeist.Monocle:monocleControllers':
+                pattern: 'ControllerObjectName'
+                patternOptions:
+                  controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
+
 Sitegeist:
   Monocle:
 
-    breakpoints:
-      xs:
-        label: 'xtra small'
-        width: 400
-      md:
-        label: 'medium'
-        width: 600
-      wide:
-        label: 'wide'
-        width: 800
+    viewportPresets: []
+#    viewportPresets:
+#      xs:
+#        label: 'xtra small'
+#        width: 400
+#        height: 600
+#      md:
+#        label: 'medium'
+#        width: 600
+#        height: 400
+#      l:
+#        label: 'wide'
+#        width: 800
+#        height: 600
 
     preview:
-      defaultPath: 'atoms'
+      defaultPath: 'atoms.basic'
       additionalResources:
-        styleSheets:
+        styleSheets: []
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'
-        javaScripts:
+        javaScripts: []
           # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
