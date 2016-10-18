@@ -37,7 +37,8 @@ class DummyNodeImplementation extends AbstractTypoScriptObject
      *
      * @var string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->tsValue('name');
     }
 
@@ -46,7 +47,8 @@ class DummyNodeImplementation extends AbstractTypoScriptObject
      *
      * @var array
      */
-    public function getProperties() {
+    public function getProperties()
+    {
         return $this->tsValue('properties');
     }
 
@@ -55,7 +57,8 @@ class DummyNodeImplementation extends AbstractTypoScriptObject
      *
      * @var array
      */
-    public function getChildNodes() {
+    public function getChildNodes()
+    {
         return $this->tsValue('childNodes');
     }
 

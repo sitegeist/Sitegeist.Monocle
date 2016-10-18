@@ -19,13 +19,14 @@ class ReverseTypoScriptParser
      * @param array $aspectSyntaxTree
      * @return string
      */
-    public static function restorePrototypeCode($prototypeName, $abstractSyntaxTree, $indentation = '') {
+    public static function restorePrototypeCode($prototypeName, $abstractSyntaxTree, $indentation = '')
+    {
         $result = '';
 
         $result .= $indentation . 'prototype(' . $prototypeName . ')' . (array_key_exists('__prototypeObjectName',  $abstractSyntaxTree) ? ' < prototype(' . $abstractSyntaxTree['__prototypeObjectName'] . ')' : '' ) . ' {' . chr(10);
 
         // handle __meta context
-        if (array_key_exists('__meta',  $abstractSyntaxTree)) {
+        if (array_key_exists('__meta', $abstractSyntaxTree)) {
             foreach (array_keys($abstractSyntaxTree['__meta']) as $key) {
                 if (in_array($key, self::TOP_META_KEYS) === false) {
                     continue;
@@ -35,7 +36,7 @@ class ReverseTypoScriptParser
         }
 
         // handle __prototypes
-        if (array_key_exists('__prototypes',  $abstractSyntaxTree)) {
+        if (array_key_exists('__prototypes', $abstractSyntaxTree)) {
             foreach (array_keys($abstractSyntaxTree['__prototypes']) as $key) {
                 $result .= self::restorePrototypeCode($key, $abstractSyntaxTree['__prototypes'][$key], $indentation . self::INDENTATION);
             }
@@ -71,7 +72,7 @@ class ReverseTypoScriptParser
      * @param array $aspectSyntaxTree
      * @return string
      */
-    static public function restoreValueCode($valueName, $abstractSyntaxTree, $indentation)
+    public static function restoreValueCode($valueName, $abstractSyntaxTree, $indentation)
     {
         $result = '';
         if (is_array($abstractSyntaxTree)) {
@@ -102,14 +103,14 @@ class ReverseTypoScriptParser
             }
 
             if ($multiline) {
-                if (array_key_exists('__meta',  $abstractSyntaxTree)) {
+                if (array_key_exists('__meta', $abstractSyntaxTree)) {
                     foreach (array_keys($abstractSyntaxTree['__meta']) as $key) {
                         $result .= self::restoreValueCode('@' . $key, $abstractSyntaxTree['__meta'][$key], $indentation . self::INDENTATION);
                     }
                 }
 
                 // handle __prototypes
-                if (array_key_exists('__prototypes',  $abstractSyntaxTree)) {
+                if (array_key_exists('__prototypes', $abstractSyntaxTree)) {
                     foreach (array_keys($abstractSyntaxTree['__prototypes']) as $key) {
                         $result .= self::restorePrototypeCode($key, $abstractSyntaxTree['__prototypes'][$key], $indentation . self::INDENTATION);
                     }
@@ -117,7 +118,7 @@ class ReverseTypoScriptParser
                 $result .= $indentation . '}' . chr(10);
             } else {
                 // handle __meta
-                if (array_key_exists('__meta',  $abstractSyntaxTree)) {
+                if (array_key_exists('__meta', $abstractSyntaxTree)) {
                     foreach (array_keys($abstractSyntaxTree['__meta']) as $key) {
                         $result .= self::restoreValueCode($valueName . '.@' . $key, $abstractSyntaxTree['__meta'][$key], $indentation);
                     }

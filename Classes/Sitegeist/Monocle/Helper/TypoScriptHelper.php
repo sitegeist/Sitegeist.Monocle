@@ -49,5 +49,4 @@ class TypoScriptHelper
         }
         return $styleguideObjects;
     }
-
 }

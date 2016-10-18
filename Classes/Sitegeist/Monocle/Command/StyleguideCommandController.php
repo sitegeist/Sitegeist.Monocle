@@ -55,7 +55,7 @@ class StyleguideCommandController extends CommandController
 
     protected function outputData($data, $format)
     {
-        switch ($format){
+        switch ($format) {
             case 'json':
                 $json = json_encode($data);
                 $this->outputLine($json . chr(10));

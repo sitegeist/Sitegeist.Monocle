@@ -22,7 +22,7 @@ class ContextHelper
      */
     protected $contextFactory;
 
-    public function getContext (NodeInterface $node = NULL)
+    public function getContext(NodeInterface $node = null)
     {
         $contextProperties = [];
         $contextProperties['currentSite'] = $this->siteRepository->findFirstOnline();
