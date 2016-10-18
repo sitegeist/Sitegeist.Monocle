@@ -131,4 +131,4 @@ In the meantime you can add the following lines to your composer.json.
 
 ## Contribution
 
-We will gladly accept contributions especially to improve the rsync, and ssh-options for a specific preset. Please send us pull requests.
+We will gladly accept contributions. Please send us pull requests.
