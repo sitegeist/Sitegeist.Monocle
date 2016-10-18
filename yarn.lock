@@ -1926,13 +1926,13 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
-highlight.js@~9.4.0:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.4.0.tgz#2687d6cf6df0d57bc68585e836bfe3ab3edf9452"
-
 highlight.js@~9.6.0:
   version "9.6.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.6.0.tgz#0cf495fff5ac15f73a42c6d0b60fb314093cf006"
+
+highlight.js@~9.7.0:
+  version "9.7.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.7.0.tgz#e7a926bf3079c65b2ae50314878e456a009b4aac"
 
 hoek@2.x.x:
   version "2.16.3"
@@ -3155,11 +3155,11 @@ react-redux@^4.4.5:
     lodash "^4.2.0"
     loose-envify "^1.1.0"
 
-react-syntax-highlighter@~2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-2.6.1.tgz#cdf19a90ebd84db04d6f3d46766b5ba9eb053bf0"
+react-syntax-highlighter@~2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-2.10.0.tgz#6ef9918f83c9b2750226190614ffc018ad5cf34f"
   dependencies:
-    highlight.js "~9.4.0"
+    highlight.js "~9.7.0"
     lowlight "^1.2.0"
 
 react-textarea-autosize@^4.0.5:
