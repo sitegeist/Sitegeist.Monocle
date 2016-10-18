@@ -21,5 +21,4 @@ class StyleguideController extends AbstractModuleController
     {
         $this->view->assign('defaultPath', $this->defaultPath);
     }
-
 }

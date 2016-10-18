@@ -23,7 +23,7 @@ class ReverseTypoScriptParser
     {
         $result = '';
 
-        $result .= $indentation . 'prototype(' . $prototypeName . ')' . (array_key_exists('__prototypeObjectName',  $abstractSyntaxTree) ? ' < prototype(' . $abstractSyntaxTree['__prototypeObjectName'] . ')' : '' ) . ' {' . chr(10);
+        $result .= $indentation . 'prototype(' . $prototypeName . ')' . (array_key_exists('__prototypeObjectName', $abstractSyntaxTree) ? ' < prototype(' . $abstractSyntaxTree['__prototypeObjectName'] . ')' : '') . ' {' . chr(10);
 
         // handle __meta context
         if (array_key_exists('__meta', $abstractSyntaxTree)) {
