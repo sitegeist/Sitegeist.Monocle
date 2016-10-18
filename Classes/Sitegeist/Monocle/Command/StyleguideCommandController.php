@@ -9,7 +9,8 @@ use Symfony\Component\Yaml\Yaml;
 use Sitegeist\Monocle\Helper\TypoScriptHelper;
 use Sitegeist\Monocle\Helper\ContextHelper;
 
-class StyleguideCommandController  extends CommandController {
+class StyleguideCommandController extends CommandController
+{
 
     /**
      * @var array
@@ -34,7 +35,8 @@ class StyleguideCommandController  extends CommandController {
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
      */
-    public function viewportsCommand($format = 'json') {
+    public function viewportsCommand($format = 'json')
+    {
         $this->outputData($this->viewportPresets, $format);
     }
 
@@ -43,14 +45,16 @@ class StyleguideCommandController  extends CommandController {
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
      */
-    public function itemsCommand($format = 'json') {
+    public function itemsCommand($format = 'json')
+    {
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
         $styleguideObjects = $this->typoScriptHelper->getStyleguideObjects($siteNode);
         $this->outputData($styleguideObjects, $format);
     }
 
-    protected function outputData($data, $format) {
+    protected function outputData($data, $format)
+    {
         switch ($format){
             case 'json':
                 $json = json_encode($data);

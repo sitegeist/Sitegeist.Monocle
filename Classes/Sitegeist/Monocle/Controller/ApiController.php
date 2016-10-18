@@ -73,7 +73,8 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @return void
      */
-    public function styleguideObjectsAction() {
+    public function styleguideObjectsAction()
+    {
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
         $styleguideObjects = $this->typoScriptHelper->getStyleguideObjects($siteNode);
@@ -86,7 +87,8 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @return void
      */
-    public function styleguideResourcesAction() {
+    public function styleguideResourcesAction()
+    {
         $styleSheets = $this->additionalResources['styleSheets'];
         $javaScripts = $this->additionalResources['javaScripts'];
 
@@ -118,7 +120,8 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @return void
      */
-    public function sitesAction() {
+    public function sitesAction()
+    {
         $siteInfo = [];
         $sites = $this->siteRepository->findAll()->toArray();
         /**
@@ -141,7 +144,8 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @return void
      */
-    public function viewportPresetsAction() {
+    public function viewportPresetsAction()
+    {
         $this->view->assign('value', $this->viewportPresets);
     }
 
@@ -152,7 +156,8 @@ class ApiController extends ActionController
      * @param string $prototypeName
      * @return void
      */
-    public function renderPrototypeAction($prototypeName) {
+    public function renderPrototypeAction($prototypeName)
+    {
         $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
 
@@ -179,7 +184,8 @@ class ApiController extends ActionController
         $this->view->assign('value', $result);
     }
 
-    protected function resolveResourcePathes($path) {
+    protected function resolveResourcePathes($path)
+    {
         if (strpos($path, 'resource://') === 0) {
             try {
                 list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);

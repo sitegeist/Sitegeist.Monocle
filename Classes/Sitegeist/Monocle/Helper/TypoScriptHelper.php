@@ -21,7 +21,7 @@ class TypoScriptHelper
 
     public function getPrototypeKey($prototypeName)
     {
-        return 'Prototype_' . str_replace([':','.'],['_'],$prototypeName);
+        return 'Prototype_' . str_replace([':','.'], ['_'], $prototypeName);
     }
 
     /**
@@ -30,10 +30,11 @@ class TypoScriptHelper
      * @param NodeInterface $siteNode
      * @return array
      */
-    public function getStyleguideObjects($siteNode) {
+    public function getStyleguideObjects($siteNode)
+    {
         $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
         $styleguideObjects = [];
-        if ($typoScriptObjectTree && $typoScriptObjectTree['__prototypes'] ) {
+        if ($typoScriptObjectTree && $typoScriptObjectTree['__prototypes']) {
             foreach ($typoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObjectTree) {
                 if (array_key_exists('__meta', $prototypeObjectTree) && is_array($prototypeObjectTree['__meta']) && array_key_exists('styleguide', $prototypeObjectTree['__meta'])) {
                     $styleguideConfiguration = $prototypeObjectTree['__meta']['styleguide'];

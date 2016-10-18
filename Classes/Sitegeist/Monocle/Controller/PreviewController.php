@@ -53,19 +53,19 @@ class PreviewController extends ActionController
     protected $resourceManager;
 
     /**
-	 * Initialize the view
-	 *
-	 * @param  ViewInterface $view
-	 * @return void
-	 */
-	public function initializeView(ViewInterface $view)
-	{
+     * Initialize the view
+     *
+     * @param  ViewInterface $view
+     * @return void
+     */
+    public function initializeView(ViewInterface $view)
+    {
         $view->assign('defaultPath', $this->defaultPath);
 
         //
         // Resolve resource uris in beforehand
         //
-		$view->assign('additionalResources', array_map(function ($resourceList) {
+        $view->assign('additionalResources', array_map(function ($resourceList) {
             return array_map(function ($path) {
                 if (strpos($path, 'resource://') === 0) {
                     list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
@@ -75,8 +75,7 @@ class PreviewController extends ActionController
                 return $path;
             }, $resourceList);
         }, $this->additionalResources));
-
-	}
+    }
 
     /**
      * @return void
@@ -85,20 +84,20 @@ class PreviewController extends ActionController
     {
     }
 
-	/**
-	 * @return void
-	 */
-	public function iframeAction()
-	{
-	}
+    /**
+     * @return void
+     */
+    public function iframeAction()
+    {
+    }
 
-	/**
-	 * @param  string $prototypeName
-	 * @return void
-	 */
-	public function componentAction($prototypeName)
-	{
-		$context = $this->contextHelper->getContext();
+    /**
+     * @param  string $prototypeName
+     * @return void
+     */
+    public function componentAction($prototypeName)
+    {
+        $context = $this->contextHelper->getContext();
         $siteNode = $context->getCurrentSiteNode();
 
         $typoScriptView = new TypoScriptView();
@@ -112,5 +111,5 @@ class PreviewController extends ActionController
             'prototypeName' => $prototypeName,
             'renderedHtml' =>  $typoScriptView->render()
         ]);
-	}
+    }
 }
