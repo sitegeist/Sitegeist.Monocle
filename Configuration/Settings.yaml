@@ -30,6 +30,7 @@ TYPO3:
 Sitegeist:
   Monocle:
 
+    # the breakpoints the styleguide will offer
     viewportPresets: []
 #    viewportPresets:
 #      xs:
@@ -46,7 +47,10 @@ Sitegeist:
 #        height: 600
 
     preview:
+      # the path the styleguide will show at start
       defaultPath: 'atoms.basic'
+
+      # the resources that are loaded in the preview iFrames
       additionalResources:
         styleSheets: []
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'

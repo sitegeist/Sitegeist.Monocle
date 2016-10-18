@@ -65,8 +65,25 @@ Some configuration is needed to define the JS and CSS that has to be included fo
 ```YAML
 Sitegeist:
   Monocle:
+    # define the breakpoints the styleguide will offer
+    viewportPresets:
+      xs:
+        label: 'xtra small'
+        width: 400
+        height: 600
+      md:
+        label: 'medium'
+        width: 600
+        height: 400
+      l:
+        label: 'wide'
+        width: 800
+        height: 600
+    
     preview:
+      # the path the styleguide will show at start    
       defaultPath: 'atoms'
+      # the resources that are loaded in the preview iFrames 
       additionalResources:
         styleSheets:
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'
