@@ -107,3 +107,28 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
     'MonocleSubroutes':
       package: 'Sitegeist.Monocle'
 ```
+
+
+## Installation
+
+Sitegeist.Monocle eventually will become available via packagist. After that just add `"sitegeist/monocle" : "~1.0"` to the require-dev section of the composer.json or run `composer require sitegeist/monocle`. We use semantic-versioning so every breaking change will increase the major-version number.
+
+In the meantime you can add the following lines to your composer.json.
+
+```JSON
+{
+    "repositories": [
+        {
+            "url": "git@github.com:sitegeist/Sitegeist.Monocle.git",
+            "type": "vcs"
+        }
+    ],
+    "require": {
+        "sitegeist/monocle": "dev-master",
+    },
+}
+``` 
+
+## Contribution
+
+We will gladly accept contributions especially to improve the rsync, and ssh-options for a specific preset. Please send us pull requests.
