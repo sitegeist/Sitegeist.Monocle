@@ -3155,7 +3155,7 @@ react-redux@^4.4.5:
     lodash "^4.2.0"
     loose-envify "^1.1.0"
 
-react-syntax-highlighter@~2.10.0:
+react-syntax-highlighter@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-2.10.0.tgz#6ef9918f83c9b2750226190614ffc018ad5cf34f"
   dependencies:
