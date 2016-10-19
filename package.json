@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --colors",
-    "lint": "npm run lint:scripts && npm run lint:css",
+    "lint": "yarn run lint:scripts && npm run lint:css",
     "lint:css": "stylelint 'Resources/Private/JavaScript/**/*.css'",
     "lint:scripts": "eslint Resources/Private/JavaScript/**",
     "test": "exit 0",
-    "watch": "npm run build -- --watch"
+    "watch": "yarn run build -- --watch"
   },
   "repository": {
     "type": "git",
