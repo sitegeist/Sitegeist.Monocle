@@ -42,7 +42,7 @@ const reducer = (state = {}, action) => {
 		case SET_PATH:
 			return state.setIn(['path'], action.payload);
         case SET_PROTOTYPES:
-            return state.setIn(['prototypes'], action.payload);
+            return state.setIn(['prototypes'], (typeof  action.payload === 'object') ? action.payload : {});
         case SET_RESOURCES:
             return state.setIn(['resources'], action.payload);
         case SET_RENDER_PROTOTYPES_ENDPOINT:

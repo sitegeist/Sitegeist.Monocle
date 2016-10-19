@@ -35,10 +35,9 @@ const reducer = (state = {}, action) => {
             } else {
                 new_state = new_state.setIn(['width'], undefined);
             }
-            return new_state
+            return new_state;
         case SET_AVAILABLE_PRESETS:
-            return state.setIn(['availablePresets'], action.payload);
-
+            return state.setIn(['availablePresets'], (typeof  action.payload === 'object') ? action.payload : {});
 	}
 	return state;
 };

@@ -30,7 +30,7 @@ export const initialState = {
     styleguide: {
         path: '',
         renderPrototypesEndpoint: null,
-        prototypes: [],
+        prototypes: {},
         resources: {}
     }
 };

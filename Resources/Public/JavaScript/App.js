@@ -875,7 +875,7 @@
 	    styleguide: {
 	        path: '',
 	        renderPrototypesEndpoint: null,
-	        prototypes: [],
+	        prototypes: {},
 	        resources: {}
 	    }
 	};
@@ -19125,10 +19125,21 @@
 	            var prototypes = this.props.prototypes;
 	
 	            var level = path ? path.split('.').length : 0;
-	            var items = prototypes.filter(function (prototype) {
-	                return path ? prototype.path.startsWith(path + '.') : true;
+	
+	            var prototypeArray = [];
+	            for (var prototypeName in prototypes) {
+	                if (prototypes.hasOwnProperty(prototypeName)) {
+	                    prototypeArray.push({
+	                        prototype: prototypeName,
+	                        configuration: prototypes[prototypeName]
+	                    });
+	                }
+	            }
+	
+	            var items = prototypeArray.filter(function (prototype) {
+	                return path ? prototype.configuration.path.startsWith(path + '.') : true;
 	            }).map(function (prototype) {
-	                return prototype.path.split('.').slice(0, level + 1).join('.');
+	                return prototype.configuration.path.split('.').slice(0, level + 1).join('.');
 	            }).filter(function (path, index, pathes) {
 	                return pathes.indexOf(path) == index;
 	            }).map(function (path) {
@@ -19190,7 +19201,7 @@
 	    return Navigation;
 	}(_react.Component), _class2.propTypes = {
 	    path: _react.PropTypes.string,
-	    prototypes: _react.PropTypes.array,
+	    prototypes: _react.PropTypes.object.isRequired,
 	    setPath: _react.PropTypes.func.isRequired
 	}, _temp)) || _class);
 	exports.default = Navigation;
@@ -19263,15 +19274,18 @@
 	            var width = availablePresets[activePreset] ? availablePresets[activePreset]['width'] : '';
 	            var label = availablePresets[activePreset] ? availablePresets[activePreset]['label'] : '';
 	
-	            var displayPrototypes = prototypes.filter(function (prototype) {
-	                return prototype.path.startsWith(path);
-	            });
+	            var displayPrototypes = [];
+	            for (var prototypeName in prototypes) {
+	                if (prototypes.hasOwnProperty(prototypeName) && prototypes[prototypeName].path.startsWith(path)) {
+	                    displayPrototypes.push(prototypeName);
+	                }
+	            }
 	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: _style2.default.previewSection },
 	                displayPrototypes.map(function (item) {
-	                    return _react2.default.createElement(_index2.PrototypeDisplay, { key: item.prototypeName, prototypeName: item.prototypeName });
+	                    return _react2.default.createElement(_index2.PrototypeDisplay, { key: item, prototypeName: item });
 	                })
 	            );
 	        }
@@ -19282,7 +19296,7 @@
 	    activePreset: _react.PropTypes.string,
 	    availablePresets: _react.PropTypes.object,
 	    path: _react.PropTypes.string,
-	    prototypes: _react.PropTypes.array
+	    prototypes: _react.PropTypes.object
 	}, _temp)) || _class);
 	exports.default = PreviewSection;
 
@@ -19380,9 +19394,7 @@
 	            var iframeUri = _props.iframeUri;
 	
 	
-	            var currentPrototype = prototypes.find(function (prototype) {
-	                return prototype.prototypeName == prototypeName;
-	            });
+	            var currentPrototype = prototypes[prototypeName];
 	            var styleSheets = resources['styleSheets'] ? resources['styleSheets'] : null;
 	            var javaScripts = resources['javaScripts'] ? resources['javaScripts'] : null;
 	
@@ -19514,7 +19526,7 @@
 	    return PrototypeDisplay;
 	}(_react.Component), _class2.propTypes = {
 	    prototypeName: _react.PropTypes.string.isRequired,
-	    prototypes: _react.PropTypes.array.isRequired,
+	    prototypes: _react.PropTypes.object.isRequired,
 	    resources: _react.PropTypes.object.isRequired,
 	    renderPrototypesEndpoint: _react.PropTypes.string,
 	    viewportWidth: _react.PropTypes.number
@@ -19764,6 +19776,8 @@
 	    value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _reduxActions = __webpack_require__(48);
 	
 	var SET_PATH = '@sitegeist/monocle-ui/Styleguide/SET_PATH';
@@ -19824,7 +19838,7 @@
 	        case SET_PATH:
 	            return state.setIn(['path'], action.payload);
 	        case SET_PROTOTYPES:
-	            return state.setIn(['prototypes'], action.payload);
+	            return state.setIn(['prototypes'], _typeof(action.payload) === 'object' ? action.payload : {});
 	        case SET_RESOURCES:
 	            return state.setIn(['resources'], action.payload);
 	        case SET_RENDER_PROTOTYPES_ENDPOINT:
@@ -19854,6 +19868,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _reduxActions = __webpack_require__(48);
 	
@@ -19902,8 +19918,7 @@
 	            }
 	            return new_state;
 	        case SET_AVAILABLE_PRESETS:
-	            return state.setIn(['availablePresets'], action.payload);
-	
+	            return state.setIn(['availablePresets'], _typeof(action.payload) === 'object' ? action.payload : {});
 	    }
 	    return state;
 	};
@@ -19930,35 +19945,44 @@
 	
 	var _index = __webpack_require__(9);
 	
-	var _marked = [boot, pathChanged, historySaga].map(regeneratorRuntime.mark);
+	var _marked = [pathChanged, historySaga].map(regeneratorRuntime.mark);
 	
-	function boot(action) {
-	    return regeneratorRuntime.wrap(function boot$(_context) {
+	function pathChanged(action) {
+	    return regeneratorRuntime.wrap(function pathChanged$(_context) {
 	        while (1) {
 	            switch (_context.prev = _context.next) {
 	                case 0:
-	                    if (!(window.location.hash && window.location.hash !== '#')) {
-	                        _context.next = 5;
-	                        break;
-	                    }
-	
-	                    _context.next = 3;
-	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(window.location.hash.substring(1)));
-	
-	                case 3:
-	                    _context.next = 8;
+	                    _context.t0 = action.type;
+	                    _context.next = _context.t0 === _index.redux.actionTypes.BOOT ? 3 : _context.t0 === _index.redux.Styleguide.actionTypes.SET_PATH ? 11 : 13;
 	                    break;
 	
-	                case 5:
-	                    if (!(action.payload && action.payload.defaultPath)) {
+	                case 3:
+	                    if (!(window.location.hash && window.location.hash !== '#')) {
 	                        _context.next = 8;
 	                        break;
 	                    }
 	
-	                    _context.next = 8;
-	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(action.payload.defaultPath));
+	                    _context.next = 6;
+	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(window.location.hash.substring(1)));
+	
+	                case 6:
+	                    _context.next = 11;
+	                    break;
 	
 	                case 8:
+	                    if (!(action.payload && action.payload.defaultPath)) {
+	                        _context.next = 11;
+	                        break;
+	                    }
+	
+	                    _context.next = 11;
+	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPath(action.payload.defaultPath));
+	
+	                case 11:
+	                    _context.next = 13;
+	                    return window.location.hash = action.payload;
+	
+	                case 13:
 	                case 'end':
 	                    return _context.stop();
 	            }
@@ -19966,12 +19990,12 @@
 	    }, _marked[0], this);
 	}
 	
-	function pathChanged(action) {
-	    return regeneratorRuntime.wrap(function pathChanged$(_context2) {
+	function historySaga() {
+	    return regeneratorRuntime.wrap(function historySaga$(_context2) {
 	        while (1) {
 	            switch (_context2.prev = _context2.next) {
 	                case 0:
-	                    window.location.hash = action.payload;
+	                    return _context2.delegateYield((0, _reduxSaga.takeEvery)([_index.redux.actionTypes.BOOT, _index.redux.Styleguide.actionTypes.SET_PATH], pathChanged), 't0', 1);
 	
 	                case 1:
 	                case 'end':
@@ -19979,24 +20003,6 @@
 	            }
 	        }
 	    }, _marked[1], this);
-	}
-	
-	function historySaga() {
-	    return regeneratorRuntime.wrap(function historySaga$(_context3) {
-	        while (1) {
-	            switch (_context3.prev = _context3.next) {
-	                case 0:
-	                    return _context3.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.actionTypes.BOOT, boot), 't0', 1);
-	
-	                case 1:
-	                    return _context3.delegateYield((0, _reduxSaga.takeEvery)(_index.redux.Styleguide.actionTypes.SET_PATH, pathChanged), 't1', 2);
-	
-	                case 2:
-	                case 'end':
-	                    return _context3.stop();
-	            }
-	        }
-	    }, _marked[2], this);
 	}
 	
 	exports.default = historySaga;
