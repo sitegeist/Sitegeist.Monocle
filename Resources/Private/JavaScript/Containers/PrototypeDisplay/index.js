@@ -22,7 +22,7 @@ import styles from './style.css';
 export default class PrototypeDisplay extends Component {
     static propTypes = {
         prototypeName: PropTypes.string.isRequired,
-        prototypes: PropTypes.array.isRequired,
+        prototypes: PropTypes.object.isRequired,
         resources: PropTypes.object.isRequired,
         renderPrototypesEndpoint: PropTypes.string,
         viewportWidth: PropTypes.number,
@@ -42,11 +42,11 @@ export default class PrototypeDisplay extends Component {
             prototypes,
             resources,
             viewportWidth,
-			iframeUri
+            iframeUri
         } = this.props;
 
 
-        const currentPrototype = prototypes.find((prototype)=>(prototype.prototypeName == prototypeName));
+        const currentPrototype = prototypes[prototypeName];
         const styleSheets = resources['styleSheets'] ? resources['styleSheets'] : null;
         const javaScripts= resources['javaScripts'] ? resources['javaScripts'] : null;
 

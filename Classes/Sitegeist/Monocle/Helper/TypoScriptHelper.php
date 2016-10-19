@@ -35,15 +35,10 @@ class TypoScriptHelper
         $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
         $styleguideObjects = [];
         if ($typoScriptObjectTree && $typoScriptObjectTree['__prototypes']) {
-            foreach ($typoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObjectTree) {
-                if (array_key_exists('__meta', $prototypeObjectTree) && is_array($prototypeObjectTree['__meta']) && array_key_exists('styleguide', $prototypeObjectTree['__meta'])) {
-                    $styleguideConfiguration = $prototypeObjectTree['__meta']['styleguide'];
-                    $styleguideObjects[] = [
-                        'prototypeName' => $prototypeName,
-                        'title' => (isset($styleguideConfiguration['title'])) ? $styleguideConfiguration['title'] : '',
-                        'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : 'other',
-                        'description' => (isset($styleguideConfiguration['description'])) ? $styleguideConfiguration['description'] : ''
-                    ];
+            foreach ($typoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObject) {
+                if (array_key_exists('__meta', $prototypeObject) && is_array($prototypeObject['__meta']) && array_key_exists('styleguide', $prototypeObject['__meta'])) {
+                    $styleguideConfiguration = $prototypeObject['__meta']['styleguide'];
+                    $styleguideObjects[$prototypeName] = $styleguideConfiguration;
                 }
             }
         }

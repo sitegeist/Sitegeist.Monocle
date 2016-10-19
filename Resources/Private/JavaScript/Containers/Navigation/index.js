@@ -18,16 +18,27 @@ import selectBoxTheme from './selectBoxTheme.css';
 export default class Navigation extends Component {
     static propTypes = {
         path: PropTypes.string,
-        prototypes: PropTypes.array,
+        prototypes: PropTypes.object.isRequired,
         setPath: PropTypes.func.isRequired
     };
 
     getPathItems(path) {
         const {prototypes} = this.props;
         const level = path ? path.split('.').length : 0;
-        const items = prototypes
-            .filter(prototype => (path ? prototype.path.startsWith( path + '.') : true))
-            .map(prototype => prototype.path.split('.').slice(0, level + 1).join('.'))
+
+        const prototypeArray = [];
+        for (var prototypeName in prototypes) {
+            if (prototypes.hasOwnProperty(prototypeName)) {
+                prototypeArray.push({
+                    prototype: prototypeName,
+                    configuration: prototypes[prototypeName]
+                });
+            }
+        }
+
+        const items = prototypeArray
+            .filter(prototype => (path ? prototype.configuration.path.startsWith( path + '.') : true))
+            .map(prototype => prototype.configuration.path.split('.').slice(0, level + 1).join('.'))
             .filter((path, index, pathes) => (pathes.indexOf(path) == index))
             .map(path => {
                 const segment = path.split('.').pop();
@@ -39,7 +50,7 @@ export default class Navigation extends Component {
         return items;
     }
 
-	render() {
+    render() {
         const {path, setPath} = this.props;
         const pathSegments = path.split('.');
         const rootline = pathSegments.map((segment, level, segments) => {
@@ -71,6 +82,6 @@ export default class Navigation extends Component {
                  <SelectBox theme={selectBoxTheme} options={children} onSelect={setPath} />
             </div> : ''}
 
-		</div>;
-	}
+        </div>;
+    }
 }
