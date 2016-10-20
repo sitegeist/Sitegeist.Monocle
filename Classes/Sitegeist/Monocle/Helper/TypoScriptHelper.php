@@ -38,7 +38,12 @@ class TypoScriptHelper
             foreach ($typoScriptObjectTree['__prototypes'] as $prototypeName => $prototypeObject) {
                 if (array_key_exists('__meta', $prototypeObject) && is_array($prototypeObject['__meta']) && array_key_exists('styleguide', $prototypeObject['__meta'])) {
                     $styleguideConfiguration = $prototypeObject['__meta']['styleguide'];
-                    $styleguideObjects[$prototypeName] = $styleguideConfiguration;
+                    $styleguideObjects[$prototypeName] = [
+                        'title' => (isset($styleguideConfiguration['title'])) ? $styleguideConfiguration['title'] : $prototypeName,
+                        'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : 'other',
+                        'description' => (isset($styleguideConfiguration['description'])) ? $styleguideConfiguration['description'] :  '',
+                        'options' => (isset($styleguideConfiguration['options'])) ? $styleguideConfiguration['options'] : null
+                    ];
                 }
             }
         }
