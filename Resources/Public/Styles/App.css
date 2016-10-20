@@ -2313,32 +2313,38 @@
     background: rgba(0, 0, 0, .1);
 }
 .style__prototype___2zaQk {
-    margin: 80px 0;
+    margin: 40px 0;
+    background-color: #323232;
+    padding: 20px;
+}
+
+.style__prototype___2zaQk > *:last-child {
+    margin-bottom: 0;
 }
 
 .style__headline___2K-rB {
-    font-family: 'Noto Sans', sans-serif;
-    font-weight: lighter;
+    font-family: 'Work Sans', sans-serif;
     font-size: 1.4em;
 	position: relative;
-    margin: 30px 0 10px 0;
+    margin: 0 0 10px 0;
     padding-bottom: 5px;
-    border-bottom: 1px solid #3f3f3f;
+    border-bottom: 1px solid #888;
     color: white;
 }
 
 .style__subheadline___3yh4n {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     font-weight: lighter;
     font-size: .6em;
 	display: block;
-	color: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+	color: #888;
 }
 
 .style__description___FZGe- {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Work Sans', sans-serif;
     font-weight: lighter;
-    font-size: 1em;
+    font-size: .8em;
     color: white;
 }
 
@@ -2369,10 +2375,29 @@
     width: 100%;
     border: none;
 }
+.tabTheme__tabNavigation___aAuvy {
+    background-color: #555;
+}
 
-.style__codePanel___1vaFk {
-    padding: 20px 0;
-    border-bottom: 1px solid #3f3f3f;
+.tabTheme__tabs__content___m1tBE {
+    background-color: #555;
+}
+
+.tabTheme__tabNavigation__item--isActive___2HD_W {
+    background-color: #00ADEE;
+}
+
+.tabTheme__tabNavigation__item--isActive___2HD_W > .tabTheme__tabNavigation__itemBtn___Ha-nY {
+    color: #fff;
+}
+
+.tabTheme__tabNavigation__itemBtn___Ha-nY {
+}
+
+.tabTheme__tabNavigation__itemBtnIcon___1GGlq {
+}
+.tabPanelTheme__panel___aPE-3 {
+    padding: 20px;
 }
 
 /*# sourceMappingURL=App.css.map*/

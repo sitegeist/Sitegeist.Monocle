@@ -8,6 +8,8 @@ import Tabs from '@neos-project/react-ui-components/lib/Tabs';
 import IconButton from '@neos-project/react-ui-components/lib/IconButton';
 
 import styles from './style.css';
+import tabTheme from './tabTheme.css';
+import tabPanelTheme from './tabPanelTheme.css';
 
 @connect(state => {
     return {
@@ -68,10 +70,10 @@ export default class PrototypeDisplay extends Component {
             { (this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
 
             { (this.state.showSourceCode && this.state.isRendered) ?
-                <Tabs>
-                    <Tabs.Panel title="HTML" icon="code"><div className={styles.codePanel}><Code content={pretty(this.state.renderedHtml)}  language="html" /></div></Tabs.Panel>
-                    <Tabs.Panel title="Fusion" icon="terminal"><div className={styles.codePanel}><Code content={this.state.renderedCode}  language="vim" /></div></Tabs.Panel>
-                    <Tabs.Panel title="Fusion AST" icon="terminal"><div className={styles.codePanel}><Code content={this.state.parsedCode}  language="yaml" /></div></Tabs.Panel>
+                <Tabs className={styles.codeSection} theme={tabTheme}>
+                    <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}><Code content={pretty(this.state.renderedHtml)}  language="html" /></Tabs.Panel>
+                    <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}><Code content={this.state.renderedCode}  language="vim" /></Tabs.Panel>
+                    <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={this.state.parsedCode}  language="yaml" /></Tabs.Panel>
                 </Tabs>
             : '' }
         </div>;
