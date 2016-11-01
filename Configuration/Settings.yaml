@@ -50,6 +50,9 @@ Sitegeist:
       # the path the styleguide will show at start
       defaultPath: 'atoms.basic'
 
+      # the meta viewport property for the preview iframes
+      metaViewport: ''
+
       # the resources that are loaded in the preview iFrames
       additionalResources:
         styleSheets: []
