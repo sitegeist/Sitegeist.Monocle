@@ -176,7 +176,7 @@ class ApiController extends ActionController
 
         $result = [
             'prototypeName' => $prototypeName,
-            'renderedHtml' =>  $typoScriptView->render(),
+            'renderedHtml' => $typoScriptView->render(),
             'renderedCode' => $typoScriptCode,
             'parsedCode' => Yaml::dump($typoScriptAst, 99)
         ];

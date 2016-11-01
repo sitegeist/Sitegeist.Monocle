@@ -29,6 +29,12 @@ class PreviewController extends ActionController
     protected $additionalResources;
 
     /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.metaViewport")
+     */
+    protected $metaViewport;
+
+    /**
      * @Flow\Inject
      * @var TypoScriptService
      */
@@ -61,6 +67,7 @@ class PreviewController extends ActionController
     public function initializeView(ViewInterface $view)
     {
         $view->assign('defaultPath', $this->defaultPath);
+        $view->assign('metaViewport', $this->metaViewport);
 
         //
         // Resolve resource uris in beforehand
