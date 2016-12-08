@@ -1,9 +1,0 @@
-prototype(Sitegeist.Monocle:DummyNode) {
-	@class = 'Sitegeist\\Monocle\\TypoScript\\DummyNodeImplementation'
-
-	name = 'unnamed'
-	nodeType = 'unstructured'
-
-	properties = TYPO3.TypoScript:RawArray
-	childNodes = TYPO3.TypoScript:RawArray
-}
