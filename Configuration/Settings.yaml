@@ -1,8 +1,5 @@
 TYPO3:
   Neos:
-    typoScript:
-      autoInclude:
-        'Sitegeist.Monocle': TRUE
     modules:
       administration:
         submodules:
