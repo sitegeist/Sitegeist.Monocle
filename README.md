@@ -32,7 +32,7 @@ use Monocle to render Fluid based Prototypes without any limitation.
 To render a prototype as a styleguide-item it simply has to be annotated:
 
 ```
-prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
+prototype(Vendor.Package:Components.Headline) < prototype(TYPO3.TypoScript:Tag){
     @styleguide {
         path = 'atoms.basic'
         title = 'My Custom Prototype'
@@ -53,10 +53,33 @@ prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
         }
     }
 
-    // normal ts props
+    // normal ts props 
+    tagName = 'h1'
     content = ''
 }
 ```
+
+The styleguide will render the items without the usal context. The ``site``, ``documenNode`` 
+and ``node`` context-variables are not present inside the styleguide rendering by intention.
+ 
+That way it is ensured that your prototypes rely only on the fusion path for rendering and are 
+not affected by editor data. This is important for relyable testing of components. 
+
+To map an actual content node on a component-prototype use a separate fusion prototype.  
+
+```
+prototype(Vendor.Package:Content.Headline) < prototype(TYPO3.TypoScript:Value){
+    value = Vendor.Package:Components.Headline {
+        content = ${q(node).property('title')}
+    }
+}
+```
+
+That way the rendering prototype is completely seperated from the mapping prototype and 
+therefore highly reusable.
+
+The distinction between rendering- and mapping-prototypes can be compared to 
+presentational-components vs. container-components in the react-js world.
 
 ### Configuration
 
