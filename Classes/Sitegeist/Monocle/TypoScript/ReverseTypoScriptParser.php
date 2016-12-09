@@ -53,7 +53,7 @@ class ReverseTypoScriptParser
                 $abstractSyntaxTree['__prototypeObjectName']
             );
         } else {
-            $result .= sprintf('prototype(%s) {',  $prototypeName);
+            $result .= sprintf('prototype(%s) {', $prototypeName);
         }
 
         // handle __meta context
