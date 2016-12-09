@@ -1,0 +1,4 @@
+Sitegeist\Monocle\TypoScript\TypoScriptView:
+  properties:
+    fallbackView:
+      object: TYPO3\Fluid\View\TemplateView

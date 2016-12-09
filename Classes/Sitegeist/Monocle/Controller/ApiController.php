@@ -5,14 +5,11 @@ namespace Sitegeist\Monocle\Controller;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\Flow\Resource\ResourceManager;
+use TYPO3\Flow\Package\PackageManagerInterface;
 
-use TYPO3\Neos\Domain\Repository\SiteRepository;
-use TYPO3\Neos\Domain\Model\Site;
-
-use Sitegeist\Monocle\Helper\TypoScriptHelper;
-use Sitegeist\Monocle\Helper\ContextHelper;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
+
 use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
 
 use Symfony\Component\Yaml\Yaml;
@@ -27,27 +24,15 @@ class ApiController extends ActionController
 
     /**
      * @Flow\Inject
+     * @var PackageManagerInterface
+     */
+    protected $packageManager;
+
+    /**
+     * @Flow\Inject
      * @var TypoScriptService
      */
     protected $typoScriptService;
-
-    /**
-     * @Flow\Inject
-     * @var TypoScriptHelper
-     */
-    protected $typoScriptHelper;
-
-    /**
-     * @Flow\Inject
-     * @var ContextHelper
-     */
-    protected $contextHelper;
-
-    /**
-     * @Flow\Inject
-     * @var SiteRepository
-     */
-    protected $siteRepository;
 
     /**
      * @Flow\Inject
@@ -75,9 +60,13 @@ class ApiController extends ActionController
      */
     public function styleguideObjectsAction()
     {
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
-        $styleguideObjects = $this->typoScriptHelper->getStyleguideObjects($siteNode);
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackage = reset($sitePackages);
+        $sitePackageKey = $sitePackage->getPackageKey();
+
+        $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $styleguideObjects = $this->typoScriptService->getStyleguideObjectsFromFusionAst($fusionAst);
+
         $this->view->assign('value', $styleguideObjects);
     }
 
@@ -110,32 +99,7 @@ class ApiController extends ActionController
                 $result['javaScripts'][] = $resolvedPath;
             }
         }
-
         $this->view->assign('value', $result);
-    }
-
-    /**
-     * Get all active sites
-     *
-     * @Flow\SkipCsrfProtection
-     * @return void
-     */
-    public function sitesAction()
-    {
-        $siteInfo = [];
-        $sites = $this->siteRepository->findAll()->toArray();
-        /**
-         * @var Site $site
-         */
-        foreach ($sites as $site) {
-            $siteInfo[$site->getNodeName()] = [
-                'name' => $site->getName(),
-                'online' => $site->isOnline(),
-                'nodeName' => $site->getNodeName(),
-                'siteResourcesPackageKe' => $site->getSiteResourcesPackageKey()
-             ];
-        }
-        $this->view->assign('value', $siteInfo);
     }
 
     /**
@@ -158,19 +122,20 @@ class ApiController extends ActionController
      */
     public function renderPrototypeAction($prototypeName)
     {
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackage = reset($sitePackages);
+        $sitePackageKey = $sitePackage->getPackageKey();
+
+        $prototypePreviewRenderPath = TypoScriptService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         // render html
         $typoScriptView = new TypoScriptView();
-        $typoScriptView->setControllerContext($this->controllerContext);
-        $typoScriptView->setTypoScriptPath('monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName));
-        $typoScriptView->assignMultiple([
-            'value' => $siteNode
-        ]);
+        $typoScriptView->setControllerContext($this->getControllerContext());
+        $typoScriptView->setTypoScriptPath($prototypePreviewRenderPath);
+        $typoScriptView->setPackageKey($sitePackageKey);
 
         // render fusion source
-        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTree($siteNode);
+        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $typoScriptAst =  $typoScriptObjectTree['__prototypes'][$prototypeName];
         $typoScriptCode = ReverseTypoScriptParser::restorePrototypeCode($prototypeName, $typoScriptAst);
 

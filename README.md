@@ -17,11 +17,11 @@ by our employer http://www.sitegeist.de.*
 
 ### Living Styleguide
 
-The Monocle-Module uses the real TypoScript2 code to render the annotated
+The Monocle-Module uses the real Fusion-code to render the annotated
 prototypes in isolation. That way the styleguide is always up to date and cannot
 diverge over time from the real codebase.
 
-The Monocle was defined with Atomic-Design and pure TypoScript2 without Fluid in
+The Monocle was defined with Atomic-Design and pure Fusion without Fluid in
 mind but the implementation is Coding-Style and Template-Engine agnostic. You can
 use Monocle to render Fluid based Prototypes without any limitation.
 
@@ -108,7 +108,6 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
       package: 'Sitegeist.Monocle'
 ```
 
-
 ## Installation
 
 Sitegeist.Monocle eventually will become available via packagist. After that just add `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`. We use semantic-versioning so every breaking change will increase the major-version number.
@@ -128,6 +127,36 @@ In the meantime you can add the following lines to your composer.json.
     },
 }
 ``` 
+
+## Visual regression testing
+
+Monocle can be used to render prototypes in isolation for visual regression testing tools. 
+For that you might want to consider the following points. 
+
+### Policies
+```YAML
+#
+# make the monocle endpoints publicly available
+# !!! do not use this in production this shoudl be used on the ci-server only!!!
+#
+
+roles:
+  'TYPO3.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
+        permission: GRANT
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
+        permission: GRANT
+
+```
+
+### Routes
+
+To make the monocle encpoints accessible without a db-connection available make sure to include the 
+monocle-routes before the neos-routes. Otherwise neos will try to resolve the path and fail due to a
+missing db-connection.
 
 ## Contribution
 

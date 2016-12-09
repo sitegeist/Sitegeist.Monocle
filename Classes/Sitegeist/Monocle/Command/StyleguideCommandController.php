@@ -2,15 +2,21 @@
 
 namespace Sitegeist\Monocle\Command;
 
+use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Cli\CommandController;
-use Symfony\Component\Yaml\Yaml;
+use TYPO3\Flow\Package\PackageManagerInterface;
 
-use Sitegeist\Monocle\Helper\TypoScriptHelper;
-use Sitegeist\Monocle\Helper\ContextHelper;
+use Symfony\Component\Yaml\Yaml;
 
 class StyleguideCommandController extends CommandController
 {
+
+    /**
+     * @Flow\Inject
+     * @var PackageManagerInterface
+     */
+    protected $packageManager;
 
     /**
      * @var array
@@ -20,15 +26,9 @@ class StyleguideCommandController extends CommandController
 
     /**
      * @Flow\Inject
-     * @var ContextHelper
+     * @var TypoScriptService
      */
-    protected $contextHelper;
-
-    /**
-     * @Flow\Inject
-     * @var TypoScriptHelper
-     */
-    protected $typoScriptHelper;
+    protected $typoScriptService;
 
     /**
      * Get a list of all configured default styleguide viewports
@@ -47,9 +47,13 @@ class StyleguideCommandController extends CommandController
      */
     public function itemsCommand($format = 'json')
     {
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
-        $styleguideObjects = $this->typoScriptHelper->getStyleguideObjects($siteNode);
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackage = reset($sitePackages);
+        $sitePackageKey = $sitePackage->getPackageKey();
+
+        $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $styleguideObjects = $this->typoScriptService->getStyleguideObjectsFromFusionAst($fusionAst);
+
         $this->outputData($styleguideObjects, $format);
     }
 
