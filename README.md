@@ -133,23 +133,9 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
 
 ## Installation
 
-Sitegeist.Monocle eventually will become available via packagist. After that just add `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`. We use semantic-versioning so every breaking change will increase the major-version number.
+Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`. 
 
-In the meantime you can add the following lines to your composer.json.
-
-```JSON
-{
-    "repositories": [
-        {
-            "url": "git@github.com:sitegeist/Sitegeist.Monocle.git",
-            "type": "vcs"
-        }
-    ],
-    "require": {
-        "sitegeist/monocle": "dev-master",
-    },
-}
-``` 
+We use semantic-versioning so every breaking change will increase the major-version number.
 
 ## Visual regression testing
 
