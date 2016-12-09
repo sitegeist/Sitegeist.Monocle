@@ -1,10 +1,25 @@
 <?php
-
 namespace Sitegeist\Monocle\Controller;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2016
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 
+/**
+ * Class StyleguideController
+ * @package Sitegeist\Monocle\Controller
+ */
 class StyleguideController extends AbstractModuleController
 {
 

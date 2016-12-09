@@ -1,15 +1,30 @@
 <?php
 namespace Sitegeist\Monocle\Controller;
 
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2016
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\Flow\Resource\ResourceManager;
 use TYPO3\Flow\Package\PackageManagerInterface;
-
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
 
+/**
+ * Class PreviewController
+ * @package Sitegeist\Monocle\Controller
+ */
 class PreviewController extends ActionController
 {
     /**

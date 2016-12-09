@@ -1,12 +1,12 @@
 privilegeTargets:
   'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
-
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Preview':
       matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(module|iframe|component)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
       matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sites|viewportPresets|renderPrototype)Action())'
+
 roles:
   'TYPO3.Neos:AbstractEditor':
     privileges:
@@ -19,3 +19,15 @@ roles:
       -
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
         permission: GRANT
+
+#
+# This has to be added to the main Policy.yaml to access the monocle encpoints without login
+#
+#  'TYPO3.Flow:Everybody':
+#    privileges:
+#      -
+#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
+#        permission: GRANT
+#      -
+#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
+#        permission: GRANT

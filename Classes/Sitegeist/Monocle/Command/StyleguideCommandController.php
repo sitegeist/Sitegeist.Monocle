@@ -1,14 +1,28 @@
 <?php
-
 namespace Sitegeist\Monocle\Command;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2016
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Cli\CommandController;
 use TYPO3\Flow\Package\PackageManagerInterface;
-
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class StyleguideCommandController
+ * @package Sitegeist\Monocle\Command
+ */
 class StyleguideCommandController extends CommandController
 {
 
