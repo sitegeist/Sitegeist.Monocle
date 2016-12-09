@@ -151,9 +151,15 @@ class ApiController extends ActionController
         $typoScriptAst =  $typoScriptObjectTree['__prototypes'][$prototypeName];
         $typoScriptCode = ReverseTypoScriptParser::restorePrototypeCode($prototypeName, $typoScriptAst);
 
+        try {
+            $html = $typoScriptView->render();
+        } catch(\Exception $e) {
+            $html = $e->getMessage();
+        }
+
         $result = [
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $typoScriptView->render(),
+            'renderedHtml' => $html,
             'renderedCode' => $typoScriptCode,
             'parsedCode' => Yaml::dump($typoScriptAst, 99)
         ];
