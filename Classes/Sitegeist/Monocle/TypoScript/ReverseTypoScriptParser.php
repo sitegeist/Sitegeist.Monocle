@@ -1,12 +1,35 @@
 <?php
-
 namespace Sitegeist\Monocle\TypoScript;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2016
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use TYPO3\Flow\Annotations as Flow;
 
+/**
+ * Class ReverseTypoScriptParser
+ * @package Sitegeist\Monocle\TypoScript
+ */
 class ReverseTypoScriptParser
 {
-    protected static $RESERVED_KEYS = ['__prototypeObjectName','__meta','__prototypeChain', '__prototypes', '__objectType', '__eelExpression', '__value'];
+    protected static $RESERVED_KEYS = [
+        '__prototypeObjectName',
+        '__meta',
+        '__prototypeChain',
+        '__prototypes',
+        '__objectType',
+        '__eelExpression',
+        '__value'
+    ];
 
     protected static $TOP_META_KEYS = ['context','styleguide'];
 
@@ -23,7 +46,15 @@ class ReverseTypoScriptParser
     {
         $result = '';
 
-        $result .= $indentation . 'prototype(' . $prototypeName . ')' . (array_key_exists('__prototypeObjectName', $abstractSyntaxTree) ? ' < prototype(' . $abstractSyntaxTree['__prototypeObjectName'] . ')' : '') . ' {' . chr(10);
+        if (array_key_exists('__prototypeObjectName', $abstractSyntaxTree)) {
+            $result .= sprintf(
+                'prototype(%s) < prototype(%s) {',
+                $prototypeName,
+                $abstractSyntaxTree['__prototypeObjectName']
+            );
+        } else {
+            $result .= sprintf('prototype(%s) {', $prototypeName);
+        }
 
         // handle __meta context
         if (array_key_exists('__meta', $abstractSyntaxTree)) {

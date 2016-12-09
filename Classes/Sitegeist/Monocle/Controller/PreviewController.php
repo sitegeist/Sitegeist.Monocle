@@ -1,20 +1,37 @@
 <?php
 namespace Sitegeist\Monocle\Controller;
 
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2016
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Utility\Arrays;
 use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Mvc\Controller\ActionController;
 use TYPO3\Flow\Resource\ResourceManager;
-use TYPO3\TYPO3CR\Domain\Model\NodeInterface;
-
-use Sitegeist\Monocle\Helper\TypoScriptHelper;
-use Sitegeist\Monocle\Helper\ContextHelper;
+use TYPO3\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
 
+/**
+ * Class PreviewController
+ * @package Sitegeist\Monocle\Controller
+ */
 class PreviewController extends ActionController
 {
+    /**
+     * @Flow\Inject
+     * @var PackageManagerInterface
+     */
+    protected $packageManager;
 
     /**
      * @var array
@@ -39,18 +56,6 @@ class PreviewController extends ActionController
      * @var TypoScriptService
      */
     protected $typoScriptService;
-
-    /**
-     * @Flow\Inject
-     * @var TypoScriptHelper
-     */
-    protected $typoScriptHelper;
-
-    /**
-     * @Flow\Inject
-     * @var ContextHelper
-     */
-    protected $contextHelper;
 
     /**
      * @Flow\Inject
@@ -104,19 +109,23 @@ class PreviewController extends ActionController
      */
     public function componentAction($prototypeName)
     {
-        $context = $this->contextHelper->getContext();
-        $siteNode = $context->getCurrentSiteNode();
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackage = reset($sitePackages);
+        $sitePackageKey = $sitePackage->getPackageKey();
+
+        $prototypePreviewRenderPath = TypoScriptService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         $typoScriptView = new TypoScriptView();
-        $typoScriptView->setControllerContext($this->controllerContext);
-        $typoScriptView->setTypoScriptPath('monoclePrototypeRenderer_' . str_replace(['.', ':'], ['_', '__'], $prototypeName));
-        $typoScriptView->assignMultiple([
-            'value' => $siteNode
-        ]);
+        $typoScriptView->setControllerContext($this->getControllerContext());
+        $typoScriptView->setTypoScriptPath($prototypePreviewRenderPath);
+        $typoScriptView->setPackageKey($sitePackageKey);
+
+        $html = $typoScriptView->render();
 
         $this->view->assignMultiple([
+            'packageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
-            'renderedHtml' =>  $typoScriptView->render()
+            'renderedHtml' => $html
         ]);
     }
 }

@@ -17,11 +17,11 @@ by our employer http://www.sitegeist.de.*
 
 ### Living Styleguide
 
-The Monocle-Module uses the real TypoScript2 code to render the annotated
+The Monocle-Module uses the real Fusion-code to render the annotated
 prototypes in isolation. That way the styleguide is always up to date and cannot
 diverge over time from the real codebase.
 
-The Monocle was defined with Atomic-Design and pure TypoScript2 without Fluid in
+The Monocle was defined with Atomic-Design and pure Fusion without Fluid in
 mind but the implementation is Coding-Style and Template-Engine agnostic. You can
 use Monocle to render Fluid based Prototypes without any limitation.
 
@@ -32,7 +32,7 @@ use Monocle to render Fluid based Prototypes without any limitation.
 To render a prototype as a styleguide-item it simply has to be annotated:
 
 ```
-prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
+prototype(Vendor.Package:Components.Headline) < prototype(TYPO3.TypoScript:Tag){
     @styleguide {
         path = 'atoms.basic'
         title = 'My Custom Prototype'
@@ -53,10 +53,33 @@ prototype(Vendor.Package:MyCustomPrototype) < prototype(TYPO3.TypoScript:Tag){
         }
     }
 
-    // normal ts props
+    // normal ts props 
+    tagName = 'h1'
     content = ''
 }
 ```
+
+The styleguide will render the items without the usal context. The ``site``, ``documenNode`` 
+and ``node`` context-variables are not present inside the styleguide rendering by intention.
+ 
+That way it is ensured that your prototypes rely only on the fusion path for rendering and are 
+not affected by editor data. This is important for relyable testing of components. 
+
+To map an actual content node on a component-prototype use a separate fusion prototype.  
+
+```
+prototype(Vendor.Package:Content.Headline) < prototype(TYPO3.TypoScript:Value){
+    value = Vendor.Package:Components.Headline {
+        content = ${q(node).property('title')}
+    }
+}
+```
+
+That way the rendering prototype is completely seperated from the mapping prototype and 
+therefore highly reusable.
+
+The distinction between rendering- and mapping-prototypes can be compared to 
+presentational-components vs. container-components in the react-js world.
 
 ### Configuration
 
@@ -108,7 +131,6 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
       package: 'Sitegeist.Monocle'
 ```
 
-
 ## Installation
 
 Sitegeist.Monocle eventually will become available via packagist. After that just add `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`. We use semantic-versioning so every breaking change will increase the major-version number.
@@ -128,6 +150,36 @@ In the meantime you can add the following lines to your composer.json.
     },
 }
 ``` 
+
+## Visual regression testing
+
+Monocle can be used to render prototypes in isolation for visual regression testing tools. 
+For that you might want to consider the following points. 
+
+### Policies
+```YAML
+#
+# make the monocle endpoints publicly available
+# !!! do not use this in production this shoudl be used on the ci-server only!!!
+#
+
+roles:
+  'TYPO3.Flow:Everybody':
+    privileges:
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
+        permission: GRANT
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
+        permission: GRANT
+
+```
+
+### Routes
+
+To make the monocle encpoints accessible without a db-connection available make sure to include the 
+monocle-routes before the neos-routes. Otherwise neos will try to resolve the path and fail due to a
+missing db-connection.
 
 ## Contribution
 
