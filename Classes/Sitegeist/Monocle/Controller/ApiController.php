@@ -153,7 +153,7 @@ class ApiController extends ActionController
 
         try {
             $html = $typoScriptView->render();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $html = $e->getMessage();
         }
 
