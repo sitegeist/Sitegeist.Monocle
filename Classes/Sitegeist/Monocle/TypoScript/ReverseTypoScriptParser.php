@@ -6,7 +6,15 @@ use TYPO3\Flow\Annotations as Flow;
 
 class ReverseTypoScriptParser
 {
-    protected static $RESERVED_KEYS = ['__prototypeObjectName','__meta','__prototypeChain', '__prototypes', '__objectType', '__eelExpression', '__value'];
+    protected static $RESERVED_KEYS = [
+        '__prototypeObjectName',
+        '__meta',
+        '__prototypeChain',
+        '__prototypes',
+        '__objectType',
+        '__eelExpression',
+        '__value'
+    ];
 
     protected static $TOP_META_KEYS = ['context','styleguide'];
 
@@ -23,7 +31,15 @@ class ReverseTypoScriptParser
     {
         $result = '';
 
-        $result .= $indentation . 'prototype(' . $prototypeName . ')' . (array_key_exists('__prototypeObjectName', $abstractSyntaxTree) ? ' < prototype(' . $abstractSyntaxTree['__prototypeObjectName'] . ')' : '') . ' {' . chr(10);
+        if (array_key_exists('__prototypeObjectName', $abstractSyntaxTree)) {
+            $result .= sprintf(
+                'prototype(%s) < prototype(%s) {',
+                $prototypeName,
+                $abstractSyntaxTree['__prototypeObjectName']
+            );
+        } else {
+            $result .= sprintf('prototype(%s) {',  $prototypeName);
+        }
 
         // handle __meta context
         if (array_key_exists('__meta', $abstractSyntaxTree)) {

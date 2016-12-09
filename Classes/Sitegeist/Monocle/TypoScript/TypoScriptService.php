@@ -46,7 +46,8 @@ class TypoScriptService extends NeosTypoScriptService
      * @param array $fusionAst
      * @return array
      */
-    public function getStyleguideObjectsFromFusionAst($fusionAst) {
+    public function getStyleguideObjectsFromFusionAst($fusionAst)
+    {
         $styleguideObjects = [];
         if ($fusionAst && $fusionAst['__prototypes']) {
             foreach ($fusionAst['__prototypes'] as $prototypeName => $prototypeObject) {
@@ -70,7 +71,8 @@ class TypoScriptService extends NeosTypoScriptService
      * @param array $fusionAst
      * @return array
      */
-    protected function addStyleguidePrototypesToFusionAst($fusionAst) {
+    protected function addStyleguidePrototypesToFusionAst($fusionAst)
+    {
         $styleguidePrototypeConfigurations = [];
         $styleguideRenderingPrototypes = [];
         $styleguidePenderingProps = [];

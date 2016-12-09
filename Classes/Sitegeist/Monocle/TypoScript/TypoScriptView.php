@@ -23,6 +23,4 @@ class TypoScriptView extends BaseTypoScriptView
         $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
         $this->parsedTypoScript = $fusionAst;
     }
-
-
 }
