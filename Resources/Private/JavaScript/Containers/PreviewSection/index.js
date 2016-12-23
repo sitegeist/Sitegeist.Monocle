@@ -23,23 +23,40 @@ export default class PreviewSection extends Component {
         prototypes: PropTypes.object
 	};
 
+	state = {
+	    readyCount: 0
+    };
+
+	constructor(props) {
+	    super(props);
+	    this.addReady = this.addReady.bind(this);
+    }
+
+    addReady() {
+	    this.setState({
+	        readyCount: this.state.readyCount + 1
+        })
+    }
+
     render() {
         const {activePreset, availablePresets} = this.props;
         const {path, prototypes} = this.props;
+        const {readyCount} = this.state;
+        const addReady = this.addReady;
 
         const width = (availablePresets[activePreset]) ? availablePresets[activePreset]['width'] : '';
         const label = (availablePresets[activePreset]) ? availablePresets[activePreset]['label'] : '';
 
         const displayPrototypes = [];
-        for (var prototypeName in prototypes) {
+        for (const prototypeName in prototypes) {
             if (prototypes.hasOwnProperty(prototypeName) && prototypes[prototypeName].path.startsWith(path)) {
                 displayPrototypes.push(prototypeName);
             }
         }
 
         return <div className={styles.previewSection}>
-            {displayPrototypes.map(item => (
-                <PrototypeDisplay key={item} prototypeName={item} />
+            {displayPrototypes.map((item, key) => (
+                <PrototypeDisplay key={item} prototypeName={item} ready={addReady} visible={key <= readyCount}/>
             ))}
         </div>;
     }

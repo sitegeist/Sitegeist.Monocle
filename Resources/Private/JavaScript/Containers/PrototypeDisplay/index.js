@@ -28,6 +28,8 @@ export default class PrototypeDisplay extends Component {
         resources: PropTypes.object.isRequired,
         renderPrototypesEndpoint: PropTypes.string,
         viewportWidth: PropTypes.number,
+        visible: PropTypes.bool,
+        ready: PropTypes.func,
     };
 
     state = {
@@ -36,6 +38,7 @@ export default class PrototypeDisplay extends Component {
         renderedCode: '',
         parsedCode: '',
         showSourceCode: false,
+        isFetching: false,
     };
 
     render() {
@@ -44,9 +47,22 @@ export default class PrototypeDisplay extends Component {
             prototypes,
             resources,
             viewportWidth,
-            iframeUri
+            iframeUri,
+            visible
         } = this.props;
 
+        const {
+            isRendered,
+            showSourceCode,
+            renderedHtml,
+            renderedCode,
+            parsedCode,
+            isFetching,
+        } = this.state;
+
+        if (!isRendered && visible && !isFetching) {
+            this.fetch();
+        }
 
         const currentPrototype = prototypes[prototypeName];
         const styleSheets = resources['styleSheets'] ? resources['styleSheets'] : null;
@@ -60,29 +76,27 @@ export default class PrototypeDisplay extends Component {
 				<small className={styles.subheadline}>prototype({prototypeName})</small>
 
 				<div className={styles.handles}>
-                    <IconButton icon="code" className={styles.handle} isActive={this.state.showSourceCode} onClick={() => this.toggleShowSourceCode()} />
-					<IconButton icon="refresh" className={styles.handle} onClick={() => this.fetchPrototype()} />
+                    <IconButton icon="code" className={styles.handle} isActive={showSourceCode} onClick={() => this.toggleShowSourceCode()} />
+					<IconButton icon="refresh" className={styles.handle} onClick={() => this.reload()} />
 					<IconButton icon="external-link" className={styles.handle} onClick={() => this.openPreview()} />
 				</div>
 			</h1>
 			<p className={styles.description}>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p>
 
-            { (this.state.isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={this.state.renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
+            { (isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
 
-            { (this.state.showSourceCode && this.state.isRendered) ?
+            { (showSourceCode && isRendered) ?
                 <Tabs className={styles.codeSection} theme={tabTheme}>
-                    <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}><Code content={pretty(this.state.renderedHtml)}  language="html" /></Tabs.Panel>
-                    <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}><Code content={this.state.renderedCode}  language="vim" /></Tabs.Panel>
-                    <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={this.state.parsedCode}  language="yaml" /></Tabs.Panel>
+                    <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}><Code content={pretty(renderedHtml)}  language="html" /></Tabs.Panel>
+                    <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}><Code content={renderedCode}  language="vim" /></Tabs.Panel>
+                    <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={parsedCode}  language="yaml" /></Tabs.Panel>
                 </Tabs>
             : '' }
         </div>;
     }
 
-    componentWillMount() {
-        if (this.state.isRendered == false) {
-            this.fetchPrototype();
-        }
+    fetch() {
+        this.fetchPrototype();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -90,6 +104,10 @@ export default class PrototypeDisplay extends Component {
 
         if (prevProps.prototypeName !== prototypeName) {
             this.fetchPrototype();
+        }
+
+        if (this.state.isRendered !== prevState.isRendered) {
+            this.props.ready();
         }
     }
 
@@ -99,17 +117,19 @@ export default class PrototypeDisplay extends Component {
 
     fetchPrototype() {
         const {prototypeName, renderPrototypesEndpoint} = this.props;
-
-        this.setState({isRendered: false, renderedHtml: '', renderedCode: '', parsedCode: '' });
-
+        this.state.isFetching = true;
         fetch(renderPrototypesEndpoint + '?prototypeName=' + prototypeName , {
             method: 'GET',
             credentials: 'same-origin'
         })
         .then(response => response.json())
         .then(json => (
-            this.setState({isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode, parsedCode: json.parsedCode})
+            this.setState({isRendered: true, renderedHtml: json.renderedHtml, renderedCode: json.renderedCode, parsedCode: json.parsedCode, isFetching: false})
         ));
+    }
+
+    reload() {
+        this.setState({isRendered: false, renderedHtml: '', renderedCode: '', parsedCode: '' });
     }
 
 	openPreview() {
