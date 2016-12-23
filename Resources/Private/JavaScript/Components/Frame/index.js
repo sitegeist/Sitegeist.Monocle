@@ -24,6 +24,7 @@ export default class Frame extends Component {
 				src={uri}
 				className={className}
 				style={mergedStyles}
+				scrolling="no"
 				onLoad={() => this.onIframeLoad()}
 				/>
 		);
