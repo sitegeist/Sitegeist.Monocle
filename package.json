@@ -60,6 +60,7 @@
     "@neos-project/brand": "^1.1.0",
     "@neos-project/react-ui-components": "^4.4.6",
     "classnames": "^2.2.5",
+    "element-resize-detector": "^1.1.10",
     "lodash.isfunction": "^3.0.8",
     "lodash.omit": "^4.5.0",
     "moment": "^2.14.1",

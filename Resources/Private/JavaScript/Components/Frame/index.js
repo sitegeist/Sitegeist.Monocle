@@ -1,4 +1,7 @@
 import React, {Component, PropTypes} from 'react';
+import makeElementResizeDetector from 'element-resize-detector';
+
+const elementResizeDetector = makeElementResizeDetector();
 
 export default class Frame extends Component {
     static propTypes = {
@@ -45,6 +48,7 @@ export default class Frame extends Component {
             frameDocument.fonts.onloadingdone = () => (this.resizeFrame());
         }
 
+        elementResizeDetector.listenTo(frameDocument.body, ::this.resizeFrame);
         frameWindow.addEventListener('resize', () => (this.resizeFrame()));
 	}
 
@@ -74,7 +78,6 @@ export default class Frame extends Component {
         const height = container.clientHeight;
 
         this.setState(Object.assign({}, this.state, {style: {height: '' + height + 'px'}}));
-		frameDocument.body.style.height = `${height}px`;
     }
 
     renderFrame() {
