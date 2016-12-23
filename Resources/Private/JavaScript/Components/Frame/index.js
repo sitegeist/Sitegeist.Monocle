@@ -1,4 +1,8 @@
 import React, {Component, PropTypes} from 'react';
+import makeElementResizeDetector from 'element-resize-detector';
+
+const elementResizeDetector = makeElementResizeDetector();
+const styleGuideLoadedEvent = new Event('Sitegeist.Monocle:StyleguideLoaded');
 
 export default class Frame extends Component {
     static propTypes = {
@@ -24,6 +28,7 @@ export default class Frame extends Component {
 				src={uri}
 				className={className}
 				style={mergedStyles}
+				scrolling="no"
 				onLoad={() => this.onIframeLoad()}
 				/>
 		);
@@ -44,6 +49,7 @@ export default class Frame extends Component {
             frameDocument.fonts.onloadingdone = () => (this.resizeFrame());
         }
 
+        elementResizeDetector.listenTo(frameDocument.body, ::this.resizeFrame);
         frameWindow.addEventListener('resize', () => (this.resizeFrame()));
 	}
 
@@ -73,7 +79,6 @@ export default class Frame extends Component {
         const height = container.clientHeight;
 
         this.setState(Object.assign({}, this.state, {style: {height: '' + height + 'px'}}));
-		frameDocument.body.style.height = `${height}px`;
     }
 
     renderFrame() {
@@ -86,7 +91,6 @@ export default class Frame extends Component {
     renderFrameContents() {
         const {iframe} = this.refs;
         const {content} = this.props;
-
         const frameDocument = iframe.contentDocument || iframe.contentWindow.document;
 
         const container = frameDocument.createElement('div');
@@ -94,6 +98,7 @@ export default class Frame extends Component {
         container.innerHTML = content;
 
         frameDocument.body.appendChild(container);
+        frameDocument.dispatchEvent(styleGuideLoadedEvent);
 		this.resizeFrame();
     }
 }
