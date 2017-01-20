@@ -14,7 +14,7 @@ namespace Sitegeist\Monocle\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use TYPO3\TypoScript\View\TypoScriptView as BaseTypoScriptView;
+use Neos\Fusion\View\TypoScriptView as BaseTypoScriptView;
 
 /**
  * Class TypoScriptView
