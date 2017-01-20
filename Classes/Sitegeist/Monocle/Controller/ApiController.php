@@ -15,7 +15,7 @@ namespace Sitegeist\Monocle\Controller;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Mvc\Controller\ActionController;
-use TYPO3\Flow\Resource\ResourceManager;
+use TYPO3\Flow\ResourceManagement\ResourceManager;
 use TYPO3\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
