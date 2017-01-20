@@ -14,13 +14,13 @@ namespace Sitegeist\Monocle\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Fusion\View\TypoScriptView as BaseTypoScriptView;
+use Neos\Fusion\View\FusionView as BaseFusionView;
 
 /**
- * Class TypoScriptView
+ * Class FusionView
  * @package Sitegeist\Monocle\TypoScript
  */
-class TypoScriptView extends BaseTypoScriptView
+class FusionView extends BaseFusionView
 {
     /**
      * @Flow\Inject
@@ -29,7 +29,7 @@ class TypoScriptView extends BaseTypoScriptView
     protected $fusionService;
 
     /**
-     * Load TypoScript from the directories specified by $this->getOption('typoScriptPathPatterns')
+     * Load TypoScript from the directories specified by $this->getOption('fusionPathPatterns')
      *
      * @return void
      */

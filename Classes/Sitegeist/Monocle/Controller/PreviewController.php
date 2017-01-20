@@ -19,7 +19,7 @@ use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\TypoScript\FusionService;
-use Sitegeist\Monocle\TypoScript\TypoScriptView;
+use Sitegeist\Monocle\TypoScript\FusionView;
 
 /**
  * Class PreviewController
@@ -115,9 +115,9 @@ class PreviewController extends ActionController
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
-        $typoScriptView = new TypoScriptView();
+        $typoScriptView = new FusionView();
         $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setTypoScriptPath($prototypePreviewRenderPath);
+        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
         $html = $typoScriptView->render();
