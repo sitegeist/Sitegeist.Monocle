@@ -8,7 +8,7 @@ privilegeTargets:
       matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sites|viewportPresets|renderPrototype)Action())'
 
 roles:
-  'TYPO3.Neos:AbstractEditor':
+  'Neos.Neos:AbstractEditor':
     privileges:
       -
         privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'

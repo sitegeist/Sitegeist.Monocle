@@ -14,7 +14,7 @@ namespace Sitegeist\Monocle\Controller;
  */
 
 use Neos\Flow\Annotations as Flow;
-use TYPO3\Neos\Controller\Module\AbstractModuleController;
+use Neos\Neos\Controller\Module\AbstractModuleController;
 
 /**
  * Class StyleguideController

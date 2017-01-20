@@ -14,7 +14,7 @@ namespace Sitegeist\Monocle\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use \TYPO3\Neos\Domain\Service\TypoScriptService as NeosTypoScriptService;
+use \Neos\Neos\Domain\Service\TypoScriptService as NeosTypoScriptService;
 
 /**
  * Class TypoScriptService
@@ -25,7 +25,7 @@ class TypoScriptService extends NeosTypoScriptService
     const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
 
     /**
-     * @Flow\InjectConfiguration(path="typoScript.autoInclude", package="TYPO3.Neos")
+     * @Flow\InjectConfiguration(path="typoScript.autoInclude", package="Neos.Neos")
      * @var array
      */
     protected $autoIncludeConfiguration = array();
@@ -35,7 +35,7 @@ class TypoScriptService extends NeosTypoScriptService
      *
      * @param string $siteResourcesPackageKey
      * @return array The merged object tree as of the given node
-     * @throws \TYPO3\Neos\Domain\Exception
+     * @throws \Neos\Neos\Domain\Exception
      */
     public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey)
     {

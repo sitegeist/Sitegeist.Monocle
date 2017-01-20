@@ -1,18 +1,4 @@
 
-TYPO3:
-  Neos:
-    modules:
-      administration:
-        submodules:
-          monocle:
-            label: Monocle
-            controller: \Sitegeist\Monocle\Controller\StyleguideController
-            description: 'A Styleguide implementation based on TypoScript prototypes and the idea of atomic-design'
-            icon: icon-magic
-            privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
-            additionalResources:
-              styleSheets:
-                module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
 Sitegeist:
   Monocle:
     viewportPresets: {  }
@@ -33,3 +19,16 @@ Neos:
                 pattern: ControllerObjectName
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
+  Neos:
+    modules:
+      administration:
+        submodules:
+          monocle:
+            label: Monocle
+            controller: \Sitegeist\Monocle\Controller\StyleguideController
+            description: 'A Styleguide implementation based on TypoScript prototypes and the idea of atomic-design'
+            icon: icon-magic
+            privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
+            additionalResources:
+              styleSheets:
+                module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
