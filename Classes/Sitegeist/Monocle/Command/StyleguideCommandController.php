@@ -13,7 +13,7 @@ namespace Sitegeist\Monocle\Command;
  * source code.
  */
 
-use Sitegeist\Monocle\TypoScript\TypoScriptService;
+use Sitegeist\Monocle\TypoScript\FusionService;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Package\PackageManagerInterface;
@@ -40,9 +40,9 @@ class StyleguideCommandController extends CommandController
 
     /**
      * @Flow\Inject
-     * @var TypoScriptService
+     * @var FusionService
      */
-    protected $typoScriptService;
+    protected $fusionService;
 
     /**
      * Get a list of all configured default styleguide viewports
@@ -65,8 +65,8 @@ class StyleguideCommandController extends CommandController
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 
-        $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
-        $styleguideObjects = $this->typoScriptService->getStyleguideObjectsFromFusionAst($fusionAst);
+        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->outputData($styleguideObjects, $format);
     }

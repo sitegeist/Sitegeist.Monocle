@@ -14,13 +14,13 @@ namespace Sitegeist\Monocle\TypoScript;
  */
 
 use Neos\Flow\Annotations as Flow;
-use \Neos\Neos\Domain\Service\TypoScriptService as NeosTypoScriptService;
+use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
 
 /**
- * Class TypoScriptService
+ * Class FusionService
  * @package Sitegeist\Monocle\TypoScript
  */
-class TypoScriptService extends NeosTypoScriptService
+class FusionService extends NeosFusionService
 {
     const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
 

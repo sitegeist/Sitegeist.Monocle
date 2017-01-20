@@ -17,7 +17,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\TypoScript\TypoScriptService;
+use Sitegeist\Monocle\TypoScript\FusionService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
 use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
 use Symfony\Component\Yaml\Yaml;
@@ -42,9 +42,9 @@ class ApiController extends ActionController
 
     /**
      * @Flow\Inject
-     * @var TypoScriptService
+     * @var FusionService
      */
-    protected $typoScriptService;
+    protected $fusionService;
 
     /**
      * @Flow\Inject
@@ -76,8 +76,8 @@ class ApiController extends ActionController
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 
-        $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
-        $styleguideObjects = $this->typoScriptService->getStyleguideObjectsFromFusionAst($fusionAst);
+        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->view->assign('value', $styleguideObjects);
     }
@@ -138,7 +138,7 @@ class ApiController extends ActionController
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 
-        $prototypePreviewRenderPath = TypoScriptService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
+        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         // render html
         $typoScriptView = new TypoScriptView();
@@ -147,7 +147,7 @@ class ApiController extends ActionController
         $typoScriptView->setPackageKey($sitePackageKey);
 
         // render fusion source
-        $typoScriptObjectTree = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $typoScriptObjectTree = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $typoScriptAst =  $typoScriptObjectTree['__prototypes'][$prototypeName];
         $typoScriptCode = ReverseTypoScriptParser::restorePrototypeCode($prototypeName, $typoScriptAst);
 

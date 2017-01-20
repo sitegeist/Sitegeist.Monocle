@@ -24,9 +24,9 @@ class TypoScriptView extends BaseTypoScriptView
 {
     /**
      * @Flow\Inject
-     * @var \Sitegeist\Monocle\TypoScript\TypoScriptService
+     * @var \Sitegeist\Monocle\TypoScript\FusionService
      */
-    protected $typoScriptService;
+    protected $fusionService;
 
     /**
      * Load TypoScript from the directories specified by $this->getOption('typoScriptPathPatterns')
@@ -35,7 +35,7 @@ class TypoScriptView extends BaseTypoScriptView
      */
     protected function loadTypoScript()
     {
-        $fusionAst = $this->typoScriptService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
+        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
         $this->parsedTypoScript = $fusionAst;
     }
 }
