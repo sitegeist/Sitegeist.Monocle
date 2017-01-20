@@ -13,7 +13,7 @@ namespace Sitegeist\Monocle\Command;
  * source code.
  */
 
-use Sitegeist\Monocle\TypoScript\FusionService;
+use Sitegeist\Monocle\Fusion\FusionService;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Package\PackageManagerInterface;

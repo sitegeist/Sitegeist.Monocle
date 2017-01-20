@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\Monocle\TypoScript;
+namespace Sitegeist\Monocle\Fusion;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -18,14 +18,14 @@ use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
 
 /**
  * Class FusionService
- * @package Sitegeist\Monocle\TypoScript
+ * @package Sitegeist\Monocle\Fusion
  */
 class FusionService extends NeosFusionService
 {
     const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
 
     /**
-     * @Flow\InjectConfiguration(path="typoScript.autoInclude", package="Neos.Neos")
+     * @Flow\InjectConfiguration(path="fusion.autoInclude", package="Neos.Neos")
      * @var array
      */
     protected $autoIncludeConfiguration = array();
@@ -39,16 +39,16 @@ class FusionService extends NeosFusionService
      */
     public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey)
     {
-        $siteRootTypoScriptPathAndFilename = sprintf($this->siteRootTypoScriptPattern, $siteResourcesPackageKey);
+        $siteRootFusionPathAndFilename = sprintf($this->siteRootFusionPattern, $siteResourcesPackageKey);
 
-        $mergedTypoScriptCode = '';
-        $mergedTypoScriptCode .= $this->generateNodeTypeDefinitions();
-        $mergedTypoScriptCode .= $this->getTypoScriptIncludes($this->prepareAutoIncludeTypoScript());
-        $mergedTypoScriptCode .= $this->getTypoScriptIncludes($this->prependTypoScriptIncludes);
-        $mergedTypoScriptCode .= $this->readExternalTypoScriptFile($siteRootTypoScriptPathAndFilename);
-        $mergedTypoScriptCode .= $this->getTypoScriptIncludes($this->appendTypoScriptIncludes);
+        $mergedFusionCode = '';
+        $mergedFusionCode .= $this->generateNodeTypeDefinitions();
+        $mergedFusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
+        $mergedFusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
+        $mergedFusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
+        $mergedFusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
 
-        $fusionAst = $this->typoScriptParser->parse($mergedTypoScriptCode, $siteRootTypoScriptPathAndFilename);
+        $fusionAst = $this->fusionParser->parse($mergedFusionCode, $siteRootFusionPathAndFilename);
         $finalFusionAst = $this->addStyleguidePrototypesToFusionAst($fusionAst);
 
         return $finalFusionAst;

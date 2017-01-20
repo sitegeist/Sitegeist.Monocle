@@ -1,6 +1,6 @@
 {
     "name": "sitegeist/monocle",
-    "type": "typo3-flow-plugin",
+    "type": "neos-plugin",
     "description": "An living-styleguide for Neos that is based on the actual fusion-code",
     "license": "GPL-3.0+",
     "authors": [
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "typo3/neos": "~2.3.0"
+        "neos/neos": "~3.0.0"
     },
     "autoload": {
         "psr-0": {

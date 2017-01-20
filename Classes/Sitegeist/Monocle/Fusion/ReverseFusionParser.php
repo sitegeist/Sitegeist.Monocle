@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\Monocle\TypoScript;
+namespace Sitegeist\Monocle\Fusion;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -17,9 +17,9 @@ use Neos\Flow\Annotations as Flow;
 
 /**
  * Class ReverseTypoScriptParser
- * @package Sitegeist\Monocle\TypoScript
+ * @package Sitegeist\Monocle\Fusion
  */
-class ReverseTypoScriptParser
+class ReverseFusionParser
 {
     protected static $RESERVED_KEYS = [
         '__prototypeObjectName',

@@ -18,8 +18,8 @@ use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\TypoScript\FusionService;
-use Sitegeist\Monocle\TypoScript\FusionView;
+use Sitegeist\Monocle\Fusion\FusionService;
+use Sitegeist\Monocle\Fusion\FusionView;
 
 /**
  * Class PreviewController

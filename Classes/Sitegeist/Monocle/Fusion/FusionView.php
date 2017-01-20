@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\Monocle\TypoScript;
+namespace Sitegeist\Monocle\Fusion;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -18,24 +18,24 @@ use Neos\Fusion\View\FusionView as BaseFusionView;
 
 /**
  * Class FusionView
- * @package Sitegeist\Monocle\TypoScript
+ * @package Sitegeist\Monocle\Fusion
  */
 class FusionView extends BaseFusionView
 {
     /**
      * @Flow\Inject
-     * @var \Sitegeist\Monocle\TypoScript\FusionService
+     * @var \Sitegeist\Monocle\Fusion\FusionService
      */
     protected $fusionService;
 
     /**
-     * Load TypoScript from the directories specified by $this->getOption('fusionPathPatterns')
+     * Load Fusion from the directories specified by $this->getOption('fusionPathPatterns')
      *
      * @return void
      */
-    protected function loadTypoScript()
+    protected function loadFusion()
     {
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
-        $this->parsedTypoScript = $fusionAst;
+        $this->parsedFusion = $fusionAst;
     }
 }

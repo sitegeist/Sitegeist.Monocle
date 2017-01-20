@@ -17,9 +17,9 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\TypoScript\FusionService;
-use Sitegeist\Monocle\TypoScript\FusionView;
-use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
+use Sitegeist\Monocle\Fusion\FusionService;
+use Sitegeist\Monocle\Fusion\FusionView;
+use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -141,18 +141,18 @@ class ApiController extends ActionController
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         // render html
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
+        $fusionView = new FusionView();
+        $fusionView->setControllerContext($this->getControllerContext());
+        $fusionView->setFusionPath($prototypePreviewRenderPath);
+        $fusionView->setPackageKey($sitePackageKey);
 
         // render fusion source
-        $typoScriptObjectTree = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
-        $typoScriptAst =  $typoScriptObjectTree['__prototypes'][$prototypeName];
-        $typoScriptCode = ReverseTypoScriptParser::restorePrototypeCode($prototypeName, $typoScriptAst);
+        $fusionObjectTree = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
+        $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
         try {
-            $html = $typoScriptView->render();
+            $html = $fusionView->render();
         } catch (\Exception $e) {
             $html = $e->getMessage();
         }
@@ -160,8 +160,8 @@ class ApiController extends ActionController
         $result = [
             'prototypeName' => $prototypeName,
             'renderedHtml' => $html,
-            'renderedCode' => $typoScriptCode,
-            'parsedCode' => Yaml::dump($typoScriptAst, 99)
+            'renderedCode' => $fusionCode,
+            'parsedCode' => Yaml::dump($fusionAst, 99)
         ];
 
         $this->view->assign('value', $result);

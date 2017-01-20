@@ -1,4 +1,4 @@
-Sitegeist\Monocle\TypoScript\TypoScriptView:
+Sitegeist\Monocle\Fusion\FusionView:
   properties:
     fallbackView:
       object: Neos\FluidAdaptor\View\TemplateView
