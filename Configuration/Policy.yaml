@@ -1,5 +1,5 @@
 privilegeTargets:
-  'TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+  'Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Preview':
@@ -23,7 +23,7 @@ roles:
 #
 # This has to be added to the main Policy.yaml to access the monocle encpoints without login
 #
-#  'TYPO3.Flow:Everybody':
+#  'Neos.Flow:Everybody':
 #    privileges:
 #      -
 #        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'

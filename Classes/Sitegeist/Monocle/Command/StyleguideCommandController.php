@@ -14,9 +14,9 @@ namespace Sitegeist\Monocle\Command;
  */
 
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cli\CommandController;
-use TYPO3\Flow\Package\PackageManagerInterface;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cli\CommandController;
+use Neos\Flow\Package\PackageManagerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -61,7 +61,7 @@ class StyleguideCommandController extends CommandController
      */
     public function itemsCommand($format = 'json')
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 

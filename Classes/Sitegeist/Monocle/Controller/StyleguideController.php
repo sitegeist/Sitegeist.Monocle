@@ -13,7 +13,7 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use TYPO3\Neos\Controller\Module\AbstractModuleController;
 
 /**

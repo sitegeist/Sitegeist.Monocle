@@ -1,18 +1,28 @@
+
 TYPO3:
   Neos:
     modules:
       administration:
         submodules:
           monocle:
-            label: 'Monocle'
-            controller: '\Sitegeist\Monocle\Controller\StyleguideController'
+            label: Monocle
+            controller: \Sitegeist\Monocle\Controller\StyleguideController
             description: 'A Styleguide implementation based on TypoScript prototypes and the idea of atomic-design'
-            icon: 'icon-magic'
+            icon: icon-magic
             privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
             additionalResources:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
-
+Sitegeist:
+  Monocle:
+    viewportPresets: {  }
+    preview:
+      defaultPath: atoms.basic
+      metaViewport: ''
+      additionalResources:
+        styleSheets: {  }
+        javaScripts: {  }
+Neos:
   Flow:
     security:
       authentication:
@@ -20,39 +30,6 @@ TYPO3:
           Typo3BackendProvider:
             requestPatterns:
               'Sitegeist.Monocle:monocleControllers':
-                pattern: 'ControllerObjectName'
+                pattern: ControllerObjectName
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
-
-Sitegeist:
-  Monocle:
-
-    # the breakpoints the styleguide will offer
-    viewportPresets: []
-#    viewportPresets:
-#      xs:
-#        label: 'xtra small'
-#        width: 400
-#        height: 600
-#      md:
-#        label: 'medium'
-#        width: 600
-#        height: 400
-#      l:
-#        label: 'wide'
-#        width: 800
-#        height: 600
-
-    preview:
-      # the path the styleguide will show at start
-      defaultPath: 'atoms.basic'
-
-      # the meta viewport property for the preview iframes
-      metaViewport: ''
-
-      # the resources that are loaded in the preview iFrames
-      additionalResources:
-        styleSheets: []
-          # example:  'resource://Vendor.Site/Public/Styles/Main.css'
-        javaScripts: []
-          # example: 'resource://Vendor.Site/Public/Scripts/Main.js'

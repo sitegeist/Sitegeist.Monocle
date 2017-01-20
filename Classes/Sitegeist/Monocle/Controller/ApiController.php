@@ -13,10 +13,10 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Mvc\Controller\ActionController;
-use TYPO3\Flow\ResourceManagement\ResourceManager;
-use TYPO3\Flow\Package\PackageManagerInterface;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\ResourceManagement\ResourceManager;
+use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\TypoScript\TypoScriptService;
 use Sitegeist\Monocle\TypoScript\TypoScriptView;
 use Sitegeist\Monocle\TypoScript\ReverseTypoScriptParser;
@@ -32,7 +32,7 @@ class ApiController extends ActionController
     /**
      * @var array
      */
-    protected $defaultViewObjectName = 'TYPO3\Flow\Mvc\View\JsonView';
+    protected $defaultViewObjectName = 'Neos\Flow\Mvc\View\JsonView';
 
     /**
      * @Flow\Inject
@@ -72,7 +72,7 @@ class ApiController extends ActionController
      */
     public function styleguideObjectsAction()
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 
@@ -134,7 +134,7 @@ class ApiController extends ActionController
      */
     public function renderPrototypeAction($prototypeName)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'typo3-flow-site');
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
         $sitePackage = reset($sitePackages);
         $sitePackageKey = $sitePackage->getPackageKey();
 
