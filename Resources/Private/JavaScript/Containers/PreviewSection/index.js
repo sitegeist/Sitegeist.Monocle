@@ -12,7 +12,8 @@ import styles from './style.css';
         availablePresets: state.viewportOptions.availablePresets,
 
         path: state.styleguide.path,
-        prototypes: state.styleguide.prototypes
+        prototypes: state.styleguide.prototypes,
+        globalerror: state.styleguide.globalError
 	};
 })
 export default class PreviewSection extends Component {
@@ -40,7 +41,7 @@ export default class PreviewSection extends Component {
 
     render() {
         const {activePreset, availablePresets} = this.props;
-        const {path, prototypes} = this.props;
+        const {path, prototypes, globalerror} = this.props;
         const {readyCount} = this.state;
         const addReady = this.addReady;
 
@@ -55,6 +56,7 @@ export default class PreviewSection extends Component {
         }
 
         return <div className={styles.previewSection}>
+            {!!globalerror && <div style={{marginTop: '40px'}} dangerouslySetInnerHTML={{__html: globalerror}} />}
             {displayPrototypes.map((item, key) => (
                 <PrototypeDisplay key={item} prototypeName={item} ready={addReady} visible={key <= readyCount}/>
             ))}
