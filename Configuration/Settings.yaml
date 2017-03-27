@@ -26,7 +26,7 @@ Neos:
           monocle:
             label: Monocle
             controller: \Sitegeist\Monocle\Controller\StyleguideController
-            description: 'A Styleguide implementation based on TypoScript prototypes and the idea of atomic-design'
+            description: 'A styleguide for fusion prototypes and the idea of components'
             icon: icon-magic
             privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
             additionalResources:
