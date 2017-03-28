@@ -7,6 +7,7 @@ const SET_RENDER_PROTOTYPES_ENDPOINT = '@sitegeist/monocle-ui/Styleguide/SET_REN
 const SET_IFRAME_URI = '@sitegeist/monocle-ui/Styleguide/SET_IFRAME_URI';
 const SET_PREVIEW_URI = '@sitegeist/monocle-ui/Styleguide/SET_PREVIEW_URI';
 const SET_FULLSCREEN_URI = '@sitegeist/monocle-ui/Styleguide/SET_FULLSCREEN_URI';
+const SET_GLOBAL_ERROR = '@sitegeist/monocle-ui/Styleguide/SET_GLOBAL_ERROR';
 
 
 const actionTypes =  {
@@ -16,7 +17,8 @@ const actionTypes =  {
     SET_RENDER_PROTOTYPES_ENDPOINT,
 	SET_IFRAME_URI,
 	SET_PREVIEW_URI,
-    SET_FULLSCREEN_URI
+    SET_FULLSCREEN_URI,
+    SET_GLOBAL_ERROR
 };
 
 const setPath = createAction(SET_PATH, path => path);
@@ -26,6 +28,7 @@ const setRenderPrototypesEndpoint = createAction(SET_RENDER_PROTOTYPES_ENDPOINT,
 const setIframeUri = createAction(SET_IFRAME_URI, uri => uri);
 const setPreviewUri = createAction(SET_PREVIEW_URI, uri => uri);
 const setFullscreenUri = createAction(SET_FULLSCREEN_URI, uri => uri);
+const setGlobalError = createAction(SET_GLOBAL_ERROR, err => err);
 
 const actions = {
     setPath,
@@ -34,7 +37,8 @@ const actions = {
     setRenderPrototypesEndpoint,
 	setIframeUri,
 	setPreviewUri,
-    setFullscreenUri
+    setFullscreenUri,
+    setGlobalError
 };
 
 const reducer = (state = {}, action) => {
@@ -53,6 +57,8 @@ const reducer = (state = {}, action) => {
             return state.setIn(['previewUri'], action.payload);
         case SET_FULLSCREEN_URI:
             return state.setIn(['fullscreenUri'], action.payload);
+        case SET_GLOBAL_ERROR:
+            return state.setIn(['globalError'], action.payload);
 	}
 	return state;
 };

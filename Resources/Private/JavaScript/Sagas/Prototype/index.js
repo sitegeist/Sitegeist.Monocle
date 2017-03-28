@@ -8,8 +8,18 @@ function* boot(action) {
     		method: 'POST',
             credentials: 'same-origin'
     	})
-        .then(response => response.json());
-        yield put(redux.Styleguide.actions.setPrototypes(json));
+        .then(response => {
+            if (!response.ok) {
+                return response.text();
+            }
+            return response.json()
+        });
+
+        if (typeof json === 'string') {
+            yield put(redux.Styleguide.actions.setGlobalError(json));
+        } else {
+            yield put(redux.Styleguide.actions.setPrototypes(json));
+        }
     }
 }
 
