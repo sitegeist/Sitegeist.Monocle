@@ -19319,7 +19319,8 @@
 	        availablePresets: state.viewportOptions.availablePresets,
 	
 	        path: state.styleguide.path,
-	        prototypes: state.styleguide.prototypes
+	        prototypes: state.styleguide.prototypes,
+	        globalerror: state.styleguide.globalError
 	    };
 	}), _dec(_class = (_temp = _class2 = function (_Component) {
 	    _inherits(PreviewSection, _Component);
@@ -19353,6 +19354,7 @@
 	            var _props2 = this.props;
 	            var path = _props2.path;
 	            var prototypes = _props2.prototypes;
+	            var globalerror = _props2.globalerror;
 	            var readyCount = this.state.readyCount;
 	
 	            var addReady = this.addReady;
@@ -19370,6 +19372,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: _style2.default.previewSection },
+	                !!globalerror && _react2.default.createElement('div', { style: { marginTop: '40px' }, dangerouslySetInnerHTML: { __html: globalerror } }),
 	                displayPrototypes.map(function (item, key) {
 	                    return _react2.default.createElement(_index2.PrototypeDisplay, { key: item, prototypeName: item, ready: addReady, visible: key <= readyCount });
 	                })
@@ -19838,6 +19841,7 @@
 	var SET_IFRAME_URI = '@sitegeist/monocle-ui/Styleguide/SET_IFRAME_URI';
 	var SET_PREVIEW_URI = '@sitegeist/monocle-ui/Styleguide/SET_PREVIEW_URI';
 	var SET_FULLSCREEN_URI = '@sitegeist/monocle-ui/Styleguide/SET_FULLSCREEN_URI';
+	var SET_GLOBAL_ERROR = '@sitegeist/monocle-ui/Styleguide/SET_GLOBAL_ERROR';
 	
 	var actionTypes = {
 	    SET_PATH: SET_PATH,
@@ -19846,7 +19850,8 @@
 	    SET_RENDER_PROTOTYPES_ENDPOINT: SET_RENDER_PROTOTYPES_ENDPOINT,
 	    SET_IFRAME_URI: SET_IFRAME_URI,
 	    SET_PREVIEW_URI: SET_PREVIEW_URI,
-	    SET_FULLSCREEN_URI: SET_FULLSCREEN_URI
+	    SET_FULLSCREEN_URI: SET_FULLSCREEN_URI,
+	    SET_GLOBAL_ERROR: SET_GLOBAL_ERROR
 	};
 	
 	var setPath = (0, _reduxActions.createAction)(SET_PATH, function (path) {
@@ -19870,6 +19875,9 @@
 	var setFullscreenUri = (0, _reduxActions.createAction)(SET_FULLSCREEN_URI, function (uri) {
 	    return uri;
 	});
+	var setGlobalError = (0, _reduxActions.createAction)(SET_GLOBAL_ERROR, function (err) {
+	    return err;
+	});
 	
 	var actions = {
 	    setPath: setPath,
@@ -19878,7 +19886,8 @@
 	    setRenderPrototypesEndpoint: setRenderPrototypesEndpoint,
 	    setIframeUri: setIframeUri,
 	    setPreviewUri: setPreviewUri,
-	    setFullscreenUri: setFullscreenUri
+	    setFullscreenUri: setFullscreenUri,
+	    setGlobalError: setGlobalError
 	};
 	
 	var reducer = function reducer() {
@@ -19900,6 +19909,8 @@
 	            return state.setIn(['previewUri'], action.payload);
 	        case SET_FULLSCREEN_URI:
 	            return state.setIn(['fullscreenUri'], action.payload);
+	        case SET_GLOBAL_ERROR:
+	            return state.setIn(['globalError'], action.payload);
 	    }
 	    return state;
 	};
@@ -20081,7 +20092,7 @@
 	            switch (_context.prev = _context.next) {
 	                case 0:
 	                    if (!(action.payload && action.payload.prototypesEndpoint)) {
-	                        _context.next = 6;
+	                        _context.next = 11;
 	                        break;
 	                    }
 	
@@ -20090,15 +20101,32 @@
 	                        method: 'POST',
 	                        credentials: 'same-origin'
 	                    }).then(function (response) {
+	                        if (!response.ok) {
+	                            return response.text();
+	                        }
 	                        return response.json();
 	                    });
 	
 	                case 3:
 	                    json = _context.sent;
-	                    _context.next = 6;
+	
+	                    if (!(typeof json === 'string')) {
+	                        _context.next = 9;
+	                        break;
+	                    }
+	
+	                    _context.next = 7;
+	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setGlobalError(json));
+	
+	                case 7:
+	                    _context.next = 11;
+	                    break;
+	
+	                case 9:
+	                    _context.next = 11;
 	                    return (0, _effects.put)(_index.redux.Styleguide.actions.setPrototypes(json));
 	
-	                case 6:
+	                case 11:
 	                case 'end':
 	                    return _context.stop();
 	            }
