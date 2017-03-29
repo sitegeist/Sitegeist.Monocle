@@ -51,9 +51,9 @@ class ReverseFusionParser
                 'prototype(%s) < prototype(%s) {',
                 $prototypeName,
                 $abstractSyntaxTree['__prototypeObjectName']
-            );
+            ) . chr(10);
         } else {
-            $result .= sprintf('prototype(%s) {', $prototypeName);
+            $result .= sprintf('prototype(%s) {', $prototypeName) . chr(10);
         }
 
         // handle __meta context
