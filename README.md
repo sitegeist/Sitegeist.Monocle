@@ -37,16 +37,7 @@ prototype(Vendor.Package:Components.Headline) < prototype(TYPO3.TypoScript:Tag){
         path = 'atoms.basic'
         title = 'My Custom Prototype'
         description = 'A Prototype ....'
-
-        # an optional class for the wrapping div of the preview
-        # previewContainerClass = 'class-with-nice-background'
-
-        # render the prototype in a single iframe
-        # display = 'iframe'
-
-        # define the height of the prototype iframe
-        # height = 600
-
+        
         # ts props to override for the styleguide rendering
         props {
             content = 'Hello World'
