@@ -29,7 +29,7 @@ export default class PreviewFrame extends PureComponent {
         const {src, onLoad} = this.props;
 
         return (
-            <iframe className={style.frame} src={src} frameBorder="0" onLoad={onLoad}/>
+            <iframe id="preview-frame" className={style.frame} src={src} frameBorder="0" onLoad={onLoad}/>
         );
     }
 }

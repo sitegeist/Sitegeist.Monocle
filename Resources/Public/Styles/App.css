@@ -2681,6 +2681,34 @@
 :root {}
 :root {}
 :root {}
+.style__selector___rUZKa {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__selector___1HES1 {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -3112,6 +3140,7 @@
     bottom: 0;
     color: white;
     z-index: 1000;
+    cursor: wait;
 }
 
 .style__caption___1tTe0 {

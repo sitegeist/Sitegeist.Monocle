@@ -31887,9 +31887,19 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(93);
+
+var _buildUrl = __webpack_require__(236);
+
+var _buildUrl2 = _interopRequireDefault(_buildUrl);
+
+var _plowJs = __webpack_require__(198);
 
 var _Button = __webpack_require__(96);
 
@@ -31898,6 +31908,10 @@ var _Button2 = _interopRequireDefault(_Button);
 var _Icon = __webpack_require__(97);
 
 var _Icon2 = _interopRequireDefault(_Icon);
+
+var _components = __webpack_require__(99);
+
+var _state = __webpack_require__(80);
 
 var _style = __webpack_require__(659);
 
@@ -31911,7 +31925,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var FullscreenToggler = function (_PureComponent) {
+var FullscreenToggler = (_dec = (0, _reactRedux.connect)(function (state) {
+    var previewUri = (0, _plowJs.$get)('env.previewUri', state);
+    var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
+
+    return {
+        url: currentlyRenderedPrototype && (0, _buildUrl2.default)(previewUri, {
+            queryParams: {
+                prototypeName: currentlyRenderedPrototype.prototypeName
+            }
+        }),
+        isVisible: Boolean(currentlyRenderedPrototype)
+    };
+}), _dec(_class = (0, _components.visibility)(_class = function (_PureComponent) {
     _inherits(FullscreenToggler, _PureComponent);
 
     function FullscreenToggler() {
@@ -31923,17 +31949,23 @@ var FullscreenToggler = function (_PureComponent) {
     _createClass(FullscreenToggler, [{
         key: 'render',
         value: function render() {
+            var url = this.props.url;
+
+
             return _react2.default.createElement(
-                _Button2.default,
-                { className: _style2.default.selector },
-                _react2.default.createElement(_Icon2.default, { icon: 'external-link', className: _style2.default.icon })
+                'a',
+                { href: url, target: '_blank' },
+                _react2.default.createElement(
+                    _Button2.default,
+                    { className: _style2.default.selector },
+                    _react2.default.createElement(_Icon2.default, { icon: 'external-link', className: _style2.default.icon })
+                )
             );
         }
     }]);
 
     return FullscreenToggler;
-}(_react.PureComponent);
-
+}(_react.PureComponent)) || _class) || _class);
 exports.default = FullscreenToggler;
 
 /***/ }),
@@ -31957,6 +31989,10 @@ var _react2 = _interopRequireDefault(_react);
 var _breakpointSelector = __webpack_require__(427);
 
 var _breakpointSelector2 = _interopRequireDefault(_breakpointSelector);
+
+var _reloadTrigger = __webpack_require__(1243);
+
+var _reloadTrigger2 = _interopRequireDefault(_reloadTrigger);
 
 var _fullscreenToggler = __webpack_require__(428);
 
@@ -31990,6 +32026,7 @@ var Toolbox = function (_PureComponent) {
                 'div',
                 { className: _style2.default.toolbox },
                 _react2.default.createElement(_breakpointSelector2.default, null),
+                _react2.default.createElement(_reloadTrigger2.default, null),
                 _react2.default.createElement(_fullscreenToggler2.default, null)
             );
         }
@@ -32613,7 +32650,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 onLoad = _props.onLoad;
 
 
-            return _react2.default.createElement('iframe', { className: _style2.default.frame, src: src, frameBorder: '0', onLoad: onLoad });
+            return _react2.default.createElement('iframe', { id: 'preview-frame', className: _style2.default.frame, src: src, frameBorder: '0', onLoad: onLoad });
         }
     }]);
 
@@ -32647,6 +32684,8 @@ var _buildUrl2 = _interopRequireDefault(_buildUrl);
 
 var _business = __webpack_require__(235);
 
+var _dom = __webpack_require__(1242);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var actions = exports.actions = {};
@@ -32666,6 +32705,8 @@ actions.setCurrentlyRendered = (0, _reduxActions.createAction)('@sitegeist/monoc
 });
 
 actions.ready = (0, _reduxActions.createAction)('@sitegeist/monocle/prototypes/ready');
+
+actions.reload = (0, _reduxActions.createAction)('@sitegeist/monocle/prototypes/reload');
 
 var reducer = exports.reducer = function reducer(state, action) {
     switch (action.type) {
@@ -32708,24 +32749,25 @@ sagas.loadPrototypesOnBootstrap = _business.sagas.operation(regeneratorRuntime.m
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
-                    _context.next = 2;
+                    document.title = 'Monocle: Loading...';
+                    _context.next = 3;
                     return (0, _effects.select)((0, _plowJs.$get)('env.prototypesEndpoint'));
 
-                case 2:
+                case 3:
                     prototypesEndpoint = _context.sent;
-                    _context.next = 5;
+                    _context.next = 6;
                     return _business.sagas.authenticated(prototypesEndpoint);
 
-                case 5:
+                case 6:
                     prototypes = _context.sent;
-                    _context.next = 8;
+                    _context.next = 9;
                     return (0, _effects.put)(actions.add(prototypes));
 
-                case 8:
-                    _context.next = 10;
+                case 9:
+                    _context.next = 11;
                     return (0, _effects.put)(actions.select(Object.keys(prototypes)[0]));
 
-                case 10:
+                case 11:
                 case 'end':
                     return _context.stop();
             }
@@ -32753,9 +32795,13 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
 
                                     case 2:
                                         prototypeName = _context3.sent.payload;
-                                        _context3.next = 5;
+
+
+                                        document.title = 'Monocle: Loading...';
+                                        _context3.next = 6;
                                         return (0, _effects.call)(_business.sagas.operation(regeneratorRuntime.mark(function _callee2() {
-                                            var renderPrototypesEndpoint, renderedPrototype;
+                                            var renderPrototypesEndpoint, renderedPrototype, _ref, title;
+
                                             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                                                 while (1) {
                                                     switch (_context2.prev = _context2.next) {
@@ -32777,9 +32823,19 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
 
                                                         case 8:
                                                             _context2.next = 10;
-                                                            return (0, _effects.take)(actions.ready);
+                                                            return (0, _effects.select)(selectors.currentlySelected);
 
                                                         case 10:
+                                                            _ref = _context2.sent;
+                                                            title = _ref.title;
+
+
+                                                            document.title = 'Monocle: ' + title;
+
+                                                            _context2.next = 15;
+                                                            return (0, _effects.take)(actions.ready);
+
+                                                        case 15:
                                                         case 'end':
                                                             return _context2.stop();
                                                     }
@@ -32787,7 +32843,7 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
                                             }, _callee2, this);
                                         })));
 
-                                    case 5:
+                                    case 6:
                                     case 'end':
                                         return _context3.stop();
                                 }
@@ -32813,6 +32869,32 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
             }
         }
     }, _callee3, this);
+});
+
+sagas.reloadIframe = regeneratorRuntime.mark(function _callee4() {
+    return regeneratorRuntime.wrap(function _callee4$(_context5) {
+        while (1) {
+            switch (_context5.prev = _context5.next) {
+                case 0:
+                    if (false) {
+                        _context5.next = 6;
+                        break;
+                    }
+
+                    _context5.next = 3;
+                    return (0, _effects.take)(actions.reload);
+
+                case 3:
+                    (0, _dom.iframeWindow)().location.reload();
+                    _context5.next = 0;
+                    break;
+
+                case 6:
+                case 'end':
+                    return _context5.stop();
+            }
+        }
+    }, _callee4, this);
 });
 
 /***/ }),
@@ -82583,6 +82665,113 @@ __webpack_require__(233);
 __webpack_require__(401);
 module.exports = __webpack_require__(400);
 
+
+/***/ }),
+/* 1242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var iframeDocument = exports.iframeDocument = function iframeDocument() {
+    return document.getElementById('preview-frame').contentDocument;
+};
+var iframeWindow = exports.iframeWindow = function iframeWindow() {
+    return document.getElementById('preview-frame').contentWindow;
+};
+
+var find = exports.find = function find(selector) {
+    return iframeDocument().querySelector(selector);
+};
+
+var findAll = exports.findAll = function findAll(selector) {
+    return [].slice.call(iframeDocument().querySelectorAll(selector));
+};
+
+/***/ }),
+/* 1243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(93);
+
+var _Button = __webpack_require__(96);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Icon = __webpack_require__(97);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _state = __webpack_require__(80);
+
+var _style = __webpack_require__(1244);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReloadTrigger = (_dec = (0, _reactRedux.connect)(function () {
+    return {};
+}, {
+    reload: _state.actions.prototypes.reload
+}), _dec(_class = function (_PureComponent) {
+    _inherits(ReloadTrigger, _PureComponent);
+
+    function ReloadTrigger() {
+        _classCallCheck(this, ReloadTrigger);
+
+        return _possibleConstructorReturn(this, (ReloadTrigger.__proto__ || Object.getPrototypeOf(ReloadTrigger)).apply(this, arguments));
+    }
+
+    _createClass(ReloadTrigger, [{
+        key: 'render',
+        value: function render() {
+            var reload = this.props.reload;
+
+
+            return _react2.default.createElement(
+                _Button2.default,
+                { className: _style2.default.selector, onClick: reload },
+                _react2.default.createElement(_Icon2.default, { icon: 'refresh', className: _style2.default.icon })
+            );
+        }
+    }]);
+
+    return ReloadTrigger;
+}(_react.PureComponent)) || _class);
+exports.default = ReloadTrigger;
+
+/***/ }),
+/* 1244 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"selector":"style__selector___rUZKa"};
 
 /***/ })
 /******/ ]);

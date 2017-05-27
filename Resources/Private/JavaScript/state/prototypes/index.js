@@ -5,6 +5,7 @@ import {take, select, put, call} from 'redux-saga/effects';
 import url from 'build-url';
 
 import {sagas as business} from '../business';
+import {iframeWindow} from 'dom';
 
 export const actions = {};
 
@@ -29,6 +30,10 @@ actions.setCurrentlyRendered = createAction(
 
 actions.ready = createAction(
     '@sitegeist/monocle/prototypes/ready'
+);
+
+actions.reload = createAction(
+    '@sitegeist/monocle/prototypes/reload'
 );
 
 export const reducer = (state, action) => {
@@ -71,6 +76,7 @@ selectors.currentlyRendered = $get('prototypes.currentlyRendered');
 export const sagas = {};
 
 sagas.loadPrototypesOnBootstrap = business.operation(function * () {
+    document.title = 'Monocle: Loading...';
     const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
     const prototypes = yield business.authenticated(prototypesEndpoint);
 
@@ -82,6 +88,7 @@ sagas.renderPrototypeOnSelect = function * () {
     while (true) { // eslint-disable-line
         const prototypeName = (yield take(actions.select)).payload;
 
+        document.title = 'Monocle: Loading...';
         yield call(
             business.operation(function * () {
                 const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
@@ -92,8 +99,20 @@ sagas.renderPrototypeOnSelect = function * () {
                 );
 
                 yield put(actions.setCurrentlyRendered(renderedPrototype));
+
+                const {title} = yield select(selectors.currentlySelected);
+
+                document.title = `Monocle: ${title}`;
+
                 yield take(actions.ready);
             })
         );
+    }
+};
+
+sagas.reloadIframe = function * () {
+    while (true) { // eslint-disable-line
+        yield take(actions.reload);
+        iframeWindow().location.reload();
     }
 };
