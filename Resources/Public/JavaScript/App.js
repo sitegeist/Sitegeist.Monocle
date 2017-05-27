@@ -9544,7 +9544,7 @@ exports.default = (0, _injectProps2.default)({
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.attached = exports.outside = exports.withToggableState = exports.visibility = undefined;
+exports.resizable = exports.attached = exports.outside = exports.withToggableState = exports.visibility = undefined;
 
 var _visibility = __webpack_require__(399);
 
@@ -9562,12 +9562,17 @@ var _attached = __webpack_require__(397);
 
 var _attached2 = _interopRequireDefault(_attached);
 
+var _resizable = __webpack_require__(999);
+
+var _resizable2 = _interopRequireDefault(_resizable);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.visibility = _visibility2.default;
 exports.withToggableState = _withToggableState2.default;
 exports.outside = _outside2.default;
 exports.attached = _attached2.default;
+exports.resizable = _resizable2.default;
 
 /***/ }),
 /* 159 */
@@ -56769,9 +56774,13 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _class;
+
 var _react = __webpack_require__(11);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _components = __webpack_require__(158);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56781,7 +56790,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InfoTabs = function (_PureComponent) {
+var InfoTabs = (_dec = (0, _components.resizable)({
+    initialHeight: 320,
+    collapsedHeight: 40
+}), _dec(_class = function (_PureComponent) {
     _inherits(InfoTabs, _PureComponent);
 
     function InfoTabs() {
@@ -56802,8 +56814,7 @@ var InfoTabs = function (_PureComponent) {
     }]);
 
     return InfoTabs;
-}(_react.PureComponent);
-
+}(_react.PureComponent)) || _class);
 exports.default = InfoTabs;
 
 /***/ }),
@@ -56908,6 +56919,138 @@ module.exports = {"main":"style__main___3Rw5T"};
 
 // removed by extract-text-webpack-plugin
 module.exports = {"frame":"style__frame___leceX"};
+
+/***/ }),
+/* 999 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _recompose = __webpack_require__(223);
+
+var _Button = __webpack_require__(114);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Icon = __webpack_require__(157);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _resizable = __webpack_require__(1000);
+
+var _resizable2 = _interopRequireDefault(_resizable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+exports.default = function (_ref) {
+    var initialHeight = _ref.initialHeight,
+        collapsedHeight = _ref.collapsedHeight,
+        _ref$isCollapsed = _ref.isCollapsed,
+        isCollapsed = _ref$isCollapsed === undefined ? false : _ref$isCollapsed,
+        _ref$toggleHandleClas = _ref.toggleHandleClassName,
+        toggleHandleClassName = _ref$toggleHandleClas === undefined ? '' : _ref$toggleHandleClas;
+    return function (Component) {
+        var _dec, _dec2, _dec3, _dec4, _class;
+
+        return _dec = (0, _recompose.withState)('height', 'setHeight', initialHeight), _dec2 = (0, _recompose.withState)('isDragging', 'setIsDragging', false), _dec3 = (0, _recompose.withState)('isCollapsed', 'setIsCollapsed', isCollapsed), _dec4 = (0, _recompose.withHandlers)({
+            startDrag: function startDrag(_ref2) {
+                var setIsDragging = _ref2.setIsDragging,
+                    isCollapsed = _ref2.isCollapsed;
+                return function () {
+                    return !isCollapsed && setIsDragging(true);
+                };
+            },
+            drag: function drag(_ref3) {
+                var setHeight = _ref3.setHeight,
+                    isCollapsed = _ref3.isCollapsed;
+                return function (event) {
+                    return !isCollapsed && setHeight(window.innerHeight - event.pageY);
+                };
+            },
+            stopDrag: function stopDrag(_ref4) {
+                var setIsDragging = _ref4.setIsDragging,
+                    isCollapsed = _ref4.isCollapsed;
+                return function () {
+                    return !isCollapsed && setIsDragging(false);
+                };
+            },
+            toggle: function toggle(_ref5) {
+                var setIsCollapsed = _ref5.setIsCollapsed,
+                    isCollapsed = _ref5.isCollapsed;
+                return function () {
+                    return setIsCollapsed(!isCollapsed);
+                };
+            }
+        }), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = function (_PureComponent) {
+            _inherits(_class, _PureComponent);
+
+            function _class() {
+                _classCallCheck(this, _class);
+
+                return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+            }
+
+            _createClass(_class, [{
+                key: 'render',
+                value: function render() {
+                    var _props = this.props,
+                        height = _props.height,
+                        isDragging = _props.isDragging,
+                        isCollapsed = _props.isCollapsed,
+                        startDrag = _props.startDrag,
+                        drag = _props.drag,
+                        stopDrag = _props.stopDrag,
+                        toggle = _props.toggle,
+                        props = _objectWithoutProperties(_props, ['height', 'isDragging', 'isCollapsed', 'startDrag', 'drag', 'stopDrag', 'toggle']);
+
+                    return _react2.default.createElement(
+                        'div',
+                        {
+                            style: { height: isCollapsed ? collapsedHeight : height, minHeight: collapsedHeight },
+                            className: _resizable2.default.resizable
+                        },
+                        isDragging && _react2.default.createElement('div', { className: _resizable2.default.overlay, onMouseUp: stopDrag, onMouseMove: drag }),
+                        _react2.default.createElement('div', { className: _resizable2.default.handle, onMouseDown: startDrag }),
+                        _react2.default.createElement(
+                            _Button2.default,
+                            { className: toggleHandleClassName, onClick: toggle },
+                            _react2.default.createElement(_Icon2.default, { icon: isCollapsed ? 'chevron-up' : 'chevron-down' })
+                        ),
+                        _react2.default.createElement(Component, props)
+                    );
+                }
+            }]);
+
+            return _class;
+        }(_react.PureComponent)) || _class) || _class) || _class) || _class;
+    };
+};
+
+/***/ }),
+/* 1000 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"handle":"resizable__handle___3uNar","overlay":"resizable__overlay___oy02S","resizable":"resizable__resizable___jkMQt"};
 
 /***/ })
 /******/ ]);
