@@ -298,6 +298,54 @@
     outline: 2px solid #ff460d;
 }
 :root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__prototype____Loly {
+    cursor: pointer;
+    color: #FFF;
+    background-color: #323232;
+    padding: 1em;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    border: none;
+}
+.style__prototype____Loly:hover {
+    background-color: #00ADEE;
+}
+
+.style__title___1d5iu {
+    font-size: 120%;
+}
+
+.style__name___1wuMd {
+    font-size: 80%;
+    color: #999;
+}
+.style__prototype____Loly:hover .style__name___1wuMd {
+    color: #FFF;
+}
+:root {}
 
 :root {}
 
@@ -355,28 +403,6 @@
     overflow-x: hidden;
 }
 
-.style__prototype___2vUmF {
-    cursor: pointer;
-    color: #FFF;
-    background-color: #323232;
-    padding: 1em;
-}
-.style__prototype___2vUmF:hover {
-    background-color: #00ADEE;
-}
-
-.style__title___2Oumz {
-    font-size: 120%;
-}
-
-.style__name___2BPpY {
-    font-size: 80%;
-    color: #999;
-}
-.style__prototype___2vUmF:hover .style__name___2BPpY {
-    color: #FFF;
-}
-
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
@@ -422,6 +448,7 @@
 }
 .style__selector___fF14K {
     font-weight: bold;
+    white-space: nowrap;
 }
 :root {}
 :root {}
@@ -2682,6 +2709,70 @@
         flex-basis: 0;
 }
 :root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__frame___leceX {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__main___3Rw5T {
+    height: calc(100vh - 40px);
+    margin-top: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+:root {}
 
 :root {}
 
@@ -2744,6 +2835,32 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+body {
+    margin: 0;
 }
 
 /*# sourceMappingURL=App.css.map*/

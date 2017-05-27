@@ -2,7 +2,10 @@ import React, {PureComponent} from 'react';
 import {Provider} from 'react-redux';
 
 import Header from './header';
+import Main from './main';
 import Loader from './loader';
+
+import './style.css';
 
 export default class Styleguide extends PureComponent {
     render() {
@@ -12,9 +15,7 @@ export default class Styleguide extends PureComponent {
             <Provider store={store}>
                 <div>
                     <Header/>
-                    <section>
-                        PREVIEW + DETAIL
-                    </section>
+                    <Main/>
                     <Loader/>
                 </div>
             </Provider>

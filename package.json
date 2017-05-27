@@ -57,6 +57,7 @@
     "@neos-project/brand": "^1.1.0",
     "@neos-project/react-ui-components": "^4.4.8",
     "babel-polyfill": "^6.23.0",
+    "build-url": "^1.0.9",
     "classnames": "^2.2.5",
     "normalize.css": "^7.0.0",
     "plow-js": "^1.2.1",

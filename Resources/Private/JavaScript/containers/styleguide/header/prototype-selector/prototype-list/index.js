@@ -1,21 +1,31 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {withState} from 'recompose';
+import {withState, withHandlers} from 'recompose';
 import TextInput from '@neos-project/react-ui-components/lib/TextInput';
 
 import {visibility, outside, attached} from 'components';
-import {selectors} from 'state';
+import {selectors, actions} from 'state';
+
+import Prototype from './prototype';
 
 import style from './style.css';
 
-@withState('searchTerm', 'setSearchTerm', '')
 @visibility
 @outside
 @attached
+@withState('searchTerm', 'setSearchTerm', '')
 @connect(state => {
     return {
         prototypes: selectors.prototypes.all(state)
     };
+}, {
+    selectPrototype: actions.prototypes.select
+})
+@withHandlers({
+    handleSelectPrototype: props => prototypeName => {
+        props.selectPrototype(prototypeName);
+        props.onSelectPrototype(prototypeName);
+    }
 })
 export default class PrototypeList extends PureComponent {
     filterPrototypes() {
@@ -35,7 +45,7 @@ export default class PrototypeList extends PureComponent {
     }
 
     render() {
-        const {searchTerm, setSearchTerm} = this.props;
+        const {searchTerm, setSearchTerm, handleSelectPrototype} = this.props;
 
         return (
             <div className={style.list}>
@@ -43,16 +53,9 @@ export default class PrototypeList extends PureComponent {
                     <TextInput placeholder="Search..." value={searchTerm} onChange={setSearchTerm}/>
                 </div>
                 <div className={style.prototypes}>
-                    {this.filterPrototypes().map(prototype => (
-                        <div className={style.prototype}>
-                            <div className={style.title}>
-                                {prototype.title}
-                            </div>
-                            <div className={style.name}>
-                                {prototype.name}
-                            </div>
-                        </div>
-                    ))}
+                    {this.filterPrototypes().map(
+                        prototype => <Prototype key={prototype.name} onClick={handleSelectPrototype} {...prototype}/>
+                    )}
                 </div>
             </div>
         );

@@ -3,4 +3,5 @@
 }
 .selector {
     font-weight: bold;
+    white-space: nowrap;
 }

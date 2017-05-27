@@ -10,28 +10,6 @@
     overflow-x: hidden;
 }
 
-.prototype {
-    cursor: pointer;
-    color: var(--brandColorsContrastBrightest);
-    background-color: var(--brandColorsContrastNeutral);
-    padding: 1em;
-}
-.prototype:hover {
-    background-color: var(--brandColorsPrimaryBlue);
-}
-
-.title {
-    font-size: 120%;
-}
-
-.name {
-    font-size: 80%;
-    color: var(--brandColorsContrastBright);
-}
-.prototype:hover .name {
-    color: var(--brandColorsContrastBrightest);
-}
-
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
