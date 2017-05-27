@@ -7,7 +7,7 @@ import style from './style.css';
 export default class SiteSelector extends PureComponent {
     render() {
         return (
-            <Button className={style.selector}>
+            <Button className={style.selector} style="clean">
                 <Icon icon="globe" className={style.icon}/>
                 SITESELECTOR
             </Button>

@@ -1,7 +1,10 @@
 .selector {
     display: flex;
+    white-space: nowrap;
 }
-
+.container {
+    position: relative;
+}
 .icon {
     margin-right: .6em;
 }

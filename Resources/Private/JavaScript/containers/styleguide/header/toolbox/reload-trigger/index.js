@@ -16,7 +16,7 @@ export default class ReloadTrigger extends PureComponent {
         const {reload} = this.props;
 
         return (
-            <Button className={style.selector} onClick={reload}>
+            <Button className={style.selector} onClick={reload} style="clean">
                 <Icon icon="refresh" className={style.icon}/>
             </Button>
         );

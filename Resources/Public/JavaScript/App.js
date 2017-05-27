@@ -4693,6 +4693,10 @@ var _prototypes = __webpack_require__(437);
 
 var prototypes = _interopRequireWildcard(_prototypes);
 
+var _breakpoints = __webpack_require__(1245);
+
+var breakpoints = _interopRequireWildcard(_breakpoints);
+
 var _business = __webpack_require__(235);
 
 var business = _interopRequireWildcard(_business);
@@ -4703,21 +4707,23 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var actions = exports.actions = {
     prototypes: prototypes.actions,
+    breakpoints: breakpoints.actions,
     business: business.actions
 };
 
 var reducer = exports.reducer = function reducer(state, action) {
-    return [prototypes.reducer, business.reducer].reduce(function (state, reducer) {
+    return [prototypes.reducer, breakpoints.reducer, business.reducer].reduce(function (state, reducer) {
         return reducer(state, action);
     }, state);
 };
 
 var selectors = exports.selectors = {
     prototypes: prototypes.selectors,
+    breakpoints: breakpoints.selectors,
     business: business.selectors
 };
 
-var sagas = exports.sagas = [].concat(_toConsumableArray((0, _ramda.values)(prototypes.sagas)));
+var sagas = exports.sagas = [].concat(_toConsumableArray((0, _ramda.values)(prototypes.sagas)), _toConsumableArray((0, _ramda.values)(breakpoints.sagas)));
 
 /***/ }),
 /* 81 */
@@ -31003,6 +31009,7 @@ exports.default = function (el) {
         loginEndpoint = _el$dataset.loginEndpoint,
         renderPrototypesEndpoint = _el$dataset.renderPrototypesEndpoint,
         prototypesEndpoint = _el$dataset.prototypesEndpoint,
+        viewportPresetsEndpoint = _el$dataset.viewportPresetsEndpoint,
         iframeUri = _el$dataset.iframeUri,
         previewUri = _el$dataset.previewUri,
         fullscreenUri = _el$dataset.fullscreenUri;
@@ -31012,6 +31019,7 @@ exports.default = function (el) {
         loginEndpoint: loginEndpoint,
         renderPrototypesEndpoint: renderPrototypesEndpoint,
         prototypesEndpoint: prototypesEndpoint,
+        viewportPresetsEndpoint: viewportPresetsEndpoint,
         iframeUri: iframeUri,
         previewUri: previewUri,
         fullscreenUri: fullscreenUri
@@ -31121,13 +31129,16 @@ var _attached2 = _interopRequireDefault(_attached);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (Component) {
-    return function (props) {
-        return _react2.default.createElement(
-            'div',
-            { className: _attached2.default.attached },
-            _react2.default.createElement(Component, props)
-        );
+exports.default = function () {
+    var alignment = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'centered';
+    return function (Component) {
+        return function (props) {
+            return _react2.default.createElement(
+                'div',
+                { className: _attached2.default.attached + ' ' + _attached2.default['attached--' + alignment] },
+                _react2.default.createElement(Component, props)
+            );
+        };
     };
 };
 
@@ -31279,7 +31290,7 @@ exports.default = function (_ref) {
                         _react2.default.createElement('div', { className: _resizable2.default.handle, onMouseDown: startDrag }),
                         _react2.default.createElement(
                             _Button2.default,
-                            { className: toggleHandleClassName, onClick: toggle },
+                            { className: toggleHandleClassName, onClick: toggle, style: 'clean' },
                             _react2.default.createElement(_Icon2.default, { icon: isCollapsed ? 'chevron-up' : 'chevron-down' })
                         ),
                         _react2.default.createElement(Component, props)
@@ -31531,7 +31542,7 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
                 { className: _style2.default.container },
                 _react2.default.createElement(
                     _Button2.default,
-                    { className: _style2.default.selector, onClick: toggleIsOpen },
+                    { className: _style2.default.selector, onClick: toggleIsOpen, style: 'clean' },
                     label
                 ),
                 _react2.default.createElement(_prototypeList2.default, { isVisible: isOpen, onClickOutside: toggleIsOpen, onSelectPrototype: toggleIsOpen })
@@ -31559,7 +31570,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _class;
+var _dec, _dec2, _dec3, _dec4, _class;
 
 var _react = __webpack_require__(7);
 
@@ -31593,20 +31604,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PrototypeList = (_dec = (0, _recompose.withState)('searchTerm', 'setSearchTerm', ''), _dec2 = (0, _reactRedux.connect)(function (state) {
+var PrototypeList = (_dec = (0, _components.attached)(), _dec2 = (0, _recompose.withState)('searchTerm', 'setSearchTerm', ''), _dec3 = (0, _reactRedux.connect)(function (state) {
     return {
         prototypes: _state.selectors.prototypes.all(state)
     };
 }, {
     selectPrototype: _state.actions.prototypes.select
-}), _dec3 = (0, _recompose.withHandlers)({
+}), _dec4 = (0, _recompose.withHandlers)({
     handleSelectPrototype: function handleSelectPrototype(props) {
         return function (prototypeName) {
             props.selectPrototype(prototypeName);
             props.onSelectPrototype(prototypeName);
         };
     }
-}), (0, _components.visibility)(_class = (0, _components.outside)(_class = (0, _components.attached)(_class = _dec(_class = _dec2(_class = _dec3(_class = function (_PureComponent) {
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = function (_PureComponent) {
     _inherits(PrototypeList, _PureComponent);
 
     function PrototypeList() {
@@ -31797,7 +31808,7 @@ var SiteSelector = function (_PureComponent) {
         value: function render() {
             return _react2.default.createElement(
                 _Button2.default,
-                { className: _style2.default.selector },
+                { className: _style2.default.selector, style: 'clean' },
                 _react2.default.createElement(_Icon2.default, { icon: 'globe', className: _style2.default.icon }),
                 'SITESELECTOR'
             );
@@ -31823,9 +31834,13 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _dec2, _class;
+
 var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(93);
 
 var _Button = __webpack_require__(96);
 
@@ -31834,6 +31849,14 @@ var _Button2 = _interopRequireDefault(_Button);
 var _Icon = __webpack_require__(97);
 
 var _Icon2 = _interopRequireDefault(_Icon);
+
+var _components = __webpack_require__(99);
+
+var _state = __webpack_require__(80);
+
+var _breakpointList = __webpack_require__(1247);
+
+var _breakpointList2 = _interopRequireDefault(_breakpointList);
 
 var _style = __webpack_require__(658);
 
@@ -31847,7 +31870,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BreakpointSelector = function (_PureComponent) {
+var BreakpointSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 = (0, _reactRedux.connect)(function (state) {
+    var currentlySelectedBreakpoint = _state.selectors.breakpoints.currentlySelected(state);
+
+    return {
+        label: currentlySelectedBreakpoint ? currentlySelectedBreakpoint.label : 'Fullscreen'
+    };
+}), _dec(_class = _dec2(_class = function (_PureComponent) {
     _inherits(BreakpointSelector, _PureComponent);
 
     function BreakpointSelector() {
@@ -31859,18 +31888,28 @@ var BreakpointSelector = function (_PureComponent) {
     _createClass(BreakpointSelector, [{
         key: 'render',
         value: function render() {
+            var _props = this.props,
+                label = _props.label,
+                isOpen = _props.isOpen,
+                toggleIsOpen = _props.toggleIsOpen;
+
+
             return _react2.default.createElement(
-                _Button2.default,
-                { className: _style2.default.selector },
-                _react2.default.createElement(_Icon2.default, { icon: 'desktop', className: _style2.default.icon }),
-                'BREAKPOINTSELECTOR'
+                'div',
+                { className: _style2.default.container },
+                _react2.default.createElement(
+                    _Button2.default,
+                    { className: _style2.default.selector, onClick: toggleIsOpen, style: 'clean' },
+                    _react2.default.createElement(_Icon2.default, { icon: 'desktop', className: _style2.default.icon }),
+                    label
+                ),
+                _react2.default.createElement(_breakpointList2.default, { isVisible: isOpen, onClickOutside: toggleIsOpen, onSelectBreakpoint: toggleIsOpen })
             );
         }
     }]);
 
     return BreakpointSelector;
-}(_react.PureComponent);
-
+}(_react.PureComponent)) || _class) || _class);
 exports.default = BreakpointSelector;
 
 /***/ }),
@@ -31957,7 +31996,7 @@ var FullscreenToggler = (_dec = (0, _reactRedux.connect)(function (state) {
                 { href: url, target: '_blank' },
                 _react2.default.createElement(
                     _Button2.default,
-                    { className: _style2.default.selector },
+                    { className: _style2.default.selector, style: 'clean' },
                     _react2.default.createElement(_Icon2.default, { icon: 'external-link', className: _style2.default.icon })
                 )
             );
@@ -32622,6 +32661,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     var previewUri = (0, _plowJs.$get)('env.previewUri', state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
+    var currentlySelectedBreakpoint = _state.selectors.breakpoints.currentlySelected(state);
 
     return {
         src: currentlyRenderedPrototype && (0, _buildUrl2.default)(previewUri, {
@@ -32629,7 +32669,14 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 prototypeName: currentlyRenderedPrototype.prototypeName
             }
         }),
-        isVisible: Boolean(currentlyRenderedPrototype)
+        isVisible: Boolean(currentlyRenderedPrototype),
+        styles: currentlySelectedBreakpoint ? {
+            width: currentlySelectedBreakpoint.width,
+            transform: window.innerWidth < currentlySelectedBreakpoint.width ? 'translate(-50%) scale(' + window.innerWidth / currentlySelectedBreakpoint.width + ')' : 'translate(-50%)',
+            height: currentlySelectedBreakpoint.height
+        } : {
+            width: '100%'
+        }
     };
 }, {
     onLoad: _state.actions.prototypes.ready
@@ -32647,10 +32694,18 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
         value: function render() {
             var _props = this.props,
                 src = _props.src,
+                styles = _props.styles,
                 onLoad = _props.onLoad;
 
 
-            return _react2.default.createElement('iframe', { id: 'preview-frame', className: _style2.default.frame, src: src, frameBorder: '0', onLoad: onLoad });
+            return _react2.default.createElement('iframe', {
+                id: 'preview-frame',
+                className: _style2.default.frame,
+                src: src,
+                style: styles,
+                frameBorder: '0',
+                onLoad: onLoad
+            });
         }
     }]);
 
@@ -37585,7 +37640,7 @@ module.exports = __webpack_require__(51);
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"attached":"attached__attached___2s3wI"};
+module.exports = {"attached":"attached__attached___2s3wI","attached--centered":"attached__attached--centered___1DZ5Z","attached--right":"attached__attached--right___1UJJy"};
 
 /***/ }),
 /* 651 */
@@ -37641,7 +37696,7 @@ module.exports = {"bar":"style__bar___1OCqf","section":"style__section___3JxZP"}
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"selector":"style__selector___3jsBp","icon":"style__icon___1d12j"};
+module.exports = {"selector":"style__selector___3jsBp","container":"style__container___1e_Mg","icon":"style__icon___1d12j"};
 
 /***/ }),
 /* 659 */
@@ -82756,7 +82811,7 @@ var ReloadTrigger = (_dec = (0, _reactRedux.connect)(function () {
 
             return _react2.default.createElement(
                 _Button2.default,
-                { className: _style2.default.selector, onClick: reload },
+                { className: _style2.default.selector, onClick: reload, style: 'clean' },
                 _react2.default.createElement(_Icon2.default, { icon: 'refresh', className: _style2.default.icon })
             );
         }
@@ -82772,6 +82827,291 @@ exports.default = ReloadTrigger;
 
 // removed by extract-text-webpack-plugin
 module.exports = {"selector":"style__selector___rUZKa"};
+
+/***/ }),
+/* 1245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.sagas = exports.selectors = exports.reducer = exports.actions = undefined;
+
+var _reduxActions = __webpack_require__(386);
+
+var _reselect = __webpack_require__(395);
+
+var _plowJs = __webpack_require__(198);
+
+var _effects = __webpack_require__(232);
+
+var _business = __webpack_require__(235);
+
+var actions = exports.actions = {};
+
+actions.set = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/set', function (listOfPrototypes) {
+    return listOfPrototypes;
+});
+
+actions.clear = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/clear');
+
+actions.select = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/select', function (breakpointName) {
+    return breakpointName;
+});
+
+var reducer = exports.reducer = function reducer(state, action) {
+    switch (action.type) {
+        case actions.set.toString():
+            return (0, _plowJs.$override)('breakpoints.byName', action.payload, state);
+
+        case actions.clear.toString():
+            return (0, _plowJs.$set)('breakpoints.byName', {}, state);
+
+        case actions.select.toString():
+            return (0, _plowJs.$set)('breakpoints.currentlySelected', action.payload, state);
+
+        default:
+            return state;
+    }
+};
+
+var selectors = exports.selectors = {};
+
+selectors.all = (0, _plowJs.$get)('breakpoints.byName');
+
+selectors.currentlySelected = (0, _reselect.createSelector)([(0, _plowJs.$get)('breakpoints.currentlySelected'), selectors.all], function (currentlySelectedBreakPoint, breakpointsByName) {
+    return breakpointsByName && breakpointsByName[currentlySelectedBreakPoint];
+});
+
+var sagas = exports.sagas = {};
+
+sagas.loadBreakpointsOnBootstrap = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
+    var viewportPresetsEndpoint, breakpoints;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _context.next = 2;
+                    return (0, _effects.select)((0, _plowJs.$get)('env.viewportPresetsEndpoint'));
+
+                case 2:
+                    viewportPresetsEndpoint = _context.sent;
+                    _context.next = 5;
+                    return _business.sagas.authenticated(viewportPresetsEndpoint);
+
+                case 5:
+                    breakpoints = _context.sent;
+                    _context.next = 8;
+                    return (0, _effects.put)(actions.set(breakpoints));
+
+                case 8:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, _callee, this);
+}));
+
+/***/ }),
+/* 1246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _recompose = __webpack_require__(156);
+
+var _style = __webpack_require__(1248);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Breakpoint = (_dec = (0, _recompose.withHandlers)({
+    handleClick: function handleClick(props) {
+        return function () {
+            return props.onClick(props.name);
+        };
+    }
+}), _dec(_class = function (_PureComponent) {
+    _inherits(Breakpoint, _PureComponent);
+
+    function Breakpoint() {
+        _classCallCheck(this, Breakpoint);
+
+        return _possibleConstructorReturn(this, (Breakpoint.__proto__ || Object.getPrototypeOf(Breakpoint)).apply(this, arguments));
+    }
+
+    _createClass(Breakpoint, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                label = _props.label,
+                name = _props.name,
+                handleClick = _props.handleClick;
+
+
+            return _react2.default.createElement(
+                'button',
+                { className: _style2.default.breakpoint, onClick: handleClick },
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.title },
+                    label
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.name },
+                    name
+                )
+            );
+        }
+    }]);
+
+    return Breakpoint;
+}(_react.PureComponent)) || _class);
+exports.default = Breakpoint;
+
+/***/ }),
+/* 1247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _dec2, _dec3, _class;
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(93);
+
+var _recompose = __webpack_require__(156);
+
+var _components = __webpack_require__(99);
+
+var _state = __webpack_require__(80);
+
+var _breakpoint = __webpack_require__(1246);
+
+var _breakpoint2 = _interopRequireDefault(_breakpoint);
+
+var _style = __webpack_require__(1249);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BreakpointList = (_dec = (0, _components.attached)('right'), _dec2 = (0, _reactRedux.connect)(function (state) {
+    return {
+        breakpoints: _state.selectors.breakpoints.all(state)
+    };
+}, {
+    selectBreakpoint: _state.actions.breakpoints.select
+}), _dec3 = (0, _recompose.withHandlers)({
+    handleSelectBreakpoint: function handleSelectBreakpoint(props) {
+        return function (breakpointName) {
+            props.selectBreakpoint(breakpointName);
+            props.onSelectBreakpoint(breakpointName);
+        };
+    }
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = function (_PureComponent) {
+    _inherits(BreakpointList, _PureComponent);
+
+    function BreakpointList() {
+        _classCallCheck(this, BreakpointList);
+
+        return _possibleConstructorReturn(this, (BreakpointList.__proto__ || Object.getPrototypeOf(BreakpointList)).apply(this, arguments));
+    }
+
+    _createClass(BreakpointList, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                breakpoints = _props.breakpoints,
+                handleSelectBreakpoint = _props.handleSelectBreakpoint;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: _style2.default.list },
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.breakpoints },
+                    Object.keys(breakpoints).map(function (name) {
+                        return _extends({ name: name }, breakpoints[name]);
+                    }).map(function (breakpoint) {
+                        return _react2.default.createElement(_breakpoint2.default, _extends({
+                            key: breakpoint.name,
+                            onClick: handleSelectBreakpoint
+                        }, breakpoint));
+                    }),
+                    _react2.default.createElement('hr', { className: _style2.default.separator }),
+                    _react2.default.createElement(_breakpoint2.default, {
+                        onClick: handleSelectBreakpoint,
+                        name: '',
+                        label: 'Fullscreen'
+                    })
+                )
+            );
+        }
+    }]);
+
+    return BreakpointList;
+}(_react.PureComponent)) || _class) || _class) || _class) || _class) || _class);
+exports.default = BreakpointList;
+
+/***/ }),
+/* 1248 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"breakpoint":"style__breakpoint___3DI1E","title":"style__title___3v2m5","name":"style__name___3UYjf"};
+
+/***/ }),
+/* 1249 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"list":"style__list___MFEzl","breakpoints":"style__breakpoints___2DvVv","separator":"style__separator___1q0FM"};
 
 /***/ })
 /******/ ]);

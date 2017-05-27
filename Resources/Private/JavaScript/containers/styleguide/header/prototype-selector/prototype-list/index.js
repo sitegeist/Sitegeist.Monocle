@@ -12,7 +12,7 @@ import style from './style.css';
 
 @visibility
 @outside
-@attached
+@attached()
 @withState('searchTerm', 'setSearchTerm', '')
 @connect(state => {
     return {

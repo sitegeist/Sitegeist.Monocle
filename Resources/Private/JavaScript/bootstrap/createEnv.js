@@ -3,6 +3,7 @@ export default el => {
         loginEndpoint,
         renderPrototypesEndpoint,
         prototypesEndpoint,
+        viewportPresetsEndpoint,
         iframeUri,
         previewUri,
         fullscreenUri
@@ -12,6 +13,7 @@ export default el => {
         loginEndpoint,
         renderPrototypesEndpoint,
         prototypesEndpoint,
+        viewportPresetsEndpoint,
         iframeUri,
         previewUri,
         fullscreenUri

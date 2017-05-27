@@ -27,7 +27,7 @@ class extends PureComponent {
                 >
                 {isDragging && <div className={style.overlay} onMouseUp={stopDrag} onMouseMove={drag}/>}
                 <div className={style.handle} onMouseDown={startDrag}/>
-                <Button className={toggleHandleClassName} onClick={toggle}>
+                <Button className={toggleHandleClassName} onClick={toggle} style="clean">
                     <Icon icon={isCollapsed ? 'chevron-up' : 'chevron-down'}/>
                 </Button>
                 <Component {...props}/>

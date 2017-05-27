@@ -11,6 +11,7 @@ import style from './style.css';
 @connect(state => {
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+    const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
 
     return {
         src: currentlyRenderedPrototype && url(previewUri, {
@@ -18,7 +19,15 @@ import style from './style.css';
                 prototypeName: currentlyRenderedPrototype.prototypeName
             }
         }),
-        isVisible: Boolean(currentlyRenderedPrototype)
+        isVisible: Boolean(currentlyRenderedPrototype),
+        styles: currentlySelectedBreakpoint ? {
+            width: currentlySelectedBreakpoint.width,
+            transform: window.innerWidth < currentlySelectedBreakpoint.width ?
+                `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
+            height: currentlySelectedBreakpoint.height
+        } : {
+            width: '100%'
+        }
     };
 }, {
     onLoad: actions.prototypes.ready
@@ -26,10 +35,17 @@ import style from './style.css';
 @visibility
 export default class PreviewFrame extends PureComponent {
     render() {
-        const {src, onLoad} = this.props;
+        const {src, styles, onLoad} = this.props;
 
         return (
-            <iframe id="preview-frame" className={style.frame} src={src} frameBorder="0" onLoad={onLoad}/>
+            <iframe
+                id="preview-frame"
+                className={style.frame}
+                src={src}
+                style={styles}
+                frameBorder="0"
+                onLoad={onLoad}
+                />
         );
     }
 }

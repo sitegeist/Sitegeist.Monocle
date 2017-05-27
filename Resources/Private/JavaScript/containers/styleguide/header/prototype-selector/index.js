@@ -23,7 +23,7 @@ export default class PrototypeSelector extends PureComponent {
 
         return (
             <div className={style.container}>
-                <Button className={style.selector} onClick={toggleIsOpen}>{label}</Button>
+                <Button className={style.selector} onClick={toggleIsOpen} style="clean">{label}</Button>
                 <PrototypeList isVisible={isOpen} onClickOutside={toggleIsOpen} onSelectPrototype={toggleIsOpen}/>
             </div>
         );

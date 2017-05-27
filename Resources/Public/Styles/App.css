@@ -224,34 +224,64 @@
     z-index: 2000;
 }
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 :root {}
+
 .attached__attached___2s3wI {
     position: absolute;
     top: 100%;
+}
+
+.attached__attached--centered___1DZ5Z {
     left: 50%;
     -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
+}
+
+.attached__attached--right___1UJJy {
+    right: 0;
 }
 :root {}
 :root {}
@@ -2604,7 +2634,56 @@
     margin-right: .6em;
 }
 :root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__breakpoint___3DI1E {
+    cursor: pointer;
+    color: #FFF;
+    background-color: #323232;
+    padding: 1em;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    border: none;
+}
+.style__breakpoint___3DI1E:hover {
+    background-color: #00ADEE;
+}
 
+.style__title___3v2m5 {
+    font-size: 120%;
+    display: inline-block;
+    margin-right: .4em;
+}
+
+.style__name___3UYjf {
+    font-size: 80%;
+    color: #999;
+    display: inline-block;
+}
+.style__breakpoint___3DI1E:hover .style__name___3UYjf {
+    color: #FFF;
+}
 :root {}
 
 :root {}
@@ -2649,12 +2728,55 @@
 
 :root {}
 
+:root {}
+
+.style__list___MFEzl {
+    width: 100vh;
+    max-width: 200px;
+}
+
+.style__breakpoints___2DvVv {
+    max-height: calc(100vh - 2 * 40px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.style__separator___1q0FM {
+    margin: 0;
+    border-color: #999;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__selector___3jsBp {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    white-space: nowrap;
 }
-
+.style__container___1e_Mg {
+    position: relative;
+}
 .style__icon___1d12j {
     margin-right: .6em;
 }
@@ -2825,11 +2947,19 @@
 :root {}
 :root {}
 .style__frame___leceX {
+    position: relative;
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
     -ms-flex-preferred-size: 0;
         flex-basis: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    -webkit-transition: width .3s, -webkit-transform .3s;
+    transition: width .3s, -webkit-transform .3s;
+    transition: width .3s, transform .3s;
+    transition: width .3s, transform .3s, -webkit-transform .3s;
 }
 :root {}
 

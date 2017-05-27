@@ -31,7 +31,7 @@ export default class FullscreenToggler extends PureComponent {
 
         return (
             <a href={url} target="_blank">
-                <Button className={style.selector}>
+                <Button className={style.selector} style="clean">
                     <Icon icon="external-link" className={style.icon}/>
                 </Button>
             </a>
