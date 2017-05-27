@@ -1,3 +1,6 @@
+.container {
+    position: relative;
+}
 .selector {
     font-weight: bold;
 }

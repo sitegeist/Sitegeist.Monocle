@@ -10,6 +10,9 @@
         <div
             id="app"
             data-default-path="{defaultPath}"
+
+            data-login-endpoint="{f:uri.action(action: 'authenticate', controller: 'Login', package: 'Neos.Neos', format: 'json', absolute: true)}"
+
             data-fullscreen-uri="{f:uri.action(action:'module', controller:'preview', package:'Sitegeist.Monocle', absolute: 1)}"
             data-iframe-uri="{f:uri.action(action:'iframe', controller:'preview', package:'Sitegeist.Monocle')}"
             data-preview-uri="{f:uri.action(action:'component', controller:'preview', package:'Sitegeist.Monocle')}"
@@ -19,7 +22,7 @@
             data-viewport-presets-endpoint="{f:uri.action(action:'viewportPresets', controller:'api', package:'Sitegeist.Monocle')}"
             data-sites-endpoint="{f:uri.action(action:'sites', controller:'api', package:'Sitegeist.Monocle')}"
             data-render-prototypes-endpoint="{f:uri.action(action:'renderPrototype', controller:'api', package:'Sitegeist.Monocle')}"
-        ></div>
+            ></div>
         <script src="{f:uri.resource(path: 'resource://Sitegeist.Monocle/Public/JavaScript/App.js')}"></script>
 	</body>
 </html>

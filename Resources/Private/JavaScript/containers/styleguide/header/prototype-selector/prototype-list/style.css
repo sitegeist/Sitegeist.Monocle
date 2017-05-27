@@ -1,0 +1,51 @@
+.list {
+    width: 100vh;
+    max-width: 480px;
+}
+
+.prototypes {
+    max-height: calc(100vh - 2 * var(--goldenUnit));
+    margin-top: -var(--spacing);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.prototype {
+    cursor: pointer;
+    color: var(--brandColorsContrastBrightest);
+    background-color: var(--brandColorsContrastNeutral);
+    padding: 1em;
+}
+.prototype:hover {
+    background-color: var(--brandColorsPrimaryBlue);
+}
+
+.title {
+    font-size: 120%;
+}
+
+.name {
+    font-size: 80%;
+    color: var(--brandColorsContrastBright);
+}
+.prototype:hover .name {
+    color: var(--brandColorsContrastBrightest);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--brandColorsContrastDark);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--brandColorsContrastDarker);
+	border: 1px solid var(--brandColorsContrastDark);
+}
+
+::-webkit-scrollbar-corner {
+	background-color: var(--brandColorsContrastDark);
+}

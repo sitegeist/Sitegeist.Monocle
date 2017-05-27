@@ -1,6 +1,9 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
 import {$get, $set, $override} from 'plow-js';
+import {take, select, put} from 'redux-saga/effects'
+
+import {sagas as business} from '../business';
 
 export const actions = {};
 
@@ -20,13 +23,13 @@ actions.select = createAction(
 
 export const reducer = (state, action) => {
     switch (action.type) {
-        case actions.add:
+        case actions.add.toString():
             return $override('prototypes.byName', action.payload, state);
 
-        case actions.clear:
+        case actions.clear.toString():
             return $set('prototypes.byName', {}, state);
 
-        case actions.select:
+        case actions.select.toString():
             return $set('prototypes.currentlySelected', action.payload, state);
 
         default:
@@ -36,9 +39,9 @@ export const reducer = (state, action) => {
 
 export const selectors = {};
 
-selectors.all = () => $get('prototypes.byName');
+selectors.all = $get('prototypes.byName');
 
-selectors.byId = () => (state, prototypeName) =>
+selectors.byId = (state, prototypeName) =>
     $get(['prototypes', 'byName', prototypeName], state);
 
 selectors.currentlySelected = () => createSelector(
@@ -51,3 +54,10 @@ selectors.currentlySelected = () => createSelector(
 );
 
 export const sagas = {};
+
+sagas.loadPrototypesOnBootstrap = business.operation(function * () {
+    const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
+    const prototypes = yield business.authenticated(prototypesEndpoint);
+
+    yield put(actions.add(prototypes));
+});

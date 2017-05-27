@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import {Provider} from 'react-redux';
 
 import Header from './header';
+import Loader from './loader';
 
 export default class Styleguide extends PureComponent {
     render() {
@@ -14,6 +15,7 @@ export default class Styleguide extends PureComponent {
                     <section>
                         PREVIEW + DETAIL
                     </section>
+                    <Loader/>
                 </div>
             </Provider>
         );

@@ -1,18 +1,21 @@
-import {compose} from 'redux';
 import {values} from 'ramda';
 
 import * as prototypes from './prototypes';
+import * as business from './business';
 
 export const actions = {
-    prototypes: prototypes.actions
+    prototypes: prototypes.actions,
+    business: business.actions
 };
 
-export const reducer = compose(
-    prototypes.reducer
-);
+export const reducer = (state, action) => [
+    prototypes.reducer,
+    business.reducer
+].reduce((state, reducer) => reducer(state, action), state);
 
 export const selectors = {
-    prototypes: prototypes.selectors
+    prototypes: prototypes.selectors,
+    business: business.selectors
 };
 
 export const sagas = [

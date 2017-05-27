@@ -7,6 +7,11 @@ import {reducer, sagas} from '../state';
 export default env => {
     const initialState = {
         env,
+        business: {
+            tasks: {},
+            errors: {},
+            needsAuthorization: false
+        },
         sites: {},
         breakpoints: {},
         prototypes: {}
