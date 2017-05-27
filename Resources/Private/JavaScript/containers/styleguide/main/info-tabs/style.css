@@ -1,0 +1,10 @@
+.toggleHandle {
+    position: absolute;
+    right: 0;
+}
+
+.prototypeLabel {
+    display: block;
+    color: var(--brandColorsContrastBright);
+    font-size: 75%;
+}
