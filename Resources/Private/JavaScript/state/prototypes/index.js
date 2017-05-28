@@ -5,6 +5,7 @@ import {take, select, put, call} from 'redux-saga/effects';
 import url from 'build-url';
 
 import {sagas as business} from '../business';
+import {selectors as sites} from '../sites';
 import {iframeWindow} from 'dom';
 
 export const actions = {};
@@ -77,8 +78,17 @@ export const sagas = {};
 
 sagas.loadPrototypesOnBootstrap = business.operation(function * () {
     document.title = 'Monocle: Loading...';
+
+    yield put(actions.clear());
+    yield put(actions.setCurrentlyRendered(null));
+
     const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
-    const prototypes = yield business.authenticated(prototypesEndpoint);
+    const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+    const prototypes = yield business.authenticated(
+        url(prototypesEndpoint, {
+            queryParams: {sitePackageKey}
+        })
+    );
 
     yield put(actions.add(prototypes));
     yield put(actions.select(Object.keys(prototypes)[0]));
@@ -92,9 +102,10 @@ sagas.renderPrototypeOnSelect = function * () {
         yield call(
             business.operation(function * () {
                 const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
+                const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
                 const renderedPrototype = yield business.authenticated(
                     url(renderPrototypesEndpoint, {
-                        queryParams: {prototypeName}
+                        queryParams: {prototypeName, sitePackageKey}
                     })
                 );
 

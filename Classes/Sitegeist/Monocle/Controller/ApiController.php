@@ -68,18 +68,33 @@ class ApiController extends ActionController
      * Get all styleguide objects
      *
      * @Flow\SkipCsrfProtection
+     * @param string $sitePackageKey
      * @return void
      */
-    public function styleguideObjectsAction()
+    public function styleguideObjectsAction($sitePackageKey)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
-
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->view->assign('value', $styleguideObjects);
+    }
+
+    /**
+     * Get all site packages
+     *
+     * @Flow\SkipCsrfProtection
+     * @return void
+     */
+    public function sitePackagesAction()
+    {
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $result = [];
+
+        foreach ($sitePackages as $sitePackage) {
+            $result[$sitePackage->getPackageKey()] = $sitePackage->getPackageKey();
+        }
+
+        $this->view->assign('value', $result);
     }
 
     /**
@@ -130,14 +145,11 @@ class ApiController extends ActionController
      *
      * @Flow\SkipCsrfProtection
      * @param string $prototypeName
+     * @param string $sitePackageKey
      * @return void
      */
-    public function renderPrototypeAction($prototypeName)
+    public function renderPrototypeAction($prototypeName, $sitePackageKey)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
-
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         // render html

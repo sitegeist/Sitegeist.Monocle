@@ -4,9 +4,11 @@ export default el => {
         renderPrototypesEndpoint,
         prototypesEndpoint,
         viewportPresetsEndpoint,
+        sitePackagesEndpoint,
         iframeUri,
         previewUri,
-        fullscreenUri
+        fullscreenUri,
+        defaultSitePackageKey
     } = el.dataset;
 
     return {
@@ -14,8 +16,10 @@ export default el => {
         renderPrototypesEndpoint,
         prototypesEndpoint,
         viewportPresetsEndpoint,
+        sitePackagesEndpoint,
         iframeUri,
         previewUri,
-        fullscreenUri
+        fullscreenUri,
+        defaultSitePackageKey
     };
 };

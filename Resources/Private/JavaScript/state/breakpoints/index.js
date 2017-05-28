@@ -9,7 +9,7 @@ export const actions = {};
 
 actions.set = createAction(
     '@sitegeist/monocle/breakpoints/set',
-    listOfPrototypes => listOfPrototypes
+    listOfBreakpoints => listOfBreakpoints
 );
 
 actions.clear = createAction(

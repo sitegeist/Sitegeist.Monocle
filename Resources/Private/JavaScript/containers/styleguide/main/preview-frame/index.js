@@ -12,11 +12,13 @@ import style from './style.css';
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
+    const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
         src: currentlyRenderedPrototype && url(previewUri, {
             queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype),

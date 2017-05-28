@@ -72,6 +72,7 @@ class PreviewController extends ActionController
     public function initializeView(ViewInterface $view)
     {
         $view->assign('defaultPath', $this->defaultPath);
+        $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
         $view->assign('metaViewport', $this->metaViewport);
 
         //
@@ -90,6 +91,18 @@ class PreviewController extends ActionController
     }
 
     /**
+     * Get the default site package key
+     *
+     * @return string
+     */
+    protected function getDefaultSitePackageKey()
+    {
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $sitePackage = reset($sitePackages);
+        return $sitePackage->getPackageKey();
+    }
+
+    /**
      * @return void
      */
     public function moduleAction()
@@ -105,13 +118,12 @@ class PreviewController extends ActionController
 
     /**
      * @param  string $prototypeName
+     * @param  string $sitePackageKey
      * @return void
      */
-    public function componentAction($prototypeName)
+    public function componentAction($prototypeName, $sitePackageKey)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 

@@ -1771,6 +1771,10 @@ var _breakpoints = __webpack_require__(448);
 
 var breakpoints = _interopRequireWildcard(_breakpoints);
 
+var _sites = __webpack_require__(1259);
+
+var sites = _interopRequireWildcard(_sites);
+
 var _business = __webpack_require__(163);
 
 var business = _interopRequireWildcard(_business);
@@ -1782,11 +1786,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var actions = exports.actions = {
     prototypes: prototypes.actions,
     breakpoints: breakpoints.actions,
+    sites: sites.actions,
     business: business.actions
 };
 
 var reducer = exports.reducer = function reducer(state, action) {
-    return [prototypes.reducer, breakpoints.reducer, business.reducer].reduce(function (state, reducer) {
+    return [prototypes.reducer, breakpoints.reducer, sites.reducer, business.reducer].reduce(function (state, reducer) {
         return reducer(state, action);
     }, state);
 };
@@ -1794,10 +1799,11 @@ var reducer = exports.reducer = function reducer(state, action) {
 var selectors = exports.selectors = {
     prototypes: prototypes.selectors,
     breakpoints: breakpoints.selectors,
+    sites: sites.selectors,
     business: business.selectors
 };
 
-var sagas = exports.sagas = [].concat(_toConsumableArray((0, _ramda.values)(prototypes.sagas)), _toConsumableArray((0, _ramda.values)(breakpoints.sagas)));
+var sagas = exports.sagas = [].concat(_toConsumableArray((0, _ramda.values)(prototypes.sagas)), _toConsumableArray((0, _ramda.values)(breakpoints.sagas)), _toConsumableArray((0, _ramda.values)(sites.sagas)));
 
 /***/ }),
 /* 43 */
@@ -32838,9 +32844,11 @@ exports.default = function (el) {
         renderPrototypesEndpoint = _el$dataset.renderPrototypesEndpoint,
         prototypesEndpoint = _el$dataset.prototypesEndpoint,
         viewportPresetsEndpoint = _el$dataset.viewportPresetsEndpoint,
+        sitePackagesEndpoint = _el$dataset.sitePackagesEndpoint,
         iframeUri = _el$dataset.iframeUri,
         previewUri = _el$dataset.previewUri,
-        fullscreenUri = _el$dataset.fullscreenUri;
+        fullscreenUri = _el$dataset.fullscreenUri,
+        defaultSitePackageKey = _el$dataset.defaultSitePackageKey;
 
 
     return {
@@ -32848,9 +32856,11 @@ exports.default = function (el) {
         renderPrototypesEndpoint: renderPrototypesEndpoint,
         prototypesEndpoint: prototypesEndpoint,
         viewportPresetsEndpoint: viewportPresetsEndpoint,
+        sitePackagesEndpoint: sitePackagesEndpoint,
         iframeUri: iframeUri,
         previewUri: previewUri,
-        fullscreenUri: fullscreenUri
+        fullscreenUri: fullscreenUri,
+        defaultSitePackageKey: defaultSitePackageKey
     };
 };
 
@@ -33598,9 +33608,13 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _dec, _dec2, _class;
+
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(41);
 
 var _Button = __webpack_require__(66);
 
@@ -33609,6 +33623,14 @@ var _Button2 = _interopRequireDefault(_Button);
 var _Icon = __webpack_require__(67);
 
 var _Icon2 = _interopRequireDefault(_Icon);
+
+var _components = __webpack_require__(53);
+
+var _state = __webpack_require__(42);
+
+var _siteList = __webpack_require__(1260);
+
+var _siteList2 = _interopRequireDefault(_siteList);
 
 var _style = __webpack_require__(668);
 
@@ -33622,7 +33644,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SiteSelector = function (_PureComponent) {
+var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 = (0, _reactRedux.connect)(function (state) {
+    var currentlySelectedSitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
+
+    return {
+        label: currentlySelectedSitePackageKey ? currentlySelectedSitePackageKey : '---'
+    };
+}), _dec(_class = _dec2(_class = function (_PureComponent) {
     _inherits(SiteSelector, _PureComponent);
 
     function SiteSelector() {
@@ -33634,18 +33662,28 @@ var SiteSelector = function (_PureComponent) {
     _createClass(SiteSelector, [{
         key: 'render',
         value: function render() {
+            var _props = this.props,
+                isOpen = _props.isOpen,
+                label = _props.label,
+                toggleIsOpen = _props.toggleIsOpen;
+
+
             return _react2.default.createElement(
-                _Button2.default,
-                { className: _style2.default.selector, style: 'clean' },
-                _react2.default.createElement(_Icon2.default, { icon: 'globe', className: _style2.default.icon }),
-                'SITESELECTOR'
+                'div',
+                { className: _style2.default.container },
+                _react2.default.createElement(
+                    _Button2.default,
+                    { className: _style2.default.selector, style: 'clean', onClick: toggleIsOpen },
+                    _react2.default.createElement(_Icon2.default, { icon: 'globe', className: _style2.default.icon }),
+                    label
+                ),
+                _react2.default.createElement(_siteList2.default, { isVisible: isOpen, onClickOutside: toggleIsOpen, onSelectSite: toggleIsOpen })
             );
         }
     }]);
 
     return SiteSelector;
-}(_react.PureComponent);
-
+}(_react.PureComponent)) || _class) || _class);
 exports.default = SiteSelector;
 
 /***/ }),
@@ -34872,11 +34910,13 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     var previewUri = (0, _plowJs.$get)('env.previewUri', state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
     var currentlySelectedBreakpoint = _state.selectors.breakpoints.currentlySelected(state);
+    var sitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
         src: currentlyRenderedPrototype && (0, _buildUrl2.default)(previewUri, {
             queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey: sitePackageKey
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype),
@@ -34972,8 +35012,8 @@ var _business = __webpack_require__(163);
 
 var actions = exports.actions = {};
 
-actions.set = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/set', function (listOfPrototypes) {
-    return listOfPrototypes;
+actions.set = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/set', function (listOfBreakpoints) {
+    return listOfBreakpoints;
 });
 
 actions.clear = (0, _reduxActions.createAction)('@sitegeist/monocle/breakpoints/clear');
@@ -35061,6 +35101,8 @@ var _buildUrl2 = _interopRequireDefault(_buildUrl);
 
 var _business = __webpack_require__(163);
 
+var _sites = __webpack_require__(1259);
+
 var _dom = __webpack_require__(447);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -35121,30 +35163,46 @@ selectors.currentlyRendered = (0, _plowJs.$get)('prototypes.currentlyRendered');
 var sagas = exports.sagas = {};
 
 sagas.loadPrototypesOnBootstrap = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
-    var prototypesEndpoint, prototypes;
+    var prototypesEndpoint, sitePackageKey, prototypes;
     return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
                     document.title = 'Monocle: Loading...';
+
                     _context.next = 3;
-                    return (0, _effects.select)((0, _plowJs.$get)('env.prototypesEndpoint'));
+                    return (0, _effects.put)(actions.clear());
 
                 case 3:
-                    prototypesEndpoint = _context.sent;
-                    _context.next = 6;
-                    return _business.sagas.authenticated(prototypesEndpoint);
+                    _context.next = 5;
+                    return (0, _effects.put)(actions.setCurrentlyRendered(null));
 
-                case 6:
+                case 5:
+                    _context.next = 7;
+                    return (0, _effects.select)((0, _plowJs.$get)('env.prototypesEndpoint'));
+
+                case 7:
+                    prototypesEndpoint = _context.sent;
+                    _context.next = 10;
+                    return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
+
+                case 10:
+                    sitePackageKey = _context.sent;
+                    _context.next = 13;
+                    return _business.sagas.authenticated((0, _buildUrl2.default)(prototypesEndpoint, {
+                        queryParams: { sitePackageKey: sitePackageKey }
+                    }));
+
+                case 13:
                     prototypes = _context.sent;
-                    _context.next = 9;
+                    _context.next = 16;
                     return (0, _effects.put)(actions.add(prototypes));
 
-                case 9:
-                    _context.next = 11;
+                case 16:
+                    _context.next = 18;
                     return (0, _effects.put)(actions.select(Object.keys(prototypes)[0]));
 
-                case 11:
+                case 18:
                 case 'end':
                     return _context.stop();
             }
@@ -35177,7 +35235,7 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
                                         document.title = 'Monocle: Loading...';
                                         _context3.next = 6;
                                         return (0, _effects.call)(_business.sagas.operation(regeneratorRuntime.mark(function _callee2() {
-                                            var renderPrototypesEndpoint, renderedPrototype, _ref, title;
+                                            var renderPrototypesEndpoint, sitePackageKey, renderedPrototype, _ref, title;
 
                                             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                                                 while (1) {
@@ -35189,30 +35247,35 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
                                                         case 2:
                                                             renderPrototypesEndpoint = _context2.sent;
                                                             _context2.next = 5;
-                                                            return _business.sagas.authenticated((0, _buildUrl2.default)(renderPrototypesEndpoint, {
-                                                                queryParams: { prototypeName: prototypeName }
-                                                            }));
+                                                            return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
 
                                                         case 5:
-                                                            renderedPrototype = _context2.sent;
+                                                            sitePackageKey = _context2.sent;
                                                             _context2.next = 8;
-                                                            return (0, _effects.put)(actions.setCurrentlyRendered(renderedPrototype));
+                                                            return _business.sagas.authenticated((0, _buildUrl2.default)(renderPrototypesEndpoint, {
+                                                                queryParams: { prototypeName: prototypeName, sitePackageKey: sitePackageKey }
+                                                            }));
 
                                                         case 8:
-                                                            _context2.next = 10;
+                                                            renderedPrototype = _context2.sent;
+                                                            _context2.next = 11;
+                                                            return (0, _effects.put)(actions.setCurrentlyRendered(renderedPrototype));
+
+                                                        case 11:
+                                                            _context2.next = 13;
                                                             return (0, _effects.select)(selectors.currentlySelected);
 
-                                                        case 10:
+                                                        case 13:
                                                             _ref = _context2.sent;
                                                             title = _ref.title;
 
 
                                                             document.title = 'Monocle: ' + title;
 
-                                                            _context2.next = 15;
+                                                            _context2.next = 18;
                                                             return (0, _effects.take)(actions.ready);
 
-                                                        case 15:
+                                                        case 18:
                                                         case 'end':
                                                             return _context2.stop();
                                                     }
@@ -39962,7 +40025,7 @@ module.exports = __webpack_require__(54);
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"attached":"attached__attached___2s3wI","attached--centered":"attached__attached--centered___1DZ5Z","attached--right":"attached__attached--right___1UJJy"};
+module.exports = {"attached":"attached__attached___2s3wI","attached--centered":"attached__attached--centered___1DZ5Z","attached--right":"attached__attached--right___1UJJy","attached--left":"attached__attached--left___2u195"};
 
 /***/ }),
 /* 663 */
@@ -40004,7 +40067,7 @@ module.exports = {"container":"style__container___Me5dO","selector":"style__sele
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"selector":"style__selector___3pV4A","icon":"style__icon___3ASk2"};
+module.exports = {"selector":"style__selector___3pV4A","container":"style__container___1hW9N","icon":"style__icon___3ASk2"};
 
 /***/ }),
 /* 669 */
@@ -83808,6 +83871,311 @@ __webpack_require__(239);
 __webpack_require__(403);
 module.exports = __webpack_require__(402);
 
+
+/***/ }),
+/* 1259 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.sagas = exports.selectors = exports.reducer = exports.actions = undefined;
+
+var _reduxActions = __webpack_require__(237);
+
+var _reselect = __webpack_require__(238);
+
+var _plowJs = __webpack_require__(112);
+
+var _effects = __webpack_require__(159);
+
+var _business = __webpack_require__(163);
+
+var _prototypes = __webpack_require__(449);
+
+var actions = exports.actions = {};
+
+actions.set = (0, _reduxActions.createAction)('@sitegeist/monocle/sites/set', function (listOfSites) {
+    return listOfSites;
+});
+
+actions.clear = (0, _reduxActions.createAction)('@sitegeist/monocle/sites/clear');
+
+actions.select = (0, _reduxActions.createAction)('@sitegeist/monocle/sites/select', function (siteName) {
+    return siteName;
+});
+
+var reducer = exports.reducer = function reducer(state, action) {
+    switch (action.type) {
+        case actions.set.toString():
+            return (0, _plowJs.$override)('sites.byName', action.payload, state);
+
+        case actions.clear.toString():
+            return (0, _plowJs.$set)('sites.byName', {}, state);
+
+        case actions.select.toString():
+            return (0, _plowJs.$set)('sites.currentlySelected', action.payload, state);
+
+        default:
+            return state;
+    }
+};
+
+var selectors = exports.selectors = {};
+
+selectors.all = (0, _plowJs.$get)('sites.byName');
+
+selectors.currentlySelectedSitePackageKey = (0, _reselect.createSelector)([(0, _plowJs.$get)('sites.currentlySelected'), (0, _plowJs.$get)('env.defaultSitePackageKey')], function (currentlySelectedSitePackageKey, defaultSitePackageKey) {
+    return currentlySelectedSitePackageKey || defaultSitePackageKey;
+});
+
+selectors.currentlySelected = (0, _reselect.createSelector)([selectors.currentlySelectedSitePackageKey, selectors.all], function (currentlySelectedSitePackageKey, sitesByName) {
+    return sitesByName && sitesByName[currentlySelectedSitePackageKey];
+});
+
+var sagas = exports.sagas = {};
+
+sagas.loadSitePackagesOnBootstrap = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
+    var sitePackagesEndpoint, sites;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    _context.next = 2;
+                    return (0, _effects.select)((0, _plowJs.$get)('env.sitePackagesEndpoint'));
+
+                case 2:
+                    sitePackagesEndpoint = _context.sent;
+                    _context.next = 5;
+                    return _business.sagas.authenticated(sitePackagesEndpoint);
+
+                case 5:
+                    sites = _context.sent;
+                    _context.next = 8;
+                    return (0, _effects.put)(actions.set(sites));
+
+                case 8:
+                case 'end':
+                    return _context.stop();
+            }
+        }
+    }, _callee, this);
+}));
+
+sagas.switchSiteOnSelect = regeneratorRuntime.mark(function _callee2() {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+            switch (_context2.prev = _context2.next) {
+                case 0:
+                    if (false) {
+                        _context2.next = 7;
+                        break;
+                    }
+
+                    _context2.next = 3;
+                    return (0, _effects.take)(actions.select);
+
+                case 3:
+                    _context2.next = 5;
+                    return (0, _effects.call)(_prototypes.sagas.loadPrototypesOnBootstrap);
+
+                case 5:
+                    _context2.next = 0;
+                    break;
+
+                case 7:
+                case 'end':
+                    return _context2.stop();
+            }
+        }
+    }, _callee2, this);
+});
+
+/***/ }),
+/* 1260 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _dec2, _dec3, _class;
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(41);
+
+var _recompose = __webpack_require__(101);
+
+var _components = __webpack_require__(53);
+
+var _state = __webpack_require__(42);
+
+var _site = __webpack_require__(1261);
+
+var _site2 = _interopRequireDefault(_site);
+
+var _style = __webpack_require__(1263);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SiteList = (_dec = (0, _components.attached)('left'), _dec2 = (0, _reactRedux.connect)(function (state) {
+    return {
+        sites: _state.selectors.sites.all(state)
+    };
+}, {
+    selectSite: _state.actions.sites.select
+}), _dec3 = (0, _recompose.withHandlers)({
+    handleSelectSite: function handleSelectSite(props) {
+        return function (siteName) {
+            props.selectSite(siteName);
+            props.onSelectSite(siteName);
+        };
+    }
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = function (_PureComponent) {
+    _inherits(SiteList, _PureComponent);
+
+    function SiteList() {
+        _classCallCheck(this, SiteList);
+
+        return _possibleConstructorReturn(this, (SiteList.__proto__ || Object.getPrototypeOf(SiteList)).apply(this, arguments));
+    }
+
+    _createClass(SiteList, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                sites = _props.sites,
+                handleSelectSite = _props.handleSelectSite;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: _style2.default.list },
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.sites },
+                    Object.keys(sites).map(function (site) {
+                        return _react2.default.createElement(_site2.default, {
+                            key: site,
+                            name: site,
+                            onClick: handleSelectSite
+                        });
+                    })
+                )
+            );
+        }
+    }]);
+
+    return SiteList;
+}(_react.PureComponent)) || _class) || _class) || _class) || _class) || _class);
+exports.default = SiteList;
+
+/***/ }),
+/* 1261 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _recompose = __webpack_require__(101);
+
+var _style = __webpack_require__(1262);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Site = (_dec = (0, _recompose.withHandlers)({
+    handleClick: function handleClick(props) {
+        return function () {
+            return props.onClick(props.name);
+        };
+    }
+}), _dec(_class = function (_PureComponent) {
+    _inherits(Site, _PureComponent);
+
+    function Site() {
+        _classCallCheck(this, Site);
+
+        return _possibleConstructorReturn(this, (Site.__proto__ || Object.getPrototypeOf(Site)).apply(this, arguments));
+    }
+
+    _createClass(Site, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                name = _props.name,
+                handleClick = _props.handleClick;
+
+
+            return _react2.default.createElement(
+                'button',
+                { className: _style2.default.site, onClick: handleClick },
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.title },
+                    name
+                )
+            );
+        }
+    }]);
+
+    return Site;
+}(_react.PureComponent)) || _class);
+exports.default = Site;
+
+/***/ }),
+/* 1262 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"site":"style__site___34akq","title":"style__title___Z5wC8"};
+
+/***/ }),
+/* 1263 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"list":"style__list___lWaxf","sites":"style__sites___d1xiF","separator":"style__separator___2X1HX"};
 
 /***/ })
 /******/ ]);

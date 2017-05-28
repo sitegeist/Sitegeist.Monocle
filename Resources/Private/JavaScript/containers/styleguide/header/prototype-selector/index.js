@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+
 import Button from '@neos-project/react-ui-components/lib/Button';
 
 import {withToggableState} from 'components';
