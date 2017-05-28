@@ -42,10 +42,10 @@ export const reducer = (state, action) => {
             return $drop(['business', 'tasks', action.payload], state);
 
         case actions.commenceAuthorization.toString():
-            return $set('business.needsAuthorization', true, state);
+            return $set('business.needsAuthentication', true, state);
 
         case actions.authorize.toString():
-            return $set('business.needsAuthorization', false, state);
+            return $set('business.needsAuthentication', false, state);
 
         default:
             return state;
@@ -61,7 +61,7 @@ selectors.isBusy = createSelector(
     tasks => Object.keys(tasks).length > 0
 );
 
-selectors.needsAuthorization = $get('business.needsAuthorization');
+selectors.needsAuthentication = $get('business.needsAuthentication');
 
 export const sagas = {};
 
@@ -104,13 +104,14 @@ sagas.authenticated = (...args) => call(function * () {
                 yield put(actions.commenceAuthorization());
 
                 const credentials = (yield take(actions.authorize)).payload;
-                const loginEndpoint = select($get('env.loginEndpoint'));
+                const loginEndpoint = yield select($get('env.loginEndpoint'));
                 const body = new FormData();
 
                 body.set('__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][username]', credentials.username);
                 body.set('__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][password]', credentials.password);
 
                 const response = yield fetch(loginEndpoint, {
+                    method: 'POST',
                     credentials: 'include',
                     body
                 });
@@ -123,7 +124,7 @@ sagas.authenticated = (...args) => call(function * () {
                     continue;
                 }
 
-                throw new Error(`Unexpected Network error during login: (${response.status}) ${response.statusText}`);
+                console.error(`Unexpected Network error during login: (${response.status}) ${response.statusText}`);
             }
 
             continue;

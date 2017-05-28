@@ -3269,7 +3269,7 @@
     right: 0;
     bottom: 0;
     color: white;
-    z-index: 1000;
+    z-index: 900;
     cursor: wait;
 }
 
@@ -3279,6 +3279,126 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__dialog___1MSFK {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0, .35);
+}
+.style__dialog__contentsPosition___1xeRt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+    background: #222;
+}
+.style__dialog__contents___JiKEX {
+    position: relative;
+    width: calc(100vw - 40px * 2);
+    max-width: calc(40px * 16);
+    max-height: calc(100vh - (40px * 2));
+    border: 1px solid #3f3f3f;
+}
+.style__dialog--wide___1Sgd5 .style__dialog__contents___JiKEX {
+       max-width: calc(40px * 24);
+    }
+.style__dialog__title___1gYIb {
+    font-size: 16px;
+    line-height: 1.2;
+    padding: 16px;
+}
+.style__dialog__closeBtn___PIGpY {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.style__dialog__actions___1JIxj {
+    text-align: right;
+    border-top: 1px solid #3f3f3f;
+    padding: 16px;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__iconButton___TIbnT {
+    vertical-align: top;
+    width: 40px;
+    padding-left: 0;
+    padding-right: 0;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__form___z0eqp {
+    padding: 16px;
 }
 :root {}
 :root {}

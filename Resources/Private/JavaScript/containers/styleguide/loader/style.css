@@ -6,7 +6,7 @@
     right: 0;
     bottom: 0;
     color: white;
-    z-index: 1000;
+    z-index: 900;
     cursor: wait;
 }
 

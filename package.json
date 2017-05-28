@@ -68,6 +68,7 @@
     "react-addons-shallow-compare": "^15.5.2",
     "react-css-themr": "^1.2.0",
     "react-dom": "^15.5.4",
+    "react-portal": "^3.1.0",
     "react-redux": "^5.0.5",
     "react-syntax-highlighter": "^5.6.1",
     "recompose": "^0.23.4",

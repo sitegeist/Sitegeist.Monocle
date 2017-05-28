@@ -1,23 +1,51 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
-import Dialog from '@neos-project/react-ui-components/lib/Dialog';
+import {withState, withHandlers} from 'recompose';
 
-import visibility from 'components';
+import Dialog from '@neos-project/react-ui-components/lib/Dialog';
+import TextInput from '@neos-project/react-ui-components/lib/TextInput';
+import Button from '@neos-project/react-ui-components/lib/Button';
+
+import {selectors, actions} from 'state';
+import {visibility} from 'components';
 
 import style from './style.css';
 
+@withState('username', 'setUsername', '')
+@withState('password', 'setPassword', '')
 @connect(state => {
     return {
-        visibility: state.business.needsAuthentication
+        isVisible: selectors.business.needsAuthentication(state)
     };
+}, {
+    authorize: actions.business.authorize
+})
+@withHandlers({
+    performAuthorization: ({username, password, authorize}) => () => authorize(username, password)
 })
 @visibility
-export default class Styleguide extends PureComponent {
+export default class Login extends PureComponent {
     render() {
+        const {username, password, setUsername, setPassword} = this.props;
+
         return (
-            <div className={style.overlay}>
-                <Dialog/>
-            </div>
+            <Dialog isOpen title="Login" onRequestClose={() => {}} actions={this.renderActions()}>
+                <div className={style.form}>
+                    It seems, your session has expired. You need to login to continue:
+                    <br/>
+                    <br/>
+                    <TextInput placeholder="Username" onChange={setUsername} value={username}/>
+                    <TextInput placeholder="Password" type="password" onChange={setPassword} value={password}/>
+                </div>
+            </Dialog>
         );
+    }
+
+    renderActions() {
+        const {performAuthorization} = this.props;
+
+        return [
+            <Button style="brand" onClick={performAuthorization}>Login</Button>
+        ];
     }
 }
