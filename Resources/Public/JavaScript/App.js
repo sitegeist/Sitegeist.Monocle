@@ -34017,11 +34017,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var FullscreenToggler = (_dec = (0, _reactRedux.connect)(function (state) {
     var previewUri = (0, _plowJs.$get)('env.previewUri', state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
+    var sitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
         url: currentlyRenderedPrototype && (0, _buildUrl2.default)(previewUri, {
             queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey: sitePackageKey
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype)

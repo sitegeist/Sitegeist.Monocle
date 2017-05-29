@@ -14,11 +14,13 @@ import style from './style.css';
 @connect(state => {
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+    const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
         url: currentlyRenderedPrototype && url(previewUri, {
             queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype)
