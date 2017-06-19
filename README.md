@@ -32,19 +32,43 @@ use Monocle to render Fluid based Prototypes without any limitation.
 To render a prototype as a styleguide-item it simply has to be annotated:
 
 ```
-prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag){
+prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
+
+    #
+    # Styleguide annotation
+    # if this annotation is present (even when empty) 
+    # the prototype is rendered in the styleguide
+    # 
     @styleguide {
-        path = 'atoms.basic'
+        
+        #
+        # Path of the component in the styleguide
+        # Optional: by default the name-part of the component name is used
+        #
+        path = 'Components.Headline'
+        
+        #
+        # The title of the component
+        # Optional:  by default the component name is splitted and reversed  
+        #
         title = 'My Custom Prototype'
+        
+        #
+        # A description of the component
+        # Optional: By default empty.
+        # 
         description = 'A Prototype ....'
         
-        # ts props to override for the styleguide rendering
+        #
+        # Fusion-props to override during the styleguide rendering
+        # Optional: By default empty.
+        # 
         props {
             content = 'Hello World'
         }
     }
 
-    // normal ts props 
+    # normal fusion props 
     tagName = 'h1'
     content = ''
 }
