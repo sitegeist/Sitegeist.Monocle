@@ -120,7 +120,13 @@ Sitegeist:
     
     preview:
       # the path the styleguide will show at start    
-      defaultPath: 'atoms'
+      defaultPath: 'Component'
+      # the meta viewport to render in the styleguide
+      metaViewport: ''
+      # attributes that are added to the html-tag in the styleguide as key->value pairs
+      htmlTagAttributes: { }
+      # attributes that are added to the body-tag in the styleguide as key->value pairs
+      bodyTagAttributes: { }
       # the resources that are loaded in the preview iFrames 
       additionalResources:
         styleSheets:

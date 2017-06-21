@@ -5,6 +5,9 @@ Sitegeist:
     preview:
       defaultPath: atoms.basic
       metaViewport: ''
+      htmlTagAttributes: { }
+      bodyTagAttributes:
+        style: 'padding: 0;'
       additionalResources:
         styleSheets: {  }
         javaScripts: {  }

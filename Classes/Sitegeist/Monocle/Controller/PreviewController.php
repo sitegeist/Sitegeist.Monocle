@@ -52,6 +52,18 @@ class PreviewController extends ActionController
     protected $metaViewport;
 
     /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.htmlTagAttributes")
+     */
+    protected $htmlTagAttributes;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.bodyTagAttributes")
+     */
+    protected $bodyTagAttributes;
+
+    /**
      * @Flow\Inject
      * @var FusionService
      */
@@ -73,6 +85,22 @@ class PreviewController extends ActionController
     {
         $view->assign('defaultPath', $this->defaultPath);
         $view->assign('metaViewport', $this->metaViewport);
+
+        $htmlTagAttributes = ' ';
+        if ($this->htmlTagAttributes && is_array($this->htmlTagAttributes)) {
+            foreach ($this->htmlTagAttributes as $key => $value) {
+                $htmlTagAttributes .= $key . '="' . $value . '" ';
+            }
+        }
+        $view->assign('htmlTagAttributes', $htmlTagAttributes);
+
+        $bodyTagAttributes = ' ';
+        if ($this->bodyTagAttributes && is_array($this->bodyTagAttributes)) {
+            foreach ($this->bodyTagAttributes as $key => $value) {
+                $bodyTagAttributes .= $key . '="' . $value . '" ';
+            }
+        }
+        $view->assign('bodyTagAttributes', $bodyTagAttributes);
 
         //
         // Resolve resource uris in beforehand

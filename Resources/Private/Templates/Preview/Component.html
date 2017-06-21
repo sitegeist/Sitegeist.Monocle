@@ -1,7 +1,7 @@
 {namespace monocle=Sitegeist\Monocle\ViewHelpers}
 <!doctype html>
 <html>
-<head>
+<head {htmlTagAttributes -> f:format.raw()}>
     <meta charset="UTF-8">
     <title>{prototypeName}</title>
 
@@ -21,7 +21,7 @@
         </f:for>
     </f:if>
 </head>
-<body>
+<body {bodyTagAttributes -> f:format.raw()}>
 {renderedHtml -> f:format.raw()}
 </body>
 </html>
