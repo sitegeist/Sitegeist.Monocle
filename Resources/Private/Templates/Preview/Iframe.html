@@ -1,7 +1,7 @@
 {namespace monocle=Sitegeist\Monocle\ViewHelpers}
 <!doctype html>
 <html>
-<head>
+<head {htmlTagAttributes  -> f:format.raw()}>
     <meta charset="UTF-8">
 
     <f:if condition="{metaViewport}">
@@ -20,6 +20,6 @@
         </f:for>
     </f:if>
 </head>
-<body style="padding:0;">
+<body {bodyTagAttributes  -> f:format.raw()}>
 </body>
 </html>
