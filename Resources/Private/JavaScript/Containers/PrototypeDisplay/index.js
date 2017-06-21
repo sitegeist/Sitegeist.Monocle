@@ -66,10 +66,9 @@ export default class PrototypeDisplay extends Component {
 
         const currentPrototype = prototypes[prototypeName];
         const styleSheets = resources['styleSheets'] ? resources['styleSheets'] : null;
-        const javaScripts= resources['javaScripts'] ? resources['javaScripts'] : null;
+        const javaScripts = resources['javaScripts'] ? resources['javaScripts'] : null;
 
         const iFrameStyle = viewportWidth ? { maxWidth: '' + viewportWidth + 'px'} : {};
-
         return <div className={styles.prototype}>
             <h1 className={styles.headline}>
 				{currentPrototype['title']}
@@ -83,7 +82,7 @@ export default class PrototypeDisplay extends Component {
 			</h1>
 			<p className={styles.description}>{currentPrototype['description'] ? currentPrototype['description'] : 'no description found'}</p>
 
-            { (isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
+                { (isRendered) ? <Frame uri={iframeUri} style={iFrameStyle} className={styles.iframe} content={renderedHtml} styleSheets={styleSheets} javaScripts={javaScripts} />: '' }
 
             { (showSourceCode && isRendered) ?
                 <Tabs className={styles.codeSection} theme={tabTheme}>

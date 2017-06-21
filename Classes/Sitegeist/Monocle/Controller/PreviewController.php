@@ -14,9 +14,7 @@ namespace Sitegeist\Monocle\Controller;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
@@ -27,6 +25,18 @@ use Sitegeist\Monocle\Fusion\FusionView;
  */
 class PreviewController extends ActionController
 {
+
+    /**
+     * @var string
+     */
+    protected $defaultViewObjectName = FusionView::class;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.fusionRootPath")
+     */
+    protected $fusionRootPath;
+
     /**
      * @Flow\Inject
      * @var PackageManagerInterface
@@ -34,74 +44,10 @@ class PreviewController extends ActionController
     protected $packageManager;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.defaultPath")
-     */
-    protected $defaultPath;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.additionalResources")
-     */
-    protected $additionalResources;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.metaViewport")
-     */
-    protected $metaViewport;
-
-    /**
      * @Flow\Inject
      * @var FusionService
      */
     protected $fusionService;
-
-    /**
-     * @Flow\Inject
-     * @var ResourceManager
-     */
-    protected $resourceManager;
-
-    /**
-     * Initialize the view
-     *
-     * @param  ViewInterface $view
-     * @return void
-     */
-    public function initializeView(ViewInterface $view)
-    {
-        $view->assign('defaultPath', $this->defaultPath);
-        $view->assign('metaViewport', $this->metaViewport);
-
-        //
-        // Resolve resource uris in beforehand
-        //
-        $view->assign('additionalResources', array_map(function ($resourceList) {
-            return array_map(function ($path) {
-                if (strpos($path, 'resource://') === 0) {
-                    list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
-                    return $this->resourceManager->getPublicPackageResourceUri($package, $path);
-                }
-
-                return $path;
-            }, $resourceList);
-        }, $this->additionalResources));
-    }
-
-    /**
-     * @return void
-     */
-    public function moduleAction()
-    {
-    }
-
-    /**
-     * @return void
-     */
-    public function iframeAction()
-    {
-    }
 
     /**
      * @param  string $prototypeName
@@ -122,10 +68,30 @@ class PreviewController extends ActionController
 
         $html = $typoScriptView->render();
 
+        $this->view->setPackageKey($sitePackageKey);
+        $this->view->setFusionPath($this->fusionRootPath);
         $this->view->assignMultiple([
-            'packageKey' => $sitePackageKey,
+            'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $html
+            'html' => $html
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function iframeAction()
+    {
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $sitePackage = reset($sitePackages);
+        $sitePackageKey = $sitePackage->getPackageKey();
+
+        $this->view->setPackageKey($sitePackageKey);
+        $this->view->setFusionPath($this->fusionRootPath);
+        $this->view->assignMultiple([
+            'sitePackageKey' => '',
+            'prototypeName' => '',
+            'html' => ''
         ]);
     }
 }

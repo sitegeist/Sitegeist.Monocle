@@ -121,6 +121,9 @@ Sitegeist:
     preview:
       # the path the styleguide will show at start    
       defaultPath: 'atoms'
+      # fusion root path that is used to render the frame around the component
+      # the fusion gets the context-variables `html`, `sitePackageKey` and `prototypeName
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       # the resources that are loaded in the preview iFrames 
       additionalResources:
         styleSheets:

@@ -3,6 +3,7 @@ Sitegeist:
   Monocle:
     viewportPresets: {  }
     preview:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       defaultPath: atoms.basic
       metaViewport: ''
       additionalResources:
@@ -32,3 +33,7 @@ Neos:
             additionalResources:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
+
+    fusion:
+      autoInclude:
+        Sitegeist.Monocle: true

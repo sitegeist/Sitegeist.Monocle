@@ -1,0 +1,16 @@
+##
+# Prototype that renders a list of style-tags based on the setting Sitegeist.Monocle.preview.metaViewport
+#
+prototype(Sitegeist.Monocle:Preview.Header.Styles) < prototype(Neos.Fusion:Value) {
+	value = Neos.Fusion:Collection {
+		collection = ${Configuration.setting('Sitegeist.Monocle.preview.additionalResources.styleSheets')}
+		itemName = 'stylesheet'
+		itemRenderer = Neos.Fusion:Tag {
+			tagName = 'link'
+			attributes.rel = 'stylesheet'
+			attributes.href = Neos.Fusion:ResourceUri {
+				path = ${stylesheet}
+			}
+		}
+	}
+}
