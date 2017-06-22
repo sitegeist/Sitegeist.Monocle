@@ -1,5 +1,5 @@
 ##
-# Prototype that renders a list of style-tags based on the setting Sitegeist.Monocle.preview.metaViewport
+# Prototype that renders a list of style-tags based on the setting Sitegeist.Monocle.preview.additionalResources.styleSheets
 #
 prototype(Sitegeist.Monocle:Preview.Header.Styles) < prototype(Neos.Fusion:Value) {
 	value = Neos.Fusion:Collection {

@@ -1,5 +1,5 @@
 ##
-# Prototype that renders a list of script-tags based on the setting Sitegeist.Monocle.preview.metaViewport
+# Prototype that renders a list of script-tags based on the setting Sitegeist.Monocle.preview.additionalResources.javaScripts
 #
 prototype(Sitegeist.Monocle:Preview.Header.Scripts) < prototype(Neos.Fusion:Value) {
 	value = Neos.Fusion:Collection {
