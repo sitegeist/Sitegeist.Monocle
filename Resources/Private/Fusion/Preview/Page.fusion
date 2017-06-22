@@ -1,0 +1,85 @@
+##
+# Prototype for the rendering of the preview html-frame into wich the components are rendered in the
+# styleguide expects the context-variables `html`, `sitePackageKey` and `prototypeName
+#
+prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Array) {
+
+    doctype = '<!DOCTYPE html>'
+    doctype.@position = 'start 100'
+
+    # Only the opening html tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    htmlTag = Neos.Fusion:Tag {
+        @position = 'start'
+        tagName = 'html'
+        omitClosingTag = TRUE
+    }
+
+    headerComment = Neos.Fusion:Template {
+        @position = 'before headTag'
+        templatePath = 'resource://Neos.Neos/Private/Templates/FusionObjects/NeosLicenseHeader.html'
+    }
+
+    # The opening head tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    headTag = Neos.Fusion:Tag {
+        @position = 'after htmlTag'
+        tagName = 'head'
+        omitClosingTag = TRUE
+    }
+
+    # The content of the head tag, integrators can add their own head content in this array.
+    head = Neos.Fusion:Array {
+        @position = 'after headTag'
+
+        characterSetMetaTag = Neos.Fusion:Tag {
+            @position = 'start 10'
+            tagName = 'meta'
+            attributes {
+                charset = 'UTF-8'
+            }
+        }
+
+        titleTag = Neos.Fusion:Tag {
+            tagName = 'title'
+            content = ${sitePackageKey + ': ' + prototypeName}
+        }
+
+        meta = Neos.Fusion:Array {
+            viewport = Sitegeist.Monocle:Preview.Header.MetaViewport
+        }
+
+        # Link tags for stylesheets in the head should go here
+        stylesheets = Neos.Fusion:Array {
+            main = Sitegeist.Monocle:Preview.Header.Styles
+        }
+        # Script includes in the head should go here
+        javascripts = Neos.Fusion:Array {
+            main = Sitegeist.Monocle:Preview.Header.Scripts
+            @position = 'after stylesheets'
+        }
+    }
+
+    closingHeadTag = '</head>'
+    closingHeadTag.@position = 'after head'
+
+    # The opening body tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    bodyTag = Neos.Fusion:Tag {
+        @position = '20'
+        tagName = 'body'
+        attributes.style = 'padding: 0;'
+        omitClosingTag = TRUE
+    }
+
+    # Content of the body tag. To be defined by the integrator.
+    body = Neos.Fusion:Array {
+        @position = 'after bodyTag'
+        html = ${html}
+    }
+
+    closingBodyTag = '</body>'
+    closingBodyTag.@position = 'end 100'
+
+    closingHtmlTag = '</html>'
+    closingHtmlTag.@position = 'end 200'
+
+    @exceptionHandler = 'Neos\\Neos\\Fusion\\ExceptionHandlers\\PageHandler'
+}

@@ -19509,7 +19509,6 @@
 	            var javaScripts = resources['javaScripts'] ? resources['javaScripts'] : null;
 	
 	            var iFrameStyle = viewportWidth ? { maxWidth: '' + viewportWidth + 'px' } : {};
-	
 	            return _react2.default.createElement(
 	                'div',
 	                { className: _style2.default.prototype },

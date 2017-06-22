@@ -12,21 +12,10 @@
 
 ##
 # Monocle
-
 -
-  name:  'Monocle API'
-  uriPattern: 'api/{@action}'
+  name:  'Monocle'
+  uriPattern: '{@controller}/{@action}'
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
-    '@controller' : 'Api'
-  httpMethods: ['GET','POST']
-
--
-  name:  'Monocle Preview'
-  uriPattern: 'preview/{@action}'
-  defaults:
-    '@package': 'Sitegeist.Monocle'
-    '@subpackage': ''
-    '@controller' : 'Preview'
   httpMethods: ['GET','POST']

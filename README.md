@@ -36,49 +36,49 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
 
     #
     # Styleguide annotation
-    # if this annotation is present (even when empty) 
+    # if this annotation is present (even when empty)
     # the prototype is rendered in the styleguide
-    # 
+    #
     @styleguide {
-        
+
         #
         # Path of the component in the styleguide
         # Optional: by default the name-part of the component name is used
         #
         path = 'Components.Headline'
-        
+
         #
         # The title of the component
         # Optional:  by default the component name is splitted and reversed  
         #
         title = 'My Custom Prototype'
-        
+
         #
         # A description of the component
         # Optional: By default empty.
-        # 
+        #
         description = 'A Prototype ....'
-        
+
         #
         # Fusion-props to override during the styleguide rendering
         # Optional: By default empty.
-        # 
+        #
         props {
             content = 'Hello World'
         }
     }
 
-    # normal fusion props 
+    # normal fusion props
     tagName = 'h1'
     content = ''
 }
 ```
 
-The styleguide will render the items without the usal context. The ``site``, ``documenNode`` 
+The styleguide will render the items without the usal context. The ``site``, ``documenNode``
 and ``node`` context-variables are not present inside the styleguide rendering by intention.
- 
-That way it is ensured that your prototypes rely only on the fusion path for rendering and are 
-not affected by editor data. This is important for relyable testing of components. 
+
+That way it is ensured that your prototypes rely only on the fusion path for rendering and are
+not affected by editor data. This is important for relyable testing of components.
 
 To map an actual content node on a component-prototype use a separate fusion prototype.  
 
@@ -90,10 +90,10 @@ prototype(Vendor.Package:Content.Headline) < prototype(Neos.Fusion:Value){
 }
 ```
 
-That way the rendering prototype is completely seperated from the mapping prototype and 
+That way the rendering prototype is completely seperated from the mapping prototype and
 therefore highly reusable.
 
-The distinction between rendering- and mapping-prototypes can be compared to 
+The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the react-js world.
 
 ### Configuration
@@ -117,11 +117,14 @@ Sitegeist:
         label: 'wide'
         width: 800
         height: 600
-    
+
     preview:
       # the path the styleguide will show at start    
       defaultPath: 'atoms'
-      # the resources that are loaded in the preview iFrames 
+      # fusion root path that is used to render the frame around the component
+      # the fusion gets the context-variables `html`, `sitePackageKey` and `prototypeName`
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
+      # the resources that are loaded in the preview iFrames
       additionalResources:
         styleSheets:
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'
@@ -148,14 +151,14 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
 
 ## Installation
 
-Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`. 
+Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`.
 
 We use semantic-versioning so every breaking change will increase the major-version number.
 
 ## Visual regression testing
 
-Monocle can be used to render prototypes in isolation for visual regression testing tools. 
-For that you might want to consider the following points. 
+Monocle can be used to render prototypes in isolation for visual regression testing tools.
+For that you might want to consider the following points.
 
 ### Policies
 ```YAML
@@ -178,7 +181,7 @@ roles:
 
 ### Routes
 
-To make the monocle encpoints accessible without a db-connection available make sure to include the 
+To make the monocle encpoints accessible without a db-connection available make sure to include the
 monocle-routes before the neos-routes. Otherwise neos will try to resolve the path and fail due to a
 missing db-connection.
 

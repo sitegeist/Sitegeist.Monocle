@@ -29,6 +29,11 @@ class FusionView extends BaseFusionView
     protected $fusionService;
 
     /**
+     * @var bool
+     */
+    protected $fallbackViewEnabled = false;
+
+    /**
      * Load Fusion from the directories specified by $this->getOption('fusionPathPatterns')
      *
      * @return void
