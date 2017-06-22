@@ -1,5 +1,5 @@
 ##
-# Prototype that renders a meta-vireport tag based on the setting Sitegeist.Monocle.preview.metaViewport
+# Prototype that renders a meta-viewport tag based on the setting Sitegeist.Monocle.preview.metaViewport
 #
 prototype(Sitegeist.Monocle:Preview.Header.MetaViewport) < prototype(Neos.Fusion:Value) {
 	value = Neos.Fusion:Tag {
