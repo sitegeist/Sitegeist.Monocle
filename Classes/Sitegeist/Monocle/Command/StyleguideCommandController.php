@@ -14,10 +14,12 @@ namespace Sitegeist\Monocle\Command;
  */
 
 use Sitegeist\Monocle\Fusion\FusionService;
+use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Package\PackageManagerInterface;
 use Symfony\Component\Yaml\Yaml;
+use Sitegeist\Monocle\Service\DummyControllerContextTrait;
 
 /**
  * Class StyleguideCommandController
@@ -25,6 +27,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class StyleguideCommandController extends CommandController
 {
+    use DummyControllerContextTrait;
 
     /**
      * @Flow\Inject
@@ -69,6 +72,30 @@ class StyleguideCommandController extends CommandController
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->outputData($styleguideObjects, $format);
+    }
+
+    /**
+     * Render a given fusion component to HTML
+     *
+     * @param string $prototypeName The prototype name of the component
+     * @return void
+     */
+    public function renderCommand($prototypeName)
+    {
+        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
+        $controllerContext = $this->createDummyControllerContext();
+
+        //
+        // Extract package key from prototype name
+        //
+        list($packageKey) = explode(':', $prototypeName);
+
+        $typoScriptView = new FusionView();
+        $typoScriptView->setControllerContext($controllerContext);
+        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
+        $typoScriptView->setPackageKey($packageKey);
+
+        $this->output($typoScriptView->render());
     }
 
     protected function outputData($data, $format)
