@@ -20,6 +20,7 @@ use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 
 /**
  * Class PreviewController
@@ -27,11 +28,7 @@ use Sitegeist\Monocle\Fusion\FusionView;
  */
 class PreviewController extends ActionController
 {
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
+    use PackageKeyTrait;
 
     /**
      * @var array
@@ -109,9 +106,7 @@ class PreviewController extends ActionController
      */
     public function componentAction($prototypeName)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 

@@ -20,6 +20,7 @@ use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -28,17 +29,12 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ApiController extends ActionController
 {
+    use PackageKeyTrait;
 
     /**
      * @var array
      */
     protected $defaultViewObjectName = 'Neos\Flow\Mvc\View\JsonView';
-
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
 
     /**
      * @Flow\Inject
@@ -72,9 +68,7 @@ class ApiController extends ActionController
      */
     public function styleguideObjectsAction()
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
@@ -134,9 +128,7 @@ class ApiController extends ActionController
      */
     public function renderPrototypeAction($prototypeName)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 

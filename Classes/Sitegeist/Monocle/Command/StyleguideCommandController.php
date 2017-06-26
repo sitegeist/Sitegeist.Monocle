@@ -20,6 +20,7 @@ use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Package\PackageManagerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Sitegeist\Monocle\Service\DummyControllerContextTrait;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 
 /**
  * Class StyleguideCommandController
@@ -27,13 +28,7 @@ use Sitegeist\Monocle\Service\DummyControllerContextTrait;
  */
 class StyleguideCommandController extends CommandController
 {
-    use DummyControllerContextTrait;
-
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
+    use DummyControllerContextTrait, PackageKeyTrait;
 
     /**
      * @var array
@@ -64,9 +59,7 @@ class StyleguideCommandController extends CommandController
      */
     public function itemsCommand($format = 'json')
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
@@ -85,15 +78,12 @@ class StyleguideCommandController extends CommandController
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
         $controllerContext = $this->createDummyControllerContext();
 
-        //
-        // Extract package key from prototype name
-        //
-        list($packageKey) = explode(':', $prototypeName);
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $typoScriptView = new FusionView();
         $typoScriptView->setControllerContext($controllerContext);
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($packageKey);
+        $typoScriptView->setPackageKey($sitePackageKey);
 
         $this->output($typoScriptView->render());
     }
