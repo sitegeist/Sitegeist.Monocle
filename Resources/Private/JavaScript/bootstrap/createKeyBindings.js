@@ -42,4 +42,21 @@ export default (env, store) => {
 
         window.open(previewUrl, '_blank');
     });
+
+    //
+    // Select prototype on enter, if there's only one search result
+    //
+    mousetrap.bindGlobal('enter', () => {
+        const state = store.getState();
+        const prototypeGroups = selectors.navigation.filteredAndGroupedPrototypes(state);
+
+        if (prototypeGroups.length === 1) {
+            if (prototypeGroups[0].prototypes.length === 1) {
+                store.dispatch(
+                    actions.prototypes.select(prototypeGroups[0].prototypes[0].name)
+                );
+                store.dispatch(actions.navigation.close());
+            }
+        }
+    });
 };

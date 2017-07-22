@@ -85668,6 +85668,21 @@ exports.default = function (env, store) {
 
         window.open(previewUrl, '_blank');
     });
+
+    //
+    // Select prototype on enter, if there's only one search result
+    //
+    _enhancedMousetrap2.default.bindGlobal('enter', function () {
+        var state = store.getState();
+        var prototypeGroups = _state.selectors.navigation.filteredAndGroupedPrototypes(state);
+
+        if (prototypeGroups.length === 1) {
+            if (prototypeGroups[0].prototypes.length === 1) {
+                store.dispatch(_state.actions.prototypes.select(prototypeGroups[0].prototypes[0].name));
+                store.dispatch(_state.actions.navigation.close());
+            }
+        }
+    });
 };
 
 /***/ }),
