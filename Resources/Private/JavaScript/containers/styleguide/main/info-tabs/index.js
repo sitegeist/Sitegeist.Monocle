@@ -8,16 +8,19 @@ import {visibility, resizable} from 'components';
 import {selectors} from 'state';
 
 import Code from './code';
+import Anatomy from './anatomy';
 
 import style from './style.css';
 import tabTheme from './tabTheme.css';
 import tabPanelTheme from './tabPanelTheme.css';
 
 @connect(state => {
+    const prototypes = selectors.prototypes.all(state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
     const currentlySelectedPrototype = selectors.prototypes.currentlySelected(state);
 
     return {
+        prototypes,
         ...currentlyRenderedPrototype,
         ...currentlySelectedPrototype,
         isVisible: Boolean(currentlyRenderedPrototype) && Boolean(currentlySelectedPrototype)
@@ -31,7 +34,7 @@ import tabPanelTheme from './tabPanelTheme.css';
 })
 export default class InfoTabs extends PureComponent {
     render() {
-        const {title, prototypeName, description, renderedHtml, renderedCode, parsedCode} = this.props;
+        const {title, prototypeName, description, renderedHtml, renderedCode, parsedCode, anatomy, prototypes} = this.props;
 
         return (
             <Tabs className={style.infoTabs} theme={tabTheme}>
@@ -42,6 +45,9 @@ export default class InfoTabs extends PureComponent {
                 <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}><Code content={pretty(renderedHtml)} language="html" /></Tabs.Panel>
                 <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}><Code content={renderedCode} language="vim" /></Tabs.Panel>
                 <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={parsedCode} language="yaml" /></Tabs.Panel>
+                <Tabs.Panel title="Anatomy" icon="heartbeat" theme={tabPanelTheme}>
+                    <Anatomy anatomy={anatomy} prototypes={prototypes} prototypeName={prototypeName}/>
+                </Tabs.Panel>
             </Tabs>
         );
     }

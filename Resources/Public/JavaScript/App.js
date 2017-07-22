@@ -36609,6 +36609,10 @@ var _code = __webpack_require__(450);
 
 var _code2 = _interopRequireDefault(_code);
 
+var _anatomy = __webpack_require__(1270);
+
+var _anatomy2 = _interopRequireDefault(_anatomy);
+
 var _style = __webpack_require__(687);
 
 var _style2 = _interopRequireDefault(_style);
@@ -36630,10 +36634,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
+    var prototypes = _state.selectors.prototypes.all(state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
     var currentlySelectedPrototype = _state.selectors.prototypes.currentlySelected(state);
 
-    return _extends({}, currentlyRenderedPrototype, currentlySelectedPrototype, {
+    return _extends({
+        prototypes: prototypes
+    }, currentlyRenderedPrototype, currentlySelectedPrototype, {
         isVisible: Boolean(currentlyRenderedPrototype) && Boolean(currentlySelectedPrototype)
     });
 }), _dec2 = (0, _components.resizable)({
@@ -36658,7 +36665,9 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
                 description = _props.description,
                 renderedHtml = _props.renderedHtml,
                 renderedCode = _props.renderedCode,
-                parsedCode = _props.parsedCode;
+                parsedCode = _props.parsedCode,
+                anatomy = _props.anatomy,
+                prototypes = _props.prototypes;
 
 
             return _react2.default.createElement(
@@ -36694,6 +36703,11 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
                     _Tabs2.default.Panel,
                     { title: 'Fusion AST', icon: 'terminal', theme: _tabPanelTheme2.default },
                     _react2.default.createElement(_code2.default, { content: parsedCode, language: 'yaml' })
+                ),
+                _react2.default.createElement(
+                    _Tabs2.default.Panel,
+                    { title: 'Anatomy', icon: 'heartbeat', theme: _tabPanelTheme2.default },
+                    _react2.default.createElement(_anatomy2.default, { anatomy: anatomy, prototypes: prototypes, prototypeName: prototypeName })
                 )
             );
         }
@@ -85737,6 +85751,148 @@ _mousetrap2.default.prototype.bindGlobal = function (keys, callback, action) {
 _mousetrap2.default.init();
 
 exports.default = _mousetrap2.default;
+
+/***/ }),
+/* 1270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(32);
+
+var _state = __webpack_require__(23);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var reduceAnatomicalTreeToComponents = function reduceAnatomicalTreeToComponents(anatomy, prototypeNames) {
+    if (anatomy.prototypeName && prototypeNames.includes(anatomy.prototypeName)) {
+        return {
+            prototypeName: anatomy.prototypeName,
+            children: reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames)
+        };
+    } else if (anatomy.children) {
+        return reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames);
+    }
+
+    var result = anatomy.map(function (a) {
+        return reduceAnatomicalTreeToComponents(a, prototypeNames);
+    }).filter(function (n) {
+        return n && (n.prototypeName || n.length);
+    });
+
+    if (!result.prototypeName && result.length === 1) {
+        return result[0];
+    }
+
+    return result;
+};
+
+var Anatomy = (_dec = (0, _reactRedux.connect)(function () {}, {
+    select: _state.actions.prototypes.select
+}), _dec(_class = function (_PureComponent) {
+    _inherits(Anatomy, _PureComponent);
+
+    function Anatomy() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Anatomy);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Anatomy.__proto__ || Object.getPrototypeOf(Anatomy)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectPrototype = function (prototypeName) {
+            return function () {
+                var select = _this.props.select;
+
+
+                select(prototypeName);
+            };
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Anatomy, [{
+        key: 'renderAnatomyRecursively',
+        value: function renderAnatomyRecursively(level) {
+            var _this2 = this;
+
+            if (level.children) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'span',
+                        { onClick: this.handleSelectPrototype(level.prototypeName) },
+                        level.prototypeName
+                    ),
+                    level.children.length ? this.renderAnatomyRecursively(level.children) : null
+                );
+            }
+
+            return _react2.default.createElement(
+                'ul',
+                null,
+                level.map(function (l) {
+                    return _react2.default.createElement(
+                        'li',
+                        { key: l.prototypeName },
+                        _this2.renderAnatomyRecursively(l)
+                    );
+                })
+            );
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                anatomy = _props.anatomy,
+                prototypes = _props.prototypes,
+                prototypeName = _props.prototypeName;
+
+            var processedAnatomy = reduceAnatomicalTreeToComponents(anatomy, Object.keys(prototypes));
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        prototypeName,
+                        this.renderAnatomyRecursively(processedAnatomy)
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Anatomy;
+}(_react.PureComponent)) || _class);
+exports.default = Anatomy;
 
 /***/ })
 /******/ ]);
