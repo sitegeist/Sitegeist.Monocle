@@ -10,6 +10,10 @@
     overflow-x: hidden;
 }
 
+.searchField input {
+    text-align: center;
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;

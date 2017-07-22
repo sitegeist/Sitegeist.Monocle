@@ -13,7 +13,8 @@
     font-size: 2rem;
     margin-right: var(--baseFontSize);
 }
-.prototype:hover {
+.prototype:hover,
+.isFocused {
     background-color: var(--brandColorsPrimaryBlue);
 }
 
@@ -25,6 +26,7 @@
     font-size: 80%;
     color: var(--brandColorsContrastBright);
 }
-.prototype:hover .name {
+.prototype:hover .name,
+.isFocused .name {
     color: var(--brandColorsContrastBrightest);
 }

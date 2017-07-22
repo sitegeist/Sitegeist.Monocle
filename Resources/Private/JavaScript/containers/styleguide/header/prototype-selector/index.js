@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import mousetrap from 'mousetrap';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
 
@@ -19,6 +20,17 @@ import style from './style.css';
     };
 })
 export default class PrototypeSelector extends PureComponent {
+    componentDidMount() {
+        mousetrap.bind('ctrl+f', e => {
+            e.preventDefault();
+            this.props.toggleIsOpen();
+        });
+    }
+
+    componentWillUnmount() {
+        mousetrap.unbind('ctrl+f');
+    }
+
     render() {
         const {isOpen, label, toggleIsOpen} = this.props;
 

@@ -2472,6 +2472,9 @@
 .style__prototype___vsYgd:hover {
     background-color: #00ADEE;
 }
+.style__isFocused___3baLJ {
+    background-color: #00ADEE;
+}
 
 .style__title___1f_sE {
     font-size: 120%;
@@ -2482,6 +2485,9 @@
     color: #999;
 }
 .style__prototype___vsYgd:hover .style__name___2gqTO {
+    color: #FFF;
+}
+.style__isFocused___3baLJ .style__name___2gqTO {
     color: #FFF;
 }
 :root {}
@@ -2596,6 +2602,10 @@
     margin-top: -16px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.style__searchField___HlbHm input {
+    text-align: center;
 }
 
 ::-webkit-scrollbar {
