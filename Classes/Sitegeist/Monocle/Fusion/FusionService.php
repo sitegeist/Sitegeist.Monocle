@@ -65,12 +65,13 @@ class FusionService extends NeosFusionService
     {
         $styleguideObjects = [];
         if ($fusionAst && $fusionAst['__prototypes']) {
-            foreach ($fusionAst['__prototypes'] as $prototypeName => $prototypeObject) {
+            foreach ($fusionAst['__prototypes'] as $prototypeFullName => $prototypeObject) {
                 if (array_key_exists('__meta', $prototypeObject) && is_array($prototypeObject['__meta']) && array_key_exists('styleguide', $prototypeObject['__meta'])) {
+                    list($prototypeVendor, $prototypeName) = explode(':', $prototypeFullName, 2);
                     $styleguideConfiguration = $prototypeObject['__meta']['styleguide'];
-                    $styleguideObjects[$prototypeName] = [
-                        'title' => (isset($styleguideConfiguration['title'])) ? $styleguideConfiguration['title'] : $prototypeName,
-                        'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : 'other',
+                    $styleguideObjects[$prototypeFullName] = [
+                        'title' => (isset($styleguideConfiguration['title'])) ? $styleguideConfiguration['title'] : implode(' ', array_reverse(explode('.', $prototypeName))),
+                        'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : $prototypeName,
                         'description' => (isset($styleguideConfiguration['description'])) ? $styleguideConfiguration['description'] :  '',
                         'options' => (isset($styleguideConfiguration['options'])) ? $styleguideConfiguration['options'] : null,
                     ];
