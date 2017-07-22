@@ -33894,7 +33894,7 @@ var PrototypeList = (_dec = (0, _components.attached)(), _dec2 = (0, _recompose.
                 _react2.default.createElement(
                     'div',
                     { className: _style2.default.searchField },
-                    _react2.default.createElement(_TextInput2.default, { placeholder: 'Search...', value: searchTerm, onChange: setSearchTerm })
+                    _react2.default.createElement(_TextInput2.default, { autoFocus: true, placeholder: 'Search...', value: searchTerm, onChange: setSearchTerm })
                 ),
                 _react2.default.createElement(
                     'div',

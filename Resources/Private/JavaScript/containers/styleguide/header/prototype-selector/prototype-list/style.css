@@ -1,6 +1,6 @@
 .list {
-    width: 100vh;
-    max-width: 480px;
+    width: 100vw;
+    max-width: 800px;
 }
 
 .prototypes {

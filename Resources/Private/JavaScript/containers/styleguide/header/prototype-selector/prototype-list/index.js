@@ -66,7 +66,7 @@ export default class PrototypeList extends PureComponent {
         return (
             <div className={style.list}>
                 <div className={style.searchField}>
-                    <TextInput placeholder="Search..." value={searchTerm} onChange={setSearchTerm}/>
+                    <TextInput autoFocus placeholder="Search..." value={searchTerm} onChange={setSearchTerm}/>
                 </div>
                 <div className={style.prototypes}>
                     {this.filterAndGroupPrototypes().map(
