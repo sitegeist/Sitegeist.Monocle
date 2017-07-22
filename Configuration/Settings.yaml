@@ -2,6 +2,13 @@
 Sitegeist:
   Monocle:
     viewportPresets: {  }
+    ui:
+      hotkeys:
+        openNavigation: 'ctrl+f'
+        closeNavigation: 'esc'
+        navigateUp: 'up'
+        navigateDown: 'down'
+        openPreviewInNewWindow: 'ctrl+space'
     preview:
       defaultPath: atoms.basic
       metaViewport: ''

@@ -14,27 +14,41 @@ export default env => {
         },
         sites: {},
         breakpoints: {},
-        prototypes: {}
+        prototypes: {},
+        navigation: {
+            items: [],
+            currentIndex: -1,
+            isOpen: false,
+            searchTerm: ''
+        }
     };
     const storeEnhancers = [];
 
-    // saga middleqware
+    //
+    // Saga middleqware
+    //
     const sagaMiddleware = createSagaMiddleware();
     storeEnhancers.push(applyMiddleware(sagaMiddleware));
 
-    // dev tools extension
-    if (window.devToolsExtension) {
+    //
+    // Dev tools extension
+    //
+    if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
         storeEnhancers.push(window.devToolsExtension());
     }
 
-    // create store
+    //
+    // Create store
+    //
     const store = createStore(
         reducer,
         immutable(initialState),
         compose(...storeEnhancers)
     );
 
-    // run sagas
+    //
+    // Run sagas
+    //
     sagas.forEach(sagaMiddleware.run);
 
     return store;

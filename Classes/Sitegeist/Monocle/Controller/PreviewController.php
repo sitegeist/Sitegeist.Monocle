@@ -49,6 +49,12 @@ class PreviewController extends ActionController
     protected $metaViewport;
 
     /**
+     * @var array
+     * @Flow\InjectConfiguration("ui")
+     */
+    protected $uiSettings;
+
+    /**
      * @Flow\Inject
      * @var FusionService
      */
@@ -71,6 +77,7 @@ class PreviewController extends ActionController
         $view->assign('defaultPath', $this->defaultPath);
         $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
         $view->assign('metaViewport', $this->metaViewport);
+        $this->view->assign('uiSettings', json_encode($this->uiSettings));
 
         //
         // Resolve resource uris in beforehand
