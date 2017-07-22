@@ -36033,18 +36033,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(32);
 
-var _mousetrap = __webpack_require__(206);
-
-var _mousetrap2 = _interopRequireDefault(_mousetrap);
-
-var _plowJs = __webpack_require__(67);
-
-var _buildUrl = __webpack_require__(129);
-
-var _buildUrl2 = _interopRequireDefault(_buildUrl);
-
-var _state = __webpack_require__(23);
-
 var _header = __webpack_require__(431);
 
 var _header2 = _interopRequireDefault(_header);
@@ -36081,33 +36069,6 @@ var Styleguide = function (_PureComponent) {
     }
 
     _createClass(Styleguide, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            _mousetrap2.default.bind('ctrl+space', function (e) {
-                var store = _this2.props.store;
-
-                var state = store.getState();
-                var previewEndpoint = (0, _plowJs.$get)('env.previewUri', state);
-                var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
-                var sitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
-                var previewUrl = currentlyRenderedPrototype && (0, _buildUrl2.default)(previewEndpoint, {
-                    queryParams: {
-                        prototypeName: currentlyRenderedPrototype.prototypeName,
-                        sitePackageKey: sitePackageKey
-                    }
-                });
-
-                window.open(previewUrl, '_blank');
-            });
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            _mousetrap2.default.unbind('ctrl+space');
-        }
-    }, {
         key: 'render',
         value: function render() {
             var store = this.props.store;
@@ -85651,6 +85612,12 @@ var _enhancedMousetrap = __webpack_require__(1269);
 
 var _enhancedMousetrap2 = _interopRequireDefault(_enhancedMousetrap);
 
+var _plowJs = __webpack_require__(67);
+
+var _buildUrl = __webpack_require__(129);
+
+var _buildUrl2 = _interopRequireDefault(_buildUrl);
+
 var _state = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -85685,8 +85652,22 @@ exports.default = function (env, store) {
     });
 
     //
-    // TODO: Open preview in new window
+    // Open preview in new window
     //
+    _enhancedMousetrap2.default.bindGlobal(env.uiSettings.hotkeys.openPreviewInNewWindow, function () {
+        var state = store.getState();
+        var previewEndpoint = (0, _plowJs.$get)('env.previewUri', state);
+        var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
+        var sitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
+        var previewUrl = currentlyRenderedPrototype && (0, _buildUrl2.default)(previewEndpoint, {
+            queryParams: {
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey: sitePackageKey
+            }
+        });
+
+        window.open(previewUrl, '_blank');
+    });
 };
 
 /***/ }),

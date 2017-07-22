@@ -1,6 +1,8 @@
 import mousetrap from './util/enhancedMousetrap';
+import {$get} from 'plow-js';
+import url from 'build-url';
 
-import {actions} from 'state';
+import {actions, selectors} from 'state';
 
 export default (env, store) => {
     //
@@ -24,6 +26,20 @@ export default (env, store) => {
     mousetrap.bindGlobal(env.uiSettings.hotkeys.navigateDown, () => store.dispatch(actions.navigation.down()));
 
     //
-    // TODO: Open preview in new window
+    // Open preview in new window
     //
+    mousetrap.bindGlobal(env.uiSettings.hotkeys.openPreviewInNewWindow, () => {
+        const state = store.getState();
+        const previewEndpoint = $get('env.previewUri', state);
+        const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+        const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
+        const previewUrl = currentlyRenderedPrototype && url(previewEndpoint, {
+            queryParams: {
+                prototypeName: currentlyRenderedPrototype.prototypeName,
+                sitePackageKey
+            }
+        });
+
+        window.open(previewUrl, '_blank');
+    });
 };
