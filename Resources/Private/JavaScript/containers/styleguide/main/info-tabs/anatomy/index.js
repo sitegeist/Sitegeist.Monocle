@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import {actions} from 'state';
 
+import AnatomyItem from './anatomy-item';
+
 const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
     if (anatomy.prototypeName && prototypeNames.includes(anatomy.prototypeName)) {
         return {
@@ -27,28 +29,11 @@ const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
     select: actions.prototypes.select
 })
 export default class Anatomy extends PureComponent {
-    handleSelectPrototype = prototypeName => () => {
+    handleSelectPrototype = prototypeName => {
         const {select} = this.props;
 
         select(prototypeName);
     };
-
-    renderAnatomyRecursively(level) {
-        if (level.children) {
-            return (
-                <div>
-                    <span onClick={this.handleSelectPrototype(level.prototypeName)}>{level.prototypeName}</span>
-                    {level.children.length ? this.renderAnatomyRecursively(level.children) : null}
-                </div>
-            );
-        }
-
-        return (
-            <ul>
-                {level.map(l => <li key={l.prototypeName}>{this.renderAnatomyRecursively(l)}</li>)}
-            </ul>
-        );
-    }
 
     render() {
         const {anatomy, prototypes, prototypeName} = this.props;
@@ -56,12 +41,11 @@ export default class Anatomy extends PureComponent {
 
         return (
             <div>
-                <ul>
-                    <li>
-                        {prototypeName}
-                        {this.renderAnatomyRecursively(processedAnatomy)}
-                    </li>
-                </ul>
+                <AnatomyItem
+                    name={prototypeName}
+                    children={processedAnatomy}
+                    onSelect={this.handleSelectPrototype}
+                    />
             </div>
         );
     }

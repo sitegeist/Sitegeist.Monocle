@@ -85776,6 +85776,10 @@ var _reactRedux = __webpack_require__(32);
 
 var _state = __webpack_require__(23);
 
+var _anatomyItem = __webpack_require__(1271);
+
+var _anatomyItem2 = _interopRequireDefault(_anatomyItem);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85824,46 +85828,14 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {}, {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Anatomy.__proto__ || Object.getPrototypeOf(Anatomy)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectPrototype = function (prototypeName) {
-            return function () {
-                var select = _this.props.select;
+            var select = _this.props.select;
 
 
-                select(prototypeName);
-            };
+            select(prototypeName);
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Anatomy, [{
-        key: 'renderAnatomyRecursively',
-        value: function renderAnatomyRecursively(level) {
-            var _this2 = this;
-
-            if (level.children) {
-                return _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'span',
-                        { onClick: this.handleSelectPrototype(level.prototypeName) },
-                        level.prototypeName
-                    ),
-                    level.children.length ? this.renderAnatomyRecursively(level.children) : null
-                );
-            }
-
-            return _react2.default.createElement(
-                'ul',
-                null,
-                level.map(function (l) {
-                    return _react2.default.createElement(
-                        'li',
-                        { key: l.prototypeName },
-                        _this2.renderAnatomyRecursively(l)
-                    );
-                })
-            );
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _props = this.props,
@@ -85876,16 +85848,11 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {}, {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        prototypeName,
-                        this.renderAnatomyRecursively(processedAnatomy)
-                    )
-                )
+                _react2.default.createElement(_anatomyItem2.default, {
+                    name: prototypeName,
+                    children: processedAnatomy,
+                    onSelect: this.handleSelectPrototype
+                })
             );
         }
     }]);
@@ -85893,6 +85860,108 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {}, {
     return Anatomy;
 }(_react.PureComponent)) || _class);
 exports.default = Anatomy;
+
+/***/ }),
+/* 1271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _style = __webpack_require__(1272);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AnatomyItem = function (_PureComponent) {
+    _inherits(AnatomyItem, _PureComponent);
+
+    function AnatomyItem() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, AnatomyItem);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AnatomyItem.__proto__ || Object.getPrototypeOf(AnatomyItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelect = function () {
+            var _this$props = _this.props,
+                name = _this$props.name,
+                onSelect = _this$props.onSelect;
+
+
+            if (onSelect) {
+                onSelect(name);
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(AnatomyItem, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                name = _props.name,
+                children = _props.children,
+                onSelect = _props.onSelect;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: _style2.default.item, onClick: this.handleSelect },
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.name },
+                    name
+                ),
+                children.length ? _react2.default.createElement(
+                    'ul',
+                    { className: _style2.default.list },
+                    children.map(function (_ref2) {
+                        var prototypeName = _ref2.prototypeName,
+                            children = _ref2.children;
+                        return _react2.default.createElement(
+                            'li',
+                            { key: prototypeName, className: _style2.default.child },
+                            _react2.default.createElement(AnatomyItem, { name: prototypeName, children: children, onSelect: onSelect })
+                        );
+                    })
+                ) : null
+            );
+        }
+    }]);
+
+    return AnatomyItem;
+}(_react.PureComponent);
+
+exports.default = AnatomyItem;
+
+/***/ }),
+/* 1272 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"item":"style__item___2TN4t","name":"style__name___3OIvq","list":"style__list___2hqYA","child":"style__child___2NFjh"};
 
 /***/ })
 /******/ ]);
