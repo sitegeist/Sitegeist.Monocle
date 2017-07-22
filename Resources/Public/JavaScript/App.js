@@ -36179,7 +36179,36 @@ var Loader = (_dec = (0, _reactRedux.connect)(function (state) {
                 _react2.default.createElement(
                     'div',
                     { className: _style2.default.caption },
-                    'LOADER'
+                    _react2.default.createElement('div', { className: _style2.default.monocle }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: _style2.default.chain },
+                        _react2.default.createElement(
+                            'div',
+                            { className: _style2.default.element },
+                            _react2.default.createElement(
+                                'div',
+                                { className: _style2.default.element },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: _style2.default.element },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: _style2.default.element },
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: _style2.default.element },
+                                            _react2.default.createElement(
+                                                'div',
+                                                { className: _style2.default.element },
+                                                _react2.default.createElement('div', { className: _style2.default.element })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
                 )
             );
         }
@@ -41844,7 +41873,7 @@ module.exports = {"toolbox":"style__toolbox___bkwfX"};
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"loader":"style__loader___2U6wg","caption":"style__caption___1tTe0"};
+module.exports = {"loader":"style__loader___2U6wg","caption":"style__caption___1tTe0","monocle":"style__monocle___1VSxd","glare":"style__glare___1ubXp","chain":"style__chain___1Egh8","element":"style__element___iKJWV","swing":"style__swing___2r4Js"};
 
 /***/ }),
 /* 686 */
