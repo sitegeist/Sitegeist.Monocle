@@ -71,7 +71,7 @@ export default class PrototypeList extends PureComponent {
                     return groups;
                 }, {})
 
-        ).sort(sortLabels);
+        ).sort((a, b) => sortLabels(a, b, i => i.position));
     }
 
     increaseFocus = () => {

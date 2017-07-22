@@ -33942,7 +33942,11 @@ var PrototypeList = (_dec = (0, _components.attached)(), _dec2 = (0, _recompose.
                 groups[prototype.structure.label].prototypes.push(prototype);
 
                 return groups;
-            }, {})).sort(sortLabels);
+            }, {})).sort(function (a, b) {
+                return sortLabels(a, b, function (i) {
+                    return i.position;
+                });
+            });
         }
     }, {
         key: 'componentDidMount',
