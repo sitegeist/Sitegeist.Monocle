@@ -2452,7 +2452,7 @@
 :root {}
 :root {}
 :root {}
-.style__prototype____Loly {
+.style__prototype___vsYgd {
     cursor: pointer;
     color: #FFF;
     background-color: #323232;
@@ -2461,21 +2461,84 @@
     text-align: left;
     font-size: 14px;
     border: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
 }
-.style__prototype____Loly:hover {
+.style__prototype___vsYgd i {
+    font-size: 2rem;
+    margin-right: 14px;
+}
+.style__prototype___vsYgd:hover {
     background-color: #00ADEE;
 }
 
-.style__title___1d5iu {
+.style__title___1f_sE {
     font-size: 120%;
 }
 
-.style__name___1wuMd {
+.style__name___2gqTO {
     font-size: 80%;
     color: #999;
 }
-.style__prototype____Loly:hover .style__name___1wuMd {
+.style__prototype___vsYgd:hover .style__name___2gqTO {
     color: #FFF;
+}
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+.style__group___1itF7 {
+    background-color: #3f3f3f;
+}
+
+.style__label___2ih37 {
+    font-size: 60%;
+    display: block;
+    padding: .3rem;
+    text-align: center;
 }
 :root {}
 

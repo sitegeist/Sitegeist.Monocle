@@ -65,6 +65,12 @@ class ApiController extends ActionController
     protected $additionalResources;
 
     /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.structure")
+     */
+    protected $structure;
+
+    /**
      * Get all styleguide objects
      *
      * @Flow\SkipCsrfProtection
@@ -76,7 +82,26 @@ class ApiController extends ActionController
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
+        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
+            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeName);
+        }
+
         $this->view->assign('value', $styleguideObjects);
+    }
+
+    protected function getStructureForPrototypeName($prototypeName)
+    {
+        foreach ($this->structure as $structure) {
+            if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
+                return $structure;
+            }
+        }
+
+        return [
+            'label' => 'Other',
+            'icon' => 'icon-question',
+            'color' => 'white'
+        ];
     }
 
     /**

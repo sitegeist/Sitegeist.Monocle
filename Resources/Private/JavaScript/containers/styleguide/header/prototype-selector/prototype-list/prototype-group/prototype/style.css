@@ -7,6 +7,11 @@
     text-align: left;
     font-size: var(--baseFontSize);
     border: none;
+    display: flex;
+}
+.prototype i {
+    font-size: 2rem;
+    margin-right: var(--baseFontSize);
 }
 .prototype:hover {
     background-color: var(--brandColorsPrimaryBlue);
