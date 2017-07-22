@@ -12435,20 +12435,34 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
             switch (_context4.prev = _context4.next) {
                 case 0:
                     _loop = regeneratorRuntime.mark(function _loop() {
-                        var prototypeName;
+                        var currentlyRenderedPrototype, prototypeName;
                         return regeneratorRuntime.wrap(function _loop$(_context3) {
                             while (1) {
                                 switch (_context3.prev = _context3.next) {
                                     case 0:
                                         _context3.next = 2;
-                                        return (0, _effects.take)(actions.select);
+                                        return (0, _effects.select)(selectors.currentlyRendered);
 
                                     case 2:
+                                        currentlyRenderedPrototype = _context3.sent;
+                                        _context3.next = 5;
+                                        return (0, _effects.take)(actions.select);
+
+                                    case 5:
                                         prototypeName = _context3.sent.payload;
 
+                                        if (!(currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName)) {
+                                            _context3.next = 10;
+                                            break;
+                                        }
 
+                                        (0, _dom.iframeWindow)().location.reload();
+                                        _context3.next = 13;
+                                        break;
+
+                                    case 10:
                                         document.title = 'Monocle: Loading...';
-                                        _context3.next = 6;
+                                        _context3.next = 13;
                                         return (0, _effects.call)(_business.sagas.operation(regeneratorRuntime.mark(function _callee2() {
                                             var renderPrototypesEndpoint, sitePackageKey, renderedPrototype, _ref, title;
 
@@ -12498,7 +12512,7 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
                                             }, _callee2, this);
                                         })));
 
-                                    case 6:
+                                    case 13:
                                     case 'end':
                                         return _context3.stop();
                                 }
@@ -36989,10 +37003,10 @@ var reducer = exports.reducer = function reducer(state, action) {
             return (0, _plowJs.$all)((0, _plowJs.$set)('navigation.isOpen', true), (0, _plowJs.$set)('navigation.currentIndex', -1), state);
 
         case actions.close.toString():
-            return (0, _plowJs.$set)('navigation.isOpen', false, state);
+            return (0, _plowJs.$all)((0, _plowJs.$set)('navigation.isOpen', false), (0, _plowJs.$set)('navigation.currentIndex', -1), state);
 
         case actions.toggle.toString():
-            return (0, _plowJs.$toggle)('navigation.isOpen', state);
+            return (0, _plowJs.$all)((0, _plowJs.$toggle)('navigation.isOpen'), (0, _plowJs.$set)('navigation.currentIndex', -1), state);
 
         case actions.search.toString():
             return (0, _plowJs.$all)((0, _plowJs.$set)('navigation.searchTerm', action.payload), (0, _plowJs.$set)('navigation.currentIndex', -1), state);

@@ -96,28 +96,33 @@ sagas.loadPrototypesOnBootstrap = business.operation(function * () {
 
 sagas.renderPrototypeOnSelect = function * () {
     while (true) { // eslint-disable-line
+        const currentlyRenderedPrototype = (yield select(selectors.currentlyRendered));
         const prototypeName = (yield take(actions.select)).payload;
 
-        document.title = 'Monocle: Loading...';
-        yield call(
-            business.operation(function * () {
-                const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
-                const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
-                const renderedPrototype = yield business.authenticated(
-                    url(renderPrototypesEndpoint, {
-                        queryParams: {prototypeName, sitePackageKey}
-                    })
-                );
+        if (currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName) {
+            iframeWindow().location.reload();
+        } else {
+            document.title = 'Monocle: Loading...';
+            yield call(
+                business.operation(function * () {
+                    const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
+                    const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+                    const renderedPrototype = yield business.authenticated(
+                        url(renderPrototypesEndpoint, {
+                            queryParams: {prototypeName, sitePackageKey}
+                        })
+                    );
 
-                yield put(actions.setCurrentlyRendered(renderedPrototype));
+                    yield put(actions.setCurrentlyRendered(renderedPrototype));
 
-                const {title} = yield select(selectors.currentlySelected);
+                    const {title} = yield select(selectors.currentlySelected);
 
-                document.title = `Monocle: ${title}`;
+                    document.title = `Monocle: ${title}`;
 
-                yield take(actions.ready);
-            })
-        );
+                    yield take(actions.ready);
+                })
+            );
+        }
     }
 };
 

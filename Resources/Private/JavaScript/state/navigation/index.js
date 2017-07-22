@@ -41,10 +41,18 @@ export const reducer = (state, action) => {
             );
 
         case actions.close.toString():
-            return $set('navigation.isOpen', false, state);
+            return $all(
+                $set('navigation.isOpen', false),
+                $set('navigation.currentIndex', -1),
+                state
+            );
 
         case actions.toggle.toString():
-            return $toggle('navigation.isOpen', state);
+            return $all(
+                $toggle('navigation.isOpen'),
+                $set('navigation.currentIndex', -1),
+                state
+            );
 
         case actions.search.toString():
             return $all(
