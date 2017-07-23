@@ -85,7 +85,7 @@ class StyleguideCommandController extends CommandController
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
-        $this->output($typoScriptView->render());
+        $this->output($typoScriptView->renderStyleguidePrototype($prototypeName));
     }
 
     protected function outputData($data, $format)

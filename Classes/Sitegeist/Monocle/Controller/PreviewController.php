@@ -110,7 +110,7 @@ class PreviewController extends ActionController
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
-        $html = $typoScriptView->render();
+        $html = $typoScriptView->renderStyleguidePrototype($prototypeName);
 
         $this->view->assignMultiple([
             'packageKey' => $sitePackageKey,

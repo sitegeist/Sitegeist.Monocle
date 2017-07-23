@@ -189,7 +189,7 @@ class ApiController extends ActionController
         $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
         try {
-            $html = $fusionView->render();
+            $html = $fusionView->renderStyleguidePrototype($prototypeName);
         } catch (\Exception $e) {
             $html = $e->getMessage();
         }
