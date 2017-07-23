@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
-import {$get, $set, $override} from 'plow-js';
+import {$get, $set, $all, $override} from 'plow-js';
 import {take, select, put, call} from 'redux-saga/effects';
 import url from 'build-url';
 
@@ -37,19 +37,35 @@ actions.reload = createAction(
     '@sitegeist/monocle/prototypes/reload'
 );
 
+actions.overrideProp = createAction(
+    '@sitegeist/monocle/prototypes/overrideProp',
+    (name, value) => ({name, value})
+);
+
 export const reducer = (state, action) => {
     switch (action.type) {
         case actions.add.toString():
             return $override('prototypes.byName', action.payload, state);
 
         case actions.clear.toString():
-            return $set('prototypes.byName', {}, state);
+            return $all(
+                $set('prototypes.byName', {}),
+                $set('prototypes.overriddenProps', {}),
+                state
+            );
 
         case actions.select.toString():
-            return $set('prototypes.currentlySelected', action.payload, state);
+            return $all(
+                $set('prototypes.currentlySelected', action.payload),
+                $set('prototypes.overriddenProps', {}),
+                state
+            );
 
         case actions.setCurrentlyRendered.toString():
             return $set('prototypes.currentlyRendered', action.payload, state);
+
+        case actions.overrideProp.toString():
+            return $set(['prototypes', 'overriddenProps', action.payload.name], action.payload.value, state);
 
         default:
             return state;
@@ -73,6 +89,8 @@ selectors.currentlySelected = createSelector(
 );
 
 selectors.currentlyRendered = $get('prototypes.currentlyRendered');
+
+selectors.overriddenProps = $get('prototypes.overriddenProps');
 
 export const sagas = {};
 

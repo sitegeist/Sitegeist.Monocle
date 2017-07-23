@@ -15,7 +15,8 @@ export default env => {
         sites: {},
         breakpoints: {},
         prototypes: {
-            byName: {}
+            byName: {},
+            overriddenProps: {}
         },
         navigation: {
             items: [],

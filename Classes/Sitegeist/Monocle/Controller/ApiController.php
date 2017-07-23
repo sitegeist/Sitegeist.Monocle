@@ -199,6 +199,7 @@ class ApiController extends ActionController
             'renderedHtml' => $html,
             'renderedCode' => $fusionCode,
             'parsedCode' => Yaml::dump($fusionAst, 99),
+            'fusionAst' => $fusionAst,
             'anatomy' => $this->fusionService->getAnatomicalPrototypeTreeFromAstExcerpt($fusionAst)
         ];
 

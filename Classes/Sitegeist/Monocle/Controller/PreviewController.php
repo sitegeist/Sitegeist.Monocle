@@ -97,9 +97,10 @@ class PreviewController extends ActionController
     /**
      * @param  string $prototypeName
      * @param  string $sitePackageKey
+     * @param  array $props
      * @return void
      */
-    public function componentAction($prototypeName, $sitePackageKey)
+    public function componentAction($prototypeName, $sitePackageKey, array $props = [])
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
@@ -110,7 +111,7 @@ class PreviewController extends ActionController
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName);
+        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, '__default', $props);
 
         $this->view->assignMultiple([
             'packageKey' => $sitePackageKey,

@@ -25,7 +25,7 @@ const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
     return result;
 };
 
-@connect(() => {}, {
+@connect(() => ({}), {
     select: actions.prototypes.select
 })
 export default class Anatomy extends PureComponent {

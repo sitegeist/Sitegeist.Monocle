@@ -2754,6 +2754,10 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -3683,6 +3687,12 @@ react-syntax-highlighter@^5.6.1:
     babel-runtime "^6.18.0"
     highlight.js "~9.8.0"
     lowlight "^1.5.0"
+
+react-textarea-autosize@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-5.0.7.tgz#cad511cf1111ab1482fbc8bd679d5d41e8e52b1f"
+  dependencies:
+    prop-types "^15.5.8"
 
 react@^15.5.4:
   version "15.5.4"
