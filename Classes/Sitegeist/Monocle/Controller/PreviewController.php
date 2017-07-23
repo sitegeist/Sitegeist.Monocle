@@ -32,12 +32,6 @@ class PreviewController extends ActionController
 
     /**
      * @var array
-     * @Flow\InjectConfiguration("preview.defaultPath")
-     */
-    protected $defaultPath;
-
-    /**
-     * @var array
      * @Flow\InjectConfiguration("preview.additionalResources")
      */
     protected $additionalResources;
@@ -74,7 +68,6 @@ class PreviewController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $view->assign('defaultPath', $this->defaultPath);
         $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
         $view->assign('metaViewport', $this->metaViewport);
         $this->view->assign('uiSettings', json_encode($this->uiSettings));
@@ -98,13 +91,6 @@ class PreviewController extends ActionController
      * @return void
      */
     public function moduleAction()
-    {
-    }
-
-    /**
-     * @return void
-     */
-    public function iframeAction()
     {
     }
 

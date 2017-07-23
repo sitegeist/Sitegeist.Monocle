@@ -17,7 +17,7 @@ import style from './style.css';
         sites: selectors.sites.all(state)
     };
 }, {
-    selectSite: actions.sites.select
+    selectSite: actions.routing.route
 })
 @withHandlers({
     handleSelectSite: props => siteName => {

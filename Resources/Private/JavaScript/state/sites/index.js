@@ -1,12 +1,15 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
 import {$get, $set, $override} from 'plow-js';
-import {select, put, take, call} from 'redux-saga/effects';
+import {select, put} from 'redux-saga/effects';
 
 import {sagas as business} from '../business';
-import {sagas as prototypes} from '../prototypes';
 
 export const actions = {};
+
+actions.initialized = createAction(
+    '@sitegeist/monocle/sites/initialized'
+);
 
 actions.set = createAction(
     '@sitegeist/monocle/sites/set',
@@ -62,16 +65,9 @@ selectors.currentlySelected = createSelector(
 
 export const sagas = {};
 
-sagas.loadSitePackagesOnBootstrap = business.operation(function * () {
+sagas.load = business.operation(function * () {
     const sitePackagesEndpoint = yield select($get('env.sitePackagesEndpoint'));
     const sites = yield business.authenticated(sitePackagesEndpoint);
 
     yield put(actions.set(sites));
 });
-
-sagas.switchSiteOnSelect = function * () {
-    while (true) { // eslint-disable-line
-        yield take(actions.select);
-        yield call(prototypes.loadPrototypesOnBootstrap);
-    }
-};

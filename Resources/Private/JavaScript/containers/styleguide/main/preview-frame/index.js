@@ -36,14 +36,31 @@ import style from './style.css';
 })
 @visibility
 export default class PreviewFrame extends PureComponent {
+    componentWillReceiveProps(newProps) {
+        const {src} = this.props;
+
+        if (src !== newProps.src && this.iframe) {
+            this.iframe.contentWindow.location.replace(newProps.src);
+        }
+    }
+
+    iframeReference = iframe => {
+        if (iframe) {
+            const {src} = this.props;
+
+            this.iframe = iframe;
+            this.iframe.contentWindow.location.replace(src);
+        }
+    }
+
     render() {
-        const {src, styles, onLoad} = this.props;
+        const {styles, onLoad} = this.props;
 
         return (
             <iframe
                 id="preview-frame"
+                ref={this.iframeReference}
                 className={style.frame}
-                src={src}
                 style={styles}
                 frameBorder="0"
                 onLoad={onLoad}

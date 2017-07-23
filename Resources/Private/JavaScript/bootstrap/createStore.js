@@ -2,7 +2,7 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import immutable from 'seamless-immutable';
 
-import {reducer, sagas} from '../state';
+import {reducer, saga} from '../state';
 
 export default env => {
     const initialState = {
@@ -14,7 +14,9 @@ export default env => {
         },
         sites: {},
         breakpoints: {},
-        prototypes: {},
+        prototypes: {
+            byName: {}
+        },
         navigation: {
             items: [],
             currentIndex: -1,
@@ -47,9 +49,9 @@ export default env => {
     );
 
     //
-    // Run sagas
+    // Run root saga
     //
-    sagas.forEach(sagaMiddleware.run);
+    sagaMiddleware.run(saga);
 
     return store;
 };

@@ -58,6 +58,7 @@
     "@neos-project/react-ui-components": "^4.4.8",
     "babel-polyfill": "^6.23.0",
     "build-url": "^1.0.9",
+    "change-case": "^3.0.1",
     "classnames": "^2.2.5",
     "lodash.omit": "^4.5.0",
     "mousetrap": "^1.6.1",

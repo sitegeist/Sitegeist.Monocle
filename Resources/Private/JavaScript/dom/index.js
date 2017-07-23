@@ -1,14 +1,42 @@
+export const iframe = () => {
+    return document.getElementById('preview-frame');
+};
+
 export const iframeDocument = () => {
-    return document.getElementById('preview-frame').contentDocument;
+    const iframeElement = iframe();
+
+    if (iframeElement) {
+        return iframeElement.contentDocument;
+    }
+
+    return null;
 };
 export const iframeWindow = () => {
-    return document.getElementById('preview-frame').contentWindow;
+    const iframeElement = iframe();
+
+    if (iframeElement) {
+        return iframeElement.contentDocument;
+    }
+
+    return null;
 };
 
 export const find = selector => {
-    return iframeDocument().querySelector(selector);
+    const iframeElementDocument = iframeDocument();
+
+    if (iframeElementDocument) {
+        return iframeElementDocument.querySelector(selector);
+    }
+
+    return null;
 };
 
 export const findAll = selector => {
-    return [].slice.call(iframeDocument().querySelectorAll(selector));
+    const iframeElementDocument = iframeDocument();
+
+    if (iframeElementDocument) {
+        return [].slice.call(iframeDocument().querySelectorAll(selector));
+    }
+
+    return null;
 };

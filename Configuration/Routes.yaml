@@ -24,6 +24,20 @@
   httpMethods: ['GET','POST']
 
 -
+  name:  'Monocle Preview - Module'
+  uriPattern: 'preview/module/{ignore}'
+  routeParts:
+    'ignore':
+      handler: 'Sitegeist\Monocle\Routing\IgnoreRoutePartHandler'
+  defaults:
+    '@package': 'Sitegeist.Monocle'
+    '@subpackage': ''
+    '@action': 'module'
+    '@controller': 'Preview'
+    '@format': 'html'
+  httpMethods: ['GET','POST']
+
+-
   name:  'Monocle Preview'
   uriPattern: 'preview/{@action}'
   defaults:

@@ -76,9 +76,7 @@ selectors.currentlyRendered = $get('prototypes.currentlyRendered');
 
 export const sagas = {};
 
-sagas.loadPrototypesOnBootstrap = business.operation(function * () {
-    document.title = 'Monocle: Loading...';
-
+sagas.load = business.operation(function * () {
     yield put(actions.clear());
     yield put(actions.setCurrentlyRendered(null));
 
@@ -91,7 +89,6 @@ sagas.loadPrototypesOnBootstrap = business.operation(function * () {
     );
 
     yield put(actions.add(prototypes));
-    yield put(actions.select(Object.keys(prototypes)[0]));
 });
 
 sagas.renderPrototypeOnSelect = function * () {
@@ -99,10 +96,9 @@ sagas.renderPrototypeOnSelect = function * () {
         const currentlyRenderedPrototype = (yield select(selectors.currentlyRendered));
         const prototypeName = (yield take(actions.select)).payload;
 
-        if (currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName) {
+        if (currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName && iframeWindow()) {
             iframeWindow().location.reload();
         } else {
-            document.title = 'Monocle: Loading...';
             yield call(
                 business.operation(function * () {
                     const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
@@ -114,11 +110,6 @@ sagas.renderPrototypeOnSelect = function * () {
                     );
 
                     yield put(actions.setCurrentlyRendered(renderedPrototype));
-
-                    const {title} = yield select(selectors.currentlySelected);
-
-                    document.title = `Monocle: ${title}`;
-
                     yield take(actions.ready);
                 })
             );
@@ -129,6 +120,7 @@ sagas.renderPrototypeOnSelect = function * () {
 sagas.reloadIframe = function * () {
     while (true) { // eslint-disable-line
         yield take(actions.reload);
+
         iframeWindow().location.reload();
     }
 };

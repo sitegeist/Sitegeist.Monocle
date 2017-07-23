@@ -9,12 +9,12 @@
 	<body style="padding:0; background-color:#222;">
         <div
             id="app"
-            data-default-path="{defaultPath}"
             data-default-site-package-key="{defaultSitePackageKey}"
             data-ui-settings="{uiSettings}"
 
             data-login-endpoint="{f:uri.action(action: 'authenticate', controller: 'Login', package: 'Neos.Neos', format: 'json', absolute: true)}"
 
+            data-module-uri="{f:uri.action(action:'module', controller:'preview', package:'Sitegeist.Monocle', absolute: true)}"
             data-fullscreen-uri="{f:uri.action(action:'module', controller:'preview', package:'Sitegeist.Monocle', absolute: 1)}"
             data-iframe-uri="{f:uri.action(action:'iframe', controller:'preview', package:'Sitegeist.Monocle')}"
             data-preview-uri="{f:uri.action(action:'component', controller:'preview', package:'Sitegeist.Monocle')}"

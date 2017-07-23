@@ -52,7 +52,7 @@ selectors.currentlySelected = createSelector(
 
 export const sagas = {};
 
-sagas.loadBreakpointsOnBootstrap = business.operation(function * () {
+sagas.load = business.operation(function * () {
     const viewportPresetsEndpoint = yield select($get('env.viewportPresetsEndpoint'));
     const breakpoints = yield business.authenticated(viewportPresetsEndpoint);
 
