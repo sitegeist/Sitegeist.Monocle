@@ -19,7 +19,8 @@
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
-    '@controller' : 'Api'
+    '@controller': 'Api'
+    '@format': 'html'
   httpMethods: ['GET','POST']
 
 -
@@ -28,5 +29,6 @@
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
-    '@controller' : 'Preview'
+    '@controller': 'Preview'
+    '@format': 'html'
   httpMethods: ['GET','POST']
