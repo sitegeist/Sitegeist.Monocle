@@ -1,0 +1,17 @@
+.selector {
+    width: 100%;
+    display: flex;
+    border: 1px solid var(--brandColorsContrastDark);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+.icon {
+    margin-left: .6em;
+}

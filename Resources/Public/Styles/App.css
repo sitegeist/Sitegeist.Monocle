@@ -3369,6 +3369,154 @@
 :root {}
 :root {}
 :root {}
+.style__propSet___DzBSQ {
+    cursor: pointer;
+    color: #FFF;
+    background-color: #323232;
+    padding: 1em;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    border: none;
+}
+.style__propSet___DzBSQ:hover {
+    background-color: #00ADEE;
+}
+
+.style__title___2rpjA {
+    font-size: 120%;
+    display: inline-block;
+    margin-right: .4em;
+}
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+.style__list___1WJzG {
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.style__propSets___2ndcV {
+    max-height: calc(100vh - 2 * 40px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.style__separator___2iDts {
+    margin: 0;
+    border-color: #999;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__selector___1NVWf {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border: 1px solid #3f3f3f;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.style__container___NTyLp {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+.style__icon___10u4y {
+    margin-left: .6em;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__textArea___lvJUq {
     width: 100%;
     height: 40px;
@@ -3413,6 +3561,7 @@
 :root {}
 :root {}
 .style__item___1gG7m {
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
 }

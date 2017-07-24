@@ -80,20 +80,21 @@ class FusionView extends BaseFusionView
         $prototypeConfiguration = $fusionAst['__prototypes'][$prototypeName];
         $styleguideConfiguration = $fusionAst['__prototypes'][$prototypeName]['__meta']['styleguide'];
 
-        if ($propSet === '__default') {
-            if (array_key_exists('props', $styleguideConfiguration)) {
-                $prototypeConfiguration = array_replace_recursive(
-                    $prototypeConfiguration,
-                    $styleguideConfiguration['props']
-                );
-            }
-        } elseif (
-            array_key_exists('props', $styleguideConfiguration) &&
+        if (array_key_exists('props', $styleguideConfiguration)) {
+            $prototypeConfiguration = array_replace_recursive(
+                $prototypeConfiguration,
+                $styleguideConfiguration['props']
+            );
+        }
+
+        if (
+            $propSet !== '__default' &&
+            array_key_exists('propSets', $styleguideConfiguration) &&
             array_key_exists($propSet, $styleguideConfiguration['propSets'])
         ) {
             $prototypeConfiguration = array_replace_recursive(
                 $prototypeConfiguration,
-                $styleguideConfiguration['propSets'][$propSet]
+                $styleguideConfiguration['propSets'][$propSet]['props']
             );
         }
 

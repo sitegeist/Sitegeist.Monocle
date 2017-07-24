@@ -42,6 +42,11 @@ actions.overrideProp = createAction(
     (name, value) => ({name, value})
 );
 
+actions.selectPropSet = createAction(
+    '@sitegeist/monocle/prototypes/selectPropSet',
+    name => name
+);
+
 export const reducer = (state, action) => {
     switch (action.type) {
         case actions.add.toString():
@@ -51,6 +56,7 @@ export const reducer = (state, action) => {
             return $all(
                 $set('prototypes.byName', {}),
                 $set('prototypes.overriddenProps', {}),
+                $set('prototypes.selectedPropSet', ''),
                 state
             );
 
@@ -58,6 +64,7 @@ export const reducer = (state, action) => {
             return $all(
                 $set('prototypes.currentlySelected', action.payload),
                 $set('prototypes.overriddenProps', {}),
+                $set('prototypes.selectedPropSet', ''),
                 state
             );
 
@@ -66,6 +73,9 @@ export const reducer = (state, action) => {
 
         case actions.overrideProp.toString():
             return $set(['prototypes', 'overriddenProps', action.payload.name], action.payload.value, state);
+
+        case actions.selectPropSet.toString():
+            return $set('prototypes.selectedPropSet', action.payload, state);
 
         default:
             return state;
@@ -91,6 +101,8 @@ selectors.currentlySelected = createSelector(
 selectors.currentlyRendered = $get('prototypes.currentlyRendered');
 
 selectors.overriddenProps = $get('prototypes.overriddenProps');
+
+selectors.selectedPropSet = state => $get('prototypes.selectedPropSet', state) || '__default';
 
 export const sagas = {};
 

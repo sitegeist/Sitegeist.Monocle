@@ -13,6 +13,7 @@ import style from './style.css';
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
     const overriddenProps = selectors.prototypes.overriddenProps(state);
+    const selectedPropSet = selectors.prototypes.selectedPropSet(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
     const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
 
@@ -20,6 +21,7 @@ import style from './style.css';
         src: currentlyRenderedPrototype && url(previewUri, {
             queryParams: {
                 prototypeName: currentlyRenderedPrototype.prototypeName,
+                propSet: selectedPropSet,
                 sitePackageKey,
                 ...Object.keys(overriddenProps).reduce((map, propName) => {
                     return {...map, [`props[${propName}]`]: encodeURIComponent(overriddenProps[propName])};
