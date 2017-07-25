@@ -200,6 +200,15 @@ routes to your global Routes.yaml and only enable the monocle-subroutes.
     'MonocleSubroutes':
       package: 'Sitegeist.Monocle'
 ```
+### Fusion 
+
+Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to your needs.
+
+- `Sitegeist.Monocle:Preview.Page` - Renders the preview Frame for a prototype, makes use of the prototypes below to do so
+- `Sitegeist.Monocle:Preview.Prototype` - Render the preview for a single prototype 
+- `Sitegeist.Monocle:Preview.Styles` - Style-tags for for the preview-page based on the setting `Sitegeist.Monocle.preview.additionalResources.styleSheets`
+- `Sitegeist.Monocle:Preview.Scripts` - Script-tags for for the preview-page based on the setting `Sitegeist.Monocle.preview.additionalResources.javaScripts`
+- `Sitegeist.Monocle:Preview.MetaViewport` - MetaViewport tag for the preview-page based on the setting `Sitegeist.Monocle.preview.metaViewport`
 
 ## Installation
 

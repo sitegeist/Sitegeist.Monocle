@@ -59,6 +59,10 @@ Neos:
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
   Neos:
+    fusion:
+      autoInclude:
+        Sitegeist.Monocle: true
+
     modules:
       administration:
         submodules:
