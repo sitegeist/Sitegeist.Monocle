@@ -119,8 +119,9 @@ Sitegeist:
         height: 600
     
     preview:
-      # the path the styleguide will show at start    
-      defaultPath: 'atoms'
+      # the prototype the styleguide will render at start    
+      defaultPrototypeName: 'Vendor.Site:Component.Template.Default'
+      
       # the resources that are loaded in the preview iFrames 
       additionalResources:
         styleSheets:
