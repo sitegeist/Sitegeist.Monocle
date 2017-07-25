@@ -107,12 +107,12 @@ class PreviewController extends ActionController
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
+        $fusionView = new FusionView();
+        $fusionView->setControllerContext($this->getControllerContext());
+        $fusionView->setFusionPath($prototypePreviewRenderPath);
+        $fusionView->setPackageKey($sitePackageKey);
 
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
+        $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props);
 
         $this->view->assignMultiple([
             'packageKey' => $sitePackageKey,
