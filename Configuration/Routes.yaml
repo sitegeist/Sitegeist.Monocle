@@ -25,6 +25,17 @@
 
 -
   name:  'Monocle Preview - Module'
+  uriPattern: 'preview/module'
+  defaults:
+    '@package': 'Sitegeist.Monocle'
+    '@subpackage': ''
+    '@action': 'index'
+    '@controller': 'Module'
+    '@format': 'html'
+  httpMethods: ['GET','POST']
+
+-
+  name:  'Monocle Preview - Module (with ignored url part)'
   uriPattern: 'preview/module/{ignore}'
   routeParts:
     'ignore':
@@ -32,13 +43,13 @@
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
-    '@action': 'module'
-    '@controller': 'Preview'
+    '@action': 'index'
+    '@controller': 'Module'
     '@format': 'html'
   httpMethods: ['GET','POST']
 
 -
-  name:  'Monocle Preview'
+  name:  'Monocle Preview - Prototype'
   uriPattern: 'preview/{@action}'
   defaults:
     '@package': 'Sitegeist.Monocle'

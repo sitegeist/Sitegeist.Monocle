@@ -38,21 +38,9 @@ class PreviewController extends ActionController
 
     /**
      * @var array
-     * @Flow\InjectConfiguration("defaultPrototypeName")
-     */
-    protected $defaultPrototypeName;
-
-    /**
-     * @var array
      * @Flow\InjectConfiguration("preview.metaViewport")
      */
     protected $metaViewport;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("ui")
-     */
-    protected $uiSettings;
 
     /**
      * @Flow\Inject
@@ -74,10 +62,7 @@ class PreviewController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
-        $view->assign('defaultPrototypeName', json_encode($this->defaultPrototypeName));
         $view->assign('metaViewport', $this->metaViewport);
-        $this->view->assign('uiSettings', json_encode($this->uiSettings));
 
         //
         // Resolve resource uris in beforehand
@@ -92,13 +77,6 @@ class PreviewController extends ActionController
                 return $path;
             }, $resourceList);
         }, $this->additionalResources));
-    }
-
-    /**
-     * @return void
-     */
-    public function moduleAction()
-    {
     }
 
     /**
