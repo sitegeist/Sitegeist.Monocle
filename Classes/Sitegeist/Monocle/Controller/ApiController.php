@@ -175,28 +175,14 @@ class ApiController extends ActionController
     {
         $sitePackageKey = $this->getDefaultSitePackageKey();
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-
-        // render html
-        $fusionView = new FusionView();
-        $fusionView->setControllerContext($this->getControllerContext());
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
-        $fusionView->setPackageKey($sitePackageKey);
-
         // render fusion source
         $fusionObjectTree = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
         $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
-        try {
-            $html = $fusionView->renderStyleguidePrototype($prototypeName);
-        } catch (\Exception $e) {
-            $html = $e->getMessage();
-        }
-
         $result = [
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $html,
+            'renderedHtml' => '',
             'renderedCode' => $fusionCode,
             'parsedCode' => Yaml::dump($fusionAst, 99),
             'fusionAst' => $fusionAst,
