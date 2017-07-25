@@ -158,6 +158,8 @@ class ReverseFusionParser
         } else {
             if (is_string($abstractSyntaxTree)) {
                 $result .= $indentation . $valueName . ' = "' . $abstractSyntaxTree . '"' . chr(10);
+            } elseif (is_bool($abstractSyntaxTree)) {
+                $result .= $indentation . $valueName . ' = ' . ($abstractSyntaxTree ? 'true' : 'false') . chr(10);
             } elseif (is_scalar($abstractSyntaxTree)) {
                 $result .= $indentation . $valueName . ' = ' . (string)$abstractSyntaxTree . chr(10);
             } else {
