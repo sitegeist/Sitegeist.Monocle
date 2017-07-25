@@ -18,15 +18,13 @@ use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 
 /**
- * Class PreviewController
+ * Class ModuleController
  * @package Sitegeist\Monocle\Controller
  */
-class PreviewController extends ActionController
+class ModuleController extends ActionController
 {
     use PackageKeyTrait;
 
@@ -47,12 +45,6 @@ class PreviewController extends ActionController
      * @Flow\InjectConfiguration("ui")
      */
     protected $uiSettings;
-
-    /**
-     * @Flow\Inject
-     * @var FusionService
-     */
-    protected $fusionService;
 
     /**
      * @Flow\Inject
@@ -88,29 +80,9 @@ class PreviewController extends ActionController
     }
 
     /**
-     * @param  string $prototypeName
-     * @param  string $sitePackageKey
-     * @param  string $propSet
-     * @param  array $props
      * @return void
      */
-    public function componentAction($prototypeName, $sitePackageKey, $propSet = '__default', array $props = [])
+    public function indexAction()
     {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
-
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
-
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
-
-        $this->view->assignMultiple([
-            'packageKey' => $sitePackageKey,
-            'prototypeName' => $prototypeName,
-            'renderedHtml' => $html
-        ]);
     }
 }
