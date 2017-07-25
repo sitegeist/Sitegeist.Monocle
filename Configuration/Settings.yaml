@@ -1,8 +1,8 @@
 
 Sitegeist:
   Monocle:
-    viewportPresets: {  }
     defaultPrototypeName: {  }
+    viewportPresets: {  }
     ui:
       hotkeys:
         openNavigation: 'ctrl+f'

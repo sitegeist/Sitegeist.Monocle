@@ -1,5 +1,5 @@
 import {$get} from 'plow-js';
-import {take, select, put, call, fork} from 'redux-saga/effects';
+import {select, put, call, fork} from 'redux-saga/effects';
 
 import * as prototypes from './prototypes';
 import * as breakpoints from './breakpoints';

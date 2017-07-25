@@ -38,6 +38,12 @@ class PreviewController extends ActionController
 
     /**
      * @var array
+     * @Flow\InjectConfiguration("defaultPrototypeName")
+     */
+    protected $defaultPrototypeName;
+
+    /**
+     * @var array
      * @Flow\InjectConfiguration("preview.metaViewport")
      */
     protected $metaViewport;
@@ -69,6 +75,7 @@ class PreviewController extends ActionController
     public function initializeView(ViewInterface $view)
     {
         $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
+        $view->assign('defaultPrototypeName', json_encode($this->defaultPrototypeName));
         $view->assign('metaViewport', $this->metaViewport);
         $this->view->assign('uiSettings', json_encode($this->uiSettings));
 
