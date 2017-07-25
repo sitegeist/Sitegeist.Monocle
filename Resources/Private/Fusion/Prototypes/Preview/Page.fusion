@@ -22,6 +22,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Neos:Page) {
             @position = 'after stylesheets'
         }
 
+        neosBackendHeader >
         neosBackendEndpoints >
     }
 
