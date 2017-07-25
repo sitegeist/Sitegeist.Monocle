@@ -2,14 +2,6 @@
 # This has to be added to the main routes .yaml if the default flow routes are not present
 #
 
-# -
-#   name: 'Monocle'
-#   uriPattern: 'sitegeist/monocle/<MonocleSubroutes>'
-#   subRoutes:
-#     'MonocleSubroutes':
-#       package: 'Sitegeist.Monocle'
-
-
 ##
 # Monocle
 

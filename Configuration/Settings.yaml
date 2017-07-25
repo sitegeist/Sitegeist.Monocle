@@ -58,6 +58,10 @@ Neos:
                 pattern: ControllerObjectName
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
+    mvc:
+      routes:
+        'Sitegeist.Monocle': true
+
   Neos:
     modules:
       administration:
