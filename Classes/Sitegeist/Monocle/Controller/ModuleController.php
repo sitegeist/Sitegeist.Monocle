@@ -30,18 +30,6 @@ class ModuleController extends ActionController
 
     /**
      * @var array
-     * @Flow\InjectConfiguration("preview.additionalResources")
-     */
-    protected $additionalResources;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.metaViewport")
-     */
-    protected $metaViewport;
-
-    /**
-     * @var array
      * @Flow\InjectConfiguration("ui")
      */
     protected $uiSettings;
@@ -60,23 +48,8 @@ class ModuleController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
-        $view->assign('metaViewport', $this->metaViewport);
+        $this->view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
         $this->view->assign('uiSettings', json_encode($this->uiSettings));
-
-        //
-        // Resolve resource uris in beforehand
-        //
-        $view->assign('additionalResources', array_map(function ($resourceList) {
-            return array_map(function ($path) {
-                if (strpos($path, 'resource://') === 0) {
-                    list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
-                    return $this->resourceManager->getPublicPackageResourceUri($package, $path);
-                }
-
-                return $path;
-            }, $resourceList);
-        }, $this->additionalResources));
     }
 
     /**

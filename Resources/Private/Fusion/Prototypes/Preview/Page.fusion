@@ -1,0 +1,42 @@
+##
+# Prototype that renders a the document around a preview-prototype
+#
+prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Neos:Page) {
+
+    head {
+        titleTag >
+        titleTag = Neos.Fusion:Tag {
+            content = ${sitePackageKey + '::' + prototypeName}
+        }
+
+        meta = Neos.Fusion:Array {
+            viewport = Sitegeist.Monocle:Preview.MetaViewport
+        }
+
+        stylesheets = Neos.Fusion:Array {
+            main = Sitegeist.Monocle:Preview.Styles
+        }
+
+        javascripts = Neos.Fusion:Array {
+            main = Sitegeist.Monocle:Preview.Scripts
+            @position = 'after stylesheets'
+        }
+
+        neosBackendEndpoints >
+    }
+
+    bodyTag.attributes.class.@process.addNeosBackendClass >
+
+    body >
+    body = Sitegeist.Monocle:Preview.Prototype {
+        sitePackageKey = ${sitePackageKey}
+        prototypeName = ${prototypeName}
+        propSet = ${propSet}
+        props =  ${props}
+    }
+
+    neosBackendDocumentNodeData >
+    neosBackendContainer >
+    lastVisitedNodeScript >
+    neosBackendFooter >
+}

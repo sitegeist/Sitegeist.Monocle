@@ -16,11 +16,12 @@
   httpMethods: ['GET','POST']
 
 -
-  name:  'Monocle Module'
-  uriPattern: 'module/{@action}'
+  name:  'Monocle Preview - Module'
+  uriPattern: 'preview/module'
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
+    '@action': 'index'
     '@controller': 'Module'
     '@format': 'html'
   httpMethods: ['GET','POST']
@@ -34,8 +35,8 @@
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
-    '@action': 'module'
-    '@controller': 'Preview'
+    '@action': 'index'
+    '@controller': 'Module'
     '@format': 'html'
   httpMethods: ['GET','POST']
 

@@ -11,6 +11,7 @@ Sitegeist:
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
     preview:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       metaViewport: ''
       additionalResources:
         styleSheets: {  }
@@ -63,6 +64,10 @@ Neos:
         'Sitegeist.Monocle': true
 
   Neos:
+    fusion:
+      autoInclude:
+        Sitegeist.Monocle: true
+
     modules:
       administration:
         submodules:
@@ -75,3 +80,4 @@ Neos:
             additionalResources:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
+

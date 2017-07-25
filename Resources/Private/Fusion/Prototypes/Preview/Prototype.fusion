@@ -1,0 +1,11 @@
+##
+# Prototype that renders a fusion-prototype as preview with applied props or propSets
+#
+prototype(Sitegeist.Monocle:Preview.Prototype) {
+    @class = 'Sitegeist\\Monocle\\FusionObjects\\PreviewPrototypeImplementation'
+
+    sitePackageKey = null
+    prototypeName = null
+    propSet = '__default'
+    props = null
+}
