@@ -10,6 +10,11 @@ Sitegeist:
         javaScripts: {  }
 Neos:
   Flow:
+    mvc:
+      routes:
+        'Sitegeist.Monocle':
+          position: 'before Neos.Neos'
+
     security:
       authentication:
         providers:
