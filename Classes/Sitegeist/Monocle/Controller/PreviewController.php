@@ -14,13 +14,11 @@ namespace Sitegeist\Monocle\Controller;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Fusion\FusionView;
+use Neos\Flow\Http\Response;
 
 /**
  * Class PreviewController
@@ -31,10 +29,9 @@ class PreviewController extends ActionController
     use PackageKeyTrait;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.additionalResources")
+     * @var string
      */
-    protected $additionalResources;
+    protected $defaultViewObjectName = FusionView::class;
 
     /**
      * @var array
@@ -43,10 +40,10 @@ class PreviewController extends ActionController
     protected $defaultPrototypeName;
 
     /**
-     * @var array
      * @Flow\InjectConfiguration("preview.metaViewport")
+     * @var FusionView
      */
-    protected $metaViewport;
+    protected $view;
 
     /**
      * @var array
@@ -65,6 +62,12 @@ class PreviewController extends ActionController
      * @var ResourceManager
      */
     protected $resourceManager;
+
+    /**
+     * @Flow\InjectConfiguration("preview.fusionRootPath")
+     * @var string
+     */
+    protected $fusionRootPath;
 
     /**
      * Initialize the view
@@ -95,13 +98,6 @@ class PreviewController extends ActionController
     }
 
     /**
-     * @return void
-     */
-    public function moduleAction()
-    {
-    }
-
-    /**
      * @param  string $prototypeName
      * @param  string $sitePackageKey
      * @param  string $propSet
@@ -112,19 +108,47 @@ class PreviewController extends ActionController
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
-
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
-
+        $this->view->setPackageKey($sitePackageKey);
+        $this->view->setFusionPath($this->fusionRootPath);
         $this->view->assignMultiple([
-            'packageKey' => $sitePackageKey,
+            'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $html
+            'propSet' => $propSet,
+            'props' => $props
         ]);
+
+        // get the status and headers from the view
+        $result = $this->view->render();
+        $result = $this->mergeHttpResponseFromOutput($result);
+        return $result;
+    }
+
+    /**
+     * @param string $output
+     * @return string The message body without the message head
+     */
+    protected function mergeHttpResponseFromOutput($output)
+    {
+        if (substr($output, 0, 5) === 'HTTP/') {
+            $endOfHeader = strpos($output, "\r\n\r\n");
+            if ($endOfHeader !== false) {
+                $header = substr($output, 0, $endOfHeader + 4);
+                try {
+                    $renderedResponse = Response::createFromRaw($header);
+
+                    /** @var Response $response */
+                    $response = $this->controllerContext->getResponse();
+                    $response->setStatus($renderedResponse->getStatusCode());
+                    foreach ($renderedResponse->getHeaders()->getAll() as $headerName => $headerValues) {
+                        $response->setHeader($headerName, $headerValues[0]);
+                    }
+
+                    $output = substr($output, strlen($header));
+                } catch (\InvalidArgumentException $exception) {
+                }
+            }
+        }
+
+        return $output;
     }
 }

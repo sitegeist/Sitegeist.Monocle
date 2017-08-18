@@ -2,6 +2,8 @@ privilegeTargets:
   'Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
+    'Sitegeist.Monocle:Styleguide.Module':
+      matcher: 'method(Sitegeist\Monocle\Controller\ModuleController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Preview':
       matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(module|iframe|component)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
@@ -17,6 +19,9 @@ roles:
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
         permission: GRANT
       -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
+        permission: GRANT
+      -
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
         permission: GRANT
 
@@ -30,4 +35,7 @@ roles:
 #        permission: GRANT
 #      -
 #        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
+#        permission: GRANT
+#      -
+#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
 #        permission: GRANT

@@ -80,12 +80,12 @@ class StyleguideCommandController extends CommandController
 
         $sitePackageKey = $this->getDefaultSitePackageKey();
 
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($controllerContext);
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
+        $fusionView = new FusionView();
+        $fusionView->setControllerContext($controllerContext);
+        $fusionView->setFusionPath($prototypePreviewRenderPath);
+        $fusionView->setPackageKey($sitePackageKey);
 
-        $this->output($typoScriptView->renderStyleguidePrototype($prototypeName));
+        $this->output($fusionView->renderStyleguidePrototype($prototypeName));
     }
 
     protected function outputData($data, $format)

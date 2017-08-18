@@ -1,0 +1,12 @@
+##
+# Prototype that renders a meta-viewport tag based on the setting Sitegeist.Monocle.preview.metaViewport
+#
+prototype(Sitegeist.Monocle:Preview.MetaViewport) < prototype(Neos.Fusion:Value) {
+    value = Neos.Fusion:Tag {
+        tagName = 'meta'
+        attributes {
+            name = 'viewport'
+            content = ${Configuration.setting('Sitegeist.Monocle.preview.metaViewport')}
+        }
+    }
+}
