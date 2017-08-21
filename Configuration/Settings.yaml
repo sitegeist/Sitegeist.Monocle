@@ -1,8 +1,8 @@
 
 Sitegeist:
   Monocle:
+    defaultPrototypeName: {  }
     viewportPresets: {  }
-    defaultPrototypeName: ~
     ui:
       hotkeys:
         openNavigation: 'ctrl+f'
@@ -11,7 +11,6 @@ Sitegeist:
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
     preview:
-      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       metaViewport: ''
       additionalResources:
         styleSheets: {  }
@@ -59,15 +58,7 @@ Neos:
                 pattern: ControllerObjectName
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
-    mvc:
-      routes:
-        'Sitegeist.Monocle': true
-
   Neos:
-    fusion:
-      autoInclude:
-        Sitegeist.Monocle: true
-
     modules:
       administration:
         submodules:

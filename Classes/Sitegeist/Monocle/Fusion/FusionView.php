@@ -31,17 +31,6 @@ class FusionView extends BaseFusionView
     protected $fusionService;
 
     /**
-     * Load Fusion from the directories specified by $this->getOption('fusionPathPatterns')
-     *
-     * @return void
-     */
-    protected function loadFusion()
-    {
-        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
-        $this->parsedFusion = $fusionAst;
-    }
-
-    /**
      * @var array
      */
     protected $overriddenPropsPerPrototype = [];
@@ -116,9 +105,7 @@ class FusionView extends BaseFusionView
         $fusionAst['__prototypes'][$prototypeName] = $prototypeConfiguration;
 
         foreach ($fusionAst['__prototypes'] as $otherPrototypeName => &$prototypeConfiguration) {
-            if ($otherPrototypeName === $prototypeName) {
-                continue;
-            }
+            if ($otherPrototypeName === $prototypeName) continue;
 
             if (
                 array_key_exists('__meta', $prototypeConfiguration) &&

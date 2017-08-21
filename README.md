@@ -40,7 +40,13 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
     # the prototype is rendered in the styleguide
     # 
     @styleguide {
-
+        
+        #
+        # Path of the component in the styleguide
+        # Optional: by default the name-part of the component name is used
+        #
+        path = 'Components.Headline'
+        
         #
         # The title of the component
         # Optional:  by default the component name is splitted and reversed  
@@ -60,28 +66,6 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
         props {
             content = 'Hello World'
         }
-        
-        #
-        # Additional propSets can be used to preview-variants for a
-        # prototype. The props of the active propSets will override 
-        # only the specified props while defaults are still in place.  
-        # 
-        propSets {
-            long {
-                label = "Long Text"
-                props {
-                    content = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy "
-                }
-            }
-            
-            word {
-                label = "Single Word Text"
-                props {
-                    content = 'Foobar'
-                }
-            }
-        }
-        
     }
 
     # normal fusion props 
@@ -90,11 +74,11 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
 }
 ```
 
-The styleguide will render the items without the usual context. The ``site``, ``documenNode`` 
+The styleguide will render the items without the usal context. The ``site``, ``documenNode`` 
 and ``node`` context-variables are not present inside the styleguide rendering by intention.
  
 That way it is ensured that your prototypes rely only on the fusion path for rendering and are 
-not affected by editor data. This is important for reliable testing of components. 
+not affected by editor data. This is important for relyable testing of components. 
 
 To map an actual content node on a component-prototype use a separate fusion prototype.  
 
@@ -135,43 +119,32 @@ Sitegeist:
         height: 600
     
     preview:
-      
-      # the prototype the styleguide will render at start    
-      defaultPrototypeName: 'Vendor.Site:Component.Template.Default'
-      
-      # fusion root path that is used to render the frame around the component
-      # the fusion gets the context-variables `sitePackageKey`, `prototypeName`, `
-      # `propSet` and `props and shall render the prototype  
-      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
-      
+      # the path the styleguide will show at start    
+      defaultPath: 'atoms'
       # the resources that are loaded in the preview iFrames 
       additionalResources:
         styleSheets:
           # example:  'resource://Vendor.Site/Public/Styles/Main.css'
         javaScripts:
           # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
-          
-      # patterns to structure the components in the search dialog into 
-      # different groups that are visually seperated by icon and color
-      structure:
-        base:
-          position: 100
-          match: Components?\.Base
-          label: Base
-          icon: icon-minus
-          color: '#AAA'
-
 ```
 
-### Fusion-prototypes
+### Routes
 
-Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to your needs.
- 
-- `Sitegeist.Monocle:Preview.Page` - Renders the preview Frame for a prototype, makes use of the prototypes below to do so
-- `Sitegeist.Monocle:Preview.Prototype` - Render the preview for a prototype 
-- `Sitegeist.Monocle:Preview.Styles` - Style-tags for for the preview-page based on the setting `Sitegeist.Monocle.preview.additionalResources.styleSheets`
-- `Sitegeist.Monocle:Preview.Scripts` - Script-tags for for the preview-page based on the setting `Sitegeist.Monocle.preview.additionalResources.javaScripts`
-- `Sitegeist.Monocle:Preview.MetaViewport` - MetaViewport tag for the preview-page based on the setting `Sitegeist.Monocle.preview.metaViewport`
+If the default flow subroutes are not included in your main Routes.yaml you can add the following
+routes to your global Routes.yaml and only enable the monocle-subroutes.
+
+```YAML
+##
+# Sitegeist.Monocle subroutes
+
+-
+  name: 'Monocle'
+  uriPattern: 'sitegeist/monocle/<MonocleSubroutes>'
+  subRoutes:
+    'MonocleSubroutes':
+      package: 'Sitegeist.Monocle'
+```
 
 ## Installation
 
@@ -184,22 +157,13 @@ We use semantic-versioning so every breaking change will increase the major-vers
 Monocle can be used to render prototypes in isolation for visual regression testing tools. 
 For that you might want to consider the following points. 
 
-### Routing
-
-The default subroutes for the monocle submodule are included automatically via Settings.
-
 ### Policies
-
-By default the monocle modules are made available for the role `Neos.Neos:AbstractEditor`. 
-
-If you want to render the styleguide without authentication the following configuration makes the
-needed endpoints under the path local path `preview/module` available without any authentication 
-and even without a database-connection present.
-
 ```YAML
 #
-# !!! do not use this in production this shoud be used for development and testing only!!!
+# make the monocle endpoints publicly available
+# !!! do not use this in production this shoudl be used on the ci-server only!!!
 #
+
 roles:
   'Neos.Flow:Everybody':
     privileges:
@@ -209,9 +173,7 @@ roles:
       -
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
         permission: GRANT
-      -
-        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
-        permission: GRANT
+
 ```
 
 ### Routes

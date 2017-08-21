@@ -34,5 +34,6 @@ class StyleguideController extends AbstractModuleController
      */
     public function indexAction()
     {
+        $this->view->assign('defaultPath', $this->defaultPath);
     }
 }
