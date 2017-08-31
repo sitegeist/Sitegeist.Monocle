@@ -794,10 +794,23 @@ var saga = exports.saga = regeneratorRuntime.mark(function saga() {
 
                 case 20:
                     listOfPrototypes = _context.sent;
-                    _context.next = 23;
+
+                    if (listOfPrototypes.length) {
+                        _context.next = 25;
+                        break;
+                    }
+
+                    _context.next = 24;
+                    return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            The prototype list is empty. Please check the Root.fusion file in your site package "' + sitePackageKey + '" and\n            make sure your components are included correctly.\n        '));
+
+                case 24:
+                    return _context.abrupt('return');
+
+                case 25:
+                    _context.next = 27;
                     return (0, _effects.select)((0, _plowJs.$get)(['env', 'defaultPrototypeName', sitePackageKey]));
 
-                case 23:
+                case 27:
                     defaultPrototypeName = _context.sent;
                     prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
@@ -805,34 +818,34 @@ var saga = exports.saga = regeneratorRuntime.mark(function saga() {
                     // Fork subsequent sagas
                     //
 
-                    _context.next = 27;
-                    return (0, _effects.fork)(routing.sagas.updateHistoryWhenPrototypeChanges);
-
-                case 27:
-                    _context.next = 29;
-                    return (0, _effects.fork)(prototypes.sagas.renderPrototypeOnSelect);
-
-                case 29:
                     _context.next = 31;
-                    return (0, _effects.fork)(prototypes.sagas.reloadIframe);
+                    return (0, _effects.fork)(routing.sagas.updateHistoryWhenPrototypeChanges);
 
                 case 31:
                     _context.next = 33;
-                    return (0, _effects.fork)(breakpoints.sagas.load);
+                    return (0, _effects.fork)(prototypes.sagas.renderPrototypeOnSelect);
 
                 case 33:
                     _context.next = 35;
-                    return (0, _effects.put)(prototypes.actions.select(prototypeName));
+                    return (0, _effects.fork)(prototypes.sagas.reloadIframe);
 
                 case 35:
                     _context.next = 37;
-                    return (0, _effects.put)(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
+                    return (0, _effects.fork)(breakpoints.sagas.load);
 
                 case 37:
                     _context.next = 39;
-                    return (0, _effects.fork)(routing.sagas.updateStateOnDirectRouting);
+                    return (0, _effects.put)(prototypes.actions.select(prototypeName));
 
                 case 39:
+                    _context.next = 41;
+                    return (0, _effects.put)(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
+
+                case 41:
+                    _context.next = 43;
+                    return (0, _effects.fork)(routing.sagas.updateStateOnDirectRouting);
+
+                case 43:
                 case 'end':
                     return _context.stop();
             }
@@ -32343,6 +32356,10 @@ var _login = __webpack_require__(339);
 
 var _login2 = _interopRequireDefault(_login);
 
+var _errorMessage = __webpack_require__(983);
+
+var _errorMessage2 = _interopRequireDefault(_errorMessage);
+
 __webpack_require__(597);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32377,7 +32394,8 @@ var Styleguide = function (_PureComponent) {
                     _react2.default.createElement(_header2.default, null),
                     _react2.default.createElement(_main2.default, null),
                     _react2.default.createElement(_loader2.default, null),
-                    _react2.default.createElement(_login2.default, null)
+                    _react2.default.createElement(_login2.default, null),
+                    _react2.default.createElement(_errorMessage2.default, null)
                 )
             );
         }
@@ -76188,6 +76206,106 @@ __webpack_require__(187);
 __webpack_require__(294);
 module.exports = __webpack_require__(293);
 
+
+/***/ }),
+/* 983 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dec, _class;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(44);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactRedux = __webpack_require__(17);
+
+var _style = __webpack_require__(984);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ErrorMessage = (_dec = (0, _reactRedux.connect)(function (state) {
+    return {
+        message: Object.values(state.business.errors).join(', '),
+        severity: 'fatal'
+    };
+}), _dec(_class = function (_PureComponent) {
+    _inherits(ErrorMessage, _PureComponent);
+
+    function ErrorMessage() {
+        _classCallCheck(this, ErrorMessage);
+
+        return _possibleConstructorReturn(this, (ErrorMessage.__proto__ || Object.getPrototypeOf(ErrorMessage)).apply(this, arguments));
+    }
+
+    _createClass(ErrorMessage, [{
+        key: 'render',
+        value: function render() {
+            var _mergeClassNames;
+
+            var _props = this.props,
+                title = _props.title,
+                message = _props.message,
+                severity = _props.severity;
+
+
+            return message ? _react2.default.createElement(
+                'div',
+                {
+                    className: (0, _classnames2.default)((_mergeClassNames = {}, _defineProperty(_mergeClassNames, _style2.default.container, true), _defineProperty(_mergeClassNames, _style2.default['severity-' + severity], true), _mergeClassNames))
+                },
+                ['error', 'fatal'].includes(severity) && _react2.default.createElement(
+                    'h1',
+                    null,
+                    'An error occured'
+                ),
+                title && _react2.default.createElement(
+                    'h2',
+                    null,
+                    title
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: _style2.default.message },
+                    message
+                )
+            ) : null;
+        }
+    }]);
+
+    return ErrorMessage;
+}(_react.PureComponent)) || _class);
+exports.default = ErrorMessage;
+
+/***/ }),
+/* 984 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+module.exports = {"container":"style__container___BkWgN","message":"style__message___2iEdT","severity-warning":"style__severity-warning___1nDcZ","severity-error":"style__severity-error___xRMZu","severity-fatal":"style__severity-fatal___25vCu"};
 
 /***/ })
 /******/ ]);

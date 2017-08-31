@@ -5,6 +5,7 @@ import Header from './header';
 import Main from './main';
 import Loader from './loader';
 import Login from './login';
+import ErrorMessage from './error-message';
 
 import './style.css';
 
@@ -19,6 +20,7 @@ export default class Styleguide extends PureComponent {
                     <Main/>
                     <Loader/>
                     <Login/>
+                    <ErrorMessage/>
                 </div>
             </Provider>
         );

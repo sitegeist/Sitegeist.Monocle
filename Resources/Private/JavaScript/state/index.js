@@ -52,6 +52,14 @@ export const saga = function * () {
 
     const listOfPrototypes = yield select(prototypes.selectors.all);
 
+    if (!listOfPrototypes.length) {
+        yield put(business.actions.errorTask('@sitegeist/monocle/bootstrap', `
+            The prototype list is empty. Please check the Root.fusion file in your site package "${sitePackageKey}" and
+            make sure your components are included correctly.
+        `));
+        return;
+    }
+
     const defaultPrototypeName = yield select($get(['env', 'defaultPrototypeName', sitePackageKey]));
     const prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
