@@ -14,14 +14,16 @@ import style from './style.css';
 @withToggableState('isOpen')
 @connect(state => {
     const currentlySelectedSitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
+    const sites = selectors.sites.all(state);
 
     return {
+        hasMultipleSites: sites && Object.keys(sites).length > 1,
         label: currentlySelectedSitePackageKey ? currentlySelectedSitePackageKey : '---'
     };
 })
 export default class SiteSelector extends PureComponent {
     render() {
-        const {isOpen, label, toggleIsOpen} = this.props;
+        const {isOpen, hasMultipleSites, label, toggleIsOpen} = this.props;
 
         return (
             <div className={style.container}>
@@ -29,7 +31,11 @@ export default class SiteSelector extends PureComponent {
                     <Icon icon="globe" className={style.icon}/>
                     {label}
                 </Button>
-                <SiteList isVisible={isOpen} onClickOutside={toggleIsOpen} onSelectSite={toggleIsOpen}/>
+                <SiteList
+                    isVisible={isOpen && hasMultipleSites}
+                    onClickOutside={toggleIsOpen}
+                    onSelectSite={toggleIsOpen}
+                    />
             </div>
         );
     }

@@ -31273,6 +31273,11 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
 
             select(prototypeName);
             close();
+        }, _this.handleToggle = function () {
+            var toggle = _this.props.toggle;
+
+
+            toggle();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -31299,7 +31304,6 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
                 searchTerm = _props.searchTerm,
                 prototypeGroups = _props.prototypeGroups,
                 label = _props.label,
-                toggle = _props.toggle,
                 close = _props.close,
                 search = _props.search;
 
@@ -31312,7 +31316,7 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
                     { className: _style2.default.selector },
                     _react2.default.createElement(
                         _Button2.default,
-                        { onClick: toggle, style: 'clean' },
+                        { onClick: this.handleToggle, style: 'clean' },
                         label
                     )
                 ),
@@ -31687,8 +31691,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 = (0, _reactRedux.connect)(function (state) {
     var currentlySelectedSitePackageKey = _state.selectors.sites.currentlySelectedSitePackageKey(state);
+    var sites = _state.selectors.sites.all(state);
 
     return {
+        hasMultipleSites: sites && Object.keys(sites).length > 1,
         label: currentlySelectedSitePackageKey ? currentlySelectedSitePackageKey : '---'
     };
 }), _dec(_class = _dec2(_class = function (_PureComponent) {
@@ -31705,6 +31711,7 @@ var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 =
         value: function render() {
             var _props = this.props,
                 isOpen = _props.isOpen,
+                hasMultipleSites = _props.hasMultipleSites,
                 label = _props.label,
                 toggleIsOpen = _props.toggleIsOpen;
 
@@ -31718,7 +31725,11 @@ var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 =
                     _react2.default.createElement(_Icon2.default, { icon: 'globe', className: _style2.default.icon }),
                     label
                 ),
-                _react2.default.createElement(_siteList2.default, { isVisible: isOpen, onClickOutside: toggleIsOpen, onSelectSite: toggleIsOpen })
+                _react2.default.createElement(_siteList2.default, {
+                    isVisible: isOpen && hasMultipleSites,
+                    onClickOutside: toggleIsOpen,
+                    onSelectSite: toggleIsOpen
+                })
             );
         }
     }]);

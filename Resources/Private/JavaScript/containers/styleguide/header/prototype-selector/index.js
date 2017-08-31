@@ -50,13 +50,19 @@ export default class PrototypeSelector extends PureComponent {
         close();
     }
 
+    handleToggle = () => {
+        const {toggle} = this.props;
+
+        toggle();
+    }
+
     render() {
-        const {isOpen, searchTerm, prototypeGroups, label, toggle, close, search} = this.props;
+        const {isOpen, searchTerm, prototypeGroups, label, close, search} = this.props;
 
         return (
             <div className={style.container}>
                 <div className={style.selector}>
-                    <Button onClick={toggle} style="clean">{label}</Button>
+                    <Button onClick={this.handleToggle} style="clean">{label}</Button>
                 </div>
                 <PrototypeList
                     searchTerm={searchTerm}
