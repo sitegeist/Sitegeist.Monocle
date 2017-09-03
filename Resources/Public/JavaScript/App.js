@@ -32057,11 +32057,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _recompose = __webpack_require__(34);
 
@@ -32083,7 +32087,7 @@ var Breakpoint = (_dec = (0, _recompose.withHandlers)({
             return props.onClick(props.name);
         };
     }
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(Breakpoint, _PureComponent);
 
     function Breakpoint() {
@@ -32119,7 +32123,11 @@ var Breakpoint = (_dec = (0, _recompose.withHandlers)({
     }]);
 
     return Breakpoint;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    label: _propTypes2.default.string.isRequired,
+    name: _propTypes2.default.string.isRequired,
+    handleClick: _propTypes2.default.func.isRequired
+}, _temp)) || _class);
 exports.default = Breakpoint;
 
 /***/ }),
@@ -32138,11 +32146,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _class;
+var _dec, _dec2, _dec3, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -32181,7 +32193,7 @@ var BreakpointList = (_dec = (0, _components.attached)('right'), _dec2 = (0, _re
             props.onSelectBreakpoint(breakpointName);
         };
     }
-}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = function (_PureComponent) {
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(BreakpointList, _PureComponent);
 
     function BreakpointList() {
@@ -32224,7 +32236,10 @@ var BreakpointList = (_dec = (0, _components.attached)('right'), _dec2 = (0, _re
     }]);
 
     return BreakpointList;
-}(_react.PureComponent)) || _class) || _class) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    breakpoints: _propTypes2.default.object.isRequired,
+    handleSelectBreakpoint: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class) || _class) || _class) || _class);
 exports.default = BreakpointList;
 
 /***/ }),
@@ -32241,11 +32256,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _class;
+var _dec, _dec2, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -32283,7 +32302,7 @@ var BreakpointSelector = (_dec = (0, _components.withToggableState)('isOpen'), _
     return {
         label: currentlySelectedBreakpoint ? currentlySelectedBreakpoint.label : 'Fullscreen'
     };
-}), _dec(_class = _dec2(_class = function (_PureComponent) {
+}), _dec(_class = _dec2(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(BreakpointSelector, _PureComponent);
 
     function BreakpointSelector() {
@@ -32316,7 +32335,11 @@ var BreakpointSelector = (_dec = (0, _components.withToggableState)('isOpen'), _
     }]);
 
     return BreakpointSelector;
-}(_react.PureComponent)) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    label: _propTypes2.default.string.isRequired,
+    isOpen: _propTypes2.default.bool.isRequired,
+    toggleIsOpen: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class);
 exports.default = BreakpointSelector;
 
 /***/ }),

@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
@@ -20,6 +21,12 @@ import style from './style.css';
     };
 })
 export default class BreakpointSelector extends PureComponent {
+    static propTypes = {
+        label: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        toggleIsOpen: PropTypes.func.isRequired
+    };
+
     render() {
         const {label, isOpen, toggleIsOpen} = this.props;
 

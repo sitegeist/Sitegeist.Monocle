@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withHandlers} from 'recompose';
 
@@ -26,6 +27,11 @@ import style from './style.css';
     }
 })
 export default class BreakpointList extends PureComponent {
+    static propTypes = {
+        breakpoints: PropTypes.object.isRequired,
+        handleSelectBreakpoint: PropTypes.func.isRequired
+    };
+
     render() {
         const {breakpoints, handleSelectBreakpoint} = this.props;
 

@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 
 import style from './style.css';
@@ -7,6 +8,12 @@ import style from './style.css';
     handleClick: props => () => props.onClick(props.name)
 })
 export default class Breakpoint extends PureComponent {
+    static propTypes = {
+        label: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        handleClick: PropTypes.func.isRequired
+    };
+
     render() {
         const {label, name, handleClick} = this.props;
 
