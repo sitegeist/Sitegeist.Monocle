@@ -33554,11 +33554,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _dec, _class;
+var _dec, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -33619,7 +33623,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     };
 }, {
     onLoad: _state.actions.prototypes.ready
-}), _dec(_class = (0, _components.visibility)(_class = function (_PureComponent) {
+}), _dec(_class = (0, _components.visibility)(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(PreviewFrame, _PureComponent);
 
     function PreviewFrame() {
@@ -33667,6 +33671,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
 
 
             return _react2.default.createElement('iframe', {
+                role: 'presentation',
                 id: 'preview-frame',
                 ref: this.iframeReference,
                 className: _style2.default.frame,
@@ -33678,7 +33683,11 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     }]);
 
     return PreviewFrame;
-}(_react.PureComponent)) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    src: _propTypes2.default.string.isRequired,
+    styles: _propTypes2.default.object,
+    onLoad: _propTypes2.default.func.isRequired
+}, _temp2)) || _class) || _class);
 exports.default = PreviewFrame;
 
 /***/ }),

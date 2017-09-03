@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {$get} from 'plow-js';
 import url from 'build-url';
@@ -43,6 +44,12 @@ import style from './style.css';
 })
 @visibility
 export default class PreviewFrame extends PureComponent {
+    static propTypes = {
+        src: PropTypes.string.isRequired,
+        styles: PropTypes.object,
+        onLoad: PropTypes.func.isRequired
+    };
+
     updateSrc = debounce(src => {
         if (this.iframe) {
             this.iframe.contentWindow.location.replace(src);
@@ -71,6 +78,7 @@ export default class PreviewFrame extends PureComponent {
 
         return (
             <iframe
+                role="presentation"
                 id="preview-frame"
                 ref={this.iframeReference}
                 className={style.frame}
