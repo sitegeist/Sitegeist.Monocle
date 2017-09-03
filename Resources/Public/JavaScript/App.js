@@ -31276,11 +31276,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _class;
+var _dec, _dec2, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -31330,7 +31334,7 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
     close: _state.actions.navigation.close,
     search: _state.actions.navigation.search,
     select: _state.actions.prototypes.select
-}), _dec(_class = _dec2(_class = function (_PureComponent) {
+}), _dec(_class = _dec2(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(PrototypeSelector, _PureComponent);
 
     function PrototypeSelector() {
@@ -31412,7 +31416,16 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
     }]);
 
     return PrototypeSelector;
-}(_react.PureComponent)) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    toggle: _propTypes2.default.func.isRequired,
+    select: _propTypes2.default.func.isRequired,
+    close: _propTypes2.default.func.isRequired,
+    isOpen: _propTypes2.default.bool.isRequired,
+    searchTerm: _propTypes2.default.string.isRequired,
+    prototypeGroups: _propTypes2.default.object.isRequired,
+    label: _propTypes2.default.string.isRequired,
+    search: _propTypes2.default.func.isRequired
+}, _temp2)) || _class) || _class);
 exports.default = PrototypeSelector;
 
 /***/ }),
@@ -31431,19 +31444,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(15);
+var _propTypes = __webpack_require__(115);
 
-var _recompose = __webpack_require__(34);
-
-var _mousetrap = __webpack_require__(167);
-
-var _mousetrap2 = _interopRequireDefault(_mousetrap);
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _TextInput = __webpack_require__(126);
 
@@ -31467,7 +31476,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PrototypeList = (_dec = (0, _components.attached)(), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = function (_PureComponent) {
+var PrototypeList = (_dec = (0, _components.attached)(), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(PrototypeList, _PureComponent);
 
     function PrototypeList() {
@@ -31509,7 +31518,12 @@ var PrototypeList = (_dec = (0, _components.attached)(), (0, _components.visibil
     }]);
 
     return PrototypeList;
-}(_react.PureComponent)) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    searchTerm: _propTypes2.default.string.isRequired,
+    prototypeGroups: _propTypes2.default.object.isRequired,
+    onChangeSearchTerm: _propTypes2.default.func.isRequired,
+    onSelectPrototype: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class) || _class);
 exports.default = PrototypeList;
 
 /***/ }),
@@ -31528,9 +31542,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _class, _temp;
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _prototype = __webpack_require__(328);
 
@@ -31548,7 +31568,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PrototypeGroup = function (_PureComponent) {
+var PrototypeGroup = (_temp = _class = function (_PureComponent) {
     _inherits(PrototypeGroup, _PureComponent);
 
     function PrototypeGroup() {
@@ -31562,8 +31582,6 @@ var PrototypeGroup = function (_PureComponent) {
         value: function render() {
             var _props = this.props,
                 label = _props.label,
-                icon = _props.icon,
-                color = _props.color,
                 prototypes = _props.prototypes,
                 onSelectPrototype = _props.onSelectPrototype;
 
@@ -31584,8 +31602,11 @@ var PrototypeGroup = function (_PureComponent) {
     }]);
 
     return PrototypeGroup;
-}(_react.PureComponent);
-
+}(_react.PureComponent), _class.propTypes = {
+    label: _propTypes2.default.string.isRequired,
+    prototypes: _propTypes2.default.object.isRequired,
+    onSelectPrototype: _propTypes2.default.func.isRequired
+}, _temp);
 exports.default = PrototypeGroup;
 
 /***/ }),
@@ -31602,11 +31623,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _recompose = __webpack_require__(34);
 
@@ -31638,7 +31663,7 @@ var Prototype = (_dec = (0, _recompose.withHandlers)({
             return props.onClick(props.name);
         };
     }
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(Prototype, _PureComponent);
 
     function Prototype() {
@@ -31715,7 +31740,16 @@ var Prototype = (_dec = (0, _recompose.withHandlers)({
     }]);
 
     return Prototype;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    title: _propTypes2.default.string.isRequired,
+    name: _propTypes2.default.string.isRequired,
+    isFocused: _propTypes2.default.bool.isRequired,
+    handleClick: _propTypes2.default.func.isRequired,
+    structure: _propTypes2.default.shape({
+        color: _propTypes2.default.string.isRequired,
+        icon: _propTypes2.default.string.isRequired
+    })
+}, _temp2)) || _class);
 exports.default = Prototype;
 
 /***/ }),

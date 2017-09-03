@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import mousetrap from 'mousetrap';
 
@@ -32,6 +33,17 @@ import style from './style.css';
     select: actions.prototypes.select
 })
 export default class PrototypeSelector extends PureComponent {
+    static propTypes = {
+        toggle: PropTypes.func.isRequired,
+        select: PropTypes.func.isRequired,
+        close: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        searchTerm: PropTypes.string.isRequired,
+        prototypeGroups: PropTypes.object.isRequired,
+        label: PropTypes.string.isRequired,
+        search: PropTypes.func.isRequired
+    };
+
     componentDidMount() {
         mousetrap.bind('ctrl+f', e => {
             e.preventDefault();

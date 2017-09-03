@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 import mergeClassNames from 'classnames';
 
@@ -10,6 +11,17 @@ import style from './style.css';
     handleClick: props => () => props.onClick(props.name)
 })
 export default class Prototype extends PureComponent {
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        isFocused: PropTypes.bool.isRequired,
+        handleClick: PropTypes.func.isRequired,
+        structure: PropTypes.shape({
+            color: PropTypes.string.isRequired,
+            icon: PropTypes.string.isRequired
+        })
+    };
+
     setIconColor = el => {
         if (el) {
             this.el = el;

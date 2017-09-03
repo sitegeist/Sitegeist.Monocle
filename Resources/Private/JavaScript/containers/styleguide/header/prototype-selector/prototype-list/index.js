@@ -1,7 +1,5 @@
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
-import {withState, withHandlers} from 'recompose';
-import mousetrap from 'mousetrap';
+import PropTypes from 'prop-types';
 
 import TextInput from '@neos-project/react-ui-components/lib/TextInput';
 
@@ -15,6 +13,13 @@ import style from './style.css';
 @outside
 @attached()
 export default class PrototypeList extends PureComponent {
+    static propTypes = {
+        searchTerm: PropTypes.string.isRequired,
+        prototypeGroups: PropTypes.object.isRequired,
+        onChangeSearchTerm: PropTypes.func.isRequired,
+        onSelectPrototype: PropTypes.func.isRequired
+    };
+
     render() {
         const {searchTerm, prototypeGroups, onChangeSearchTerm, onSelectPrototype} = this.props;
 
