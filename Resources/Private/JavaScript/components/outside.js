@@ -7,7 +7,7 @@ export default Component => {
     const outside = props => (
         <div>
             <div
-                role="button"
+                role="presentation"
                 className={style.outside}
                 onClick={props.onClickOutside ? props.onClickOutside : () => {}}
                 />

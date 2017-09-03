@@ -30822,7 +30822,7 @@ exports.default = function (Component) {
             'div',
             null,
             _react2.default.createElement('div', {
-                role: 'button',
+                role: 'presentation',
                 className: _outside2.default.outside,
                 onClick: props.onClickOutside ? props.onClickOutside : function () {}
             }),
@@ -30858,6 +30858,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _recompose = __webpack_require__(34);
 
 var _Button = __webpack_require__(43);
@@ -30890,7 +30894,7 @@ exports.default = function (_ref) {
         _ref$toggleHandleClas = _ref.toggleHandleClassName,
         toggleHandleClassName = _ref$toggleHandleClas === undefined ? '' : _ref$toggleHandleClas;
     return function (Component) {
-        var _dec, _dec2, _dec3, _dec4, _class;
+        var _dec, _dec2, _dec3, _dec4, _class, _class2, _temp;
 
         return _dec = (0, _recompose.withState)('height', 'setHeight', initialHeight), _dec2 = (0, _recompose.withState)('isDragging', 'setIsDragging', false), _dec3 = (0, _recompose.withState)('isCollapsed', 'setIsCollapsed', isCollapsed), _dec4 = (0, _recompose.withHandlers)({
             startDrag: function startDrag(_ref2) {
@@ -30921,7 +30925,7 @@ exports.default = function (_ref) {
                     return setIsCollapsed(!isCollapsed);
                 };
             }
-        }), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = function (_PureComponent) {
+        }), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (_temp = _class2 = function (_PureComponent) {
             _inherits(_class, _PureComponent);
 
             function _class() {
@@ -30949,8 +30953,17 @@ exports.default = function (_ref) {
                             style: { height: isCollapsed ? collapsedHeight : height, minHeight: collapsedHeight },
                             className: _resizable2.default.resizable
                         },
-                        isDragging && _react2.default.createElement('div', { className: _resizable2.default.overlay, onMouseUp: stopDrag, onMouseMove: drag }),
-                        _react2.default.createElement('div', { className: _resizable2.default.handle, onMouseDown: startDrag }),
+                        isDragging && _react2.default.createElement('div', {
+                            role: 'presentation',
+                            className: _resizable2.default.overlay,
+                            onMouseUp: stopDrag,
+                            onMouseMove: drag
+                        }),
+                        _react2.default.createElement('div', {
+                            role: 'presentation',
+                            className: _resizable2.default.handle,
+                            onMouseDown: startDrag
+                        }),
                         _react2.default.createElement(
                             _Button2.default,
                             { className: toggleHandleClassName, onClick: toggle, style: 'clean' },
@@ -30962,7 +30975,15 @@ exports.default = function (_ref) {
             }]);
 
             return _class;
-        }(_react.PureComponent)) || _class) || _class) || _class) || _class;
+        }(_react.PureComponent), _class2.propTypes = {
+            height: _propTypes2.default.number.isRequired,
+            isDragging: _propTypes2.default.bool.isRequired,
+            isCollapsed: _propTypes2.default.bool.isRequired,
+            startDrag: _propTypes2.default.func.isRequired,
+            drag: _propTypes2.default.func.isRequired,
+            stopDrag: _propTypes2.default.func.isRequired,
+            toggle: _propTypes2.default.func.isRequired
+        }, _temp)) || _class) || _class) || _class) || _class;
     };
 };
 
