@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
@@ -12,6 +13,10 @@ import style from './style.css';
     reload: actions.prototypes.reload
 })
 export default class ReloadTrigger extends PureComponent {
+    static propTypes = {
+        reload: PropTypes.func.isRequied
+    };
+
     render() {
         const {reload} = this.props;
 
