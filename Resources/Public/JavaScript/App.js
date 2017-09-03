@@ -30806,6 +30806,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _outside = __webpack_require__(570);
 
 var _outside2 = _interopRequireDefault(_outside);
@@ -30813,11 +30817,15 @@ var _outside2 = _interopRequireDefault(_outside);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (Component) {
-    return function (props) {
+    var outside = function outside(props) {
         return _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement('div', { className: _outside2.default.outside, onClick: props.onClickOutside ? props.onClickOutside : function () {} }),
+            _react2.default.createElement('div', {
+                role: 'button',
+                className: _outside2.default.outside,
+                onClick: props.onClickOutside ? props.onClickOutside : function () {}
+            }),
             _react2.default.createElement(
                 'div',
                 { className: _outside2.default.inside },
@@ -30825,6 +30833,12 @@ exports.default = function (Component) {
             )
         );
     };
+
+    outside.propTypes = {
+        onClickOutside: _propTypes2.default.func
+    };
+
+    return outside;
 };
 
 /***/ }),
