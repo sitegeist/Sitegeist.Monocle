@@ -61,6 +61,10 @@ export const reducer = (state, action) => {
             );
 
         case actions.select.toString():
+            if (!$get(['prototypes', 'byName', action.payload], state)) {
+                throw new Error(`Prototype "${action.payload}" does not exists and cannot be selected.`);
+            }
+
             return $all(
                 $set('prototypes.currentlySelected', action.payload),
                 $set('prototypes.overriddenProps', {}),

@@ -63,6 +63,14 @@ export const saga = function * () {
     const defaultPrototypeName = yield select($get(['env', 'defaultPrototypeName', sitePackageKey]));
     const prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
+    if (!prototypeName) {
+        yield put(business.actions.errorTask('@sitegeist/monocle/bootstrap', `
+            Could not determine default prototypeName. Please make sure to have a defaultPrototypeName configured
+            for your site package.
+        `));
+        return;
+    }
+
     //
     // Fork subsequent sagas
     //
@@ -71,7 +79,14 @@ export const saga = function * () {
     yield fork(prototypes.sagas.reloadIframe);
     yield fork(breakpoints.sagas.load);
 
-    yield put(prototypes.actions.select(prototypeName));
+    try {
+        yield put.sync(prototypes.actions.select(prototypeName));
+    } catch (err) {
+        yield put(business.actions.errorTask('@sitegeist/monocle/bootstrap', `
+            Could not select default Prototype: ${err.message}
+        `));
+        return;
+    }
 
     yield put(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
 

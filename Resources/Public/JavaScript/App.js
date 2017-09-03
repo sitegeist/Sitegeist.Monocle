@@ -814,43 +814,65 @@ var saga = exports.saga = regeneratorRuntime.mark(function saga() {
                     defaultPrototypeName = _context.sent;
                     prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
-                    //
-                    // Fork subsequent sagas
-                    //
+                    if (prototypeName) {
+                        _context.next = 33;
+                        break;
+                    }
 
-                    _context.next = 31;
-                    return (0, _effects.fork)(routing.sagas.updateHistoryWhenPrototypeChanges);
+                    _context.next = 32;
+                    return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            Could not determine default prototypeName. Please make sure to have a defaultPrototypeName configured\n            for your site package.\n        '));
 
-                case 31:
-                    _context.next = 33;
-                    return (0, _effects.fork)(prototypes.sagas.renderPrototypeOnSelect);
+                case 32:
+                    return _context.abrupt('return');
 
                 case 33:
                     _context.next = 35;
-                    return (0, _effects.fork)(prototypes.sagas.reloadIframe);
+                    return (0, _effects.fork)(routing.sagas.updateHistoryWhenPrototypeChanges);
 
                 case 35:
                     _context.next = 37;
-                    return (0, _effects.fork)(breakpoints.sagas.load);
+                    return (0, _effects.fork)(prototypes.sagas.renderPrototypeOnSelect);
 
                 case 37:
                     _context.next = 39;
-                    return (0, _effects.put)(prototypes.actions.select(prototypeName));
+                    return (0, _effects.fork)(prototypes.sagas.reloadIframe);
 
                 case 39:
                     _context.next = 41;
-                    return (0, _effects.put)(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
+                    return (0, _effects.fork)(breakpoints.sagas.load);
 
                 case 41:
-                    _context.next = 43;
+                    _context.prev = 41;
+                    _context.next = 44;
+                    return _effects.put.sync(prototypes.actions.select(prototypeName));
+
+                case 44:
+                    _context.next = 51;
+                    break;
+
+                case 46:
+                    _context.prev = 46;
+                    _context.t0 = _context['catch'](41);
+                    _context.next = 50;
+                    return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            Could not select default Prototype: ' + _context.t0.message + '\n        '));
+
+                case 50:
+                    return _context.abrupt('return');
+
+                case 51:
+                    _context.next = 53;
+                    return (0, _effects.put)(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
+
+                case 53:
+                    _context.next = 55;
                     return (0, _effects.fork)(routing.sagas.updateStateOnDirectRouting);
 
-                case 43:
+                case 55:
                 case 'end':
                     return _context.stop();
             }
         }
-    }, saga, this);
+    }, saga, this, [[41, 46]]);
 });
 
 /***/ }),
@@ -10991,6 +11013,10 @@ var reducer = exports.reducer = function reducer(state, action) {
             return (0, _plowJs.$all)((0, _plowJs.$set)('prototypes.byName', {}), (0, _plowJs.$set)('prototypes.overriddenProps', {}), (0, _plowJs.$set)('prototypes.selectedPropSet', ''), state);
 
         case actions.select.toString():
+            if (!(0, _plowJs.$get)(['prototypes', 'byName', action.payload], state)) {
+                throw new Error('Prototype "' + action.payload + '" does not exists and cannot be selected.');
+            }
+
             return (0, _plowJs.$all)((0, _plowJs.$set)('prototypes.currentlySelected', action.payload), (0, _plowJs.$set)('prototypes.overriddenProps', {}), (0, _plowJs.$set)('prototypes.selectedPropSet', ''), state);
 
         case actions.setCurrentlyRendered.toString():
