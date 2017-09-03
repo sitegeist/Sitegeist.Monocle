@@ -34,6 +34,6 @@ export default class PropsItem extends PureComponent {
                     <TextInput id={`prop-${name}`} value={value} onChange={this.handleChange}/>
                 }
             </div>
-        )
+        );
     }
 }
