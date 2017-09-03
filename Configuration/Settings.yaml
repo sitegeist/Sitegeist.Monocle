@@ -1,13 +1,52 @@
 
 Sitegeist:
   Monocle:
+    defaultPrototypeName: {  }
     viewportPresets: {  }
+    ui:
+      hotkeys:
+        openNavigation: 'ctrl+f'
+        closeNavigation: 'esc'
+        navigateUp: 'up'
+        navigateDown: 'down'
+        openPreviewInNewWindow: 'ctrl+space'
     preview:
-      defaultPath: atoms.basic
       metaViewport: ''
       additionalResources:
         styleSheets: {  }
         javaScripts: {  }
+      structure:
+        base:
+          position: 100
+          match: Components?\.Base
+          label: Base
+          icon: icon-minus
+          color: '#AAA'
+        atoms:
+          position: 200
+          match: Components?\.Atom
+          label: Atoms
+          icon: icon-gear
+          color: '#4DBCE9'
+        molecules:
+          position: 300
+          match: Components?\.Molecule
+          label: Molecules
+          icon: icon-gears
+          color: '#26ADE4'
+        organisms:
+          position: 400
+          match: Components?\.Organism
+          label: Organisms
+          icon: icon-certificate
+          color: '#D1E751'
+        templates:
+          position: 500
+          match: Components?\.Template
+          label: Templates
+          icon: icon-file
+          color: '#FFF'
+
 Neos:
   Flow:
     security:

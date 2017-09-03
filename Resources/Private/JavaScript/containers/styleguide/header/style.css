@@ -1,0 +1,8 @@
+.bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section {
+    flex-basis: 0;
+}

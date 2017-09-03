@@ -14,10 +14,13 @@ namespace Sitegeist\Monocle\Command;
  */
 
 use Sitegeist\Monocle\Fusion\FusionService;
+use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
 use Neos\Flow\Package\PackageManagerInterface;
 use Symfony\Component\Yaml\Yaml;
+use Sitegeist\Monocle\Service\DummyControllerContextTrait;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 
 /**
  * Class StyleguideCommandController
@@ -25,12 +28,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class StyleguideCommandController extends CommandController
 {
-
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
+    use DummyControllerContextTrait, PackageKeyTrait;
 
     /**
      * @var array
@@ -61,14 +59,33 @@ class StyleguideCommandController extends CommandController
      */
     public function itemsCommand($format = 'json')
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->outputData($styleguideObjects, $format);
+    }
+
+    /**
+     * Render a given fusion component to HTML
+     *
+     * @param string $prototypeName The prototype name of the component
+     * @return void
+     */
+    public function renderCommand($prototypeName)
+    {
+        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
+        $controllerContext = $this->createDummyControllerContext();
+
+        $sitePackageKey = $this->getDefaultSitePackageKey();
+
+        $typoScriptView = new FusionView();
+        $typoScriptView->setControllerContext($controllerContext);
+        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
+        $typoScriptView->setPackageKey($sitePackageKey);
+
+        $this->output($typoScriptView->renderStyleguidePrototype($prototypeName));
     }
 
     protected function outputData($data, $format)

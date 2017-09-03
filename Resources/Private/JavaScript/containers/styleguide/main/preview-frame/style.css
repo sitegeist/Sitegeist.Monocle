@@ -1,0 +1,8 @@
+.frame {
+    position: relative;
+    flex-grow: 1;
+    flex-basis: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width .3s, transform .3s;
+}

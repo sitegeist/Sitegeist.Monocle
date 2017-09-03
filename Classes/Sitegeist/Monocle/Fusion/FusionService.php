@@ -82,6 +82,46 @@ class FusionService extends NeosFusionService
     }
 
     /**
+     * Get anatomical prototype tree from fusion AST excerpt
+     *
+     * @param array $fusionAstExcerpt
+     * @return array
+     */
+    public function getAnatomicalPrototypeTreeFromAstExcerpt($fusionAstExcerpt)
+    {
+        $result = [];
+
+        if (!is_array($fusionAstExcerpt)) {
+            return $result;
+        }
+
+        foreach ($fusionAstExcerpt as $key => $value) {
+            if (substr($key, 0, 2) === '__') {
+                continue;
+            }
+
+            $anatomy = $this->getAnatomicalPrototypeTreeFromAstExcerpt($value);
+
+            if (array_key_exists('prototypeName', $anatomy)) {
+                if ($anatomy['prototypeName'] !== null) {
+                    $result[] = $anatomy;
+                }
+            } else {
+                $result = array_merge($result, $anatomy);
+            }
+        }
+
+        if (!array_key_exists('__objectType', $fusionAstExcerpt)) {
+            return $result;
+        } else {
+            return [
+                'prototypeName' => $fusionAstExcerpt['__objectType'],
+                'children' => $result
+            ];
+        }
+    }
+
+    /**
      * Add styleguide rendering configuration to the fusion-ast
      *
      * @param array $fusionAst
@@ -101,7 +141,7 @@ class FusionService extends NeosFusionService
             }
         }
 
-         // create rendering prototypes with dummy data
+        // create rendering prototypes with dummy data
         foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
             $renderPrototypeTypoScript = [
                 '__objectType' => $prototypeName,

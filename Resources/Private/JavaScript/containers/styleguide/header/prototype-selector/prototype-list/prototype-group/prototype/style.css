@@ -1,0 +1,32 @@
+.prototype {
+    cursor: pointer;
+    color: var(--brandColorsContrastBrightest);
+    background-color: var(--brandColorsContrastNeutral);
+    padding: 1em;
+    width: 100%;
+    text-align: left;
+    font-size: var(--baseFontSize);
+    border: none;
+    display: flex;
+}
+.prototype i {
+    font-size: 2rem;
+    margin-right: var(--baseFontSize);
+}
+.prototype:hover,
+.isFocused {
+    background-color: var(--brandColorsPrimaryBlue);
+}
+
+.title {
+    font-size: 120%;
+}
+
+.name {
+    font-size: 80%;
+    color: var(--brandColorsContrastBright);
+}
+.prototype:hover .name,
+.isFocused .name {
+    color: var(--brandColorsContrastBrightest);
+}

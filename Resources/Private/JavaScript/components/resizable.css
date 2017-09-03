@@ -1,0 +1,19 @@
+.handle {
+    width: 100%;
+    max-height: calc(100vh - var(--goldenUnit));
+    border-bottom: 3px solid gray;
+    cursor: row-resize;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2000;
+}
+
+.resizable {
+    overflow: hidden;
+}

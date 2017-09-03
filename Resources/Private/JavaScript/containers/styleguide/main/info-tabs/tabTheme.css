@@ -1,0 +1,6 @@
+.tabNavigation__item--isActive {
+    background-color: #00ADEE;
+    > .tabNavigation__itemBtn {
+        color: #fff;
+    }
+}

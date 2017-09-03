@@ -20,6 +20,7 @@ use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -28,17 +29,12 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ApiController extends ActionController
 {
+    use PackageKeyTrait;
 
     /**
      * @var array
      */
     protected $defaultViewObjectName = 'Neos\Flow\Mvc\View\JsonView';
-
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
 
     /**
      * @Flow\Inject
@@ -65,21 +61,63 @@ class ApiController extends ActionController
     protected $additionalResources;
 
     /**
+     * @var array
+     * @Flow\InjectConfiguration("preview.structure")
+     */
+    protected $structure;
+
+    /**
      * Get all styleguide objects
      *
      * @Flow\SkipCsrfProtection
+     * @param string $sitePackageKey
      * @return void
      */
-    public function styleguideObjectsAction()
+    public function styleguideObjectsAction($sitePackageKey)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
+        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
+            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeName);
+        }
+
         $this->view->assign('value', $styleguideObjects);
+    }
+
+    protected function getStructureForPrototypeName($prototypeName)
+    {
+        foreach ($this->structure as $structure) {
+            if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
+                return $structure;
+            }
+        }
+
+        return [
+            'label' => 'Other',
+            'icon' => 'icon-question',
+            'color' => 'white'
+        ];
+    }
+
+    /**
+     * Get all site packages
+     *
+     * @Flow\SkipCsrfProtection
+     * @return void
+     */
+    public function sitePackagesAction()
+    {
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $result = [];
+
+        foreach ($sitePackages as $sitePackage) {
+            $result[$sitePackage->getPackageKey()] = $sitePackage->getPackageKey();
+        }
+
+        $this->view->assign('value', $result);
     }
 
     /**
@@ -130,13 +168,12 @@ class ApiController extends ActionController
      *
      * @Flow\SkipCsrfProtection
      * @param string $prototypeName
+     * @param string $sitePackageKey
      * @return void
      */
-    public function renderPrototypeAction($prototypeName)
+    public function renderPrototypeAction($prototypeName, $sitePackageKey)
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
@@ -152,7 +189,7 @@ class ApiController extends ActionController
         $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
         try {
-            $html = $fusionView->render();
+            $html = $fusionView->renderStyleguidePrototype($prototypeName);
         } catch (\Exception $e) {
             $html = $e->getMessage();
         }
@@ -161,7 +198,9 @@ class ApiController extends ActionController
             'prototypeName' => $prototypeName,
             'renderedHtml' => $html,
             'renderedCode' => $fusionCode,
-            'parsedCode' => Yaml::dump($fusionAst, 99)
+            'parsedCode' => Yaml::dump($fusionAst, 99),
+            'fusionAst' => $fusionAst,
+            'anatomy' => $this->fusionService->getAnatomicalPrototypeTreeFromAstExcerpt($fusionAst)
         ];
 
         $this->view->assign('value', $result);

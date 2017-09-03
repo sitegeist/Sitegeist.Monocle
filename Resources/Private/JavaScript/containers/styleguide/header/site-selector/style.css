@@ -1,0 +1,9 @@
+.selector {
+    display: flex;
+}
+.container {
+    position: relative;
+}
+.icon {
+    margin-right: .6em;
+}

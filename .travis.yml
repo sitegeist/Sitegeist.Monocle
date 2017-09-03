@@ -1,0 +1,31 @@
+sudo: false
+notifications:
+  email: false
+
+language: php
+
+php:
+  - '7.1'
+
+cache:
+  yarn: true
+  directories:
+    - ./node_modules
+    - $HOME/.nvm/versions/
+
+before_install:
+  #
+  # Install nvm
+  #
+  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+  - nvm install
+  - nvm use
+
+  #
+  # Install yarn
+  #
+  - npm install -g yarn
+  - yarn install
+
+script:
+  - yarn lint:scripts

@@ -20,6 +20,7 @@ use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
+use Sitegeist\Monocle\Service\PackageKeyTrait;
 
 /**
  * Class PreviewController
@@ -27,17 +28,7 @@ use Sitegeist\Monocle\Fusion\FusionView;
  */
 class PreviewController extends ActionController
 {
-    /**
-     * @Flow\Inject
-     * @var PackageManagerInterface
-     */
-    protected $packageManager;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.defaultPath")
-     */
-    protected $defaultPath;
+    use PackageKeyTrait;
 
     /**
      * @var array
@@ -47,9 +38,21 @@ class PreviewController extends ActionController
 
     /**
      * @var array
+     * @Flow\InjectConfiguration("defaultPrototypeName")
+     */
+    protected $defaultPrototypeName;
+
+    /**
+     * @var array
      * @Flow\InjectConfiguration("preview.metaViewport")
      */
     protected $metaViewport;
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration("ui")
+     */
+    protected $uiSettings;
 
     /**
      * @Flow\Inject
@@ -71,8 +74,10 @@ class PreviewController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $view->assign('defaultPath', $this->defaultPath);
+        $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
+        $view->assign('defaultPrototypeName', json_encode($this->defaultPrototypeName));
         $view->assign('metaViewport', $this->metaViewport);
+        $this->view->assign('uiSettings', json_encode($this->uiSettings));
 
         //
         // Resolve resource uris in beforehand
@@ -97,21 +102,15 @@ class PreviewController extends ActionController
     }
 
     /**
-     * @return void
-     */
-    public function iframeAction()
-    {
-    }
-
-    /**
      * @param  string $prototypeName
+     * @param  string $sitePackageKey
+     * @param  string $propSet
+     * @param  array $props
      * @return void
      */
-    public function componentAction($prototypeName)
+    public function componentAction($prototypeName, $sitePackageKey, $propSet = '__default', array $props = [])
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
-        $sitePackageKey = $sitePackage->getPackageKey();
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
@@ -120,7 +119,7 @@ class PreviewController extends ActionController
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
-        $html = $typoScriptView->render();
+        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
 
         $this->view->assignMultiple([
             'packageKey' => $sitePackageKey,
