@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import url from 'build-url';
 import {$get} from 'plow-js';
@@ -28,6 +29,10 @@ import style from './style.css';
 })
 @visibility
 export default class FullscreenToggler extends PureComponent {
+    static propTypes = {
+        url: PropTypes.string.isRequired
+    };
+
     render() {
         const {url} = this.props;
 
