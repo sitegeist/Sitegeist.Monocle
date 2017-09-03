@@ -105,7 +105,9 @@ class FusionView extends BaseFusionView
         $fusionAst['__prototypes'][$prototypeName] = $prototypeConfiguration;
 
         foreach ($fusionAst['__prototypes'] as $otherPrototypeName => &$prototypeConfiguration) {
-            if ($otherPrototypeName === $prototypeName) continue;
+            if ($otherPrototypeName === $prototypeName) {
+                continue;
+            }
 
             if (
                 array_key_exists('__meta', $prototypeConfiguration) &&

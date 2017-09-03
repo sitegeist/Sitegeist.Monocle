@@ -141,7 +141,7 @@ class FusionService extends NeosFusionService
             }
         }
 
-         // create rendering prototypes with dummy data
+        // create rendering prototypes with dummy data
         foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
             $renderPrototypeTypoScript = [
                 '__objectType' => $prototypeName,
