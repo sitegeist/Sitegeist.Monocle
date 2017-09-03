@@ -14,7 +14,7 @@ import style from './style.css';
 })
 export default class ReloadTrigger extends PureComponent {
     static propTypes = {
-        reload: PropTypes.func.isRequied
+        reload: PropTypes.func.isRequired
     };
 
     render() {

@@ -16,7 +16,7 @@ import style from './style.css';
 export default class PropsInspector extends PureComponent {
     static propTypes = {
         toggleIsOpen: PropTypes.func.isRequired,
-        isOpen: PropTypes.bool.isRequired
+        isOpen: PropTypes.bool
     };
 
     render() {

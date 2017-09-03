@@ -39,7 +39,7 @@ export default class PrototypeSelector extends PureComponent {
         close: PropTypes.func.isRequired,
         isOpen: PropTypes.bool.isRequired,
         searchTerm: PropTypes.string.isRequired,
-        prototypeGroups: PropTypes.object.isRequired,
+        prototypeGroups: PropTypes.array.isRequired,
         label: PropTypes.string.isRequired,
         search: PropTypes.func.isRequired
     };

@@ -22,12 +22,12 @@ import style from './style.css';
     overrideProp: actions.prototypes.overrideProp,
     selectPropSet: actions.prototypes.selectPropSet
 })
-export default class Props extends PureComponent {
+export default class Inspector extends PureComponent {
     static propTypes = {
         fusionAst: PropTypes.object,
         overriddenProps: PropTypes.object,
         selectedPropSet: PropTypes.string,
-        isVisible: PropTypes.bool.isRequired,
+        isVisible: PropTypes.bool,
         selectPropSet: PropTypes.func.isRequired,
         overrideProp: PropTypes.func.isRequired
     };

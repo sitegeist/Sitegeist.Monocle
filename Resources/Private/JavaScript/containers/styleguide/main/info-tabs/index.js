@@ -41,7 +41,7 @@ export default class InfoTabs extends PureComponent {
         renderedHtml: PropTypes.string.isRequired,
         renderedCode: PropTypes.string.isRequired,
         parsedCode: PropTypes.string.isRequired,
-        anatomy: PropTypes.object.isRequired,
+        anatomy: PropTypes.array.isRequired,
         prototypes: PropTypes.object.isRequired
     };
 

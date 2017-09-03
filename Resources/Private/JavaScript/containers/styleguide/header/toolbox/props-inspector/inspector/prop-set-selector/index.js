@@ -15,7 +15,7 @@ export default class PropSetSelector extends PureComponent {
     static propTypes = {
         onSelectPropSet: PropTypes.func.isRequired,
         toggleIsOpen: PropTypes.func.isRequired,
-        isOpen: PropTypes.bool.isRequired,
+        isOpen: PropTypes.bool,
         label: PropTypes.string.isRequired,
         propSets: PropTypes.object
     };

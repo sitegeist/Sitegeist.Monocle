@@ -23,7 +23,7 @@ import style from './style.css';
 export default class BreakpointSelector extends PureComponent {
     static propTypes = {
         label: PropTypes.string.isRequired,
-        isOpen: PropTypes.bool.isRequired,
+        isOpen: PropTypes.bool,
         toggleIsOpen: PropTypes.func.isRequired
     };
 

@@ -24,8 +24,8 @@ import style from './style.css';
 })
 export default class SiteSelector extends PureComponent {
     static propTypes = {
-        isOpen: PropTypes.bool.isRequired,
-        hasMultipleSites: PropTypes.bool.isRequired,
+        isOpen: PropTypes.bool,
+        hasMultipleSites: PropTypes.bool,
         label: PropTypes.string.isRequired,
         toggleIsOpen: PropTypes.func.isRequired
     };

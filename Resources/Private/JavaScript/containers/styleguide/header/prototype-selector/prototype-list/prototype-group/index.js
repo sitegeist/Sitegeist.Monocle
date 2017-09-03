@@ -8,7 +8,7 @@ import style from './style.css';
 export default class PrototypeGroup extends PureComponent {
     static propTypes = {
         label: PropTypes.string.isRequired,
-        prototypes: PropTypes.object.isRequired,
+        prototypes: PropTypes.array.isRequired,
         onSelectPrototype: PropTypes.func.isRequired
     };
 

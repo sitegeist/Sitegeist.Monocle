@@ -32,7 +32,7 @@ const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
 export default class Anatomy extends PureComponent {
     static propTypes = {
         select: PropTypes.func.isRequired,
-        anatomy: PropTypes.object.isRequired,
+        anatomy: PropTypes.array.isRequired,
         prototypes: PropTypes.object.isRequired,
         prototypeName: PropTypes.string.isRequired
     };

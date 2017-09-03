@@ -7,7 +7,7 @@ export default Component => {
     );
 
     visibility.propTypes = {
-        isVisible: PropTypes.bool.isRequired
+        isVisible: PropTypes.bool
     };
 
     return visibility;

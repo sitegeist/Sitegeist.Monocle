@@ -15,7 +15,7 @@ import style from './style.css';
 export default class PrototypeList extends PureComponent {
     static propTypes = {
         searchTerm: PropTypes.string.isRequired,
-        prototypeGroups: PropTypes.object.isRequired,
+        prototypeGroups: PropTypes.array.isRequired,
         onChangeSearchTerm: PropTypes.func.isRequired,
         onSelectPrototype: PropTypes.func.isRequired
     };

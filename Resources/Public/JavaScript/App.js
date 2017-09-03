@@ -31019,7 +31019,7 @@ exports.default = function (Component) {
     };
 
     visibility.propTypes = {
-        isVisible: _propTypes2.default.bool.isRequired
+        isVisible: _propTypes2.default.bool
     };
 
     return visibility;
@@ -31422,7 +31422,7 @@ var PrototypeSelector = (_dec = (0, _components.withToggableState)('isOpen'), _d
     close: _propTypes2.default.func.isRequired,
     isOpen: _propTypes2.default.bool.isRequired,
     searchTerm: _propTypes2.default.string.isRequired,
-    prototypeGroups: _propTypes2.default.object.isRequired,
+    prototypeGroups: _propTypes2.default.array.isRequired,
     label: _propTypes2.default.string.isRequired,
     search: _propTypes2.default.func.isRequired
 }, _temp2)) || _class) || _class);
@@ -31520,7 +31520,7 @@ var PrototypeList = (_dec = (0, _components.attached)(), (0, _components.visibil
     return PrototypeList;
 }(_react.PureComponent), _class2.propTypes = {
     searchTerm: _propTypes2.default.string.isRequired,
-    prototypeGroups: _propTypes2.default.object.isRequired,
+    prototypeGroups: _propTypes2.default.array.isRequired,
     onChangeSearchTerm: _propTypes2.default.func.isRequired,
     onSelectPrototype: _propTypes2.default.func.isRequired
 }, _temp)) || _class) || _class) || _class);
@@ -31604,7 +31604,7 @@ var PrototypeGroup = (_temp = _class = function (_PureComponent) {
     return PrototypeGroup;
 }(_react.PureComponent), _class.propTypes = {
     label: _propTypes2.default.string.isRequired,
-    prototypes: _propTypes2.default.object.isRequired,
+    prototypes: _propTypes2.default.array.isRequired,
     onSelectPrototype: _propTypes2.default.func.isRequired
 }, _temp);
 exports.default = PrototypeGroup;
@@ -31853,8 +31853,8 @@ var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 =
 
     return SiteSelector;
 }(_react.PureComponent), _class2.propTypes = {
-    isOpen: _propTypes2.default.bool.isRequired,
-    hasMultipleSites: _propTypes2.default.bool.isRequired,
+    isOpen: _propTypes2.default.bool,
+    hasMultipleSites: _propTypes2.default.bool,
     label: _propTypes2.default.string.isRequired,
     toggleIsOpen: _propTypes2.default.func.isRequired
 }, _temp)) || _class) || _class);
@@ -32337,7 +32337,7 @@ var BreakpointSelector = (_dec = (0, _components.withToggableState)('isOpen'), _
     return BreakpointSelector;
 }(_react.PureComponent), _class2.propTypes = {
     label: _propTypes2.default.string.isRequired,
-    isOpen: _propTypes2.default.bool.isRequired,
+    isOpen: _propTypes2.default.bool,
     toggleIsOpen: _propTypes2.default.func.isRequired
 }, _temp)) || _class) || _class);
 exports.default = BreakpointSelector;
@@ -32596,7 +32596,7 @@ var ReloadTrigger = (_dec = (0, _reactRedux.connect)(function () {
 
     return ReloadTrigger;
 }(_react.PureComponent), _class2.propTypes = {
-    reload: _propTypes2.default.func.isRequied
+    reload: _propTypes2.default.func.isRequired
 }, _temp)) || _class);
 exports.default = ReloadTrigger;
 
@@ -33202,7 +33202,7 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {
     return Anatomy;
 }(_react.PureComponent), _class2.propTypes = {
     select: _propTypes2.default.func.isRequired,
-    anatomy: _propTypes2.default.object.isRequired,
+    anatomy: _propTypes2.default.array.isRequired,
     prototypes: _propTypes2.default.object.isRequired,
     prototypeName: _propTypes2.default.string.isRequired
 }, _temp2)) || _class);
@@ -33561,7 +33561,7 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
     renderedHtml: _propTypes2.default.string.isRequired,
     renderedCode: _propTypes2.default.string.isRequired,
     parsedCode: _propTypes2.default.string.isRequired,
-    anatomy: _propTypes2.default.object.isRequired,
+    anatomy: _propTypes2.default.array.isRequired,
     prototypes: _propTypes2.default.object.isRequired
 }, _temp)) || _class) || _class) || _class);
 exports.default = InfoTabs;
@@ -76123,7 +76123,7 @@ var PropsInspector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2
     return PropsInspector;
 }(_react.PureComponent), _class2.propTypes = {
     toggleIsOpen: _propTypes2.default.func.isRequired,
-    isOpen: _propTypes2.default.bool.isRequired
+    isOpen: _propTypes2.default.bool
 }, _temp)) || _class) || _class);
 exports.default = PropsInspector;
 
@@ -76190,7 +76190,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Props = (_dec = (0, _reactRedux.connect)(function (state) {
+var Inspector = (_dec = (0, _reactRedux.connect)(function (state) {
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
 
     return _extends({}, currentlyRenderedPrototype, {
@@ -76201,20 +76201,20 @@ var Props = (_dec = (0, _reactRedux.connect)(function (state) {
     overrideProp: _state.actions.prototypes.overrideProp,
     selectPropSet: _state.actions.prototypes.selectPropSet
 }), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
-    _inherits(Props, _PureComponent);
+    _inherits(Inspector, _PureComponent);
 
-    function Props() {
+    function Inspector() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, Props);
+        _classCallCheck(this, Inspector);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Props.__proto__ || Object.getPrototypeOf(Props)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectPropSet = function (propSet) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Inspector.__proto__ || Object.getPrototypeOf(Inspector)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelectPropSet = function (propSet) {
             var selectPropSet = _this.props.selectPropSet;
 
 
@@ -76227,7 +76227,7 @@ var Props = (_dec = (0, _reactRedux.connect)(function (state) {
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(Props, [{
+    _createClass(Inspector, [{
         key: 'render',
         value: function render() {
             var _mergeClassnames,
@@ -76272,16 +76272,16 @@ var Props = (_dec = (0, _reactRedux.connect)(function (state) {
         }
     }]);
 
-    return Props;
+    return Inspector;
 }(_react.PureComponent), _class2.propTypes = {
     fusionAst: _propTypes2.default.object,
     overriddenProps: _propTypes2.default.object,
     selectedPropSet: _propTypes2.default.string,
-    isVisible: _propTypes2.default.bool.isRequired,
+    isVisible: _propTypes2.default.bool,
     selectPropSet: _propTypes2.default.func.isRequired,
     overrideProp: _propTypes2.default.func.isRequired
 }, _temp2)) || _class);
-exports.default = Props;
+exports.default = Inspector;
 
 /***/ }),
 /* 988 */
@@ -76396,7 +76396,7 @@ var PropSetSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec
 }(_react.PureComponent), _class2.propTypes = {
     onSelectPropSet: _propTypes2.default.func.isRequired,
     toggleIsOpen: _propTypes2.default.func.isRequired,
-    isOpen: _propTypes2.default.bool.isRequired,
+    isOpen: _propTypes2.default.bool,
     label: _propTypes2.default.string.isRequired,
     propSets: _propTypes2.default.object
 }, _temp2)) || _class);
