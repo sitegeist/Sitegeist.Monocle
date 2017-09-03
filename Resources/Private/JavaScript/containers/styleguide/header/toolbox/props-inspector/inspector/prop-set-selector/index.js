@@ -1,11 +1,10 @@
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
 import Icon from '@neos-project/react-ui-components/lib/Icon';
 
 import {withToggableState} from 'components';
-import {selectors} from 'state';
 
 import PropSetList from './prop-set-list';
 
@@ -13,6 +12,14 @@ import style from './style.css';
 
 @withToggableState('isOpen')
 export default class PropSetSelector extends PureComponent {
+    static propTypes = {
+        onSelectPropSet: PropTypes.func.isRequired,
+        toggleIsOpen: PropTypes.func.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        label: PropTypes.string.isRequired,
+        propSets: PropTypes.object
+    };
+
     handleSelectPropSet = propSet => {
         const {onSelectPropSet, toggleIsOpen} = this.props;
 

@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import mergeClassnames from 'classnames';
 
-import {visibility} from 'components';
 import {actions, selectors} from 'state';
 
 import PropSetSelector from './prop-set-selector';
@@ -17,12 +17,21 @@ import style from './style.css';
         ...currentlyRenderedPrototype,
         overriddenProps: selectors.prototypes.overriddenProps(state),
         selectedPropSet: selectors.prototypes.selectedPropSet(state)
-    }
+    };
 }, {
     overrideProp: actions.prototypes.overrideProp,
     selectPropSet: actions.prototypes.selectPropSet
 })
 export default class Props extends PureComponent {
+    static propTypes = {
+        fusionAst: PropTypes.object,
+        overriddenProps: PropTypes.object,
+        selectedPropSet: PropTypes.string,
+        isVisible: PropTypes.bool.isRequired,
+        selectPropSet: PropTypes.func.isRequired,
+        overrideProp: PropTypes.func.isRequired
+    };
+
     handleSelectPropSet = propSet => {
         const {selectPropSet} = this.props;
 

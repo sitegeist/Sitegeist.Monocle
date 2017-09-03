@@ -1,9 +1,8 @@
 import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 
-import {visibility, outside, attached} from 'components';
-import {selectors, actions} from 'state';
+import {visibility, outside} from 'components';
 
 import PropSet from './prop-set';
 
@@ -17,6 +16,11 @@ import style from './style.css';
     }
 })
 export default class PropSetList extends PureComponent {
+    static propTypes = {
+        propSets: PropTypes.object,
+        handleSelectPropSet: PropTypes.func.isRequired
+    };
+
     render() {
         const {propSets, handleSelectPropSet} = this.props;
 

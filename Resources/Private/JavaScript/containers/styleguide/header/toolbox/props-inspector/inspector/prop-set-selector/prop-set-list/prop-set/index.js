@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 
 import style from './style.css';
@@ -7,8 +8,13 @@ import style from './style.css';
     handleClick: props => () => props.onClick(props.name)
 })
 export default class PropSet extends PureComponent {
+    static propTypes = {
+        label: PropTypes.string.isRequired,
+        handleClick: PropTypes.func.isRequired
+    };
+
     render() {
-        const {label, handleClick, name} = this.props;
+        const {label, handleClick} = this.props;
 
         return (
             <button className={style.propSet} onClick={handleClick}>

@@ -75991,11 +75991,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _class;
+var _dec, _dec2, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -76008,8 +76012,6 @@ var _Icon = __webpack_require__(44);
 var _Icon2 = _interopRequireDefault(_Icon);
 
 var _components = __webpack_require__(20);
-
-var _state = __webpack_require__(14);
 
 var _inspector = __webpack_require__(987);
 
@@ -76029,7 +76031,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var PropsInspector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 = (0, _reactRedux.connect)(function () {
     return {};
-}, {}), _dec(_class = _dec2(_class = function (_PureComponent) {
+}, {}), _dec(_class = _dec2(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(PropsInspector, _PureComponent);
 
     function PropsInspector() {
@@ -76061,7 +76063,10 @@ var PropsInspector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2
     }]);
 
     return PropsInspector;
-}(_react.PureComponent)) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    toggleIsOpen: _propTypes2.default.func.isRequired,
+    isOpen: _propTypes2.default.bool.isRequired
+}, _temp)) || _class) || _class);
 exports.default = PropsInspector;
 
 /***/ }),
@@ -76087,19 +76092,21 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _dec, _class;
+var _dec, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
 var _classnames = __webpack_require__(35);
 
 var _classnames2 = _interopRequireDefault(_classnames);
-
-var _components = __webpack_require__(20);
 
 var _state = __webpack_require__(14);
 
@@ -76135,7 +76142,7 @@ var Props = (_dec = (0, _reactRedux.connect)(function (state) {
 }, {
     overrideProp: _state.actions.prototypes.overrideProp,
     selectPropSet: _state.actions.prototypes.selectPropSet
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(Props, _PureComponent);
 
     function Props() {
@@ -76208,7 +76215,14 @@ var Props = (_dec = (0, _reactRedux.connect)(function (state) {
     }]);
 
     return Props;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    fusionAst: _propTypes2.default.object,
+    overriddenProps: _propTypes2.default.object,
+    selectedPropSet: _propTypes2.default.string,
+    isVisible: _propTypes2.default.bool.isRequired,
+    selectPropSet: _propTypes2.default.func.isRequired,
+    overrideProp: _propTypes2.default.func.isRequired
+}, _temp2)) || _class);
 exports.default = Props;
 
 /***/ }),
@@ -76225,13 +76239,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(15);
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Button = __webpack_require__(43);
 
@@ -76242,8 +76258,6 @@ var _Icon = __webpack_require__(44);
 var _Icon2 = _interopRequireDefault(_Icon);
 
 var _components = __webpack_require__(20);
-
-var _state = __webpack_require__(14);
 
 var _propSetList = __webpack_require__(989);
 
@@ -76261,7 +76275,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PropSetSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec(_class = function (_PureComponent) {
+var PropSetSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(PropSetSelector, _PureComponent);
 
     function PropSetSelector() {
@@ -76321,7 +76335,13 @@ var PropSetSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec
     }]);
 
     return PropSetSelector;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    onSelectPropSet: _propTypes2.default.func.isRequired,
+    toggleIsOpen: _propTypes2.default.func.isRequired,
+    isOpen: _propTypes2.default.bool.isRequired,
+    label: _propTypes2.default.string.isRequired,
+    propSets: _propTypes2.default.object
+}, _temp2)) || _class);
 exports.default = PropSetSelector;
 
 /***/ }),
@@ -76338,19 +76358,19 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(15);
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _recompose = __webpack_require__(34);
 
 var _components = __webpack_require__(20);
-
-var _state = __webpack_require__(14);
 
 var _propSet = __webpack_require__(990);
 
@@ -76374,7 +76394,7 @@ var PropSetList = (_dec = (0, _recompose.withHandlers)({
             props.onSelectPropSet(propSetName);
         };
     }
-}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = function (_PureComponent) {
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(PropSetList, _PureComponent);
 
     function PropSetList() {
@@ -76417,7 +76437,10 @@ var PropSetList = (_dec = (0, _recompose.withHandlers)({
     }]);
 
     return PropSetList;
-}(_react.PureComponent)) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    propSets: _propTypes2.default.object,
+    handleSelectPropSet: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class) || _class);
 exports.default = PropSetList;
 
 /***/ }),
@@ -76434,11 +76457,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _recompose = __webpack_require__(34);
 
@@ -76460,7 +76487,7 @@ var PropSet = (_dec = (0, _recompose.withHandlers)({
             return props.onClick(props.name);
         };
     }
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(PropSet, _PureComponent);
 
     function PropSet() {
@@ -76474,8 +76501,7 @@ var PropSet = (_dec = (0, _recompose.withHandlers)({
         value: function render() {
             var _props = this.props,
                 label = _props.label,
-                handleClick = _props.handleClick,
-                name = _props.name;
+                handleClick = _props.handleClick;
 
 
             return _react2.default.createElement(
@@ -76491,7 +76517,10 @@ var PropSet = (_dec = (0, _recompose.withHandlers)({
     }]);
 
     return PropSet;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    label: _propTypes2.default.string.isRequired,
+    handleClick: _propTypes2.default.func.isRequired
+}, _temp)) || _class);
 exports.default = PropSet;
 
 /***/ }),
@@ -76508,9 +76537,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _class, _temp2;
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _TextInput = __webpack_require__(126);
 
@@ -76532,7 +76567,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PropsItem = function (_PureComponent) {
+var PropsItem = (_temp2 = _class = function (_PureComponent) {
     _inherits(PropsItem, _PureComponent);
 
     function PropsItem() {
@@ -76581,8 +76616,12 @@ var PropsItem = function (_PureComponent) {
     }]);
 
     return PropsItem;
-}(_react.PureComponent);
-
+}(_react.PureComponent), _class.propTypes = {
+    name: _propTypes2.default.string.isRequired,
+    value: _propTypes2.default.any.isRequired,
+    isLarge: _propTypes2.default.bool.isRequired,
+    onChange: _propTypes2.default.func.isRequired
+}, _temp2);
 exports.default = PropsItem;
 
 /***/ }),
