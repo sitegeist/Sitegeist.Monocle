@@ -32998,9 +32998,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _class, _temp2;
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _style = __webpack_require__(589);
 
@@ -33014,7 +33020,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AnatomyItem = function (_PureComponent) {
+var AnatomyItem = (_temp2 = _class = function (_PureComponent) {
     _inherits(AnatomyItem, _PureComponent);
 
     function AnatomyItem() {
@@ -33051,7 +33057,7 @@ var AnatomyItem = function (_PureComponent) {
 
             return _react2.default.createElement(
                 'div',
-                { className: _style2.default.item, onClick: this.handleSelect },
+                { className: _style2.default.item, onClick: this.handleSelect, role: 'button' },
                 _react2.default.createElement(
                     'div',
                     { className: _style2.default.name },
@@ -33075,8 +33081,11 @@ var AnatomyItem = function (_PureComponent) {
     }]);
 
     return AnatomyItem;
-}(_react.PureComponent);
-
+}(_react.PureComponent), _class.propTypes = {
+    name: _propTypes2.default.string.isRequired,
+    children: _propTypes2.default.array.isRequired,
+    onSelect: _propTypes2.default.func.isRequired
+}, _temp2);
 exports.default = AnatomyItem;
 
 /***/ }),
@@ -33093,11 +33102,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp2;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -33142,7 +33155,7 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {
     return {};
 }, {
     select: _state.actions.prototypes.select
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(Anatomy, _PureComponent);
 
     function Anatomy() {
@@ -33187,7 +33200,12 @@ var Anatomy = (_dec = (0, _reactRedux.connect)(function () {
     }]);
 
     return Anatomy;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    select: _propTypes2.default.func.isRequired,
+    anatomy: _propTypes2.default.object.isRequired,
+    prototypes: _propTypes2.default.object.isRequired,
+    prototypeName: _propTypes2.default.string.isRequired
+}, _temp2)) || _class);
 exports.default = Anatomy;
 
 /***/ }),
@@ -33197,121 +33215,122 @@ exports.default = Anatomy;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
+
 exports.default = {
-    "hljs": {
-        "display": "block",
-        "overflowX": "auto",
-        "color": "#f8f8f2"
+    'hljs': {
+        display: 'block',
+        overflowX: 'auto',
+        color: '#f8f8f2'
     },
-    "hljs-tag": {
-        "color": "#f8f8f2"
+    'hljs-tag': {
+        color: '#f8f8f2'
     },
-    "hljs-subst": {
-        "color": "#f8f8f2"
+    'hljs-subst': {
+        color: '#f8f8f2'
     },
-    "hljs-strong": {
-        "color": "#a8a8a2",
-        "fontWeight": "bold"
+    'hljs-strong': {
+        color: '#a8a8a2',
+        fontWeight: 'bold'
     },
-    "hljs-emphasis": {
-        "color": "#a8a8a2",
-        "fontStyle": "italic"
+    'hljs-emphasis': {
+        color: '#a8a8a2',
+        fontStyle: 'italic'
     },
-    "hljs-bullet": {
-        "color": "#ae81ff"
+    'hljs-bullet': {
+        color: '#ae81ff'
     },
-    "hljs-quote": {
-        "color": "#ae81ff"
+    'hljs-quote': {
+        color: '#ae81ff'
     },
-    "hljs-number": {
-        "color": "#ae81ff"
+    'hljs-number': {
+        color: '#ae81ff'
     },
-    "hljs-regexp": {
-        "color": "#ae81ff"
+    'hljs-regexp': {
+        color: '#ae81ff'
     },
-    "hljs-literal": {
-        "color": "#ae81ff"
+    'hljs-literal': {
+        color: '#ae81ff'
     },
-    "hljs-link": {
-        "color": "#ae81ff"
+    'hljs-link': {
+        color: '#ae81ff'
     },
-    "hljs-code": {
-        "color": "#a6e22e"
+    'hljs-code': {
+        color: '#a6e22e'
     },
-    "hljs-title": {
-        "color": "#a6e22e"
+    'hljs-title': {
+        color: '#a6e22e'
     },
-    "hljs-section": {
-        "color": "#a6e22e"
+    'hljs-section': {
+        color: '#a6e22e'
     },
-    "hljs-selector-class": {
-        "color": "#a6e22e"
+    'hljs-selector-class': {
+        color: '#a6e22e'
     },
-    "hljs-keyword": {
-        "color": "#f92672"
+    'hljs-keyword': {
+        color: '#f92672'
     },
-    "hljs-selector-tag": {
-        "color": "#f92672"
+    'hljs-selector-tag': {
+        color: '#f92672'
     },
-    "hljs-name": {
-        "color": "#f92672"
+    'hljs-name': {
+        color: '#f92672'
     },
-    "hljs-attr": {
-        "color": "#f92672"
+    'hljs-attr': {
+        color: '#f92672'
     },
-    "hljs-symbol": {
-        "color": "#66d9ef"
+    'hljs-symbol': {
+        color: '#66d9ef'
     },
-    "hljs-attribute": {
-        "color": "#66d9ef"
+    'hljs-attribute': {
+        color: '#66d9ef'
     },
-    "hljs-params": {
-        "color": "#f8f8f2"
+    'hljs-params': {
+        color: '#f8f8f2'
     },
-    "hljs-class .hljs-title": {
-        "color": "#f8f8f2"
+    'hljs-class .hljs-title': {
+        color: '#f8f8f2'
     },
-    "hljs-string": {
-        "color": "#e6db74"
+    'hljs-string': {
+        color: '#e6db74'
     },
-    "hljs-type": {
-        "color": "#e6db74"
+    'hljs-type': {
+        color: '#e6db74'
     },
-    "hljs-built_in": {
-        "color": "#e6db74"
+    'hljs-built_in': {
+        color: '#e6db74'
     },
-    "hljs-builtin-name": {
-        "color": "#e6db74"
+    'hljs-builtin-name': {
+        color: '#e6db74'
     },
-    "hljs-selector-id": {
-        "color": "#e6db74"
+    'hljs-selector-id': {
+        color: '#e6db74'
     },
-    "hljs-selector-attr": {
-        "color": "#e6db74"
+    'hljs-selector-attr': {
+        color: '#e6db74'
     },
-    "hljs-selector-pseudo": {
-        "color": "#e6db74"
+    'hljs-selector-pseudo': {
+        color: '#e6db74'
     },
-    "hljs-addition": {
-        "color": "#e6db74"
+    'hljs-addition': {
+        color: '#e6db74'
     },
-    "hljs-variable": {
-        "color": "#e6db74"
+    'hljs-variable': {
+        color: '#e6db74'
     },
-    "hljs-template-variable": {
-        "color": "#e6db74"
+    'hljs-template-variable': {
+        color: '#e6db74'
     },
-    "hljs-comment": {
-        "color": "#75715e"
+    'hljs-comment': {
+        color: '#75715e'
     },
-    "hljs-deletion": {
-        "color": "#75715e"
+    'hljs-deletion': {
+        color: '#75715e'
     },
-    "hljs-meta": {
-        "color": "#75715e"
+    'hljs-meta': {
+        color: '#75715e'
     }
 };
 
@@ -33330,12 +33349,14 @@ exports.default = undefined;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp;
-/* import { defaultStyle as codeStyle } from 'react-syntax-highlighter/dist/styles'; */
-
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactSyntaxHighlighter = __webpack_require__(947);
 
@@ -33379,8 +33400,8 @@ var Code = (_temp = _class = function (_Component) {
 
     return Code;
 }(_react.Component), _class.propTypes = {
-    content: _react.PropTypes.string,
-    language: _react.PropTypes.string
+    content: _propTypes2.default.string,
+    language: _propTypes2.default.string
 }, _temp);
 exports.default = Code;
 
@@ -33400,11 +33421,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _dec, _dec2, _class;
+var _dec, _dec2, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -33462,7 +33487,7 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
     initialHeight: 320,
     collapsedHeight: 40,
     toggleHandleClassName: _style2.default.toggleHandle
-}), _dec(_class = (0, _components.visibility)(_class = _dec2(_class = function (_PureComponent) {
+}), _dec(_class = (0, _components.visibility)(_class = _dec2(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(InfoTabs, _PureComponent);
 
     function InfoTabs() {
@@ -33481,7 +33506,6 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
                 renderedHtml = _props.renderedHtml,
                 renderedCode = _props.renderedCode,
                 parsedCode = _props.parsedCode,
-                fusionAst = _props.fusionAst,
                 anatomy = _props.anatomy,
                 prototypes = _props.prototypes;
 
@@ -33530,7 +33554,16 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
     }]);
 
     return InfoTabs;
-}(_react.PureComponent)) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    title: _propTypes2.default.string.isRequired,
+    prototypeName: _propTypes2.default.string.isRequired,
+    description: _propTypes2.default.string,
+    renderedHtml: _propTypes2.default.string.isRequired,
+    renderedCode: _propTypes2.default.string.isRequired,
+    parsedCode: _propTypes2.default.string.isRequired,
+    anatomy: _propTypes2.default.object.isRequired,
+    prototypes: _propTypes2.default.object.isRequired
+}, _temp)) || _class) || _class) || _class);
 exports.default = InfoTabs;
 
 /***/ }),

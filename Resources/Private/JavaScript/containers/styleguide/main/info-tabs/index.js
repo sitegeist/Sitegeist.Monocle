@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import pretty from 'pretty';
 
@@ -33,8 +34,28 @@ import tabPanelTheme from './tabPanelTheme.css';
     toggleHandleClassName: style.toggleHandle
 })
 export default class InfoTabs extends PureComponent {
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        prototypeName: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        renderedHtml: PropTypes.string.isRequired,
+        renderedCode: PropTypes.string.isRequired,
+        parsedCode: PropTypes.string.isRequired,
+        anatomy: PropTypes.object.isRequired,
+        prototypes: PropTypes.object.isRequired
+    };
+
     render() {
-        const {title, prototypeName, description, renderedHtml, renderedCode, parsedCode, fusionAst, anatomy, prototypes} = this.props;
+        const {
+            title,
+            prototypeName,
+            description,
+            renderedHtml,
+            renderedCode,
+            parsedCode,
+            anatomy,
+            prototypes
+        } = this.props;
 
         return (
             <Tabs className={style.infoTabs} theme={tabTheme}>
@@ -42,9 +63,15 @@ export default class InfoTabs extends PureComponent {
                     <h2>{title} <small className={style.prototypeLabel}>{prototypeName}</small></h2>
                     {description}
                 </Tabs.Panel>
-                <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}><Code content={pretty(renderedHtml)} language="html" /></Tabs.Panel>
-                <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}><Code content={renderedCode} language="vim" /></Tabs.Panel>
-                <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={parsedCode} language="yaml" /></Tabs.Panel>
+                <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}>
+                    <Code content={pretty(renderedHtml)} language="html"/>
+                </Tabs.Panel>
+                <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}>
+                    <Code content={renderedCode} language="vim"/>
+                </Tabs.Panel>
+                <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}>
+                    <Code content={parsedCode} language="yaml"/>
+                </Tabs.Panel>
                 <Tabs.Panel title="Anatomy" icon="heartbeat" theme={tabPanelTheme}>
                     <Anatomy anatomy={anatomy} prototypes={prototypes} prototypeName={prototypeName}/>
                 </Tabs.Panel>

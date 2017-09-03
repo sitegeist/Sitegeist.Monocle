@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {actions} from 'state';
@@ -29,6 +30,13 @@ const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
     select: actions.prototypes.select
 })
 export default class Anatomy extends PureComponent {
+    static propTypes = {
+        select: PropTypes.func.isRequired,
+        anatomy: PropTypes.object.isRequired,
+        prototypes: PropTypes.object.isRequired,
+        prototypeName: PropTypes.string.isRequired
+    };
+
     handleSelectPrototype = prototypeName => {
         const {select} = this.props;
 
