@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 
 import style from './style.css';
@@ -7,6 +8,11 @@ import style from './style.css';
     handleClick: props => () => props.onClick(props.name)
 })
 export default class Site extends PureComponent {
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+        handleClick: PropTypes.func.isRequired
+    };
+
     render() {
         const {name, handleClick} = this.props;
 

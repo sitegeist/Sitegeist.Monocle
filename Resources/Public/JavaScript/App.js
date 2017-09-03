@@ -31766,11 +31766,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _class;
+var _dec, _dec2, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -31810,7 +31814,7 @@ var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 =
         hasMultipleSites: sites && Object.keys(sites).length > 1,
         label: currentlySelectedSitePackageKey ? currentlySelectedSitePackageKey : '---'
     };
-}), _dec(_class = _dec2(_class = function (_PureComponent) {
+}), _dec(_class = _dec2(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(SiteSelector, _PureComponent);
 
     function SiteSelector() {
@@ -31848,7 +31852,12 @@ var SiteSelector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2 =
     }]);
 
     return SiteSelector;
-}(_react.PureComponent)) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    isOpen: _propTypes2.default.bool.isRequired,
+    hasMultipleSites: _propTypes2.default.bool.isRequired,
+    label: _propTypes2.default.string.isRequired,
+    toggleIsOpen: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class);
 exports.default = SiteSelector;
 
 /***/ }),
@@ -31865,11 +31874,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _class;
+var _dec, _dec2, _dec3, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -31908,7 +31921,7 @@ var SiteList = (_dec = (0, _components.attached)('left'), _dec2 = (0, _reactRedu
             props.onSelectSite(siteName);
         };
     }
-}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = function (_PureComponent) {
+}), (0, _components.visibility)(_class = (0, _components.outside)(_class = _dec(_class = _dec2(_class = _dec3(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(SiteList, _PureComponent);
 
     function SiteList() {
@@ -31944,7 +31957,10 @@ var SiteList = (_dec = (0, _components.attached)('left'), _dec2 = (0, _reactRedu
     }]);
 
     return SiteList;
-}(_react.PureComponent)) || _class) || _class) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    sites: _propTypes2.default.object.isRequired,
+    handleSelectSite: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class) || _class) || _class) || _class);
 exports.default = SiteList;
 
 /***/ }),
@@ -31961,11 +31977,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _class;
+var _dec, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _recompose = __webpack_require__(34);
 
@@ -31987,7 +32007,7 @@ var Site = (_dec = (0, _recompose.withHandlers)({
             return props.onClick(props.name);
         };
     }
-}), _dec(_class = function (_PureComponent) {
+}), _dec(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(Site, _PureComponent);
 
     function Site() {
@@ -32017,7 +32037,10 @@ var Site = (_dec = (0, _recompose.withHandlers)({
     }]);
 
     return Site;
-}(_react.PureComponent)) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    name: _propTypes2.default.string.isRequired,
+    handleClick: _propTypes2.default.func.isRequired
+}, _temp)) || _class);
 exports.default = Site;
 
 /***/ }),

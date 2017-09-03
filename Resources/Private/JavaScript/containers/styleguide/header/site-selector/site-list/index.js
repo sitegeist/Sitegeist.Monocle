@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withHandlers} from 'recompose';
 
@@ -26,6 +27,11 @@ import style from './style.css';
     }
 })
 export default class SiteList extends PureComponent {
+    static propTypes = {
+        sites: PropTypes.object.isRequired,
+        handleSelectSite: PropTypes.func.isRequired
+    };
+
     render() {
         const {sites, handleSelectSite} = this.props;
 

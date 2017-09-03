@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
@@ -22,6 +23,13 @@ import style from './style.css';
     };
 })
 export default class SiteSelector extends PureComponent {
+    static propTypes = {
+        isOpen: PropTypes.bool.isRequired,
+        hasMultipleSites: PropTypes.bool.isRequired,
+        label: PropTypes.string.isRequired,
+        toggleIsOpen: PropTypes.func.isRequired
+    };
+
     render() {
         const {isOpen, hasMultipleSites, label, toggleIsOpen} = this.props;
 
