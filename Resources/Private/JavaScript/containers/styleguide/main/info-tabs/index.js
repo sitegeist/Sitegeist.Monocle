@@ -9,7 +9,6 @@ import {selectors} from 'state';
 
 import Code from './code';
 import Anatomy from './anatomy';
-import Props from './props';
 
 import style from './style.css';
 import tabTheme from './tabTheme.css';
@@ -48,9 +47,6 @@ export default class InfoTabs extends PureComponent {
                 <Tabs.Panel title="Fusion AST" icon="terminal" theme={tabPanelTheme}><Code content={parsedCode} language="yaml" /></Tabs.Panel>
                 <Tabs.Panel title="Anatomy" icon="heartbeat" theme={tabPanelTheme}>
                     <Anatomy anatomy={anatomy} prototypes={prototypes} prototypeName={prototypeName}/>
-                </Tabs.Panel>
-                <Tabs.Panel title="Props" icon="check-square" theme={tabPanelTheme}>
-                    <Props fusionAst={fusionAst}/>
                 </Tabs.Panel>
             </Tabs>
         );

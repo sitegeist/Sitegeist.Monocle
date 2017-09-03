@@ -1,13 +1,20 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import mergeClassnames from 'classnames';
 
+import {visibility} from 'components';
 import {actions, selectors} from 'state';
 
 import PropSetSelector from './prop-set-selector';
 import PropsItem from './props-item';
 
+import style from './style.css';
+
 @connect(state => {
+    const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+
     return {
+        ...currentlyRenderedPrototype,
         overriddenProps: selectors.prototypes.overriddenProps(state),
         selectedPropSet: selectors.prototypes.selectedPropSet(state)
     }
@@ -29,11 +36,19 @@ export default class Props extends PureComponent {
     };
 
     render() {
-        const {fusionAst, overriddenProps, selectedPropSet} = this.props;
+        const {fusionAst, overriddenProps, selectedPropSet, isVisible} = this.props;
+        if (!fusionAst) {
+            return null;
+        }
         const {props, propSets} = fusionAst.__meta.styleguide;
 
         return (
-            <div>
+            <div
+                className={mergeClassnames({
+                    [style.inspector]: true,
+                    [style.isVisible]: isVisible
+                })}
+                >
                 {propSets && (
                     <PropSetSelector
                         label={selectedPropSet in propSets ? propSets[selectedPropSet].label : 'Default'}

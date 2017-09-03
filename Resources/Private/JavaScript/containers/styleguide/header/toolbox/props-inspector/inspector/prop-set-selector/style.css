@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     border: 1px solid var(--brandColorsContrastDark);
-    display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
@@ -11,6 +10,11 @@
     max-width: 800px;
     margin: 0 auto;
     position: relative;
+
+    label {
+        display: block;
+        margin-bottom: .6rem;
+    }
 }
 .icon {
     margin-left: .6em;

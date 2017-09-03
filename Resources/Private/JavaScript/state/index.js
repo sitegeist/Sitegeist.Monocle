@@ -80,7 +80,7 @@ export const saga = function * () {
     yield fork(breakpoints.sagas.load);
 
     try {
-        yield put.sync(prototypes.actions.select(prototypeName));
+        yield put.resolve(prototypes.actions.select(prototypeName));
     } catch (err) {
         yield put(business.actions.errorTask('@sitegeist/monocle/bootstrap', `
             Could not select default Prototype: ${err.message}
