@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import mergeClassNames from 'classnames';
 import {connect} from 'react-redux';
 
@@ -11,6 +12,11 @@ import style from './style.css';
     };
 })
 export default class ErrorMessage extends PureComponent {
+    static propTypes = {
+        title: PropTypes.string,
+        message: PropTypes.string.isRequired,
+        severity: PropTypes.oneOf(['warning', 'error', 'fatal']).isRequired
+    }
     render() {
         const {title, message, severity} = this.props;
 
