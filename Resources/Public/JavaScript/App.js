@@ -32806,11 +32806,15 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _class;
+var _dec, _dec2, _dec3, _dec4, _class, _class2, _temp;
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(115);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactRedux = __webpack_require__(15);
 
@@ -32859,7 +32863,7 @@ var Login = (_dec = (0, _recompose.withState)('username', 'setUsername', ''), _d
             return authorize(username, password);
         };
     }
-}), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (0, _components.visibility)(_class = function (_PureComponent) {
+}), _dec(_class = _dec2(_class = _dec3(_class = _dec4(_class = (0, _components.visibility)(_class = (_temp = _class2 = function (_PureComponent) {
     _inherits(Login, _PureComponent);
 
     function Login() {
@@ -32907,7 +32911,13 @@ var Login = (_dec = (0, _recompose.withState)('username', 'setUsername', ''), _d
     }]);
 
     return Login;
-}(_react.PureComponent)) || _class) || _class) || _class) || _class) || _class);
+}(_react.PureComponent), _class2.propTypes = {
+    username: _propTypes2.default.string.isRequired,
+    password: _propTypes2.default.string.isRequired,
+    setUsername: _propTypes2.default.func.isRequired,
+    setPassword: _propTypes2.default.func.isRequired,
+    performAuthorization: _propTypes2.default.func.isRequired
+}, _temp)) || _class) || _class) || _class) || _class) || _class);
 exports.default = Login;
 
 /***/ }),

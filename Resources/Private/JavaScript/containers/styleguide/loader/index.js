@@ -17,7 +17,7 @@ export default class Loader extends PureComponent {
         return (
             <div className={style.loader}>
                 <div className={style.caption}>
-                    <div className={style.monocle}></div>
+                    <div className={style.monocle}/>
                     <div className={style.chain}>
                         <div className={style.element}>
                             <div className={style.element}>

@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withState, withHandlers} from 'recompose';
 
@@ -25,6 +26,14 @@ import style from './style.css';
 })
 @visibility
 export default class Login extends PureComponent {
+    static propTypes = {
+        username: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired,
+        setUsername: PropTypes.func.isRequired,
+        setPassword: PropTypes.func.isRequired,
+        performAuthorization: PropTypes.func.isRequired
+    };
+
     render() {
         const {username, password, setUsername, setPassword} = this.props;
 
