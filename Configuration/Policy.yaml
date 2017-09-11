@@ -3,7 +3,7 @@ privilegeTargets:
     'Sitegeist.Monocle:Backend.Styleguide':
       matcher: 'method(Sitegeist\Monocle\Controller\StyleguideController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Preview':
-      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(module|iframe|component)Action())'
+      matcher: 'method(Sitegeist\Monocle\Controller\PreviewController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Module':
       matcher: 'method(Sitegeist\Monocle\Controller\ModuleController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
