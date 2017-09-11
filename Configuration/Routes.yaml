@@ -15,7 +15,7 @@
 
 -
   name:  'Monocle API'
-  uriPattern: 'api/{@action}'
+  uriPattern: 'monocle/api/{@action}'
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
@@ -25,7 +25,7 @@
 
 -
   name:  'Monocle Preview - Module'
-  uriPattern: 'preview/module'
+  uriPattern: 'monocle/preview/module'
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
@@ -36,7 +36,7 @@
 
 -
   name:  'Monocle Preview - Module (with ignored url part)'
-  uriPattern: 'preview/module/{ignore}'
+  uriPattern: 'monocle/preview/module/{ignore}'
   routeParts:
     'ignore':
       handler: 'Sitegeist\Monocle\Routing\IgnoreRoutePartHandler'
@@ -50,7 +50,7 @@
 
 -
   name:  'Monocle Preview - Prototype'
-  uriPattern: 'preview/{@action}'
+  uriPattern: 'monocle/preview/{@action}'
   defaults:
     '@package': 'Sitegeist.Monocle'
     '@subpackage': ''
