@@ -17,6 +17,32 @@
     transform: translate(-50%, -50%);
 }
 
+.imagemark {
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+.imagemark path {
+    fill: #888;
+}
+
+.monocle {
+    position: absolute;
+    top: 138px;
+    left: 69px;
+    z-index: 9;
+    background: linear-gradient(to bottom, #f2f6f8 0,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
+    background-size: 200%;
+    background-position: 0 0;
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    transform: rotate(45deg);
+    animation: glare linear 2s infinite;
+}
+
 @keyframes glare {
     from {
         background-position: 0 0;
@@ -27,57 +53,3 @@
     }
 }
 
-.monocle {
-    position: relative;
-    top: -80px;
-    background: linear-gradient(to bottom, #f2f6f8 0,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
-    background-size: 200%;
-    background-position: 0 0;
-    border: 8px solid #111;
-    border-radius: 100%;
-    width: 200px;
-    height: 200px;
-    transform: rotate(30deg);
-    animation: glare linear 2s infinite;
-}
-
-.chain {
-    position: absolute;
-    top: calc(100% - 104px);
-    right: 35px;
-}
-
-@keyframes swing {
-    20% {
-        transform: rotate3d(0, 0, 1, 10deg);
-    }
-
-    40% {
-        transform: rotate3d(0, 0, 1, -5deg);
-    }
-
-    60% {
-        transform: rotate3d(0, 0, 1, 3deg);
-    }
-
-    80% {
-        transform: rotate3d(0, 0, 1, -1deg);
-    }
-
-    to {
-        transform: rotate3d(0, 0, 1, 0deg);
-    }
-}
-
-.element {
-    position: absolute;
-    border: 8px solid #111;
-    border-radius: 100%;
-    width: 10px;
-    height: 40px;
-    top: calc(100% - 8px);
-    right: -8px;
-    transform-origin: top center;
-    animation-name: swing;
-    animation-duration: .8s;
-}
