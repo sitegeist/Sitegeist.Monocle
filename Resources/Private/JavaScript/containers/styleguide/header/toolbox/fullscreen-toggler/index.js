@@ -15,13 +15,19 @@ import style from './style.css';
 @connect(state => {
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+    const overriddenProps = selectors.prototypes.overriddenProps(state);
+    const selectedPropSet = selectors.prototypes.selectedPropSet(state);
     const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
         url: currentlyRenderedPrototype && url(previewUri, {
             queryParams: {
                 prototypeName: currentlyRenderedPrototype.prototypeName,
-                sitePackageKey
+                propSet: selectedPropSet,
+                sitePackageKey,
+                ...Object.keys(overriddenProps).reduce((map, propName) => {
+                    return {...map, [`props[${propName}]`]: encodeURIComponent(overriddenProps[propName])};
+                }, {})
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype)
