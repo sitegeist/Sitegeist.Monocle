@@ -44,12 +44,6 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
     @styleguide {
 
         #
-        # Path of the component in the styleguide
-        # Optional: by default the name-part of the component name is used
-        #
-        path = 'Components.Headline'
-
-        #
         # The title of the component
         # Optional:  by default the component name is splitted and reversed
         #
