@@ -2,6 +2,8 @@
 
 # Sitegeist.Monocle
 
+<img src="./Resources/Public/Images/monocle_imagemark.svg" width="300" />
+
 ## A living styleguide for Neos
 
 This package adds a styleguide module to Neos that renders the
