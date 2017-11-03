@@ -32728,10 +32728,12 @@ var Inspector = (_dec = (0, _reactRedux.connect)(function (state) {
             if (!fusionAst) {
                 return null;
             }
+
             var _fusionAst$__meta$sty = fusionAst.__meta.styleguide,
                 props = _fusionAst$__meta$sty.props,
                 propSets = _fusionAst$__meta$sty.propSets;
 
+            var currentProps = selectedPropSet in propSets ? Object.assign({}, props, propSets[selectedPropSet]) : props;
 
             return _react2.default.createElement(
                 'div',
@@ -32739,18 +32741,18 @@ var Inspector = (_dec = (0, _reactRedux.connect)(function (state) {
                     className: (0, _classnames2.default)((_mergeClassnames = {}, _defineProperty(_mergeClassnames, _style2.default.inspector, true), _defineProperty(_mergeClassnames, _style2.default.isVisible, isVisible), _mergeClassnames))
                 },
                 propSets && _react2.default.createElement(_propSetSelector2.default, {
-                    label: selectedPropSet in propSets ? propSets[selectedPropSet].label : 'Default',
+                    label: selectedPropSet in propSets ? selectedPropSet : 'Default',
                     propSets: propSets,
                     onSelectPropSet: this.handleSelectPropSet
                 }),
-                props && Object.keys(props).filter(function (name) {
-                    return typeof props[name] === 'string';
+                currentProps && Object.keys(currentProps).filter(function (name) {
+                    return typeof currentProps[name] === 'string';
                 }).map(function (name) {
                     return _react2.default.createElement(_propsItem2.default, {
                         key: name,
                         name: name,
-                        value: name in overriddenProps ? overriddenProps[name] : props[name],
-                        isLarge: props[name].length > 80,
+                        value: name in overriddenProps ? overriddenProps[name] : currentProps[name],
+                        isLarge: currentProps[name].length > 80,
                         onChange: _this2.handleChange
                     });
                 })
@@ -32971,7 +32973,7 @@ var PropSetList = (_dec = (0, _recompose.withHandlers)({
                         return _react2.default.createElement(_propSet2.default, {
                             key: propSetName,
                             name: propSetName,
-                            label: propSets[propSetName].label || propSetName,
+                            label: propSetName,
                             onClick: handleSelectPropSet
                         });
                     })

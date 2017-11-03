@@ -94,7 +94,7 @@ class FusionView extends BaseFusionView
         ) {
             $prototypeConfiguration = array_replace_recursive(
                 $prototypeConfiguration,
-                $styleguideConfiguration['propSets'][$propSet]['props']
+                $styleguideConfiguration['propSets'][$propSet]
             );
         }
 

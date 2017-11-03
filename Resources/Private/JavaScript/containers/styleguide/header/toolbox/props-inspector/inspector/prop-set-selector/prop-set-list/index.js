@@ -38,7 +38,7 @@ export default class PropSetList extends PureComponent {
                             <PropSet
                                 key={propSetName}
                                 name={propSetName}
-                                label={propSets[propSetName].label || propSetName}
+                                label={propSetName}
                                 onClick={handleSelectPropSet}
                                 />
                         )

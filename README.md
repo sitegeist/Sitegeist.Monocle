@@ -62,6 +62,19 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
         props {
             content = 'Hello World'
         }
+        
+        #
+        # Alternate prop sets that can overload the default props
+        # Optional: By default empty.
+        #
+        propSets {
+            'level 2' {
+                tagName = 'h2'
+            }
+            'long text' {
+                content = 'Lorem ipsum dolor sit amet ...'
+            }
+        }
     }
 
     # normal fusion props

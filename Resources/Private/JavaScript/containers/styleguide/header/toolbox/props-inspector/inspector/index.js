@@ -49,7 +49,9 @@ export default class Inspector extends PureComponent {
         if (!fusionAst) {
             return null;
         }
+
         const {props, propSets} = fusionAst.__meta.styleguide;
+        const currentProps = selectedPropSet in propSets ? Object.assign({}, props, propSets[selectedPropSet]) : props;
 
         return (
             <div
@@ -60,17 +62,17 @@ export default class Inspector extends PureComponent {
                 >
                 {propSets && (
                     <PropSetSelector
-                        label={selectedPropSet in propSets ? propSets[selectedPropSet].label : 'Default'}
+                        label={selectedPropSet in propSets ? selectedPropSet : 'Default'}
                         propSets={propSets}
                         onSelectPropSet={this.handleSelectPropSet}
                         />
                 )}
-                {props && Object.keys(props).filter(name => typeof props[name] === 'string').map(name => (
+                {currentProps && Object.keys(currentProps).filter(name => typeof currentProps[name] === 'string').map(name => (
                     <PropsItem
                         key={name}
                         name={name}
-                        value={name in overriddenProps ? overriddenProps[name] : props[name]}
-                        isLarge={props[name].length > 80}
+                        value={name in overriddenProps ? overriddenProps[name] : currentProps[name]}
+                        isLarge={currentProps[name].length > 80}
                         onChange={this.handleChange}
                         />
                 ))}
