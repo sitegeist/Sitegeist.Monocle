@@ -40,7 +40,8 @@ import style from './style.css';
         }
     };
 }, {
-    onLoad: actions.prototypes.ready
+    onLoad: actions.prototypes.ready,
+    setCurrentHtml: actions.prototypes.setCurrentHtml
 })
 @visibility
 export default class PreviewFrame extends PureComponent {
@@ -73,8 +74,14 @@ export default class PreviewFrame extends PureComponent {
         }
     }
 
+    iframeLoaded = () => {
+        const {onLoad, setCurrentHtml} = this.props;
+        onLoad();
+        setCurrentHtml(this.iframe.contentDocument.querySelector('body').innerHTML);
+    }
+
     render() {
-        const {styles, onLoad} = this.props;
+        const {styles} = this.props;
 
         return (
             <iframe
@@ -84,7 +91,7 @@ export default class PreviewFrame extends PureComponent {
                 className={style.frame}
                 style={styles}
                 frameBorder="0"
-                onLoad={onLoad}
+                onLoad={this.iframeLoaded}
                 />
         );
     }

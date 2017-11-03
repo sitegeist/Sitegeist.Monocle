@@ -10992,6 +10992,10 @@ actions.setCurrentlyRendered = (0, _reduxActions.createAction)('@sitegeist/monoc
     return currentlyRenderedPrototype;
 });
 
+actions.setCurrentHtml = (0, _reduxActions.createAction)('@sitegeist/monocle/prototypes/setCurrentHtml', function (currentlyRenderedHtml) {
+    return currentlyRenderedHtml;
+});
+
 actions.ready = (0, _reduxActions.createAction)('@sitegeist/monocle/prototypes/ready');
 
 actions.reload = (0, _reduxActions.createAction)('@sitegeist/monocle/prototypes/reload');
@@ -11022,6 +11026,9 @@ var reducer = exports.reducer = function reducer(state, action) {
         case actions.setCurrentlyRendered.toString():
             return (0, _plowJs.$set)('prototypes.currentlyRendered', action.payload, state);
 
+        case actions.setCurrentHtml.toString():
+            return (0, _plowJs.$set)('prototypes.currentHtml', action.payload, state);
+
         case actions.overrideProp.toString():
             return (0, _plowJs.$set)(['prototypes', 'overriddenProps', action.payload.name], action.payload.value, state);
 
@@ -11046,6 +11053,8 @@ selectors.currentlySelected = (0, _reselect.createSelector)([(0, _plowJs.$get)('
 });
 
 selectors.currentlyRendered = (0, _plowJs.$get)('prototypes.currentlyRendered');
+
+selectors.currentHtml = (0, _plowJs.$get)('prototypes.currentHtml');
 
 selectors.overriddenProps = (0, _plowJs.$get)('prototypes.overriddenProps');
 
@@ -34107,10 +34116,12 @@ var InfoTabs = (_dec = (0, _reactRedux.connect)(function (state) {
     var prototypes = _state.selectors.prototypes.all(state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
     var currentlySelectedPrototype = _state.selectors.prototypes.currentlySelected(state);
+    var currentHtml = _state.selectors.prototypes.currentHtml(state);
 
     return _extends({
         prototypes: prototypes
     }, currentlyRenderedPrototype, currentlySelectedPrototype, {
+        renderedHtml: currentHtml ? currentHtml : '',
         isVisible: Boolean(currentlyRenderedPrototype) && Boolean(currentlySelectedPrototype)
     });
 }), _dec2 = (0, _components.resizable)({
@@ -34280,7 +34291,8 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
         }
     };
 }, {
-    onLoad: _state.actions.prototypes.ready
+    onLoad: _state.actions.prototypes.ready,
+    setCurrentHtml: _state.actions.prototypes.setCurrentHtml
 }), _dec(_class = (0, _components.visibility)(_class = (_temp2 = _class2 = function (_PureComponent) {
     _inherits(PreviewFrame, _PureComponent);
 
@@ -34307,6 +34319,13 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 _this.iframe = iframe;
                 _this.updateSrc(src);
             }
+        }, _this.iframeLoaded = function () {
+            var _this$props = _this.props,
+                onLoad = _this$props.onLoad,
+                setCurrentHtml = _this$props.setCurrentHtml;
+
+            onLoad();
+            setCurrentHtml(_this.iframe.contentDocument.querySelector('body').innerHTML);
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -34323,9 +34342,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     }, {
         key: 'render',
         value: function render() {
-            var _props = this.props,
-                styles = _props.styles,
-                onLoad = _props.onLoad;
+            var styles = this.props.styles;
 
 
             return _react2.default.createElement('iframe', {
@@ -34335,7 +34352,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 className: _style2.default.frame,
                 style: styles,
                 frameBorder: '0',
-                onLoad: onLoad
+                onLoad: this.iframeLoaded
             });
         }
     }]);
