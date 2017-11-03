@@ -96,9 +96,9 @@ therefore highly reusable.
 The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the ReactJS world.
 
-### Configuration
+### Preview Configuration
 
-Some configuration is available to ui settings and to configure the preview.
+Some configuration is available to configure the preview.
 
 ```YAML
 Sitegeist:
@@ -121,10 +121,9 @@ Sitegeist:
         defaultPrototypeName: 'Vendor.Site:Prototype'
 ```
 
+### Sites - Configuration
 
-### Configuration
-
-All configurations can be overwritten for each site-package.
+All configurations can be overwritten for each selected site package.
 
 ```YAML
 Sitegeist:
