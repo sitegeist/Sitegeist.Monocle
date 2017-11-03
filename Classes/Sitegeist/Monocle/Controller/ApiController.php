@@ -17,11 +17,13 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Utility\Arrays;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Symfony\Component\Yaml\Yaml;
+use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
  * Class ApiController
@@ -50,21 +52,15 @@ class ApiController extends ActionController
 
     /**
      * @var array
-     * @Flow\InjectConfiguration("viewportPresets")
-     */
-    protected $viewportPresets;
-
-    /**
-     * @var array
      * @Flow\InjectConfiguration("preview.additionalResources")
      */
     protected $additionalResources;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.structure")
+     * @Flow\Inject
+     * @var ConfigurationService
      */
-    protected $structure;
+    protected $configurationService;
 
     /**
      * Get all styleguide objects
@@ -79,17 +75,25 @@ class ApiController extends ActionController
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
+        $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
 
         foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
-            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeName);
+            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
         }
 
         $this->view->assign('value', $styleguideObjects);
     }
 
-    protected function getStructureForPrototypeName($prototypeName)
+    /**
+     * Find the matching structure for a prototype
+     *
+     * @param $prototypeStructures
+     * @param $prototypeName
+     * @return array
+     */
+    protected function getStructureForPrototypeName($prototypeStructures, $prototypeName)
     {
-        foreach ($this->structure as $structure) {
+        foreach ($prototypeStructures as $structure) {
             if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
                 return $structure;
             }
@@ -121,46 +125,16 @@ class ApiController extends ActionController
     }
 
     /**
-     * Get all the configured resources
-     *
-     * @Flow\SkipCsrfProtection
-     * @return void
-     */
-    public function styleguideResourcesAction()
-    {
-        $styleSheets = $this->additionalResources['styleSheets'];
-        $javaScripts = $this->additionalResources['javaScripts'];
-
-        $result = [
-            'styleSheets' => [],
-            'javaScripts' => []
-        ];
-
-        foreach ($styleSheets as $styleSheetPath) {
-            $resolvedPath = $this->resolveResourcePathes($styleSheetPath);
-            if ($resolvedPath) {
-                $result['styleSheets'][] = $resolvedPath;
-            }
-        }
-
-        foreach ($javaScripts as $javaScriptPath) {
-            $resolvedPath = $this->resolveResourcePathes($javaScriptPath);
-            if ($resolvedPath) {
-                $result['javaScripts'][] = $resolvedPath;
-            }
-        }
-        $this->view->assign('value', $result);
-    }
-
     /**
      * Get all configured breakpoints
      *
      * @Flow\SkipCsrfProtection
+     * @param string $sitePackageKey
      * @return void
      */
-    public function viewportPresetsAction()
+    public function viewportPresetsAction($sitePackageKey)
     {
-        $this->view->assign('value', $this->viewportPresets);
+        $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'));
     }
 
     /**
@@ -206,15 +180,5 @@ class ApiController extends ActionController
         $this->view->assign('value', $result);
     }
 
-    protected function resolveResourcePathes($path)
-    {
-        if (strpos($path, 'resource://') === 0) {
-            try {
-                list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
-                return $this->resourceManager->getPublicPackageResourceUri($package, $path);
-            } catch (Exception $exception) {
-            }
-        }
-        return $path;
-    }
+
 }

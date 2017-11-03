@@ -19,6 +19,8 @@ use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Http\Response;
+use Sitegeist\Monocle\Service\ConfigurationService;
+use Neos\Utility\Arrays;
 
 /**
  * Class PreviewController
@@ -39,10 +41,10 @@ class PreviewController extends ActionController
     protected $view;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.fusionRootPath")
+     * @Flow\Inject
+     * @var ConfigurationService
      */
-    protected $fusionRootPath;
+    protected $configurationService;
 
     /**
      * @param  string $prototypeName
@@ -54,9 +56,10 @@ class PreviewController extends ActionController
     public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = [])
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
 
         $this->view->setPackageKey($sitePackageKey);
-        $this->view->setFusionPath($this->fusionRootPath);
+        $this->view->setFusionPath($fusionRootPath);
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,

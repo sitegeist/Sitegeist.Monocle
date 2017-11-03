@@ -1,43 +1,85 @@
 ##
 # Prototype that renders a the document around a preview-prototype
 #
-prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Neos:Page) {
+prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) {
 
-    head {
-        titleTag >
+    doctype = '<!DOCTYPE html>'
+    doctype.@position = 'start 100'
+
+    # Only the opening html tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    htmlTag = Neos.Fusion:Tag {
+        @position = 'start'
+        tagName = 'html'
+        omitClosingTag = TRUE
+    }
+
+    headerComment = Neos.Fusion:Template {
+        @position = 'before headTag'
+        templatePath = 'resource://Neos.Neos/Private/Templates/FusionObjects/NeosLicenseHeader.html'
+    }
+
+    # The opening head tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    headTag = Neos.Fusion:Tag {
+        @position = 'after htmlTag'
+        tagName = 'head'
+        omitClosingTag = TRUE
+    }
+
+    # The content of the head tag, integrators can add their own head content in this array.
+    head = Neos.Fusion:Array {
+        @position = 'after headTag'
+
+        characterSetMetaTag = Neos.Fusion:Tag {
+            @position = 'start 10'
+            tagName = 'meta'
+            attributes {
+                charset = 'UTF-8'
+            }
+        }
+
         titleTag = Neos.Fusion:Tag {
-            content = ${sitePackageKey + '::' + prototypeName}
+            tagName = 'title'
+            content = ${sitePackageKey + prototypeName}
         }
 
-        meta = Neos.Fusion:Array {
-            viewport = Sitegeist.Monocle:Preview.MetaViewport
-        }
+        # Link tags for stylesheets in the head should go here
+        stylesheets = Neos.Fusion:Array
 
-        stylesheets = Neos.Fusion:Array {
-            main = Sitegeist.Monocle:Preview.Styles
-        }
-
+        # Script includes in the head should go here
         javascripts = Neos.Fusion:Array {
-            main = Sitegeist.Monocle:Preview.Scripts
             @position = 'after stylesheets'
         }
-
-        neosBackendHeader >
-        neosBackendEndpoints >
     }
 
-    bodyTag.attributes.class.@process.addNeosBackendClass >
+    closingHeadTag = '</head>'
+    closingHeadTag.@position = 'after head'
 
-    body >
-    body = Sitegeist.Monocle:Preview.Prototype {
-        sitePackageKey = ${sitePackageKey}
-        prototypeName = ${prototypeName}
-        propSet = ${propSet}
-        props =  ${props}
+    # The opening body tag for the page. This is done to avoid deep nesting of TypoScript paths for integrators.
+    bodyTag = Neos.Fusion:Tag {
+        @position = '20'
+        tagName = 'body'
+        omitClosingTag = TRUE
     }
 
-    neosBackendDocumentNodeData >
-    neosBackendContainer >
-    lastVisitedNodeScript >
-    neosBackendFooter >
+
+    # Content of the body tag. To be defined by the integrator.
+    body = Neos.Fusion:Array {
+        @position = 'after bodyTag'
+
+        preview = Sitegeist.Monocle:Preview.Prototype {
+            sitePackageKey = ${sitePackageKey}
+            prototypeName = ${prototypeName}
+            propSet = ${propSet}
+            props =  ${props}
+        }
+    }
+
+
+    closingBodyTag = '</body>'
+    closingBodyTag.@position = 'end 100'
+
+    closingHtmlTag = '</html>'
+    closingHtmlTag.@position = 'end 200'
+
+    @exceptionHandler = 'Neos\\Neos\\Fusion\\ExceptionHandlers\\PageHandler'
 }

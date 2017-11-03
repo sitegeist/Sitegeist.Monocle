@@ -19,6 +19,7 @@ use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
  * Class ModuleController
@@ -29,16 +30,10 @@ class ModuleController extends ActionController
     use PackageKeyTrait;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("ui")
+     * @Flow\Inject
+     * @var ConfigurationService
      */
-    protected $uiSettings;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("defaultPrototypeName")
-     */
-    protected $defaultPrototypeName;
+    protected $configurationService;
 
     /**
      * Initialize the view
@@ -48,9 +43,13 @@ class ModuleController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $this->view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
-        $this->view->assign('defaultPrototypeName', json_encode($this->defaultPrototypeName));
-        $this->view->assign('uiSettings', json_encode($this->uiSettings));
+        $sitePackageKey = $this->getDefaultSitePackageKey();
+        $defaultPrototypeName = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview.defaultPrototypeName');
+        $uiSettings = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui');
+
+        $this->view->assign('defaultSitePackageKey', $sitePackageKey);
+        $this->view->assign('defaultPrototypeName', json_encode($defaultPrototypeName));
+        $this->view->assign('uiSettings', json_encode($uiSettings));
     }
 
     /**

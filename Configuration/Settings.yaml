@@ -1,8 +1,8 @@
 
 Sitegeist:
   Monocle:
-    defaultPrototypeName: {  }
-    viewportPresets: {  }
+    packages: {  }
+
     ui:
       hotkeys:
         openNavigation: 'ctrl+f'
@@ -10,12 +10,21 @@ Sitegeist:
         navigateUp: 'up'
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
-    preview:
-      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
-      metaViewport: ''
-      additionalResources:
-        styleSheets: {  }
-        javaScripts: {  }
+
+      viewportPresets:
+        xs:
+          label: 'xtra small'
+          width: 400
+          height: 600
+        md:
+          label: 'medium'
+          width: 600
+          height: 400
+        l:
+          label: 'wide'
+          width: 800
+          height: 600
+
       structure:
         base:
           position: 100
@@ -47,6 +56,10 @@ Sitegeist:
           label: Templates
           icon: icon-file
           color: '#FFF'
+
+    preview:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
+      defaultPrototypeName: {  }
 
 Neos:
   Flow:

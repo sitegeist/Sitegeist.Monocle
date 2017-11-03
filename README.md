@@ -98,44 +98,81 @@ presentational-components vs. container-components in the ReactJS world.
 
 ### Configuration
 
-Some configuration is needed to define the JS and CSS that has to be included for the preview.
+Some configuration is available to ui settings and to configure the preview.
 
 ```YAML
 Sitegeist:
   Monocle:
-    # define the breakpoints the styleguide will offer
-    viewportPresets:
-      xs:
-        label: 'xtra small'
-        width: 400
-        height: 600
-      md:
-        label: 'medium'
-        width: 600
-        height: 400
-      l:
-        label: 'wide'
-        width: 800
-        height: 600
-
     preview:
-      # the resources that are loaded in the preview iFrames
-      additionalResources:
-        styleSheets:
-          # example:  'resource://Vendor.Site/Public/Styles/Main.css'
-        javaScripts:
-          # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
+        # 
+        # The fusion path that renders the preview. 
+        # the available context is has the values 
+        #  - sitePackageKey
+        #  - prototypeName
+        #  - propSet
+        #  - props  
+        # 
+        fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
+        
+        # 
+        # The fusion prototype that is rendered initially
+        # Optional: Will default to the first found prototype
+        #
+        defaultPrototypeName: 'Vendor.Site:Prototype'
+```
+
+
+### Configuration
+
+All configurations can be overwritten for each site-package.
+
+```YAML
+Sitegeist:
+  Monocle:
+    packages:
+      'Vendor.Site':
+        preview: 
+          fusionRootPath:  '/<Vendow.Site:Preview.Page>'
+        ui:
+          viewportPresets:
+              xxl:
+                label: 'extra wide'
+                width: 1600
+                height: 1000    
 ```
 
 #### Default Prototype
 
-Monocle will determine the prototype that is shown first automatically. It is however possible, to configure a specific prototype instead. Since Monocle distinguishes between site packages, this prototype has to be defined on a per-sitepackage basis:
+Monocle will determine the prototype that is shown first automatically. It is however possible, to configure a specific prototype instead.
 
 ```YAML
 Sitegeist:
   Monocle:
-    defaultPrototypeName:
-      'Vendor.SitePackage': 'Vendor.SitePackage:Prototype'
+    preview:
+      defaultPrototypeName: 'Vendor.SitePackage:Prototype'
+```
+
+#### Viewports
+
+To configure the available viewport presets you can alter the following configuration. 
+
+```YAML
+Sitegeist:
+  Monocle:
+    ui:
+      viewportPresets:
+        xs:
+          label: 'xtra small'
+          width: 400
+          height: 600
+        md:
+          label: 'medium'
+          width: 600
+          height: 400
+        l:
+          label: 'wide'
+          width: 800
+          height: 600
 ```
 
 #### Hotkeys (experimental)
@@ -163,7 +200,7 @@ A possible configuration for such a group looks like this:
 ```YAML
 Sitegeist:
   Monocle:
-    preview:
+    ui:
       structure:
         base:
           position: 100
