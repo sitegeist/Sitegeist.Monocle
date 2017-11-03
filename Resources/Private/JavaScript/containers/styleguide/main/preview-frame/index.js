@@ -48,7 +48,8 @@ export default class PreviewFrame extends PureComponent {
     static propTypes = {
         src: PropTypes.string.isRequired,
         styles: PropTypes.object,
-        onLoad: PropTypes.func.isRequired
+        onLoad: PropTypes.func.isRequired,
+        setCurrentHtml: PropTypes.func.isRequired
     };
 
     updateSrc = debounce(src => {
@@ -76,8 +77,8 @@ export default class PreviewFrame extends PureComponent {
 
     iframeLoaded = () => {
         const {onLoad, setCurrentHtml} = this.props;
-        onLoad();
         setCurrentHtml(this.iframe.contentDocument.querySelector('body').innerHTML);
+        onLoad();
     }
 
     render() {
