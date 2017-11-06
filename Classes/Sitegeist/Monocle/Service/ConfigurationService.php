@@ -27,7 +27,7 @@ class ConfigurationService
     public function getSiteConfiguration($sitePackageKey, $path = null)
     {
         $configuration = $this->getMergedConfigurationForSitePackage($sitePackageKey);
-        if ($path == null){
+        if ($path == null) {
             return $configuration;
         } else {
             return Arrays::getValueByPath($configuration, $path);
