@@ -33673,15 +33673,15 @@ var AnatomyItem = (_temp2 = _class = function (_PureComponent) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AnatomyItem.__proto__ || Object.getPrototypeOf(AnatomyItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelect = function () {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AnatomyItem.__proto__ || Object.getPrototypeOf(AnatomyItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleSelect = function (event) {
             var _this$props = _this.props,
                 name = _this$props.name,
                 onSelect = _this$props.onSelect;
 
-
             if (onSelect) {
                 onSelect(name);
             }
+            event.stopPropagation();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
