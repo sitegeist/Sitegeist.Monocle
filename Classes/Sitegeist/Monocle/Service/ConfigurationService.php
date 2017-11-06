@@ -24,7 +24,8 @@ class ConfigurationService
      * @param $sitePackageKey
      * @param $path
      */
-    public function getSiteConfiguration($sitePackageKey, $path = null) {
+    public function getSiteConfiguration($sitePackageKey, $path = null)
+    {
         $configuration = $this->getMergedConfigurationForSitePackage($sitePackageKey);
         if ($path == null){
             return $configuration;
@@ -39,16 +40,17 @@ class ConfigurationService
      * @param $sitePackageKey
      * @return array
      */
-    protected function getMergedConfigurationForSitePackage($sitePackageKey) {
+    protected function getMergedConfigurationForSitePackage($sitePackageKey)
+    {
         if (array_key_exists($sitePackageKey, $this->mergedConfigurationCache)) {
             return $this->mergedConfigurationCache[$sitePackageKey];
         }
 
         $configuration = $this->configuration;
-        $siteConfiguration = Arrays::getValueByPath($configuration, ['packages' , $sitePackageKey] );
+        $siteConfiguration = Arrays::getValueByPath($configuration, ['packages' , $sitePackageKey]);
         if ($siteConfiguration) {
             $result = Arrays::arrayMergeRecursiveOverrule($configuration, $siteConfiguration);
-        } else  {
+        } else {
             $result = $configuration;
         }
 

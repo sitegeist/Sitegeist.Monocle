@@ -179,6 +179,4 @@ class ApiController extends ActionController
 
         $this->view->assign('value', $result);
     }
-
-
 }
