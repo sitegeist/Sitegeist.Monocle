@@ -23,10 +23,8 @@ import style from './style.css';
             queryParams: {
                 prototypeName: currentlyRenderedPrototype.prototypeName,
                 propSet: selectedPropSet,
-                sitePackageKey,
-                ...Object.keys(overriddenProps).reduce((map, propName) => {
-                    return {...map, [`props[${propName}]`]: encodeURIComponent(overriddenProps[propName])};
-                }, {})
+                sitePackageKey: sitePackageKey,
+                props: JSON.stringify(overriddenProps)
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype),

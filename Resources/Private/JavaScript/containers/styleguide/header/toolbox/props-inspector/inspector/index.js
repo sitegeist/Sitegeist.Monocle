@@ -67,12 +67,12 @@ export default class Inspector extends PureComponent {
                         onSelectPropSet={this.handleSelectPropSet}
                         />
                 )}
-                {currentProps && Object.keys(currentProps).filter(name => typeof currentProps[name] === 'string').map(name => (
+                {currentProps && Object.keys(currentProps).map(name => (
                     <PropsItem
                         key={name}
                         name={name}
+                        type={typeof currentProps[name]}
                         value={name in overriddenProps ? overriddenProps[name] : currentProps[name]}
-                        isLarge={currentProps[name].length > 80}
                         onChange={this.handleChange}
                         />
                 ))}

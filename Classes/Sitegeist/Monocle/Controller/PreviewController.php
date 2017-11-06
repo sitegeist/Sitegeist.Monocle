@@ -105,11 +105,20 @@ class PreviewController extends ActionController
      * @param  string $prototypeName
      * @param  string $sitePackageKey
      * @param  string $propSet
-     * @param  array $props
+     * @param  string $props props as json encoded string
      * @return void
      */
-    public function componentAction($prototypeName, $sitePackageKey, $propSet = '__default', array $props = [])
+    public function componentAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '')
     {
+        $renderProps = [];
+
+        if ($props) {
+            $data = json_decode($props, true);
+            if (is_array($data)) {
+                $renderProps = $data;
+            }
+        }
+
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
@@ -119,7 +128,7 @@ class PreviewController extends ActionController
         $typoScriptView->setFusionPath($prototypePreviewRenderPath);
         $typoScriptView->setPackageKey($sitePackageKey);
 
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
+        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $renderProps);
 
         $this->view->assignMultiple([
             'packageKey' => $sitePackageKey,
