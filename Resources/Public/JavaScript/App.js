@@ -32742,7 +32742,7 @@ var Inspector = (_dec = (0, _reactRedux.connect)(function (state) {
                 props = _fusionAst$__meta$sty.props,
                 propSets = _fusionAst$__meta$sty.propSets;
 
-            var currentProps = selectedPropSet in propSets ? Object.assign({}, props, propSets[selectedPropSet]) : props;
+            var currentProps = propSets && selectedPropSet in propSets ? Object.assign({}, props, propSets[selectedPropSet]) : props;
 
             return _react2.default.createElement(
                 'div',
@@ -34324,8 +34324,8 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 onLoad = _this$props.onLoad,
                 setCurrentHtml = _this$props.setCurrentHtml;
 
-            onLoad();
             setCurrentHtml(_this.iframe.contentDocument.querySelector('body').innerHTML);
+            onLoad();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -34361,7 +34361,8 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
 }(_react.PureComponent), _class2.propTypes = {
     src: _propTypes2.default.string.isRequired,
     styles: _propTypes2.default.object,
-    onLoad: _propTypes2.default.func.isRequired
+    onLoad: _propTypes2.default.func.isRequired,
+    setCurrentHtml: _propTypes2.default.func.isRequired
 }, _temp2)) || _class) || _class);
 exports.default = PreviewFrame;
 

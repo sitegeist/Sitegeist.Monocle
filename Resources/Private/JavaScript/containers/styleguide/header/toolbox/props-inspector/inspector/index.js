@@ -51,7 +51,7 @@ export default class Inspector extends PureComponent {
         }
 
         const {props, propSets} = fusionAst.__meta.styleguide;
-        const currentProps = selectedPropSet in propSets ? Object.assign({}, props, propSets[selectedPropSet]) : props;
+        const currentProps = (propSets && selectedPropSet in propSets) ? Object.assign({}, props, propSets[selectedPropSet]) : props;
 
         return (
             <div
