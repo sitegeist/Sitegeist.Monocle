@@ -20,7 +20,6 @@ use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Http\Response;
 use Sitegeist\Monocle\Service\ConfigurationService;
-use Neos\Utility\Arrays;
 
 /**
  * Class PreviewController
@@ -50,21 +49,31 @@ class PreviewController extends ActionController
      * @param  string $prototypeName
      * @param  string $sitePackageKey
      * @param  string $propSet
-     * @param  array $props
+     * @param  string $props props as json encoded string
      * @return void
      */
-    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = [])
+    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '')
     {
+        $renderProps = [];
+
+        if ($props) {
+            $data = json_decode($props, true);
+            if (is_array($data)) {
+                $renderProps = $data;
+            }
+        }
+
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
         $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
 
         $this->view->setPackageKey($sitePackageKey);
         $this->view->setFusionPath($fusionRootPath);
+
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
             'propSet' => $propSet,
-            'props' => $props
+            'props' => $renderProps
         ]);
 
         // get the status and headers from the view

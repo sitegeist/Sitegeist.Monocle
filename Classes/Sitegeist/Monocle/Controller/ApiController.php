@@ -162,15 +162,8 @@ class ApiController extends ActionController
         $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
         $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
-        try {
-            $html = $fusionView->renderStyleguidePrototype($prototypeName);
-        } catch (\Exception $e) {
-            $html = $e->getMessage();
-        }
-
         $result = [
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $html,
             'renderedCode' => $fusionCode,
             'parsedCode' => Yaml::dump($fusionAst, 99),
             'fusionAst' => $fusionAst,

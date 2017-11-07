@@ -29,6 +29,11 @@ actions.setCurrentlyRendered = createAction(
     currentlyRenderedPrototype => currentlyRenderedPrototype
 );
 
+actions.setCurrentHtml = createAction(
+    '@sitegeist/monocle/prototypes/setCurrentHtml',
+    currentlyRenderedHtml => currentlyRenderedHtml
+);
+
 actions.ready = createAction(
     '@sitegeist/monocle/prototypes/ready'
 );
@@ -75,6 +80,9 @@ export const reducer = (state, action) => {
         case actions.setCurrentlyRendered.toString():
             return $set('prototypes.currentlyRendered', action.payload, state);
 
+        case actions.setCurrentHtml.toString():
+            return $set('prototypes.currentHtml', action.payload, state);
+
         case actions.overrideProp.toString():
             return $set(['prototypes', 'overriddenProps', action.payload.name], action.payload.value, state);
 
@@ -103,6 +111,8 @@ selectors.currentlySelected = createSelector(
 );
 
 selectors.currentlyRendered = $get('prototypes.currentlyRendered');
+
+selectors.currentHtml = $get('prototypes.currentHtml');
 
 selectors.overriddenProps = $get('prototypes.overriddenProps');
 

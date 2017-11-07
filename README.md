@@ -2,6 +2,8 @@
 
 # Sitegeist.Monocle
 
+<img src="./Resources/Public/Images/monocle_imagemark.svg" width="300" />
+
 ## A living styleguide for Neos
 
 This package adds a styleguide module to Neos that renders the
@@ -42,12 +44,6 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
     @styleguide {
 
         #
-        # Path of the component in the styleguide
-        # Optional: by default the name-part of the component name is used
-        #
-        path = 'Components.Headline'
-
-        #
         # The title of the component
         # Optional:  by default the component name is splitted and reversed
         #
@@ -65,6 +61,19 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
         #
         props {
             content = 'Hello World'
+        }
+        
+        #
+        # Alternate prop sets that can overload the default props
+        # Optional: By default empty.
+        #
+        propSets {
+            'level 2' {
+                tagName = 'h2'
+            }
+            'long text' {
+                content = 'Lorem ipsum dolor sit amet ...'
+            }
         }
     }
 

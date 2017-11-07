@@ -23,10 +23,8 @@ import style from './style.css';
             queryParams: {
                 prototypeName: currentlyRenderedPrototype.prototypeName,
                 propSet: selectedPropSet,
-                sitePackageKey,
-                ...Object.keys(overriddenProps).reduce((map, propName) => {
-                    return {...map, [`props[${propName}]`]: encodeURIComponent(overriddenProps[propName])};
-                }, {})
+                sitePackageKey: sitePackageKey,
+                props: JSON.stringify(overriddenProps)
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype),
@@ -40,14 +38,16 @@ import style from './style.css';
         }
     };
 }, {
-    onLoad: actions.prototypes.ready
+    onLoad: actions.prototypes.ready,
+    setCurrentHtml: actions.prototypes.setCurrentHtml
 })
 @visibility
 export default class PreviewFrame extends PureComponent {
     static propTypes = {
         src: PropTypes.string.isRequired,
         styles: PropTypes.object,
-        onLoad: PropTypes.func.isRequired
+        onLoad: PropTypes.func.isRequired,
+        setCurrentHtml: PropTypes.func.isRequired
     };
 
     updateSrc = debounce(src => {
@@ -73,8 +73,14 @@ export default class PreviewFrame extends PureComponent {
         }
     }
 
+    iframeLoaded = () => {
+        const {onLoad, setCurrentHtml} = this.props;
+        setCurrentHtml(this.iframe.contentDocument.querySelector('body').innerHTML);
+        onLoad();
+    }
+
     render() {
-        const {styles, onLoad} = this.props;
+        const {styles} = this.props;
 
         return (
             <iframe
@@ -84,7 +90,7 @@ export default class PreviewFrame extends PureComponent {
                 className={style.frame}
                 style={styles}
                 frameBorder="0"
-                onLoad={onLoad}
+                onLoad={this.iframeLoaded}
                 />
         );
     }
