@@ -154,17 +154,6 @@ class FusionService extends NeosFusionService
             $styleguideRenderingPrototypes[$prototypeName] = $renderPrototypeTypoScript;
         }
 
-        // apply props to the prototypes inside
-        foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
-            foreach ($styleguidePenderingProps as $propPrototypeName => $props) {
-                if ($propPrototypeName == $prototypeName) {
-                    $styleguideRenderingPrototypes[$prototypeName] = array_merge_recursive($styleguideRenderingPrototypes[$prototypeName], $props);
-                } else {
-                    $styleguideRenderingPrototypes[$prototypeName]['__prototypes'][$propPrototypeName] = $props;
-                }
-            }
-        }
-
         // create render pathes
         foreach ($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
             $key = self::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
