@@ -69,9 +69,9 @@ class ApiController extends ActionController
      * @param string $sitePackageKey
      * @return void
      */
-    public function styleguideObjectsAction($sitePackageKey)
+    public function styleguideObjectsAction($sitePackageKey = null)
     {
-        $sitePackageKey = $this->getDefaultSitePackageKey();
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
@@ -132,8 +132,9 @@ class ApiController extends ActionController
      * @param string $sitePackageKey
      * @return void
      */
-    public function viewportPresetsAction($sitePackageKey)
+    public function viewportPresetsAction($sitePackageKey = null)
     {
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
         $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'));
     }
 
@@ -145,9 +146,9 @@ class ApiController extends ActionController
      * @param string $sitePackageKey
      * @return void
      */
-    public function renderPrototypeAction($prototypeName, $sitePackageKey)
+    public function renderPrototypeAction($prototypeName, $sitePackageKey = null)
     {
-        $sitePackageKey = $this->getDefaultSitePackageKey();
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 

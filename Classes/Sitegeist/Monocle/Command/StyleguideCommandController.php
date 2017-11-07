@@ -56,10 +56,11 @@ class StyleguideCommandController extends CommandController
      * Get all styleguide items currently available
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
+     * @param string $packageKey site-package (defaults to first found)
      */
-    public function itemsCommand($format = 'json')
+    public function itemsCommand($format = 'json', $packageKey = null)
     {
-        $sitePackageKey = $this->getDefaultSitePackageKey();
+        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
 
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
@@ -71,14 +72,15 @@ class StyleguideCommandController extends CommandController
      * Render a given fusion component to HTML
      *
      * @param string $prototypeName The prototype name of the component
+     * @param string $packageKey site-package (defaults to first found)
      * @return void
      */
-    public function renderCommand($prototypeName)
+    public function renderCommand($prototypeName, $packageKey = null)
     {
+        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
+
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
         $controllerContext = $this->createDummyControllerContext();
-
-        $sitePackageKey = $this->getDefaultSitePackageKey();
 
         $fusionView = new FusionView();
         $fusionView->setControllerContext($controllerContext);
