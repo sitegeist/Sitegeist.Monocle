@@ -12,9 +12,7 @@ export default class AnatomyItem extends PureComponent {
 
     handleSelect = (event) => {
         const {name, onSelect} = this.props;
-        if (onSelect) {
-            onSelect(name);
-        }
+        onSelect(name);
         event.stopPropagation();
     };
 

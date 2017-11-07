@@ -33855,9 +33855,7 @@ var AnatomyItem = (_temp2 = _class = function (_PureComponent) {
                 name = _this$props.name,
                 onSelect = _this$props.onSelect;
 
-            if (onSelect) {
-                onSelect(name);
-            }
+            onSelect(name);
             event.stopPropagation();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
