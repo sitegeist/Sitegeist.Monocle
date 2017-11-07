@@ -33248,8 +33248,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp2;
@@ -33303,20 +33301,20 @@ var PropsItem = (_temp2 = _class = function (_PureComponent) {
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PropsItem.__proto__ || Object.getPrototypeOf(PropsItem)).call.apply(_ref, [this].concat(args))), _this), _this.handleChange = function (value) {
             var _this$props = _this.props,
                 onChange = _this$props.onChange,
-                name = _this$props.name,
-                type = _this$props.type;
+                name = _this$props.name;
 
 
             if (onChange) {
                 onChange(name, value);
             }
-        }, _this.renderField = function (name, value, onChange) {
-            switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
+        }, _this.renderField = function (name, value, type, onChange) {
+            switch (type) {
                 case 'string':
-                    var isLarge = value.length > 80;
-                    if (isLarge) {
-                        return _react2.default.createElement(_TextArea2.default, { minRows: 6, id: 'prop-' + name, value: value, onChange: onChange });
-                    } else {
+                    {
+                        var isLarge = value.length > 80;
+                        if (isLarge) {
+                            return _react2.default.createElement(_TextArea2.default, { minRows: 6, id: 'prop-' + name, value: value, onChange: onChange });
+                        }
                         return _react2.default.createElement(_TextInput2.default, { id: 'prop-' + name, value: value, onChange: onChange });
                     }
                 case 'boolean':
@@ -33344,7 +33342,7 @@ var PropsItem = (_temp2 = _class = function (_PureComponent) {
                     { htmlFor: 'prop-' + name },
                     name
                 ),
-                this.renderField(name, value, this.handleChange)
+                this.renderField(name, value, type, this.handleChange)
             );
         }
     }]);

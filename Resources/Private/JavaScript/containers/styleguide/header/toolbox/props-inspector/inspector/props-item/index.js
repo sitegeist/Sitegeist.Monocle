@@ -16,26 +16,32 @@ export default class PropsItem extends PureComponent {
     };
 
     handleChange = value => {
-        const {onChange, name, type} = this.props;
+        const {onChange, name} = this.props;
 
         if (onChange) {
             onChange(name, value);
         }
     };
 
-    renderField = (name, value, onChange) => {
-        switch (typeof value) {
-            case 'string':
-                const isLarge = (value.length > 80);
+    renderField = (name, value, type, onChange) => {
+        switch (type) {
+            case 'string': {
+                const isLarge = value.length > 80;
                 if (isLarge) {
-                    return <TextArea minRows={6} id={`prop-${name}`} value={value} onChange={onChange}/>
-                } else {
-                    return <TextInput id={`prop-${name}`} value={value} onChange={onChange}/>
+                    return (
+                         <TextArea minRows={6} id={`prop-${name}`} value={value} onChange={onChange}/>
+                    );
                 }
+                return (
+                    <TextInput id={`prop-${name}`} value={value} onChange={onChange}/>
+                );
+            }
             case 'boolean':
-                return <CheckBox id={`prop-${name}`} isChecked={value} onChange={onChange}/>
+                return (
+                    <CheckBox id={`prop-${name}`} isChecked={value} onChange={onChange}/>
+                );
             default:
-                return 'no matching editor found'
+                return 'no matching editor found';
         }
     }
 
@@ -43,11 +49,11 @@ export default class PropsItem extends PureComponent {
         const {name, value, type} = this.props;
 
         return (
-            ['string','boolean'].includes(type) &&
+            ['string', 'boolean'].includes(type) &&
             <div key={name} className={style.item}>
                 <label htmlFor={`prop-${name}`}>{name}</label>
                 {
-                    this.renderField(name, value, this.handleChange)
+                    this.renderField(name, value, type, this.handleChange)
                 }
             </div>
         );
