@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
-import {$get, $set, $override} from 'plow-js';
+import {$get, $set} from 'plow-js';
 import {select, put} from 'redux-saga/effects';
 import {selectors as sites} from '../sites';
 import url from 'build-url';
@@ -26,7 +26,7 @@ actions.select = createAction(
 export const reducer = (state, action) => {
     switch (action.type) {
         case actions.set.toString():
-            return $override('breakpoints.byName', action.payload, state);
+            return $set('breakpoints.byName', action.payload, state);
 
         case actions.clear.toString():
             return $set('breakpoints.byName', {}, state);
