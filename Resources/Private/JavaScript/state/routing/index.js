@@ -4,6 +4,7 @@ import {$get} from 'plow-js';
 
 import * as business from '../business';
 import * as prototypes from '../prototypes';
+import * as breakpoints from '../breakpoints';
 import * as sites from '../sites';
 
 export const actions = {};
@@ -49,7 +50,9 @@ sagas.updateStateOnDirectRouting = function * () {
         } else {
             yield put(business.actions.addTask('@sitegeist/monocle/switch-site'));
             yield put(sites.actions.select(sitePackageKey));
+
             yield call(prototypes.sagas.load);
+            yield call(breakpoints.sagas.load);
 
             const listOfPrototypes = yield select(prototypes.selectors.all);
 

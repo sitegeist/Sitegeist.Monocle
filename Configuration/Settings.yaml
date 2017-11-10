@@ -1,8 +1,8 @@
 
 Sitegeist:
   Monocle:
-    defaultPrototypeName: {  }
-    viewportPresets: {  }
+    packages: {  }
+
     ui:
       hotkeys:
         openNavigation: 'ctrl+f'
@@ -10,11 +10,21 @@ Sitegeist:
         navigateUp: 'up'
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
-    preview:
-      metaViewport: ''
-      additionalResources:
-        styleSheets: {  }
-        javaScripts: {  }
+
+      viewportPresets:
+        xs:
+          label: 'xtra small'
+          width: 400
+          height: 600
+        md:
+          label: 'medium'
+          width: 600
+          height: 400
+        l:
+          label: 'wide'
+          width: 800
+          height: 600
+
       structure:
         base:
           position: 100
@@ -47,8 +57,16 @@ Sitegeist:
           icon: icon-file
           color: '#FFF'
 
+    preview:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
+      defaultPrototypeName: {  }
+
 Neos:
   Flow:
+    mvc:
+      routes:
+        'Sitegeist.Monocle':
+          position: 'before Neos.Neos'
     security:
       authentication:
         providers:
@@ -59,6 +77,10 @@ Neos:
                 patternOptions:
                   controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
   Neos:
+    fusion:
+      autoInclude:
+        Sitegeist.Monocle: true
+
     modules:
       administration:
         submodules:
@@ -71,3 +93,4 @@ Neos:
             additionalResources:
               styleSheets:
                 module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
+

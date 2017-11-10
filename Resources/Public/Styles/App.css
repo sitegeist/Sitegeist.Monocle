@@ -3183,6 +3183,71 @@
 :root {}
 :root {}
 :root {}
+.style__checkbox___2NlrV {
+    position: relative;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.style__checkbox__input___cKsM2 {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+.style__checkbox__inputMirror___1W_XI {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #adadad;
+    vertical-align: text-bottom;
+    background: #3f3f3f;
+    color: #FFF;
+}
+.style__label___XbPRM:hover .style__checkbox__inputMirror___1W_XI {
+        border-color: #00ADEE;
+    }
+.style__checkbox__inputMirror--active___3gI4Y {
+    background: #00ADEE;
+    border-color: #00ADEE;
+}
+.style__checkbox__inputMirror--active___3gI4Y:before {
+        content: '\2713';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+    }
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__item___3nKYS {
     width: 100%;
     max-width: 800px;

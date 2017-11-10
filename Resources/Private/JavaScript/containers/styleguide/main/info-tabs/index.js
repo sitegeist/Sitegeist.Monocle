@@ -19,11 +19,13 @@ import tabPanelTheme from './tabPanelTheme.css';
     const prototypes = selectors.prototypes.all(state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
     const currentlySelectedPrototype = selectors.prototypes.currentlySelected(state);
+    const currentHtml = selectors.prototypes.currentHtml(state);
 
     return {
         prototypes,
         ...currentlyRenderedPrototype,
         ...currentlySelectedPrototype,
+        renderedHtml: currentHtml ? currentHtml : '',
         isVisible: Boolean(currentlyRenderedPrototype) && Boolean(currentlySelectedPrototype)
     };
 })

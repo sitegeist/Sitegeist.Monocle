@@ -31,6 +31,17 @@ class FusionView extends BaseFusionView
     protected $fusionService;
 
     /**
+     * Load Fusion from the directories specified by $this->getOption('fusionPathPatterns')
+     *
+     * @return void
+     */
+    protected function loadFusion()
+    {
+        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
+        $this->parsedFusion = $fusionAst;
+    }
+
+    /**
      * @var array
      */
     protected $overriddenPropsPerPrototype = [];
@@ -43,7 +54,7 @@ class FusionView extends BaseFusionView
      * @param array $props
      * @return string
      */
-    public function renderStyleguidePrototype($prototypeName, $propSet = '__default', array $props = [])
+    public function renderStyleguidePrototype($prototypeName, $propSet = '__default', $props = [])
     {
         $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
         $fusionAst = $this->postProcessFusionAstForPrototype($fusionAst, $prototypeName, $propSet, $props);
@@ -73,7 +84,7 @@ class FusionView extends BaseFusionView
      * @param array $props
      * @return array
      */
-    protected function postProcessFusionAstForPrototype(array $fusionAst, $prototypeName, $propSet, array $props)
+    protected function postProcessFusionAstForPrototype(array $fusionAst, $prototypeName, $propSet, $props = [])
     {
         $this->assertWellFormedStyleguideObject($fusionAst, $prototypeName);
 
@@ -94,7 +105,7 @@ class FusionView extends BaseFusionView
         ) {
             $prototypeConfiguration = array_replace_recursive(
                 $prototypeConfiguration,
-                $styleguideConfiguration['propSets'][$propSet]['props']
+                $styleguideConfiguration['propSets'][$propSet]
             );
         }
 

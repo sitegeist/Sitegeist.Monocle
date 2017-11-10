@@ -27,6 +27,13 @@ The Monocle was defined with Atomic-Design and pure Fusion without Fluid in
 mind but the implementation is Coding-Style and Template-Engine agnostic. You can
 use Monocle to render Fluid based Prototypes without any limitation.
 
+## Installation
+
+Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~4.0"` to the require section of the composer.json 
+or run `composer require sitegeist/monocle`.
+
+We use semantic-versioning so every breaking change will increase the major-version number.
+
 ## Usage
 
 ### Create items for the styleguide
@@ -62,6 +69,19 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
         props {
             content = 'Hello World'
         }
+        
+        #
+        # Alternate prop sets that can overload the default props
+        # Optional: By default empty.
+        #
+        propSets {
+            'level 2' {
+                tagName = 'h2'
+            }
+            'long text' {
+                content = 'Lorem ipsum dolor sit amet ...'
+            }
+        }
     }
 
     # normal fusion props
@@ -92,46 +112,72 @@ therefore highly reusable.
 The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the ReactJS world.
 
-### Configuration
+### Preview Configuration
 
-Some configuration is needed to define the JS and CSS that has to be included for the preview.
+Some configuration is available to configure the preview.
 
 ```YAML
 Sitegeist:
   Monocle:
-    # define the breakpoints the styleguide will offer
-    viewportPresets:
-      xs:
-        label: 'xtra small'
-        width: 400
-        height: 600
-      md:
-        label: 'medium'
-        width: 600
-        height: 400
-      l:
-        label: 'wide'
-        width: 800
-        height: 600
-
     preview:
-      # the resources that are loaded in the preview iFrames
-      additionalResources:
-        styleSheets:
-          # example:  'resource://Vendor.Site/Public/Styles/Main.css'
-        javaScripts:
-          # example: 'resource://Vendor.Site/Public/Scripts/Main.js'
+        # 
+        # The fusion path that renders the preview. 
+        # the available context is has the values 
+        #  - sitePackageKey
+        #  - prototypeName
+        #  - propSet
+        #  - props  
+        # 
+        fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
+        
+        # 
+        # The fusion prototype that is rendered initially
+        # Optional: Will default to the first found prototype
+        #
+        defaultPrototypeName: 'Vendor.Site:Prototype'
 ```
 
-#### Default Prototype
+To include your styles and scripts into the preview you can extend the `Sitegeist.Monocle:Preview.Page` prototype the 
+same way you would customize `Neos.Neos:Page`. 
 
-Monocle will determine the prototype that is shown first automatically. It is however possible, to configure a specific prototype instead. Since Monocle distinguishes between site packages, this prototype has to be defined on a per-sitepackage basis:
+```
+//
+// Add stylesheets to to the preview-prototype
+//
+prototype(Sitegeist.Monocle:Preview.Page) {
+    head {
+        stylesheets.main = Vendor.Site:Resources.Styles
+        javascripts.main = Vendor.Site:Resources.Scripts
+    }
+
+    bodyScripts = Vendor.Site:Resources.BodyScripts {
+        @position = 'before closingBodyTag'
+    }
+} 
+
+```
+
+#### Viewports
+
+To configure the available viewport presets you can alter the following configuration. 
 
 ```YAML
 Sitegeist:
   Monocle:
-    defaultPrototypeName:
-      'Vendor.SitePackage': 'Vendor.SitePackage:Prototype'
+    ui:
+      viewportPresets:
+        xs:
+          label: 'xtra small'
+          width: 400
+          height: 600
+        md:
+          label: 'medium'
+          width: 600
+          height: 400
+        l:
+          label: 'wide'
+          width: 800
+          height: 600
 ```
 
 #### Hotkeys (experimental)
@@ -145,7 +191,7 @@ Sitegeist:
       hotkeys:
         openNavigation: 'ctrl+f'
         closeNavigation: 'esc'
-        navigateUp: 'up'
+        navigateUp: 'up's
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
 ```
@@ -159,7 +205,7 @@ A possible configuration for such a group looks like this:
 ```YAML
 Sitegeist:
   Monocle:
-    preview:
+    ui:
       structure:
         base:
           position: 100
@@ -180,39 +226,71 @@ Monocle ships with a default structure configuration that tries to represent an 
 
 Each component that doesn't match any of the configured groups will instead be put into the `unknown` group.
 
-### Routes
+### Site-specific configuration
 
-If the default flow subroutes are not included in your main Routes.yaml you can add the following
-routes to your global Routes.yaml and only enable the monocle-subroutes.
+All configurations can be overwritten for each selected site package.
 
 ```YAML
-##
-# Sitegeist.Monocle subroutes
-
--
-  name: 'Monocle'
-  uriPattern: 'sitegeist/monocle/<MonocleSubroutes>'
-  subRoutes:
-    'MonocleSubroutes':
-      package: 'Sitegeist.Monocle'
+Sitegeist:
+  Monocle:
+    packages:
+      'Vendor.Site':
+        ui:
+          viewportPresets:
+              xxl:
+                label: 'extra wide'
+                width: 1600
+                height: 1000    
 ```
 
-## Installation
+### Routes
 
-Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~1.0"` to the require section of the composer.json or run `composer require sitegeist/monocle`.
+The monocle Routes are included automatically via Settings.
 
-We use semantic-versioning so every breaking change will increase the major-version number.
+### Fusion 
 
-## Visual regression testing
+Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to your needs.
+
+#### `Sitegeist.Monocle:Preview.Page` 
+
+The prototype `Sitegeist.Monocle:Preview.Page` renders the preview view for a prototype, to do so it uses `Sitegeist.Monocle:Preview.Prototype` below. 
+You can extend this prototype to add your styles and scripts as you would with `Neos.Neos:Page`. 
+
+#### `Sitegeist.Monocle:Preview.Prototype`
+
+The prototype `Sitegeist.Monocle:Preview.Prototype` is used to render a single prototype with applied styleguide props. 
+This is useful if you want to provide the result as prop to the preview of another prototype. 
+
+```
+prototype(Vendor.Site:Container) {
+    @styleguide{
+        props.content = Sitegeist.Monocle:Preview.Prototype {
+            prototypeName = 'Vendor.Site:Item'
+            propSet = 'large'
+        }
+    }
+    ...
+}
+```
+
+## Policies
+
+Monocle comes with four privilege targets that are by default granted to the group 'Neos.Neos:AbstractEditor'
+
+- `Sitegeist.Monocle:Backend.Styleguide` : call the backend module that will open the styleguide 
+- `Sitegeist.Monocle:Styleguide.Api` : request informations about prototypes etc. via api (used from the module)
+- `Sitegeist.Monocle:Styleguide.Preview` : show a preview for a prototype
+- `Sitegeist.Monocle:Styleguide.Module` : show the styleguide
+
+### Policies for Visual regression testing
 
 Monocle can be used to render prototypes in isolation for visual regression testing tools.
-For that you might want to consider the following points.
+For that you might want to remove the access restrictions for the preview- and the api-target. 
 
-### Policies
 ```YAML
 #
 # make the monocle endpoints publicly available
-# !!! do not use this in production this shoudl be used on the ci-server only!!!
+# !!! do not use this in production this should be used on the ci-server only!!!
 #
 
 roles:
@@ -226,12 +304,6 @@ roles:
         permission: GRANT
 
 ```
-
-### Routes
-
-To make the monocle encpoints accessible without a db-connection available make sure to include the
-monocle-routes before the neos-routes. Otherwise neos will try to resolve the path and fail due to a
-missing db-connection.
 
 ## Contribution
 

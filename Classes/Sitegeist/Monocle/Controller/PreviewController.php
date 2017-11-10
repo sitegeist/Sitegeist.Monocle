@@ -14,13 +14,12 @@ namespace Sitegeist\Monocle\Controller;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Package\PackageManagerInterface;
-use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Fusion\FusionView;
+use Neos\Flow\Http\Response;
+use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
  * Class PreviewController
@@ -31,100 +30,84 @@ class PreviewController extends ActionController
     use PackageKeyTrait;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.additionalResources")
+     * @var string
      */
-    protected $additionalResources;
+    protected $defaultViewObjectName = FusionView::class;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("defaultPrototypeName")
+     * @var FusionView
      */
-    protected $defaultPrototypeName;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.metaViewport")
-     */
-    protected $metaViewport;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("ui")
-     */
-    protected $uiSettings;
+    protected $view;
 
     /**
      * @Flow\Inject
-     * @var FusionService
+     * @var ConfigurationService
      */
-    protected $fusionService;
-
-    /**
-     * @Flow\Inject
-     * @var ResourceManager
-     */
-    protected $resourceManager;
-
-    /**
-     * Initialize the view
-     *
-     * @param  ViewInterface $view
-     * @return void
-     */
-    public function initializeView(ViewInterface $view)
-    {
-        $view->assign('defaultSitePackageKey', $this->getDefaultSitePackageKey());
-        $view->assign('defaultPrototypeName', json_encode($this->defaultPrototypeName));
-        $view->assign('metaViewport', $this->metaViewport);
-        $this->view->assign('uiSettings', json_encode($this->uiSettings));
-
-        //
-        // Resolve resource uris in beforehand
-        //
-        $view->assign('additionalResources', array_map(function ($resourceList) {
-            return array_map(function ($path) {
-                if (strpos($path, 'resource://') === 0) {
-                    list($package, $path) = $this->resourceManager->getPackageAndPathByPublicPath($path);
-                    return $this->resourceManager->getPublicPackageResourceUri($package, $path);
-                }
-
-                return $path;
-            }, $resourceList);
-        }, $this->additionalResources));
-    }
-
-    /**
-     * @return void
-     */
-    public function moduleAction()
-    {
-    }
+    protected $configurationService;
 
     /**
      * @param  string $prototypeName
      * @param  string $sitePackageKey
      * @param  string $propSet
-     * @param  array $props
+     * @param  string $props props as json encoded string
      * @return void
      */
-    public function componentAction($prototypeName, $sitePackageKey, $propSet = '__default', array $props = [])
+    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '')
     {
+        $renderProps = [];
+
+        if ($props) {
+            $data = json_decode($props, true);
+            if (is_array($data)) {
+                $renderProps = $data;
+            }
+        }
+
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-
-        $typoScriptView = new FusionView();
-        $typoScriptView->setControllerContext($this->getControllerContext());
-        $typoScriptView->setFusionPath($prototypePreviewRenderPath);
-        $typoScriptView->setPackageKey($sitePackageKey);
-
-        $html = $typoScriptView->renderStyleguidePrototype($prototypeName, $propSet, $props);
+        $this->view->setPackageKey($sitePackageKey);
+        $this->view->setFusionPath($fusionRootPath);
 
         $this->view->assignMultiple([
-            'packageKey' => $sitePackageKey,
+            'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
-            'renderedHtml' => $html
+            'propSet' => $propSet,
+            'props' => $renderProps
         ]);
+
+        // get the status and headers from the view
+        $result = $this->view->render();
+        $result = $this->mergeHttpResponseFromOutput($result);
+        return $result;
+    }
+
+    /**
+     * @param string $output
+     * @return string The message body without the message head
+     */
+    protected function mergeHttpResponseFromOutput($output)
+    {
+        if (substr($output, 0, 5) === 'HTTP/') {
+            $endOfHeader = strpos($output, "\r\n\r\n");
+            if ($endOfHeader !== false) {
+                $header = substr($output, 0, $endOfHeader + 4);
+                try {
+                    $renderedResponse = Response::createFromRaw($header);
+
+                    /** @var Response $response */
+                    $response = $this->controllerContext->getResponse();
+                    $response->setStatus($renderedResponse->getStatusCode());
+                    foreach ($renderedResponse->getHeaders()->getAll() as $headerName => $headerValues) {
+                        $response->setHeader($headerName, $headerValues[0]);
+                    }
+
+                    $output = substr($output, strlen($header));
+                } catch (\InvalidArgumentException $exception) {
+                }
+            }
+        }
+
+        return $output;
     }
 }

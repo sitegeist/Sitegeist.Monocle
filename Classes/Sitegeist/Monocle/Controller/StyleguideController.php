@@ -24,16 +24,9 @@ class StyleguideController extends AbstractModuleController
 {
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.defaultPath")
-     */
-    protected $defaultPath;
-
-    /**
      * @return void
      */
     public function indexAction()
     {
-        $this->view->assign('defaultPath', $this->defaultPath);
     }
 }
