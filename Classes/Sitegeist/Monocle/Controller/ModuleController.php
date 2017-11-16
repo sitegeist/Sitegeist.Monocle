@@ -44,12 +44,13 @@ class ModuleController extends ActionController
     public function initializeView(ViewInterface $view)
     {
         $sitePackageKey = $this->getDefaultSitePackageKey();
-        $defaultPrototypeName = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview.defaultPrototypeName');
         $uiSettings = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui');
+        $previewSettings = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview');
 
         $this->view->assign('defaultSitePackageKey', $sitePackageKey);
-        $this->view->assign('defaultPrototypeName', json_encode($defaultPrototypeName));
         $this->view->assign('uiSettings', json_encode($uiSettings));
+        $this->view->assign('previewSettings', json_encode($previewSettings));
+
     }
 
     /**

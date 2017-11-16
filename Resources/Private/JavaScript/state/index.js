@@ -60,7 +60,7 @@ export const saga = function * () {
         return;
     }
 
-    const defaultPrototypeName = yield select($get(['env', 'defaultPrototypeName', sitePackageKey]));
+    const defaultPrototypeName = yield select($get(['env', 'previewSettings', 'defaultPrototypeName']));
     const prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
     if (!prototypeName) {

@@ -12,6 +12,7 @@ import style from './style.css';
 
 @connect(state => {
     const previewUri = $get('env.previewUri', state);
+    const sourceQuerySelector = $get('env.previewSettings.sourceQuerySelector', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
     const overriddenProps = selectors.prototypes.overriddenProps(state);
     const selectedPropSet = selectors.prototypes.selectedPropSet(state);
@@ -27,6 +28,7 @@ import style from './style.css';
                 props: JSON.stringify(overriddenProps)
             }
         }),
+        sourceQuerySelector: sourceQuerySelector,
         isVisible: Boolean(currentlyRenderedPrototype),
         styles: currentlySelectedBreakpoint ? {
             width: currentlySelectedBreakpoint.width,
@@ -45,6 +47,7 @@ import style from './style.css';
 export default class PreviewFrame extends PureComponent {
     static propTypes = {
         src: PropTypes.string.isRequired,
+        sourceQuerySelector: PropTypes.string.isRequired,
         styles: PropTypes.object,
         onLoad: PropTypes.func.isRequired,
         setCurrentHtml: PropTypes.func.isRequired
@@ -74,8 +77,8 @@ export default class PreviewFrame extends PureComponent {
     }
 
     iframeLoaded = () => {
-        const {onLoad, setCurrentHtml} = this.props;
-        setCurrentHtml(this.iframe.contentDocument.querySelector('body').innerHTML);
+        const {onLoad, setCurrentHtml, sourceQuerySelector} = this.props;
+        setCurrentHtml(this.iframe.contentDocument.querySelector(sourceQuerySelector).innerHTML);
         onLoad();
     }
 
