@@ -16,8 +16,6 @@ namespace Sitegeist\Monocle\Controller;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
-use Neos\Flow\Package\PackageManagerInterface;
-use Neos\Utility\Arrays;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
@@ -114,11 +112,11 @@ class ApiController extends ActionController
      */
     public function sitePackagesAction()
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $sitePackageKeys = $this->getActiveSitePackageKeys();
         $result = [];
 
-        foreach ($sitePackages as $sitePackage) {
-            $result[$sitePackage->getPackageKey()] = $sitePackage->getPackageKey();
+        foreach ($sitePackageKeys as $sitePackageKey) {
+            $result[$sitePackageKey] = $sitePackageKey;
         }
 
         $this->view->assign('value', $result);

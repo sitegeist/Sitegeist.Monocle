@@ -17,10 +17,10 @@ use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
-use Neos\Flow\Package\PackageManagerInterface;
 use Symfony\Component\Yaml\Yaml;
 use Sitegeist\Monocle\Service\DummyControllerContextTrait;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
  * Class StyleguideCommandController
@@ -31,25 +31,28 @@ class StyleguideCommandController extends CommandController
     use DummyControllerContextTrait, PackageKeyTrait;
 
     /**
-     * @var array
-     * @Flow\InjectConfiguration("viewportPresets")
-     */
-    protected $viewportPresets;
-
-    /**
      * @Flow\Inject
      * @var FusionService
      */
     protected $fusionService;
 
     /**
+     * @Flow\Inject
+     * @var ConfigurationService
+     */
+    protected $configurationService;
+
+    /**
      * Get a list of all configured default styleguide viewports
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
+     * @param string $packageKey site-package (defaults to first found)
      */
-    public function viewportsCommand($format = 'json')
+    public function viewportsCommand($format = 'json', $packageKey = null)
     {
-        $this->outputData($this->viewportPresets, $format);
+        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
+        $viewportPresets = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets');
+        $this->outputData($viewportPresets, $format);
     }
 
     /**

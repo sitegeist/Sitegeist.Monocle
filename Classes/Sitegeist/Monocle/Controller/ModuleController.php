@@ -16,8 +16,6 @@ namespace Sitegeist\Monocle\Controller;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Neos\Flow\ResourceManagement\ResourceManager;
-use Neos\Flow\Package\PackageManagerInterface;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Service\ConfigurationService;
 
