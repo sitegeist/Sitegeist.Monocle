@@ -56,7 +56,7 @@ sagas.updateStateOnDirectRouting = function * () {
 
             const listOfPrototypes = yield select(prototypes.selectors.all);
 
-            const defaultPrototypeName = yield select($get(['env', 'defaultPrototypeName', sitePackageKey]));
+            const defaultPrototypeName = yield select($get(['env', 'previewSettings', 'defaultPrototypeName']));
             const newPrototypeName = prototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
             yield put(prototypes.actions.select(newPrototypeName));

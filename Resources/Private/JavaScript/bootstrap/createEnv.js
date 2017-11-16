@@ -10,8 +10,8 @@ export default el => {
         previewUri,
         fullscreenUri,
         defaultSitePackageKey,
-        defaultPrototypeName,
-        uiSettings
+        uiSettings,
+        previewSettings
     } = el.dataset;
 
     return {
@@ -25,7 +25,7 @@ export default el => {
         previewUri,
         fullscreenUri,
         defaultSitePackageKey,
-        defaultPrototypeName: JSON.parse(defaultPrototypeName),
-        uiSettings: JSON.parse(uiSettings)
+        uiSettings: JSON.parse(uiSettings),
+        previewSettings: JSON.parse(previewSettings)
     };
 };

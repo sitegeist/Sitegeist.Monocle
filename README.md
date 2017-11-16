@@ -135,6 +135,14 @@ Sitegeist:
         # Optional: Will default to the first found prototype
         #
         defaultPrototypeName: 'Vendor.Site:Prototype'
+  
+        # 
+        # The query selector that is used to extract the component html 
+        # from the preview to the html-view. 
+        # Optional: Default is 'body'
+        #       
+        sourceQuerySelector: 'body'
+
 ```
 
 To include your styles and scripts into the preview you can extend the `Sitegeist.Monocle:Preview.Page` prototype the 

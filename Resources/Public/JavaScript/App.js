@@ -896,7 +896,7 @@ var saga = exports.saga = regeneratorRuntime.mark(function saga() {
 
                 case 25:
                     _context.next = 27;
-                    return (0, _effects.select)((0, _plowJs.$get)(['env', 'defaultPrototypeName', sitePackageKey]));
+                    return (0, _effects.select)((0, _plowJs.$get)(['env', 'previewSettings', 'defaultPrototypeName']));
 
                 case 27:
                     defaultPrototypeName = _context.sent;
@@ -30737,8 +30737,8 @@ exports.default = function (el) {
         previewUri = _el$dataset.previewUri,
         fullscreenUri = _el$dataset.fullscreenUri,
         defaultSitePackageKey = _el$dataset.defaultSitePackageKey,
-        defaultPrototypeName = _el$dataset.defaultPrototypeName,
-        uiSettings = _el$dataset.uiSettings;
+        uiSettings = _el$dataset.uiSettings,
+        previewSettings = _el$dataset.previewSettings;
 
 
     return {
@@ -30752,8 +30752,8 @@ exports.default = function (el) {
         previewUri: previewUri,
         fullscreenUri: fullscreenUri,
         defaultSitePackageKey: defaultSitePackageKey,
-        defaultPrototypeName: JSON.parse(defaultPrototypeName),
-        uiSettings: JSON.parse(uiSettings)
+        uiSettings: JSON.parse(uiSettings),
+        previewSettings: JSON.parse(previewSettings)
     };
 };
 
@@ -34538,6 +34538,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     var previewUri = (0, _plowJs.$get)('env.previewUri', state);
+    var sourceQuerySelector = (0, _plowJs.$get)('env.previewSettings.sourceQuerySelector', state);
     var currentlyRenderedPrototype = _state.selectors.prototypes.currentlyRendered(state);
     var overriddenProps = _state.selectors.prototypes.overriddenProps(state);
     var selectedPropSet = _state.selectors.prototypes.selectedPropSet(state);
@@ -34553,6 +34554,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
                 props: JSON.stringify(overriddenProps)
             }
         }),
+        sourceQuerySelector: sourceQuerySelector,
         isVisible: Boolean(currentlyRenderedPrototype),
         styles: currentlySelectedBreakpoint ? {
             width: currentlySelectedBreakpoint.width,
@@ -34594,9 +34596,10 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
         }, _this.iframeLoaded = function () {
             var _this$props = _this.props,
                 onLoad = _this$props.onLoad,
-                setCurrentHtml = _this$props.setCurrentHtml;
+                setCurrentHtml = _this$props.setCurrentHtml,
+                sourceQuerySelector = _this$props.sourceQuerySelector;
 
-            setCurrentHtml(_this.iframe.contentDocument.querySelector('body').innerHTML);
+            setCurrentHtml(_this.iframe.contentDocument.querySelector(sourceQuerySelector).innerHTML);
             onLoad();
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -34632,6 +34635,7 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     return PreviewFrame;
 }(_react.PureComponent), _class2.propTypes = {
     src: _propTypes2.default.string.isRequired,
+    sourceQuerySelector: _propTypes2.default.string.isRequired,
     styles: _propTypes2.default.object,
     onLoad: _propTypes2.default.func.isRequired,
     setCurrentHtml: _propTypes2.default.func.isRequired
@@ -34978,7 +34982,7 @@ sagas.updateStateOnDirectRouting = regeneratorRuntime.mark(function _callee2() {
                 case 24:
                     listOfPrototypes = _context2.sent;
                     _context2.next = 27;
-                    return (0, _effects.select)((0, _plowJs.$get)(['env', 'defaultPrototypeName', sitePackageKey]));
+                    return (0, _effects.select)((0, _plowJs.$get)(['env', 'previewSettings', 'defaultPrototypeName']));
 
                 case 27:
                     defaultPrototypeName = _context2.sent;
