@@ -3,6 +3,7 @@ namespace Sitegeist\Monocle\Service;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Flow\Package\PackageInterface;
 
 /**
  * Utility trait to determine package keys
@@ -12,20 +13,35 @@ trait PackageKeyTrait
 
     /**
      * @Flow\Inject
-     * @var PackageManagerInterface
+     * @var \Neos\Flow\Package\PackageManagerInterface
      */
     protected $packageManager;
 
     /**
-     * Determine the default package key
+     * Determine the default site package key
      *
      * @return string
      */
     protected function getDefaultSitePackageKey()
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $sitePackage = reset($sitePackages);
+        $sitePackageKeys = $this->getActiveSitePackageKeys();
+        return reset($sitePackageKeys);
+    }
 
-        return $sitePackage->getPackageKey();
+    /**
+     * Get a list of all active site package keys
+     * @return array
+     */
+    protected function getActiveSitePackageKeys()
+    {
+        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        $result = [];
+        foreach ($sitePackages as $sitePackage) {
+            $packageKey = $sitePackage->getPackageKey();
+            if ($this->packageManager->isPackageActive($packageKey)) {
+                $result[] = $packageKey;
+            }
+        }
+        return $result;
     }
 }
