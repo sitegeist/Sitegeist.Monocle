@@ -50,7 +50,6 @@ class ModuleController extends ActionController
         $this->view->assign('defaultSitePackageKey', $sitePackageKey);
         $this->view->assign('uiSettings', json_encode($uiSettings));
         $this->view->assign('previewSettings', json_encode($previewSettings));
-
     }
 
     /**
