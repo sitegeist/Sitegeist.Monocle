@@ -15,6 +15,7 @@ import style from './style.css';
 @connect(state => {
     const previewUri = $get('env.previewUri', state);
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
+    const currentLocales = selectors.locales.current(state);
     const overriddenProps = selectors.prototypes.overriddenProps(state);
     const selectedPropSet = selectors.prototypes.selectedPropSet(state);
     const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
@@ -25,7 +26,9 @@ import style from './style.css';
                 prototypeName: currentlyRenderedPrototype.prototypeName,
                 propSet: selectedPropSet,
                 sitePackageKey: sitePackageKey,
-                props: JSON.stringify(overriddenProps)
+                props: JSON.stringify(overriddenProps),
+                locales: currentLocales
+
             }
         }),
         isVisible: Boolean(currentlyRenderedPrototype)

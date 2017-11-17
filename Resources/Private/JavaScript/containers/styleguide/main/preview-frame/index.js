@@ -17,6 +17,7 @@ import style from './style.css';
     const overriddenProps = selectors.prototypes.overriddenProps(state);
     const selectedPropSet = selectors.prototypes.selectedPropSet(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
+    const currentlyLocales = selectors.locales.current(state);
     const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
 
     return {
@@ -25,7 +26,8 @@ import style from './style.css';
                 prototypeName: currentlyRenderedPrototype.prototypeName,
                 propSet: selectedPropSet,
                 sitePackageKey: sitePackageKey,
-                props: JSON.stringify(overriddenProps)
+                props: JSON.stringify(overriddenProps),
+                locales: currentlyLocales
             }
         }),
         sourceQuerySelector: sourceQuerySelector,

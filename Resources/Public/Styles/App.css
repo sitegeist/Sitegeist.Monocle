@@ -2989,6 +2989,153 @@
 :root {}
 :root {}
 :root {}
+.style__locale___3lSO2 {
+    cursor: pointer;
+    color: #FFF;
+    background-color: #323232;
+    padding: 1em;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    border: none;
+}
+.style__locale___3lSO2:hover {
+    background-color: #00ADEE;
+}
+
+.style__title___3SlVp {
+    font-size: 120%;
+    display: inline-block;
+    margin-right: .4em;
+}
+
+.style__name___2OtaZ {
+    font-size: 80%;
+    color: #999;
+    display: inline-block;
+}
+.style__locale___3lSO2:hover .style__name___2OtaZ {
+    color: #FFF;
+}
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+.style__list___2iF3r {
+    width: 100vh;
+    max-width: 200px;
+}
+
+.style__locales___1TS-I {
+    max-height: calc(100vh - 2 * 40px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.style__separator___1UbDT {
+    margin: 0;
+    border-color: #999;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+.style__selector___3_8XH {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    white-space: nowrap;
+}
+.style__container___PWCk5 {
+    position: relative;
+}
+.style__icon___1RyfE {
+    margin-right: .6em;
+}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__propSet___11EDS {
     cursor: pointer;
     color: #FFF;

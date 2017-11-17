@@ -11,6 +11,16 @@ Sitegeist:
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
 
+      localePresets:
+        de:
+          label: 'German'
+          fallback: ['de', 'en']
+        en:
+          label: 'English'
+          fallback: ['en_UK', 'en']
+        fr:
+          label: 'French'
+
       viewportPresets:
         xs:
           label: 'xtra small'
