@@ -19,7 +19,7 @@ import style from './style.css';
 
     return {
         label: currentlySelectedLocale ? currentlySelectedLocale.label : 'default',
-        enable: availableLocales ? true : false
+        enable: Boolean(availableLocales)
     };
 })
 export default class LocaleSelector extends PureComponent {

@@ -62,9 +62,8 @@ selectors.current = createSelector(
             const locale = localesByName[currentlySelectedLocale];
             if (locale && locale.fallback) {
                 return locale.fallback.join(',');
-            } else {
-                return currentlySelectedLocale;
             }
+            return currentlySelectedLocale;
         }
         return '';
     }
