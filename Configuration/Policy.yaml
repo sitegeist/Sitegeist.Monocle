@@ -7,7 +7,7 @@ privilegeTargets:
     'Sitegeist.Monocle:Styleguide.Module':
       matcher: 'method(Sitegeist\Monocle\Controller\ModuleController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
-      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sitePackages|viewportPresets|renderPrototype)Action())'
+      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sitePackages|viewportPresets|localePresets|renderPrototype)Action())'
 
 roles:
   'Neos.Neos:AbstractEditor':
