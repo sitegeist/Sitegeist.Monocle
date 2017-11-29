@@ -99,7 +99,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
         try {
             $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props, $locales);
         } catch (\Exception $e) {
-            $html = $e->getMessage();
+            throw $exception->getPrevious();
         }
 
         return  $html;
