@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Fusion;
 use Neos\Flow\Annotations as Flow;
 
 /**
- * Class ReverseTypoScriptParser
+ * Class ReverseFusionParser
  * @package Sitegeist\Monocle\Fusion
  */
 class ReverseFusionParser

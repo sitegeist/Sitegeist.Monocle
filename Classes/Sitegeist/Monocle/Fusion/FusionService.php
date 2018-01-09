@@ -31,13 +31,25 @@ class FusionService extends NeosFusionService
     protected $autoIncludeConfiguration = array();
 
     /**
-     * Returns a merged TypoScript object tree in the context of the given site-package
+     * Returns a merged fusion object tree in the context of the given site-package
+     *
+     * @param string $siteResourcesPackageKey
+     * @return array The merged object tree as of the given node
+     * @throws \Neos\Neos\Domain\Exception
+     * @deprecated
+     */
+    public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey) {
+        return $this->getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey);
+    }
+
+    /**
+     * Returns a merged fusion object tree in the context of the given site-package
      *
      * @param string $siteResourcesPackageKey
      * @return array The merged object tree as of the given node
      * @throws \Neos\Neos\Domain\Exception
      */
-    public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey)
+    public function getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey)
     {
         $siteRootFusionPathAndFilename = sprintf($this->siteRootFusionPattern, $siteResourcesPackageKey);
 
@@ -143,7 +155,7 @@ class FusionService extends NeosFusionService
 
         // create rendering prototypes with dummy data
         foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
-            $renderPrototypeTypoScript = [
+            $renderPrototypeFusion = [
                 '__objectType' => $prototypeName,
                 '__value' => null,
                 '__eelExpression' => null
@@ -151,7 +163,7 @@ class FusionService extends NeosFusionService
             if (array_key_exists('props', $prototypeConfiguration['__meta']['styleguide']) && is_array($prototypeConfiguration['__meta']['styleguide']['props'])) {
                 $styleguidePenderingProps[$prototypeName] = $prototypeConfiguration['__meta']['styleguide']['props'];
             }
-            $styleguideRenderingPrototypes[$prototypeName] = $renderPrototypeTypoScript;
+            $styleguideRenderingPrototypes[$prototypeName] = $renderPrototypeFusion;
         }
 
         // create render pathes
