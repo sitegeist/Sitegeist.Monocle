@@ -38,7 +38,8 @@ class FusionService extends NeosFusionService
      * @throws \Neos\Neos\Domain\Exception
      * @deprecated
      */
-    public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey) {
+    public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey)
+    {
         return $this->getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey);
     }
 
