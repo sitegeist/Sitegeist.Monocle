@@ -88,12 +88,15 @@ export const reducer = (state, action) => {
 
 export const selectors = {};
 
-const sortByPropertyAccess = (a, b, accessorFunction) => {
-    if (accessorFunction(a) === accessorFunction(b)) {
+const sortByPropertyAccess = (a, b, accessorFunction, defaultValue) => {
+    const valueA = accessorFunction(a) || defaultValue;
+    const valueB = accessorFunction(b) || defaultValue;
+
+    if (valueA === valueB) {
         return 0;
     }
 
-    return accessorFunction(a) < accessorFunction(b) ? -1 : 1;
+    return valueA < valueB ? -1 : 1;
 };
 
 selectors.searchTerm = $get('navigation.searchTerm');
@@ -108,8 +111,7 @@ selectors.filteredAndGroupedPrototypes = createSelector(
     ],
     (prototypes, searchTerm, currentIndex) => {
         const lowerCasedSearchTerm = searchTerm.toLowerCase();
-
-        return Object.values(
+        const result = Object.values(
             Object.keys(prototypes)
                 .map(name => Object.assign({name}, prototypes[name], {
                     relevance: (
@@ -120,8 +122,9 @@ selectors.filteredAndGroupedPrototypes = createSelector(
                 }))
                 .filter(prototype => prototype.relevance)
                 .sort((a, b) => (
-                    sortByPropertyAccess(a, b, $get('structure.position')) ||
-                    sortByPropertyAccess(a, b, $get('structure.label')) ||
+                    sortByPropertyAccess(a, b, $get('structure.position'), Infinity) ||
+                    sortByPropertyAccess(a, b, $get('options.position')) ||
+                    sortByPropertyAccess(a, b, $get('title')) ||
                     b.relevance - a.relevance
                 ))
                 .map((prototype, index) => ({...prototype, isFocused: currentIndex === index}))
@@ -138,9 +141,8 @@ selectors.filteredAndGroupedPrototypes = createSelector(
                     return groups;
                 }, {})
 
-        ).sort((a, b) => (
-            sortByPropertyAccess(a, b, $get('position')) ||
-            sortByPropertyAccess(a, b, $get('label'))
-        ));
+        );
+
+        return result;
     }
 );
