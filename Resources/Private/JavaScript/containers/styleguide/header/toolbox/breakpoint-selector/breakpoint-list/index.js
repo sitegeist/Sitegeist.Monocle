@@ -34,15 +34,18 @@ export default class BreakpointList extends PureComponent {
 
     render() {
         const {breakpoints, handleSelectBreakpoint} = this.props;
+        const relevantBreakpoints = Object.keys(breakpoints).filter(name => breakpoints[name])
+            .map(name => ({name, ...breakpoints[name]}));
 
         return (
             <div className={style.list}>
                 <div className={style.breakpoints}>
-                    {Object.keys(breakpoints).map(name => ({name, ...breakpoints[name]})).map(
+                    {relevantBreakpoints.map(
                         breakpoint => (
                             <Breakpoint
                                 key={breakpoint.name}
                                 onClick={handleSelectBreakpoint}
+                                dimensions={`${breakpoint.width}x${breakpoint.height}`}
                                 {...breakpoint}
                                 />
                         )
