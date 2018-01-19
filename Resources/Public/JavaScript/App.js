@@ -32375,7 +32375,7 @@ var Breakpoint = (_dec = (0, _recompose.withHandlers)({
         value: function render() {
             var _props = this.props,
                 label = _props.label,
-                name = _props.name,
+                dimensions = _props.dimensions,
                 handleClick = _props.handleClick;
 
 
@@ -32389,8 +32389,8 @@ var Breakpoint = (_dec = (0, _recompose.withHandlers)({
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: _style2.default.name },
-                    name
+                    { className: _style2.default.dimensions },
+                    dimensions
                 )
             );
         }
@@ -32399,7 +32399,7 @@ var Breakpoint = (_dec = (0, _recompose.withHandlers)({
     return Breakpoint;
 }(_react.PureComponent), _class2.propTypes = {
     label: _propTypes2.default.string.isRequired,
-    name: _propTypes2.default.string.isRequired,
+    dimensions: _propTypes2.default.string.isRequired,
     handleClick: _propTypes2.default.func.isRequired
 }, _temp)) || _class);
 exports.default = Breakpoint;
@@ -32483,6 +32483,11 @@ var BreakpointList = (_dec = (0, _components.attached)('right'), _dec2 = (0, _re
                 breakpoints = _props.breakpoints,
                 handleSelectBreakpoint = _props.handleSelectBreakpoint;
 
+            var relevantBreakpoints = Object.keys(breakpoints).filter(function (name) {
+                return breakpoints[name];
+            }).map(function (name) {
+                return _extends({ name: name }, breakpoints[name]);
+            });
 
             return _react2.default.createElement(
                 'div',
@@ -32490,12 +32495,11 @@ var BreakpointList = (_dec = (0, _components.attached)('right'), _dec2 = (0, _re
                 _react2.default.createElement(
                     'div',
                     { className: _style2.default.breakpoints },
-                    Object.keys(breakpoints).map(function (name) {
-                        return _extends({ name: name }, breakpoints[name]);
-                    }).map(function (breakpoint) {
+                    relevantBreakpoints.map(function (breakpoint) {
                         return _react2.default.createElement(_breakpoint2.default, _extends({
                             key: breakpoint.name,
-                            onClick: handleSelectBreakpoint
+                            onClick: handleSelectBreakpoint,
+                            dimensions: breakpoint.width + 'x' + breakpoint.height
                         }, breakpoint));
                     }),
                     _react2.default.createElement('hr', { className: _style2.default.separator }),
@@ -33692,7 +33696,11 @@ var Loader = (_dec = (0, _reactRedux.connect)(function (state) {
                 _react2.default.createElement(
                     'div',
                     { className: _style2.default.caption },
-                    _react2.default.createElement('div', { className: _style2.default.monocle }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: _style2.default.monocle },
+                        _react2.default.createElement('div', { className: _style2.default.monocleBackground })
+                    ),
                     _react2.default.createElement(
                         'svg',
                         { className: _style2.default.imagemark, xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 1009 961' },
@@ -34780,12 +34788,15 @@ var reducer = exports.reducer = function reducer(state, action) {
 
 var selectors = exports.selectors = {};
 
-var sortByPropertyAccess = function sortByPropertyAccess(a, b, accessorFunction) {
-    if (accessorFunction(a) === accessorFunction(b)) {
+var sortByPropertyAccess = function sortByPropertyAccess(a, b, accessorFunction, defaultValue) {
+    var valueA = accessorFunction(a) || defaultValue;
+    var valueB = accessorFunction(b) || defaultValue;
+
+    if (valueA === valueB) {
         return 0;
     }
 
-    return accessorFunction(a) < accessorFunction(b) ? -1 : 1;
+    return valueA < valueB ? -1 : 1;
 };
 
 selectors.searchTerm = (0, _plowJs.$get)('navigation.searchTerm');
@@ -34794,15 +34805,14 @@ selectors.isOpen = (0, _plowJs.$get)('navigation.isOpen');
 
 selectors.filteredAndGroupedPrototypes = (0, _reselect.createSelector)([prototypes.selectors.all, selectors.searchTerm, selectors.currentIndex], function (prototypes, searchTerm, currentIndex) {
     var lowerCasedSearchTerm = searchTerm.toLowerCase();
-
-    return Object.values(Object.keys(prototypes).map(function (name) {
+    var result = Object.values(Object.keys(prototypes).map(function (name) {
         return Object.assign({ name: name }, prototypes[name], {
             relevance: prototypes[name].title.toLowerCase().includes(lowerCasedSearchTerm) * 2 + name.toLowerCase().includes(lowerCasedSearchTerm) + prototypes[name].description.toLowerCase().includes(lowerCasedSearchTerm)
         });
     }).filter(function (prototype) {
         return prototype.relevance;
     }).sort(function (a, b) {
-        return sortByPropertyAccess(a, b, (0, _plowJs.$get)('structure.position')) || sortByPropertyAccess(a, b, (0, _plowJs.$get)('structure.label')) || b.relevance - a.relevance;
+        return sortByPropertyAccess(a, b, (0, _plowJs.$get)('structure.position'), Infinity) || sortByPropertyAccess(a, b, (0, _plowJs.$get)('options.position')) || sortByPropertyAccess(a, b, (0, _plowJs.$get)('title')) || b.relevance - a.relevance;
     }).map(function (prototype, index) {
         return _extends({}, prototype, { isFocused: currentIndex === index });
     }).reduce(function (groups, prototype) {
@@ -34815,9 +34825,9 @@ selectors.filteredAndGroupedPrototypes = (0, _reselect.createSelector)([prototyp
         groups[prototype.structure.label].prototypes.push(prototype);
 
         return groups;
-    }, {})).sort(function (a, b) {
-        return sortByPropertyAccess(a, b, (0, _plowJs.$get)('position')) || sortByPropertyAccess(a, b, (0, _plowJs.$get)('label'));
-    });
+    }, {}));
+
+    return result;
 });
 
 /***/ }),
@@ -39778,7 +39788,7 @@ module.exports = {"bar":"style__bar___1OCqf","section":"style__section___3JxZP"}
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"breakpoint":"style__breakpoint___3DI1E","title":"style__title___3v2m5","name":"style__name___3UYjf"};
+module.exports = {"breakpoint":"style__breakpoint___3DI1E","title":"style__title___3v2m5","dimensions":"style__dimensions___3Bk6D","name":"style__name___3UYjf"};
 
 /***/ }),
 /* 585 */
@@ -39862,7 +39872,7 @@ module.exports = {"toolbox":"style__toolbox___bkwfX"};
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-module.exports = {"loader":"style__loader___2U6wg","caption":"style__caption___1tTe0","imagemark":"style__imagemark___3R_w9","monocle":"style__monocle___1VSxd","glare":"style__glare___1ubXp"};
+module.exports = {"loader":"style__loader___2U6wg","caption":"style__caption___1tTe0","imagemark":"style__imagemark___3R_w9","monocle":"style__monocle___1VSxd","monocleBackground":"style__monocleBackground___3cksS","glare":"style__glare___1ubXp"};
 
 /***/ }),
 /* 597 */
