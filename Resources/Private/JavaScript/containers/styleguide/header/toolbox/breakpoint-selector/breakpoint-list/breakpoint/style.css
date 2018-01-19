@@ -18,7 +18,7 @@
     margin-right: .4em;
 }
 
-.name {
+.dimensions {
     font-size: 80%;
     color: var(--brandColorsContrastBright);
     display: inline-block;
