@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import Button from '@neos-project/react-ui-components/lib/Button';
 import Icon from '@neos-project/react-ui-components/lib/Icon';
 
-import {selectors, actions} from 'state';
+import {actions} from 'state';
 
 import style from './style.css';
 
@@ -25,9 +25,9 @@ export default class QrCodeTrigger extends PureComponent {
 
     render() {
         return (
-            <Button className={style.selector} onClick={this.handleToggle} style="clean">
-                <Icon icon="qrcode" className={style.icon}/>
-            </Button>
+	<Button className={style.selector} onClick={this.handleToggle} style="clean">
+		<Icon icon="qrcode" className={style.icon}/>
+	</Button>
         );
     }
 }

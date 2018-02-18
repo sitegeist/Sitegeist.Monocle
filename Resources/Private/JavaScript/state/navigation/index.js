@@ -155,11 +155,11 @@ selectors.previewUri = createSelector(
         prototypes.selectors.currentlyRendered,
         prototypes.selectors.overriddenProps,
         prototypes.selectors.selectedPropSet,
-        sites.selectors.currentlySelectedSitePackageKey,
+        sites.selectors.currentlySelectedSitePackageKey
     ],
     (endpoint, renderedPrototype, props, propSet, sitePackageKey) => {
         if (!renderedPrototype) {
-            return;
+            return null;
         }
 
         const {prototypeName} = renderedPrototype;
