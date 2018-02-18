@@ -1,8 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import url from 'build-url';
-import {$get} from 'plow-js';
 import QRCode from 'qrcode';
 
 import Dialog from '@neos-project/react-ui-components/lib/Dialog';
@@ -15,23 +13,10 @@ import {visibility} from 'components';
 import style from './style.css';
 
 @connect(state => {
-    const previewUri = $get('env.previewUri', state);
-    const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
-    const overriddenProps = selectors.prototypes.overriddenProps(state);
-    const selectedPropSet = selectors.prototypes.selectedPropSet(state);
-    const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
+    const url = selectors.navigation.previewUri(state);
+    const isVisible = selectors.qrcode.isVisible(state) && Boolean(url);
 
-    return {
-        url: currentlyRenderedPrototype && url(previewUri, {
-            queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName,
-                propSet: selectedPropSet,
-                sitePackageKey: sitePackageKey,
-                props: JSON.stringify(overriddenProps)
-            }
-        }),
-        isVisible: selectors.qrcode.isVisible(state) && Boolean(currentlyRenderedPrototype)
-    };
+    return {url, isVisible};
 }, {
     hide: actions.qrcode.hide
 })
