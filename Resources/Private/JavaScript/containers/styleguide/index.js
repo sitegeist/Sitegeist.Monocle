@@ -6,6 +6,7 @@ import Header from './header';
 import Main from './main';
 import Loader from './loader';
 import Login from './login';
+import QrCode from './qrcode';
 import ErrorMessage from './error-message';
 
 import './style.css';
@@ -25,6 +26,7 @@ export default class Styleguide extends PureComponent {
                     <Main/>
                     <Loader/>
                     <Login/>
+                    <QrCode/>
                     <ErrorMessage/>
                 </div>
             </Provider>

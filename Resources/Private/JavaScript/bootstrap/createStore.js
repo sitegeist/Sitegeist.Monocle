@@ -23,6 +23,9 @@ export default env => {
             currentIndex: -1,
             isOpen: false,
             searchTerm: ''
+        },
+        qrcode: {
+            isVisible: false
         }
     };
     const storeEnhancers = [];
