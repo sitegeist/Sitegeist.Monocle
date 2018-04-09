@@ -39,7 +39,7 @@ export const saga = function * () {
     document.title = 'Monocle: Loading...';
 
     const moduleUri = yield select($get('env.moduleUri'));
-    const routePath = window.location.href === moduleUri ? '' : window.location.href.substring(moduleUri.length + 1);
+    const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
     const [routeSitePackageKey, routePrototypeName] = routePath.split('/');
 
     const defaultSitePackageKey = yield select($get('env.defaultSitePackageKey'));

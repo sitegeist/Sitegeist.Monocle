@@ -857,7 +857,7 @@ var saga = exports.saga = regeneratorRuntime.mark(function saga() {
 
                 case 5:
                     moduleUri = _context.sent;
-                    routePath = window.location.href === moduleUri ? '' : window.location.href.substring(moduleUri.length + 1);
+                    routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
                     _routePath$split = routePath.split('/'), _routePath$split2 = _slicedToArray(_routePath$split, 2), routeSitePackageKey = _routePath$split2[0], routePrototypeName = _routePath$split2[1];
                     _context.next = 10;
                     return (0, _effects.select)((0, _plowJs.$get)('env.defaultSitePackageKey'));
