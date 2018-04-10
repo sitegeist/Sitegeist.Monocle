@@ -188,6 +188,25 @@ Sitegeist:
           height: 600
 ```
 
+#### Locales 
+
+If you translations in your component you can configure the available locales via settings
+
+```YAML
+Sitegeist:
+  Monocle:
+    ui:
+      localePresets:
+        en:
+          label: 'English'
+          fallback: ['en_UK', 'en']
+        de:
+           label: 'German'
+           fallback: ['de', 'en']
+        fr:
+          label: 'French'
+```
+
 #### Hotkeys (experimental)
 
 Some elements of Monocle can be controlled via keyboard. All hotkeys in use can be configured via Settings. It seems though, this is not always working reliably - so please be aware, that you might experience strange side effects, when overriding the default hotkey configuration.
