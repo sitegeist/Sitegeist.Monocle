@@ -1,8 +1,11 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
+import url from 'build-url';
 import {$get, $set, $all, $toggle, $count} from 'plow-js';
 
 import * as prototypes from '../prototypes';
+import * as sites from '../sites';
+import * as locales from '../locales';
 
 export const actions = {};
 
@@ -144,5 +147,33 @@ selectors.filteredAndGroupedPrototypes = createSelector(
         );
 
         return result;
+    }
+);
+
+selectors.previewUri = createSelector(
+    [
+        $get('env.previewUri'),
+        prototypes.selectors.currentlyRendered,
+        prototypes.selectors.overriddenProps,
+        prototypes.selectors.selectedPropSet,
+        locales.selectors.current,
+        sites.selectors.currentlySelectedSitePackageKey
+    ],
+    (endpoint, renderedPrototype, props, propSet, locales, sitePackageKey) => {
+        if (!renderedPrototype) {
+            return null;
+        }
+
+        const {prototypeName} = renderedPrototype;
+
+        return url(`${window.location.protocol}//${window.location.host}${endpoint}`, {
+            queryParams: {
+                prototypeName,
+                propSet,
+                sitePackageKey,
+                locales,
+                props: JSON.stringify(props)
+            }
+        });
     }
 );

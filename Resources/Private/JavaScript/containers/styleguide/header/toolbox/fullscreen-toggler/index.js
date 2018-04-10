@@ -1,8 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import url from 'build-url';
-import {$get} from 'plow-js';
 
 import Button from '@neos-project/react-ui-components/lib/Button';
 import Icon from '@neos-project/react-ui-components/lib/Icon';
@@ -13,26 +11,10 @@ import {selectors} from 'state';
 import style from './style.css';
 
 @connect(state => {
-    const previewUri = $get('env.previewUri', state);
-    const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
-    const currentLocales = selectors.locales.current(state);
-    const overriddenProps = selectors.prototypes.overriddenProps(state);
-    const selectedPropSet = selectors.prototypes.selectedPropSet(state);
-    const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
+    const url = selectors.navigation.previewUri(state);
+    const isVisible = Boolean(url);
 
-    return {
-        url: currentlyRenderedPrototype && url(previewUri, {
-            queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName,
-                propSet: selectedPropSet,
-                sitePackageKey: sitePackageKey,
-                props: JSON.stringify(overriddenProps),
-                locales: currentLocales
-
-            }
-        }),
-        isVisible: Boolean(currentlyRenderedPrototype)
-    };
+    return {url, isVisible};
 })
 @visibility
 export default class FullscreenToggler extends PureComponent {
@@ -44,11 +26,11 @@ export default class FullscreenToggler extends PureComponent {
         const {url} = this.props;
 
         return (
-            <a href={url} target="_blank">
-                <Button className={style.selector} style="clean">
-                    <Icon icon="external-link" className={style.icon}/>
-                </Button>
-            </a>
+	<a href={url} target="_blank">
+		<Button className={style.selector} style="clean">
+			<Icon icon="external-link" className={style.icon}/>
+		</Button>
+	</a>
         );
     }
 }

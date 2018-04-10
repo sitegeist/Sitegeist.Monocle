@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {$get} from 'plow-js';
-import url from 'build-url';
 import debounce from 'lodash.debounce';
 
 import {selectors, actions} from 'state';
@@ -11,36 +10,20 @@ import {visibility} from 'components';
 import style from './style.css';
 
 @connect(state => {
-    const previewUri = $get('env.previewUri', state);
+    const src = selectors.navigation.previewUri(state);
     const sourceQuerySelector = $get('env.previewSettings.sourceQuerySelector', state);
-    const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
-    const overriddenProps = selectors.prototypes.overriddenProps(state);
-    const selectedPropSet = selectors.prototypes.selectedPropSet(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
-    const currentlyLocales = selectors.locales.current(state);
-    const sitePackageKey = selectors.sites.currentlySelectedSitePackageKey(state);
-
-    return {
-        src: currentlyRenderedPrototype && url(previewUri, {
-            queryParams: {
-                prototypeName: currentlyRenderedPrototype.prototypeName,
-                propSet: selectedPropSet,
-                sitePackageKey: sitePackageKey,
-                props: JSON.stringify(overriddenProps),
-                locales: currentlyLocales
-            }
-        }),
-        sourceQuerySelector: sourceQuerySelector,
-        isVisible: Boolean(currentlyRenderedPrototype),
-        styles: currentlySelectedBreakpoint ? {
-            width: currentlySelectedBreakpoint.width,
-            transform: window.innerWidth < currentlySelectedBreakpoint.width ?
-                `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
-            height: currentlySelectedBreakpoint.height
-        } : {
-            width: '100%'
-        }
+    const isVisible = Boolean(src);
+    const styles = currentlySelectedBreakpoint ? {
+        width: currentlySelectedBreakpoint.width,
+        transform: window.innerWidth < currentlySelectedBreakpoint.width ?
+            `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
+        height: currentlySelectedBreakpoint.height
+    } : {
+        width: '100%'
     };
+
+    return {src, sourceQuerySelector, isVisible, styles};
 }, {
     onLoad: actions.prototypes.ready,
     setCurrentHtml: actions.prototypes.setCurrentHtml
@@ -88,15 +71,15 @@ export default class PreviewFrame extends PureComponent {
         const {styles} = this.props;
 
         return (
-            <iframe
-                role="presentation"
-                id="preview-frame"
-                ref={this.iframeReference}
-                className={style.frame}
-                style={styles}
-                frameBorder="0"
-                onLoad={this.iframeLoaded}
-                />
+	<iframe
+    role="presentation"
+    id="preview-frame"
+    ref={this.iframeReference}
+    className={style.frame}
+    style={styles}
+    frameBorder="0"
+    onLoad={this.iframeLoaded}
+    />
         );
     }
 }

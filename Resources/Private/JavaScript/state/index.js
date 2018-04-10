@@ -8,6 +8,7 @@ import * as sites from './sites';
 import * as business from './business';
 import * as navigation from './navigation';
 import * as routing from './routing';
+import * as qrcode from './qrcode';
 
 export const actions = {
     prototypes: prototypes.actions,
@@ -16,7 +17,8 @@ export const actions = {
     sites: sites.actions,
     business: business.actions,
     navigation: navigation.actions,
-    routing: routing.actions
+    routing: routing.actions,
+    qrcode: qrcode.actions
 };
 
 export const reducer = (state, action) => [
@@ -25,7 +27,8 @@ export const reducer = (state, action) => [
     locales.reducer,
     sites.reducer,
     business.reducer,
-    navigation.reducer
+    navigation.reducer,
+    qrcode.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
 export const selectors = {
@@ -34,7 +37,8 @@ export const selectors = {
     locales: locales.selectors,
     sites: sites.selectors,
     business: business.selectors,
-    navigation: navigation.selectors
+    navigation: navigation.selectors,
+    qrcode: qrcode.selectors
 };
 
 export const saga = function * () {
