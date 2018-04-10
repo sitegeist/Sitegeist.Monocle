@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import QRCode from 'qrcode';
 
 import Dialog from '@neos-project/react-ui-components/lib/Dialog';
+import Icon from '@neos-project/react-ui-components/lib/Icon';
 
 import {selectors, actions} from 'state';
 import {visibility} from 'components';
@@ -62,6 +63,12 @@ export default class QrCode extends PureComponent {
 	<Dialog isOpen title="QR Code" onRequestClose={this.handleClose}>
 		<div className={style.form}>
 			{this.state.qrcode && <img className={style.qrcode} src={this.state.qrcode} alt={this.props.url}/>}
+			<div className={style.url}>
+				{this.props.url}
+				<span onClick={this.handleCopy} className={style.copy}>
+					<Icon icon="copy"/>
+				</span>
+			</div>
 		</div>
 	</Dialog>
         );
