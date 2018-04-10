@@ -124,7 +124,7 @@ class ApiController extends ActionController
 
     /**
     /**
-     * Get all configured breakpoints
+     * Get all configured viewport presets
      *
      * @Flow\SkipCsrfProtection
      * @param string $sitePackageKey
@@ -134,6 +134,20 @@ class ApiController extends ActionController
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
         $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'));
+    }
+
+    /**
+    /**
+     * Get all configured locale presets
+     *
+     * @Flow\SkipCsrfProtection
+     * @param string $sitePackageKey
+     * @return void
+     */
+    public function localePresetsAction($sitePackageKey = null)
+    {
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'));
     }
 
     /**

@@ -71,15 +71,15 @@ export default class PreviewFrame extends PureComponent {
         const {styles} = this.props;
 
         return (
-            <iframe
-                role="presentation"
-                id="preview-frame"
-                ref={this.iframeReference}
-                className={style.frame}
-                style={styles}
-                frameBorder="0"
-                onLoad={this.iframeLoaded}
-                />
+	<iframe
+    role="presentation"
+    id="preview-frame"
+    ref={this.iframeReference}
+    className={style.frame}
+    style={styles}
+    frameBorder="0"
+    onLoad={this.iframeLoaded}
+    />
         );
     }
 }

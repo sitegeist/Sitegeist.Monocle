@@ -68,6 +68,14 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
     }
 
     /**
+     * @return string
+     */
+    public function getLocales()
+    {
+        return $this->fusionValue('locales');
+    }
+
+    /**
      * Render a prototype
      *
      * @return mixed
@@ -78,6 +86,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
         $prototypeName = $this->getPrototypeName();
         $propSet = $this->getPropSet();
         $props = $this->getProps();
+        $locales = $this->getLocales();
 
         $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
@@ -87,7 +96,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
         $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props);
+        $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props, $locales);
 
         return  $html;
     }

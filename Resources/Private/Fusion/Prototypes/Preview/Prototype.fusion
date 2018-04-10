@@ -8,4 +8,5 @@ prototype(Sitegeist.Monocle:Preview.Prototype) {
     prototypeName = null
     propSet = null
     props = null
+    locales = null
 }

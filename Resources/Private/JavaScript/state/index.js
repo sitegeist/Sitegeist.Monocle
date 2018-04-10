@@ -3,6 +3,7 @@ import {select, put, call, fork} from 'redux-saga/effects';
 
 import * as prototypes from './prototypes';
 import * as breakpoints from './breakpoints';
+import * as locales from './locales';
 import * as sites from './sites';
 import * as business from './business';
 import * as navigation from './navigation';
@@ -12,6 +13,7 @@ import * as qrcode from './qrcode';
 export const actions = {
     prototypes: prototypes.actions,
     breakpoints: breakpoints.actions,
+    locales: locales.actions,
     sites: sites.actions,
     business: business.actions,
     navigation: navigation.actions,
@@ -22,6 +24,7 @@ export const actions = {
 export const reducer = (state, action) => [
     prototypes.reducer,
     breakpoints.reducer,
+    locales.reducer,
     sites.reducer,
     business.reducer,
     navigation.reducer,
@@ -31,6 +34,7 @@ export const reducer = (state, action) => [
 export const selectors = {
     prototypes: prototypes.selectors,
     breakpoints: breakpoints.selectors,
+    locales: locales.selectors,
     sites: sites.selectors,
     business: business.selectors,
     navigation: navigation.selectors,
@@ -43,7 +47,7 @@ export const saga = function * () {
     document.title = 'Monocle: Loading...';
 
     const moduleUri = yield select($get('env.moduleUri'));
-    const routePath = window.location.href === moduleUri ? '' : window.location.href.substring(moduleUri.length + 1);
+    const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
     const [routeSitePackageKey, routePrototypeName] = routePath.split('/');
 
     const defaultSitePackageKey = yield select($get('env.defaultSitePackageKey'));
@@ -82,6 +86,7 @@ export const saga = function * () {
     yield fork(prototypes.sagas.renderPrototypeOnSelect);
     yield fork(prototypes.sagas.reloadIframe);
     yield fork(breakpoints.sagas.load);
+    yield fork(locales.sagas.load);
 
     try {
         yield put.resolve(prototypes.actions.select(prototypeName));

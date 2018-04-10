@@ -5,6 +5,7 @@ import {$get, $set, $all, $toggle, $count} from 'plow-js';
 
 import * as prototypes from '../prototypes';
 import * as sites from '../sites';
+import * as locales from '../locales';
 
 export const actions = {};
 
@@ -155,9 +156,10 @@ selectors.previewUri = createSelector(
         prototypes.selectors.currentlyRendered,
         prototypes.selectors.overriddenProps,
         prototypes.selectors.selectedPropSet,
+        locales.selectors.current,
         sites.selectors.currentlySelectedSitePackageKey
     ],
-    (endpoint, renderedPrototype, props, propSet, sitePackageKey) => {
+    (endpoint, renderedPrototype, props, propSet, locales, sitePackageKey) => {
         if (!renderedPrototype) {
             return null;
         }
@@ -169,6 +171,7 @@ selectors.previewUri = createSelector(
                 prototypeName,
                 propSet,
                 sitePackageKey,
+                locales,
                 props: JSON.stringify(props)
             }
         });

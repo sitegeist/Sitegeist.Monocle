@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 
 import BreakpointSelector from './breakpoint-selector';
+import LocaleSelector from './locale-selector';
 import PropsInspector from './props-inspector';
 import ReloadTrigger from './reload-trigger';
 import QrCodeTrigger from './qrcode-trigger';
@@ -12,6 +13,7 @@ export default class Toolbox extends PureComponent {
     render() {
         return (
             <div className={style.toolbox}>
+                <LocaleSelector/>
                 <BreakpointSelector/>
                 <PropsInspector/>
                 <QrCodeTrigger/>
