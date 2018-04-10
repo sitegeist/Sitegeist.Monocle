@@ -2862,7 +2862,7 @@
     margin-right: .4em;
 }
 
-.style__name___3UYjf {
+.style__dimensions___3Bk6D {
     font-size: 80%;
     color: #999;
     display: inline-block;
@@ -2918,7 +2918,7 @@
 
 .style__list___MFEzl {
     width: 100vh;
-    max-width: 200px;
+    max-width: 300px;
 }
 
 .style__breakpoints___2DvVv {
@@ -4117,6 +4117,7 @@
 }
 
 .style__caption___1tTe0 {
+    width: 300px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -4137,42 +4138,52 @@
 
 .style__monocle___1VSxd {
     position: absolute;
-    top: 138px;
-    left: 69px;
+    top: 48%;
+    left: 23%;
     z-index: 9;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f2f6f8),color-stop(50%, #d8e1e7),color-stop(51%, #b5c6d0),to(#e0eff9));
-    background: linear-gradient(to bottom, #f2f6f8 0,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
-    background-size: 200%;
-    background-position: 0 0;
     border-radius: 100%;
-    width: 80px;
-    height: 80px;
+    width: 28%;
+    height: 28%;
     -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
-    -webkit-animation: style__glare___1ubXp linear 2s infinite;
-            animation: style__glare___1ubXp linear 2s infinite;
+    overflow: hidden;
+}
+
+.style__monocleBackground___3cksS {
+    position: absolute;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f2f6f8), color-stop(50%, #d8e1e7), color-stop(51%, #b5c6d0), to(#f2f6f8));
+    background: linear-gradient(to bottom, #f2f6f8 0, #d8e1e7 50%, #b5c6d0 51%, #f2f6f8 100%);
+    width: 200%;
+    height: 200%;
+    -webkit-animation: style__glare___1ubXp linear 1s;
+            animation: style__glare___1ubXp linear 1s;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 
 @-webkit-keyframes style__glare___1ubXp {
     from {
-        background-position: 0 0;
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
     }
 
     to {
-        background-position: 0 200%;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
     }
 }
 
 @keyframes style__glare___1ubXp {
     from {
-        background-position: 0 0;
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
     }
 
     to {
-        background-position: 0 200%;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
     }
 }
-
 :root {}
 :root {}
 :root {}

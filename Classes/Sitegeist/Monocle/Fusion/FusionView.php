@@ -45,7 +45,7 @@ class FusionView extends BaseFusionView
      */
     protected function loadFusion()
     {
-        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
+        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
         $this->parsedFusion = $fusionAst;
     }
 
@@ -71,7 +71,7 @@ class FusionView extends BaseFusionView
             $this->i18nService->getConfiguration()->setFallbackRule(array('strict' => false, 'order' => array_reverse($locales)));
         }
 
-        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($this->getOption('packageKey'));
+        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
         $fusionAst = $this->postProcessFusionAstForPrototype($fusionAst, $prototypeName, $propSet, $props);
 
         $fusionPath = sprintf('/<%s>', $prototypeName);

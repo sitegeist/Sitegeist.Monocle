@@ -2,7 +2,7 @@
     "name": "sitegeist/monocle",
     "type": "neos-plugin",
     "description": "An living-styleguide for Neos that is based on the actual fusion-code",
-    "license": "GPL-3.0+",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Martin Ficzel",

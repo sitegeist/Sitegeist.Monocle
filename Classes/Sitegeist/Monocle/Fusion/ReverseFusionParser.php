@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Fusion;
 use Neos\Flow\Annotations as Flow;
 
 /**
- * Class ReverseTypoScriptParser
+ * Class ReverseFusionParser
  * @package Sitegeist\Monocle\Fusion
  */
 class ReverseFusionParser
@@ -59,7 +59,7 @@ class ReverseFusionParser
         // handle __meta context
         if (array_key_exists('__meta', $abstractSyntaxTree)) {
             foreach (array_keys($abstractSyntaxTree['__meta']) as $key) {
-                if (in_array($key, self::$TOP_META_KEYS) === false) {
+                if (in_array($key, self::$TOP_META_KEYS, true) === false) {
                     continue;
                 }
                 $result .= self::restoreValueCode('@' . $key, $abstractSyntaxTree['__meta'][$key], $indentation . self::INDENTATION);
@@ -75,7 +75,7 @@ class ReverseFusionParser
 
         // add properties
         foreach (array_keys($abstractSyntaxTree) as $key) {
-            if (in_array($key, self::$RESERVED_KEYS)) {
+            if (in_array($key, self::$RESERVED_KEYS, true)) {
                 continue;
             }
             $result .=  self::restoreValueCode($key, $abstractSyntaxTree[$key], $indentation . self::INDENTATION);
@@ -85,7 +85,7 @@ class ReverseFusionParser
         // handle remaining __meta keys
         if (array_key_exists('__meta', $abstractSyntaxTree)) {
             foreach (array_keys($abstractSyntaxTree['__meta']) as $key) {
-                if (in_array($key, self::$TOP_META_KEYS) === true) {
+                if (in_array($key, self::$TOP_META_KEYS, true) === true) {
                     continue;
                 }
                 $result .= self::restoreValueCode('@' . $key, $abstractSyntaxTree['__meta'][$key], $indentation . self::INDENTATION);
@@ -112,7 +112,7 @@ class ReverseFusionParser
                 $multiline = true;
                 $result .= $indentation . $valueName . ' = ' . $abstractSyntaxTree['__objectType'] . ' {' . chr(10);
                 foreach (array_keys($abstractSyntaxTree) as $key) {
-                    if (in_array($key, self::$RESERVED_KEYS)) {
+                    if (in_array($key, self::$RESERVED_KEYS, true)) {
                         continue;
                     }
                     $result .= self::restoreValueCode($key, $abstractSyntaxTree[$key], $indentation . self::INDENTATION);

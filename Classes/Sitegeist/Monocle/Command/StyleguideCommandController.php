@@ -65,7 +65,7 @@ class StyleguideCommandController extends CommandController
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
 
-        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
 
         $this->outputData($styleguideObjects, $format);

@@ -96,11 +96,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
         $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        try {
-            $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props, $locales);
-        } catch (\Exception $e) {
-            throw $exception->getPrevious();
-        }
+        $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props, $locales);
 
         return  $html;
     }

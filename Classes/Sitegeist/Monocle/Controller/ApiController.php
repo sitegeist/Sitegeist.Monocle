@@ -71,7 +71,7 @@ class ApiController extends ActionController
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
-        $fusionAst = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
         $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
 
@@ -171,7 +171,7 @@ class ApiController extends ActionController
         $fusionView->setPackageKey($sitePackageKey);
 
         // render fusion source
-        $fusionObjectTree = $this->fusionService->getMergedTypoScriptObjectTreeForSitePackage($sitePackageKey);
+        $fusionObjectTree = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
         $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
         $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
 
