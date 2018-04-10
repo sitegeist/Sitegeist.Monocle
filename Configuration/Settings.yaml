@@ -11,6 +11,8 @@ Sitegeist:
         navigateDown: 'down'
         openPreviewInNewWindow: 'ctrl+space'
 
+      # localePresets: {  }
+
       viewportPresets:
         xs:
           label: 'xtra small'

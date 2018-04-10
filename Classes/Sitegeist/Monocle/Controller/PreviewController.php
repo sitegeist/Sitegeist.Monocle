@@ -45,13 +45,26 @@ class PreviewController extends ActionController
     protected $configurationService;
 
     /**
+     * @var string
+     * @Flow\InjectConfiguration(package="Neos.Flow", path="i18n.defaultLocale");
+     */
+    protected $defaultLocale;
+
+    /**
+     * @var string
+     * @Flow\InjectConfiguration(package="Neos.Flow", path="i18n.fallbackRule.order");
+     */
+    protected $localeFallback;
+
+    /**
      * @param  string $prototypeName
      * @param  string $sitePackageKey
      * @param  string $propSet
      * @param  string $props props as json encoded string
+     * @param  string $locales locales-fallback-chain as comma sepertated string
      * @return void
      */
-    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '')
+    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '', $locales = '')
     {
         $renderProps = [];
 
@@ -60,6 +73,12 @@ class PreviewController extends ActionController
             if (is_array($data)) {
                 $renderProps = $data;
             }
+        }
+
+        if ($locales) {
+            $renderLocales = explode(',', $locales);
+        } else {
+            $renderLocales = $this->localeFallback ?: [$this->defaultLocale];
         }
 
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
@@ -72,7 +91,8 @@ class PreviewController extends ActionController
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
             'propSet' => $propSet,
-            'props' => $renderProps
+            'props' => $renderProps,
+            'locales' => $renderLocales
         ]);
 
         // get the status and headers from the view

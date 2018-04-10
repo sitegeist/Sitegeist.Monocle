@@ -70,7 +70,8 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
             sitePackageKey = ${sitePackageKey}
             prototypeName = ${prototypeName}
             propSet = ${propSet}
-            props =  ${props}
+            props = ${props}
+            locales = ${locales}
         }
     }
 

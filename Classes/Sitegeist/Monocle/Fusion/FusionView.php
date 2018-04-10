@@ -16,6 +16,8 @@ namespace Sitegeist\Monocle\Fusion;
 use Neos\Flow\Annotations as Flow;
 use Neos\Fusion\View\FusionView as BaseFusionView;
 use Neos\Fusion\Core\Runtime as FusionRuntime;
+use Neos\Flow\I18n\Locale;
+use Neos\Flow\I18n\Service;
 
 /**
  * A specialized fusion view that
@@ -29,6 +31,12 @@ class FusionView extends BaseFusionView
      * @var \Sitegeist\Monocle\Fusion\FusionService
      */
     protected $fusionService;
+
+    /**
+     * @Flow\Inject
+     * @var Service
+     */
+    protected $i18nService;
 
     /**
      * Load Fusion from the directories specified by $this->getOption('fusionPathPatterns')
@@ -52,10 +60,17 @@ class FusionView extends BaseFusionView
      * @param string $prototypeName
      * @param string $propSet
      * @param array $props
+     * @param array $locales
      * @return string
      */
-    public function renderStyleguidePrototype($prototypeName, $propSet = '__default', $props = [])
+    public function renderStyleguidePrototype($prototypeName, $propSet = '__default', $props = [], $locales = [])
     {
+        if ($locales) {
+            $currentLocale = new Locale($locales[0]);
+            $this->i18nService->getConfiguration()->setCurrentLocale($currentLocale);
+            $this->i18nService->getConfiguration()->setFallbackRule(array('strict' => false, 'order' => array_reverse($locales)));
+        }
+
         $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
         $fusionAst = $this->postProcessFusionAstForPrototype($fusionAst, $prototypeName, $propSet, $props);
 
