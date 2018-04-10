@@ -302,35 +302,21 @@ prototype(Vendor.Site:Container) {
 
 ## Policies
 
-Monocle comes with four privilege targets that are by default granted to the group 'Neos.Neos:AbstractEditor'
+Monocle comes with four privilege targets to control access.
 
 - `Sitegeist.Monocle:Backend.Styleguide` : call the backend module that will open the styleguide 
 - `Sitegeist.Monocle:Styleguide.Api` : request informations about prototypes etc. via api (used from the module)
 - `Sitegeist.Monocle:Styleguide.Preview` : show a preview for a prototype
 - `Sitegeist.Monocle:Styleguide.Module` : show the styleguide
 
-### Policies for Visual regression testing
+### Policies for different Contexts
 
-Monocle can be used to render prototypes in isolation for visual regression testing tools.
-For that you might want to remove the access restrictions for the preview- and the api-target. 
-
-```YAML
-#
-# make the monocle endpoints publicly available
-# !!! do not use this in production this should be used on the ci-server only!!!
-#
-
-roles:
-  'Neos.Flow:Everybody':
-    privileges:
-      -
-        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
-        permission: GRANT
-      -
-        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
-        permission: GRANT
-
-```
+- In `Production`-context all monocle privileges are by default granted to the group `Neos.Neos:AbstractEditor`.
+  That way only backend-uses can see the styleguide.
+- In `Development`-context the Sitegeist.Monocle:Styleguide privileges are granted to the group `Neos.Flow:Everybody`.
+  That way the Styleguide can be accessed without any database via url http://127.0.0.1:8081/monocle/preview/module .
+- For integration into ci-processes you grant access to the privileges `Sitegeist.Monocle:Styleguide.Preview` and
+  `Sitegeist.Monocle:Styleguide.Api` to the ci-system.
 
 ## Contribution
 

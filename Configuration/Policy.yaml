@@ -24,18 +24,3 @@ roles:
       -
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
         permission: GRANT
-
-#
-# This has to be added to the main Policy.yaml to access the monocle endpoints without login
-#
-#  'Neos.Flow:Everybody':
-#    privileges:
-#      -
-#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Preview'
-#        permission: GRANT
-#      -
-#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
-#        permission: GRANT
-#      -
-#        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Api'
-#        permission: GRANT
