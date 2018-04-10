@@ -2,6 +2,9 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import QRCode from 'qrcode';
+import mergeClassNames from 'classnames';
+
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Dialog from '@neos-project/react-ui-components/lib/Dialog';
 import Icon from '@neos-project/react-ui-components/lib/Icon';
@@ -27,7 +30,8 @@ export default class QrCode extends PureComponent {
     };
 
     state = {
-        qrcode: ''
+        qrcode: '',
+        copied: false
     };
 
     componentDidMount() {
@@ -58,16 +62,31 @@ export default class QrCode extends PureComponent {
         hide();
     };
 
+    handleCopy = async () => {
+        this.setState({copied: true});
+        setTimeout(() => this.setState({copied: false}), 600);
+    }
+
     render() {
+        const copiedClassNames = mergeClassNames({
+            [style.copied]: true,
+            [style.copiedVisible]: this.state.copied
+        });
+
         return (
 	<Dialog isOpen title="QR Code" onRequestClose={this.handleClose}>
 		<div className={style.form}>
 			{this.state.qrcode && <img className={style.qrcode} src={this.state.qrcode} alt={this.props.url}/>}
 			<div className={style.url}>
 				{this.props.url}
-				<span onClick={this.handleCopy} className={style.copy}>
-					<Icon icon="copy"/>
-				</span>
+				<CopyToClipboard onCopy={this.handleCopy} text={this.props.url}>
+					<span className={style.copy} title="Copy URL to clipboard">
+						<Icon icon="clipboard"/>
+						<span className={copiedClassNames}>
+                            Copied!
+                        </span>
+					</span>
+				</CopyToClipboard>
 			</div>
 		</div>
 	</Dialog>

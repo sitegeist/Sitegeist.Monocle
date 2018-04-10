@@ -166,7 +166,7 @@ selectors.previewUri = createSelector(
 
         const {prototypeName} = renderedPrototype;
 
-        return url(endpoint, {
+        return url(`${window.location.protocol}//${window.location.host}${endpoint}`, {
             queryParams: {
                 prototypeName,
                 propSet,

@@ -4385,6 +4385,52 @@
 .style__qrcode___1O1YU {
     width: 100%;
 }
+
+.style__url___1NFt9 {
+    position: relative;
+    word-wrap: break-word;
+    font-family: monospace;
+    padding: 16px 42px 16px 16px;
+    margin-top: 16px;
+    background-color: #000;
+}
+
+.style__copy___167XT {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 42px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.style__copied___2-3Si {
+    position: absolute;
+    opacity: 0;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+    background-color: #333;
+    top: 50%;
+    right: 100%;
+    padding: .3em .6em;
+    -webkit-box-shadow: 1px 1px 0 #000;
+            box-shadow: 1px 1px 0 #000;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+.style__copiedVisible___1G73a {
+    opacity: 1;
+}
 :root {}
 
 :root {}
