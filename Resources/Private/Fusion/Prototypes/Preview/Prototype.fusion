@@ -7,6 +7,6 @@ prototype(Sitegeist.Monocle:Preview.Prototype) {
     sitePackageKey = null
     prototypeName = null
     propSet = null
-    props = null
-    locales = null
+    props = Neos.Fusion:RawArray
+    locales = Neos.Fusion:RawArray
 }
