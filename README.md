@@ -253,6 +253,18 @@ Monocle ships with a default structure configuration that tries to represent an 
 
 Each component that doesn't match any of the configured groups will instead be put into the `unknown` group.
 
+#### Hide components
+
+If you do not want to display components, you can define hiddenPrototypeNamePatterns as follows:
+
+```YAML
+Sitegeist:
+  Monocle:
+    hiddenPrototypeNamePatterns:
+      - 'Vendor.Site:*'
+      - 'Another.Vendor.Site:Prototype'
+```
+
 ### Site-specific configuration
 
 All configurations can be overwritten for each selected site package.

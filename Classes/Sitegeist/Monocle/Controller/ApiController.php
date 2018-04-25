@@ -79,6 +79,19 @@ class ApiController extends ActionController
             $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
         }
 
+        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
+        if (is_array($hiddenPrototypeNamePatterns)) {
+            foreach ($hiddenPrototypeNamePatterns as $pattern) {
+                $styleguideObjects = array_filter(
+                    $styleguideObjects,
+                    function ($prototypeName) use ($pattern) {
+                        return fnmatch($pattern, $prototypeName) === false;
+                    },
+                    ARRAY_FILTER_USE_KEY
+                );
+            }
+        }
+
         $this->view->assign('value', $styleguideObjects);
     }
 

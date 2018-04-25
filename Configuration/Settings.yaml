@@ -59,6 +59,8 @@ Sitegeist:
           icon: icon-file
           color: '#FFF'
 
+    hiddenPrototypeNamePatterns: {  }
+
     preview:
       fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       sourceQuerySelector: 'body'
