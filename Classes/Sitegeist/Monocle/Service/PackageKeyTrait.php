@@ -38,9 +38,7 @@ trait PackageKeyTrait
         $result = [];
         foreach ($sitePackages as $sitePackage) {
             $packageKey = $sitePackage->getPackageKey();
-            if ($this->packageManager->isPackageActive($packageKey)) {
-                $result[] = $packageKey;
-            }
+            $result[] = $packageKey;
         }
         return $result;
     }
