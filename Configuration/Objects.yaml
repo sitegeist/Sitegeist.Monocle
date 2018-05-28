@@ -2,3 +2,13 @@ Sitegeist\Monocle\Fusion\FusionView:
   properties:
     fallbackView:
       object: Neos\FluidAdaptor\View\TemplateView
+
+Sitegeist\Monocle\Aspects\FusionCachingAspect:
+  properties:
+    fusionCache:
+      object:
+        factoryObjectName: Neos\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: Sitegeist_Monocle_Fusion
