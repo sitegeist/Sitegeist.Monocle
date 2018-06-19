@@ -188,9 +188,9 @@ Sitegeist:
           height: 600
 ```
 
-#### Locales 
+#### Locales
 
-If you translations in your component you can configure the available locales via settings
+If you have translations in your component you can configure the available locales via settings
 
 ```YAML
 Sitegeist:
@@ -274,11 +274,11 @@ Sitegeist:
 
 The monocle Routes are included automatically via Settings.
 
-### Fusion 
+### Fusion
 
 Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to your needs.
 
-#### `Sitegeist.Monocle:Preview.Page` 
+#### `Sitegeist.Monocle:Preview.Page`
 
 The prototype `Sitegeist.Monocle:Preview.Page` renders the preview view for a prototype, to do so it uses `Sitegeist.Monocle:Preview.Prototype` below. 
 You can extend this prototype to add your styles and scripts as you would with `Neos.Neos:Page`. 
