@@ -282,6 +282,14 @@ Sitegeist:
                 height: 1000    
 ```
 
+### Fusion Object Tree Caching
+
+Monocle will cache the fusion code for every site package. To invalidate this cache
+the the Fusion directories of all packages are monitored and changes trigger the flushing
+of the fusion-cache.
+
+The setting `Sitegeist.Monocle.fusion.enableObjectTreeCache` enables the caching in Monocle by default.
+
 ### Routes
 
 The monocle Routes are included automatically via Settings.

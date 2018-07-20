@@ -1,6 +1,9 @@
 
 Sitegeist:
   Monocle:
+    fusion:
+      enableObjectTreeCache: true
+
     packages: {  }
 
     ui:
