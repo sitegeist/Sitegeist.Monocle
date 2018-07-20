@@ -60,7 +60,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getProps()
     {
@@ -68,7 +68,7 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getLocales()
     {
