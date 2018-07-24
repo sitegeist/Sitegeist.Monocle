@@ -112,6 +112,35 @@ therefore highly reusable.
 The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the ReactJS world.
 
+### Simulate API-Endpoints
+
+Monocle has fusion-prototypes to simulate json api responses for components.
+
+- `Sitegeist.Monocle:DataUri`: Generic data uri implementation that expects `type` and `content` as string
+- `Sitegeist.Monocle:DataUri.Json`: And endpoint-mock with media-type `application/json` that will pass `content` trough Json.stringify
+- `Sitegeist.Monocle:DataUri.Text`: And endpoint-mock with media-type `text/plain`
+
+```
+prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Component) {
+	@styleguide {
+		props {
+			endpointUrl = Sitegeist.Monocle:DataUri.Json {
+				content = Neos.Fusion:RawArray {
+					term = 'hamburch'
+					suggestedTerm = 'hamburg'
+				}
+			}
+		}
+	}
+
+	endpointUrl = null
+
+	renderer = afx`
+		<div data-endpoint-url={props.endpointUrl} />
+	`
+}
+```
+
 ### Preview Configuration
 
 Some configuration is available to configure the preview.
