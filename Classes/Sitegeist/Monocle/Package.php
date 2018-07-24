@@ -17,9 +17,7 @@ use Neos\Flow\Cache\CacheManager;
 use Neos\Flow\Core\Booting\Sequence;
 use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Monitor\FileMonitor;
-use Neos\Flow\Package\FlowPackageInterface;
 use Neos\Flow\Package\Package as BasePackage;
-use Neos\Flow\Package\PackageManager;
 use Neos\Flow\Package\PackageManagerInterface;
 
 /**
@@ -44,15 +42,22 @@ class Package extends BasePackage
             $dispatcher->connect(Sequence::class, 'afterInvokeStep', function ($step) use ($bootstrap, $dispatcher) {
                 if ($step->getIdentifier() === 'neos.flow:systemfilemonitor') {
                     $templateFileMonitor = FileMonitor::createFileMonitorAtBoot('Sitegeist_Monocle_Fusion_Files', $bootstrap);
-                    $packageManager = $bootstrap->getEarlyInstance(PackageManagerInterface::class);
                     /**
-                     * @var PackageManager $packageKey
-                     * @var FlowPackageInterface $package
+                     * @var PackageManagerInterface $packageManager
                      */
-                    foreach ($packageManager->getFlowPackages() as $packageKey => $package) {
-                        $templatesPath = $package->getResourcesPath() . 'Private/Fusion';
-                        if (is_dir($templatesPath)) {
-                            $templateFileMonitor->monitorDirectory($templatesPath);
+                    $packageManager = $bootstrap->getEarlyInstance(PackageManagerInterface::class);
+
+                    foreach ($packageManager->getAvailablePackages() as $packageKey => $package) {
+                        //
+                        // this is here to distinguish between flow and other packages
+                        // in flow 5 we can check wether the packe is a FlowPackage instead
+                        // @todo fix this after the support for neos 3.3 is dropped
+                        //
+                        if (method_exists($package, 'getResourcesPath')) {
+                            $templatesPath = $package->getResourcesPath() . 'Private/Fusion';
+                            if (is_dir($templatesPath)) {
+                                $templateFileMonitor->monitorDirectory($templatesPath);
+                            }
                         }
                     }
 
