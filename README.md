@@ -120,6 +120,8 @@ Monocle has fusion-prototypes to simulate json api responses for components.
 - `Sitegeist.Monocle:DataUri.Json`: And endpoint-mock with media-type `application/json` that will pass `content` trough Json.stringify
 - `Sitegeist.Monocle:DataUri.Text`: And endpoint-mock with media-type `text/plain`
 
+The DataUri-Prototypes will encode the content as base64.
+
 ```
 prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Component) {
 	@styleguide {
