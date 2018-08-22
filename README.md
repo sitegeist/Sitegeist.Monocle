@@ -29,7 +29,7 @@ use Monocle to render Fluid based Prototypes without any limitation.
 
 ## Installation
 
-Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~4.0"` to the require section of the composer.json 
+Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~4.0"` to the require section of the composer.json
 or run `composer require sitegeist/monocle`.
 
 We use semantic-versioning so every breaking change will increase the major-version number.
@@ -69,7 +69,7 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
         props {
             content = 'Hello World'
         }
-        
+
         #
         # Alternate prop sets that can overload the default props
         # Optional: By default empty.
@@ -116,11 +116,45 @@ presentational-components vs. container-components in the ReactJS world.
 
 Monocle has fusion-prototypes to simulate json api responses for components.
 
-- `Sitegeist.Monocle:DataUri`: Generic data uri implementation that expects `type` and `content` as string
+#### `Sitegeist.Monocle:DataUri`
+
+Generic data uri implementation that expects `type` and `content` as string
+
+```
+    endpointUrl = Sitegeist.Monocle:DataUri {
+        content = '{"hello":"world"}'
+        type = 'application/json'
+    }
+```
+
+The DataUri-Prototypes will encode the content as base64.
+Attention: Data Uris do not accept url-parameters. If you frontend code adds arguments to the mock you have to be aware of that.
+
+For convenience special prototypes for json and text exist:
+
 - `Sitegeist.Monocle:DataUri.Json`: And endpoint-mock with media-type `application/json` that will pass `content` trough Json.stringify
 - `Sitegeist.Monocle:DataUri.Text`: And endpoint-mock with media-type `text/plain`
 
-The DataUri-Prototypes will encode the content as base64.
+#### `Sitegeist.Monocle:MirrorUri`
+
+Create an uri to an monocle endpoint that returns the passed content with the given type
+
+```
+    endpointUrl = Sitegeist.Monocle:MirrorUri {
+        content = '{"hello":"world"}'
+        type = 'application/json'
+    }
+```
+
+Attention: Browsers will often crop the urls to a maximal length, be aware of that if you mock large json-structures.
+
+For convenience special prototypes for json and text exist:
+
+- `Sitegeist.Monocle:MirrorUri.Json`: And endpoint-mock with media-type `application/json` that accepts RawArray data
+- `Sitegeist.Monocle:MirrorUri.Text`: And endpoint-mock with media-type `text/plain`
+
+
+#### Mocking Uris inside the styleguide
 
 ```
 prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Component) {
@@ -151,33 +185,33 @@ Some configuration is available to configure the preview.
 Sitegeist:
   Monocle:
     preview:
-        # 
-        # The fusion path that renders the preview. 
-        # the available context is has the values 
+        #
+        # The fusion path that renders the preview.
+        # the available context is has the values
         #  - sitePackageKey
         #  - prototypeName
         #  - propSet
-        #  - props  
-        # 
+        #  - props
+        #
         fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
-        
-        # 
+
+        #
         # The fusion prototype that is rendered initially
         # Optional: Will default to the first found prototype
         #
         defaultPrototypeName: 'Vendor.Site:Prototype'
-  
-        # 
-        # The query selector that is used to extract the component html 
-        # from the preview to the html-view. 
+
+        #
+        # The query selector that is used to extract the component html
+        # from the preview to the html-view.
         # Optional: Default is 'body'
-        #       
+        #
         sourceQuerySelector: 'body'
 
 ```
 
-To include your styles and scripts into the preview you can extend the `Sitegeist.Monocle:Preview.Page` prototype the 
-same way you would customize `Neos.Neos:Page`. 
+To include your styles and scripts into the preview you can extend the `Sitegeist.Monocle:Preview.Page` prototype the
+same way you would customize `Neos.Neos:Page`.
 
 ```
 //
@@ -192,13 +226,13 @@ prototype(Sitegeist.Monocle:Preview.Page) {
     bodyScripts = Vendor.Site:Resources.BodyScripts {
         @position = 'before closingBodyTag'
     }
-} 
+}
 
 ```
 
 #### Viewports
 
-To configure the available viewport presets you can alter the following configuration. 
+To configure the available viewport presets you can alter the following configuration.
 
 ```YAML
 Sitegeist:
@@ -310,7 +344,7 @@ Sitegeist:
               xxl:
                 label: 'extra wide'
                 width: 1600
-                height: 1000    
+                height: 1000
 ```
 
 ### Fusion Object Tree Caching
@@ -331,13 +365,13 @@ Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to yo
 
 #### `Sitegeist.Monocle:Preview.Page`
 
-The prototype `Sitegeist.Monocle:Preview.Page` renders the preview view for a prototype, to do so it uses `Sitegeist.Monocle:Preview.Prototype` below. 
-You can extend this prototype to add your styles and scripts as you would with `Neos.Neos:Page`. 
+The prototype `Sitegeist.Monocle:Preview.Page` renders the preview view for a prototype, to do so it uses `Sitegeist.Monocle:Preview.Prototype` below.
+You can extend this prototype to add your styles and scripts as you would with `Neos.Neos:Page`.
 
 #### `Sitegeist.Monocle:Preview.Prototype`
 
-The prototype `Sitegeist.Monocle:Preview.Prototype` is used to render a single prototype with applied styleguide props. 
-This is useful if you want to provide the result as prop to the preview of another prototype. 
+The prototype `Sitegeist.Monocle:Preview.Prototype` is used to render a single prototype with applied styleguide props.
+This is useful if you want to provide the result as prop to the preview of another prototype.
 
 ```
 prototype(Vendor.Site:Container) {
@@ -355,7 +389,7 @@ prototype(Vendor.Site:Container) {
 
 Monocle comes with four privilege targets to control access.
 
-- `Sitegeist.Monocle:Backend.Styleguide` : call the backend module that will open the styleguide 
+- `Sitegeist.Monocle:Backend.Styleguide` : call the backend module that will open the styleguide
 - `Sitegeist.Monocle:Styleguide.Api` : request informations about prototypes etc. via api (used from the module)
 - `Sitegeist.Monocle:Styleguide.Preview` : show a preview for a prototype
 - `Sitegeist.Monocle:Styleguide.Module` : show the styleguide

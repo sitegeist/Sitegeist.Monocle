@@ -1,0 +1,8 @@
+prototype(Sitegeist.Monocle:MirrorUri.Text) < prototype(Neos.Fusion:Component) {
+    content = null
+
+    renderer = Sitegeist.Monocle:MirrorUri {
+        type = 'text/plain'
+        content = ${props.content}
+    }
+}

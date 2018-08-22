@@ -1,0 +1,8 @@
+prototype(Sitegeist.Monocle:MirrorUri.Json) < prototype(Neos.Fusion:Component) {
+    content = null
+
+    renderer = Sitegeist.Monocle:MirrorUri {
+        type = 'application/json'
+        content = ${Json.stringify(props.content)}
+    }
+}

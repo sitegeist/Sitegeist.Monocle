@@ -8,6 +8,8 @@ privilegeTargets:
       matcher: 'method(Sitegeist\Monocle\Controller\ModuleController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
       matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(styleguideObjects|styleguideResources|sitePackages|viewportPresets|localePresets|renderPrototype)Action())'
+    'Sitegeist.Monocle:Styleguide.Mock':
+      matcher: 'method(Sitegeist\Monocle\Controller\MockController->(mirror)Action())'
 
 roles:
   'Neos.Neos:AbstractEditor':
@@ -23,4 +25,7 @@ roles:
         permission: GRANT
       -
         privilegeTarget: 'Sitegeist.Monocle:Styleguide.Module'
+        permission: GRANT
+      -
+        privilegeTarget: 'Sitegeist.Monocle:Styleguide.Mock'
         permission: GRANT
