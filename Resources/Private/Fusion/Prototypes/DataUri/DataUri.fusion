@@ -1,6 +1,6 @@
 prototype(Sitegeist.Monocle:DataUri) {
-	@class = 'Sitegeist\\Monocle\\FusionObjects\\DataUriImplementation'
+    @class = 'Sitegeist\\Monocle\\FusionObjects\\DataUriImplementation'
 
-	type = null
-	content = null
+    type = null
+    content = null
 }

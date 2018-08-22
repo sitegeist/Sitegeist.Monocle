@@ -1,8 +1,8 @@
 prototype(Sitegeist.Monocle:DataUri.Json) < prototype(Neos.Fusion:Component) {
-	content = null
+    content = null
 
-	renderer = Sitegeist.Monocle:DataUri {
-		type = 'application/json'
-		content = ${Json.stringify(props.content)}
-	}
+    renderer = Sitegeist.Monocle:DataUri {
+        type = 'application/json'
+        content = ${Json.stringify(props.content)}
+    }
 }
