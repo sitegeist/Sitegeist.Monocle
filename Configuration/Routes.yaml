@@ -24,6 +24,17 @@
   httpMethods: ['GET','POST']
 
 -
+  name:  'Monocle Mock'
+  uriPattern: 'monocle/mock/{@action}'
+  defaults:
+    '@package': 'Sitegeist.Monocle'
+    '@subpackage': ''
+    '@controller': 'Mock'
+    '@format': 'text'
+  httpMethods: ['GET','POST']
+  appendExceedingArguments: true
+
+-
   name:  'Monocle Preview - Module'
   uriPattern: 'monocle/preview/module'
   defaults:

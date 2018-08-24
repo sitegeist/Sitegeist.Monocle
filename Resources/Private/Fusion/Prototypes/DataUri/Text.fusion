@@ -1,8 +1,8 @@
 prototype(Sitegeist.Monocle:DataUri.Text) < prototype(Neos.Fusion:Component) {
-	content = null
+    content = null
 
-	renderer = Sitegeist.Monocle:DataUri {
-		type = 'text/plain'
-		content = ${props.content}
-	}
+    renderer = Sitegeist.Monocle:DataUri {
+        type = 'text/plain'
+        content = ${props.content}
+    }
 }

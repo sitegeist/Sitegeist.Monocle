@@ -1,0 +1,15 @@
+prototype(Sitegeist.Monocle:MirrorUri) < prototype(Neos.Fusion:Component) {
+    type = null
+    content = null
+
+    renderer = Neos.Fusion:UriBuilder {
+        package = 'Sitegeist.Monocle'
+        controller = 'Mock'
+        action = 'mirror'
+        format = 'text'
+        arguments {
+            content = ${props.content}
+            type = ${props.type}
+        }
+    }
+}
