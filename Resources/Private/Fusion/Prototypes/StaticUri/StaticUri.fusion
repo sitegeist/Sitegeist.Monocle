@@ -1,0 +1,14 @@
+prototype(Sitegeist.Monocle:StaticUri) < prototype(Neos.Fusion:Component) {
+    key = null
+
+    renderer = Neos.Fusion:UriBuilder {
+        package = 'Sitegeist.Monocle'
+        controller = 'Mock'
+        action = 'static'
+        format = 'text'
+        arguments {
+            key = ${props.key}
+        }
+    }
+
+}

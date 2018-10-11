@@ -154,6 +154,28 @@ For convenience special prototypes for json and text exist:
 - `Sitegeist.Monocle:MirrorUri.Text`: And endpoint-mock with media-type `text/plain`
 
 
+#### `Sitegeist.Monocle:StaticUri`
+
+Create an URI that will return the content of the file and the contentType for the given key.
+
+```
+    endpointUrl = Sitegeist.Monocle:StaticUri {
+        key = 'example'
+    }
+```
+
+The path and content type for each key are configured via Settings:
+
+```yaml
+Sitegeist:
+  Monocle:
+    uriMock:
+      static:
+        example:
+          path: 'resource://Vendor.Package/Private/Json/example.json'
+          contentType: 'application/json'
+```
+
 #### Mocking Uris inside the styleguide
 
 ```

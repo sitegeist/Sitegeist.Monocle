@@ -1,6 +1,13 @@
 
 Sitegeist:
   Monocle:
+    uriMock:
+      #the static file uris to mock
+      static: {}
+      # key:
+      #   path: 'resource://Vendor.Package/Private/Json/example.json'
+      #   contentType: 'application/json'
+
     fusion:
       enableObjectTreeCache: true
 
