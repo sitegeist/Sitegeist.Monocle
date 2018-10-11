@@ -15,6 +15,7 @@ namespace Sitegeist\Monocle\Controller;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Property\Exception\TargetNotFoundException;
 
 /**
  * Class MockController
@@ -22,6 +23,13 @@ use Neos\Flow\Mvc\Controller\ActionController;
  */
 class MockController extends ActionController
 {
+
+    /**
+     * @var array
+     * @Flow\InjectConfiguration(path="uriMock.static")
+     */
+    protected $staticUriMocks;
+
     /**
      * Return the given content and the type header
      *
@@ -33,5 +41,22 @@ class MockController extends ActionController
     {
         $this->response->setHeader('Content-Type', $type);
         return $content;
+    }
+
+    /**
+     * Return the given static content as defined in the configuration
+     *
+     * @param string $key
+     * @return void
+     */
+    public function staticAction($key)
+    {
+        if ($key && is_array($this->staticUriMocks) && array_key_exists($key, $this->staticUriMocks)) {
+            $config = $this->staticUriMocks[$key];
+            $this->response->setHeader('Content-Type', $config['contentType']);
+            return file_get_contents($config['path']);
+        }
+
+        throw new TargetNotFoundException();
     }
 }
