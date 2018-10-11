@@ -8,22 +8,15 @@ import AnatomyItem from './anatomy-item';
 
 const reduceAnatomicalTreeToComponents = (anatomy, prototypeNames) => {
     if (anatomy.prototypeName && prototypeNames.includes(anatomy.prototypeName)) {
-        return {
+        return [{
             prototypeName: anatomy.prototypeName,
             children: reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames)
-        };
+        }];
     } else if (anatomy.children) {
         return reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames);
     }
 
-    const result = anatomy.map(a => reduceAnatomicalTreeToComponents(a, prototypeNames))
-        .filter(n => n && (n.prototypeName || n.length));
-
-    if (!result.prototypeName && result.length === 1) {
-        return result[0];
-    }
-
-    return result;
+    return anatomy.flatMap(a => reduceAnatomicalTreeToComponents(a, prototypeNames));
 };
 
 @connect(() => ({}), {

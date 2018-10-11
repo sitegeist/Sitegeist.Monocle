@@ -1897,7 +1897,7 @@ var isClassComponent = function isClassComponent(Component$$1) {
 };
 
 var isReferentiallyTransparentFunctionComponent = function isReferentiallyTransparentFunctionComponent(Component$$1) {
-  return Boolean(typeof Component$$1 === 'function' && !isClassComponent(Component$$1) && !Component$$1.defaultProps && !Component$$1.contextTypes && ("Production" === 'production' || !Component$$1.propTypes));
+  return Boolean(typeof Component$$1 === 'function' && !isClassComponent(Component$$1) && !Component$$1.defaultProps && !Component$$1.contextTypes && ("development" === 'production' || !Component$$1.propTypes));
 };
 
 var createFactory = function createFactory(type) {
@@ -2042,7 +2042,7 @@ var withHandlers = function withHandlers(handlers) {
           var handler = createHandler(_this2.props);
           _this2.cachedHandlers[handlerName] = handler;
 
-          if ("Production" !== 'production' && typeof handler !== 'function') {
+          if ("development" !== 'production' && typeof handler !== 'function') {
             console.error(
             // eslint-disable-line no-console
             'withHandlers(): Expected a map of higher-order functions. ' + 'Refer to the docs for more info.');
@@ -2428,7 +2428,7 @@ var lifecycle = function lifecycle(spec) {
   return function (BaseComponent) {
     var factory = createFactory(BaseComponent);
 
-    if ("Production" !== 'production' && spec.hasOwnProperty('render')) {
+    if ("development" !== 'production' && spec.hasOwnProperty('render')) {
       console.error('lifecycle() does not support the render method; its behavior is to ' + 'pass all props and state to the base component.');
     }
 
@@ -4565,7 +4565,7 @@ function log(level, message) {
 
 function deprecate(fn, deprecationWarning) {
   return function () {
-    if (false) log('warn', deprecationWarning);
+    if (true) log('warn', deprecationWarning);
     return fn.apply(undefined, arguments);
   };
 }
@@ -23615,7 +23615,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
             'Use `PropTypes.checkPropTypes()` to call them. ' +
             'Read more at http://fb.me/use-check-prop-types'
           );
-        } else if ("Production" !== 'production' && typeof console !== 'undefined') {
+        } else if ("development" !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
           if (
@@ -28082,7 +28082,7 @@ function proc(iterator) {
     iterator._isRunning = false;
     stdChannel.close();
     if (!isErr) {
-      if (false) {
+      if ("development" === 'development' && result === TASK_CANCEL) {
         log('info', name + ' has been cancelled', '');
       }
       iterator._result = result;
@@ -28522,8 +28522,8 @@ function runSaga(storeInterface, saga) {
   var iterator = void 0;
 
   if (__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* is */].iterator(storeInterface)) {
-    if (false) {
-      log('warn', 'runSaga(iterator, storeInterface) has been deprecated in favor of ' + RUN_SAGA_SIGNATURE);
+    if (true) {
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["w" /* log */])('warn', 'runSaga(iterator, storeInterface) has been deprecated in favor of ' + RUN_SAGA_SIGNATURE);
     }
     iterator = storeInterface;
     storeInterface = saga;
@@ -29142,7 +29142,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 */
 function isCrushed() {}
 
-if ("Production" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
   __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
@@ -32344,7 +32344,7 @@ exports.default = function (env) {
     //
     // Dev tools extension
     //
-    if ("Production" !== 'production' && window.devToolsExtension) {
+    if ("development" !== 'production' && window.devToolsExtension) {
         storeEnhancers.push(window.devToolsExtension());
     }
 
@@ -35862,25 +35862,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var reduceAnatomicalTreeToComponents = function reduceAnatomicalTreeToComponents(anatomy, prototypeNames) {
     if (anatomy.prototypeName && prototypeNames.includes(anatomy.prototypeName)) {
-        return {
+        return [{
             prototypeName: anatomy.prototypeName,
             children: reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames)
-        };
+        }];
     } else if (anatomy.children) {
         return reduceAnatomicalTreeToComponents(anatomy.children, prototypeNames);
     }
 
-    var result = anatomy.map(function (a) {
+    return anatomy.flatMap(function (a) {
         return reduceAnatomicalTreeToComponents(a, prototypeNames);
-    }).filter(function (n) {
-        return n && (n.prototypeName || n.length);
     });
-
-    if (!result.prototypeName && result.length === 1) {
-        return result[0];
-    }
-
-    return result;
 };
 
 var Anatomy = (_dec = (0, _reactRedux.connect)(function () {
@@ -68678,7 +68670,7 @@ var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
-if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"Production"}) && "Production" === 'test') {
+if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"development"}) && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
@@ -75765,7 +75757,7 @@ var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
-if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"Production"}) && "Production" === 'test') {
+if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"development"}) && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
@@ -76004,7 +75996,7 @@ var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
-if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"Production"}) && "Production" === 'test') {
+if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"development"}) && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
@@ -79435,7 +79427,7 @@ var warning = __webpack_require__(3);
 
 var ReactComponentTreeHook;
 
-if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"Production"}) && "Production" === 'test') {
+if (typeof process !== 'undefined' && __webpack_require__.i({"NODE_ENV":"development"}) && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
@@ -80085,7 +80077,7 @@ function sagaMiddlewareFactory() {
     throw new Error('`options.logger` passed to the Saga middleware is not a function!');
   }
 
-  if (false) {
+  if ("development" === 'development' && options.onerror) {
     throw new Error('`options.onerror` was removed. Use `options.onError` instead.');
   }
 
