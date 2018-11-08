@@ -1,12 +1,24 @@
 ##
 # Prototype that renders a fusion-prototype as preview with applied props or propSets
 #
-prototype(Sitegeist.Monocle:Preview.Prototype) {
-    @class = 'Sitegeist\\Monocle\\FusionObjects\\PreviewPrototypeImplementation'
-
-    sitePackageKey = null
+prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component){
     prototypeName = null
-    propSet = null
     props = Neos.Fusion:RawArray
-    locales = Neos.Fusion:RawArray
+    propSet = null
+
+    renderer = Neos.Fusion:Renderer {
+        type = ${props.prototypeName}
+        element {
+            @apply {
+                defaultProps = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props<Neos.Fusion:RawArray>'}
+                }
+                selectedPropSet = Neos.Fusion:Renderer {
+                    @if.has = ${props.propSet}
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet + '<Neos.Fusion:RawArray>'}
+                }
+                props = ${props.props}
+            }
+        }
+    }
 }
