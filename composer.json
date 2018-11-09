@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sitegeist\\Monocle": "Classes"
+            "Sitegeist\\Monocle\\": "Classes"
         }
     },
     "extra": {
