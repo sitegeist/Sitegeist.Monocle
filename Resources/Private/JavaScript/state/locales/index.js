@@ -71,14 +71,14 @@ selectors.current = createSelector(
 
 export const sagas = {};
 
-sagas.load = business.operation(function * () {
-    const localePresetsEndpoint = yield select($get('env.localePresetsEndpoint'));
-    const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
-    const localePresets = yield business.authenticated(
-        url(localePresetsEndpoint, {
-            queryParams: {sitePackageKey}
-        })
-    );
-
-    yield put(actions.set(localePresets));
-});
+// sagas.load = business.operation(function * () {
+//     const localePresetsEndpoint = yield select($get('env.localePresetsEndpoint'));
+//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+//     const localePresets = yield business.authenticated(
+//         url(localePresetsEndpoint, {
+//             queryParams: {sitePackageKey}
+//         })
+//     );
+//
+//     yield put(actions.set(localePresets));
+// });

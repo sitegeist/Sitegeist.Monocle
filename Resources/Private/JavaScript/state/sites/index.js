@@ -65,9 +65,9 @@ selectors.currentlySelected = createSelector(
 
 export const sagas = {};
 
-sagas.load = business.operation(function * () {
-    const sitePackagesEndpoint = yield select($get('env.sitePackagesEndpoint'));
-    const sites = yield business.authenticated(sitePackagesEndpoint);
-
-    yield put(actions.set(sites));
-});
+// sagas.load = business.operation(function * () {
+//     const sitePackagesEndpoint = yield select($get('env.sitePackagesEndpoint'));
+//     const sites = yield business.authenticated(sitePackagesEndpoint);
+//
+//     yield put(actions.set(sites));
+// });

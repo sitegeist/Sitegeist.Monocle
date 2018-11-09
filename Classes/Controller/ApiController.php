@@ -60,37 +60,42 @@ class ApiController extends ActionController
      */
     protected $configurationService;
 
+
+    /**
+     * Get all configurations for this site package
+     *
+     * @param null $sitePackageKey
+     */
+    public function configurationAction($sitePackageKey = null)
+    {
+        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+
+        $value = [];
+        $value['sitePackage'] = $sitePackageKey;
+        $value['ui'] = [
+            'sitePackages' =>  $this->getSitePackages(),
+            'viewportPresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'),
+            'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets')
+        ];
+        $value['preview'] = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview');
+        $value['styleguideObjects'] = $this->getStyleguideObjects($sitePackageKey);
+
+        $this->view->assign('value', $value);
+    }
+
     /**
      * Get all styleguide objects
      *
      * @Flow\SkipCsrfProtection
      * @param string $sitePackageKey
      * @return void
+     * @deprecated
      */
     public function styleguideObjectsAction($sitePackageKey = null)
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
-        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
-        $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
-
-        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
-            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
-        }
-
-        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
-        if (is_array($hiddenPrototypeNamePatterns)) {
-            foreach ($hiddenPrototypeNamePatterns as $pattern) {
-                $styleguideObjects = array_filter(
-                    $styleguideObjects,
-                    function ($prototypeName) use ($pattern) {
-                        return fnmatch($pattern, $prototypeName) === false;
-                    },
-                    ARRAY_FILTER_USE_KEY
-                );
-            }
-        }
+        $styleguideObjects = $this->getStyleguideObjects($sitePackageKey);
 
         $this->view->assign('value', $styleguideObjects);
     }
@@ -122,15 +127,11 @@ class ApiController extends ActionController
      *
      * @Flow\SkipCsrfProtection
      * @return void
+     * @deprecated
      */
     public function sitePackagesAction()
     {
-        $sitePackageKeys = $this->getActiveSitePackageKeys();
-        $result = [];
-
-        foreach ($sitePackageKeys as $sitePackageKey) {
-            $result[$sitePackageKey] = $sitePackageKey;
-        }
+        $result = $this->getSitePackages();
 
         $this->view->assign('value', $result);
     }
@@ -142,6 +143,7 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @param string $sitePackageKey
      * @return void
+     * @deprecated
      */
     public function viewportPresetsAction($sitePackageKey = null)
     {
@@ -156,6 +158,7 @@ class ApiController extends ActionController
      * @Flow\SkipCsrfProtection
      * @param string $sitePackageKey
      * @return void
+     * @deprecated
      */
     public function localePresetsAction($sitePackageKey = null)
     {
@@ -164,14 +167,14 @@ class ApiController extends ActionController
     }
 
     /**
-     * Render the given prototype
+     * Render informations about the given prototype
      *
      * @Flow\SkipCsrfProtection
-     * @param string $prototypeName
      * @param string $sitePackageKey
+     * @param string $prototypeName
      * @return void
      */
-    public function renderPrototypeAction($prototypeName, $sitePackageKey = null)
+    public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
         $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
 
@@ -197,5 +200,64 @@ class ApiController extends ActionController
         ];
 
         $this->view->assign('value', $result);
+    }
+
+    /**
+     * Render the given prototype
+     *
+     * @Flow\SkipCsrfProtection
+     * @param string $prototypeName
+     * @param string $sitePackageKey
+     * @return void
+     * @deprecated
+     */
+    public function renderPrototypeAction($prototypeName, $sitePackageKey = null)
+    {
+        return $this->prototypeDetailsAction($sitePackageKey, $prototypeName);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSitePackages(): array
+    {
+        $sitePackageKeys = $this->getActiveSitePackageKeys();
+        $result = [];
+
+        foreach ($sitePackageKeys as $sitePackageKey) {
+            $result[$sitePackageKey] = $sitePackageKey;
+        }
+        return $result;
+    }
+
+    /**
+     * @param $sitePackageKey
+     * @param $styleguideObject
+     * @return array
+     * @throws \Neos\Neos\Domain\Exception
+     */
+    protected function getStyleguideObjects($sitePackageKey): array
+    {
+        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
+        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
+        $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
+
+        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
+            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
+        }
+
+        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
+        if (is_array($hiddenPrototypeNamePatterns)) {
+            foreach ($hiddenPrototypeNamePatterns as $pattern) {
+                $styleguideObjects = array_filter(
+                    $styleguideObjects,
+                    function ($prototypeName) use ($pattern) {
+                        return fnmatch($pattern, $prototypeName) === false;
+                    },
+                    ARRAY_FILTER_USE_KEY
+                );
+            }
+        }
+        return $styleguideObjects;
     }
 }

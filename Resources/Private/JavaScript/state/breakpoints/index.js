@@ -54,14 +54,14 @@ selectors.currentlySelected = createSelector(
 
 export const sagas = {};
 
-sagas.load = business.operation(function * () {
-    const viewportPresetsEndpoint = yield select($get('env.viewportPresetsEndpoint'));
-    const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
-    const breakpoints = yield business.authenticated(
-        url(viewportPresetsEndpoint, {
-            queryParams: {sitePackageKey}
-        })
-    );
-
-    yield put(actions.set(breakpoints));
-});
+// sagas.load = business.operation(function * () {
+//     const viewportPresetsEndpoint = yield select($get('env.viewportPresetsEndpoint'));
+//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+//     const breakpoints = yield business.authenticated(
+//         url(viewportPresetsEndpoint, {
+//             queryParams: {sitePackageKey}
+//         })
+//     );
+//
+//     yield put(actions.set(breakpoints));
+// });

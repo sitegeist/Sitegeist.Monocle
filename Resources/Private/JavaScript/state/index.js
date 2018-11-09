@@ -53,7 +53,23 @@ export const saga = function * () {
     const defaultSitePackageKey = yield select($get('env.defaultSitePackageKey'));
     const sitePackageKey = routeSitePackageKey || defaultSitePackageKey;
 
-    yield call(sites.sagas.load);
+    //yield call(sites.sagas.load);
+    yield call (business.operation(function * () {
+        const configurationEndpoint = yield select($get('env.configurationEndpoint'));
+
+        yield put(actions.prototypes.clear());
+        yield put(actions.prototypes.setCurrentlyRendered(null));
+
+        const configuration = yield business.authenticated(configurationEndpoint);
+
+        yield put(actions.sites.set(configuration.ui.sitePackages));
+        yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
+        yield put(actions.locales.set(configuration.ui.localePresets));
+        yield put(actions.prototypes.add(configuration.styleguideObjects));
+
+    }));
+
+
     yield put(sites.actions.select(sitePackageKey));
 
     yield call(prototypes.sagas.load);
@@ -85,8 +101,8 @@ export const saga = function * () {
     yield fork(routing.sagas.updateHistoryWhenPrototypeChanges);
     yield fork(prototypes.sagas.renderPrototypeOnSelect);
     yield fork(prototypes.sagas.reloadIframe);
-    yield fork(breakpoints.sagas.load);
-    yield fork(locales.sagas.load);
+    //yield fork(breakpoints.sagas.load);
+    //yield fork(locales.sagas.load);
 
     try {
         yield put.resolve(prototypes.actions.select(prototypeName));

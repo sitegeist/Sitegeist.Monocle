@@ -601,130 +601,170 @@ var selectors = exports.selectors = {
 var saga = exports.saga = regeneratorRuntime.mark(function saga() {
     var moduleUri, routePath, _routePath$split, _routePath$split2, routeSitePackageKey, routePrototypeName, defaultSitePackageKey, sitePackageKey, listOfPrototypes, defaultPrototypeName, prototypeName;
 
-    return regeneratorRuntime.wrap(function saga$(_context) {
+    return regeneratorRuntime.wrap(function saga$(_context2) {
         while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
                 case 0:
-                    _context.next = 2;
+                    _context2.next = 2;
                     return (0, _effects.put)(business.actions.addTask('@sitegeist/monocle/bootstrap'));
 
                 case 2:
 
                     document.title = 'Monocle: Loading...';
 
-                    _context.next = 5;
+                    _context2.next = 5;
                     return (0, _effects.select)((0, _plowJs.$get)('env.moduleUri'));
 
                 case 5:
-                    moduleUri = _context.sent;
+                    moduleUri = _context2.sent;
                     routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
                     _routePath$split = routePath.split('/'), _routePath$split2 = _slicedToArray(_routePath$split, 2), routeSitePackageKey = _routePath$split2[0], routePrototypeName = _routePath$split2[1];
-                    _context.next = 10;
+                    _context2.next = 10;
                     return (0, _effects.select)((0, _plowJs.$get)('env.defaultSitePackageKey'));
 
                 case 10:
-                    defaultSitePackageKey = _context.sent;
+                    defaultSitePackageKey = _context2.sent;
                     sitePackageKey = routeSitePackageKey || defaultSitePackageKey;
-                    _context.next = 14;
-                    return (0, _effects.call)(sites.sagas.load);
+
+                    //yield call(sites.sagas.load);
+
+                    _context2.next = 14;
+                    return (0, _effects.call)(business.operation(regeneratorRuntime.mark(function _callee() {
+                        var configurationEndpoint, configuration;
+                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                                switch (_context.prev = _context.next) {
+                                    case 0:
+                                        _context.next = 2;
+                                        return (0, _effects.select)((0, _plowJs.$get)('env.configurationEndpoint'));
+
+                                    case 2:
+                                        configurationEndpoint = _context.sent;
+                                        _context.next = 5;
+                                        return (0, _effects.put)(actions.prototypes.clear());
+
+                                    case 5:
+                                        _context.next = 7;
+                                        return (0, _effects.put)(actions.prototypes.setCurrentlyRendered(null));
+
+                                    case 7:
+                                        _context.next = 9;
+                                        return business.authenticated(configurationEndpoint);
+
+                                    case 9:
+                                        configuration = _context.sent;
+                                        _context.next = 12;
+                                        return (0, _effects.put)(actions.sites.set(configuration.ui.sitePackages));
+
+                                    case 12:
+                                        _context.next = 14;
+                                        return (0, _effects.put)(actions.breakpoints.set(configuration.ui.viewportPresets));
+
+                                    case 14:
+                                        _context.next = 16;
+                                        return (0, _effects.put)(actions.locales.set(configuration.ui.localePresets));
+
+                                    case 16:
+                                        _context.next = 18;
+                                        return (0, _effects.put)(actions.prototypes.add(configuration.styleguideObjects));
+
+                                    case 18:
+                                    case 'end':
+                                        return _context.stop();
+                                }
+                            }
+                        }, _callee, this);
+                    })));
 
                 case 14:
-                    _context.next = 16;
+                    _context2.next = 16;
                     return (0, _effects.put)(sites.actions.select(sitePackageKey));
 
                 case 16:
-                    _context.next = 18;
+                    _context2.next = 18;
                     return (0, _effects.call)(prototypes.sagas.load);
 
                 case 18:
-                    _context.next = 20;
+                    _context2.next = 20;
                     return (0, _effects.select)(prototypes.selectors.all);
 
                 case 20:
-                    listOfPrototypes = _context.sent;
+                    listOfPrototypes = _context2.sent;
 
                     if (!(!listOfPrototypes || !Object.keys(listOfPrototypes).length)) {
-                        _context.next = 25;
+                        _context2.next = 25;
                         break;
                     }
 
-                    _context.next = 24;
+                    _context2.next = 24;
                     return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            The prototype list is empty. Please check the Root.fusion file in your site package "' + sitePackageKey + '" and\n            make sure your components are included correctly.\n        '));
 
                 case 24:
-                    return _context.abrupt('return');
+                    return _context2.abrupt('return');
 
                 case 25:
-                    _context.next = 27;
+                    _context2.next = 27;
                     return (0, _effects.select)((0, _plowJs.$get)(['env', 'previewSettings', 'defaultPrototypeName']));
 
                 case 27:
-                    defaultPrototypeName = _context.sent;
+                    defaultPrototypeName = _context2.sent;
                     prototypeName = routePrototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
 
                     if (prototypeName) {
-                        _context.next = 33;
+                        _context2.next = 33;
                         break;
                     }
 
-                    _context.next = 32;
+                    _context2.next = 32;
                     return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            Could not determine default prototypeName. Please make sure to have a defaultPrototypeName configured\n            for your site package.\n        '));
 
                 case 32:
-                    return _context.abrupt('return');
+                    return _context2.abrupt('return');
 
                 case 33:
-                    _context.next = 35;
+                    _context2.next = 35;
                     return (0, _effects.fork)(routing.sagas.updateHistoryWhenPrototypeChanges);
 
                 case 35:
-                    _context.next = 37;
+                    _context2.next = 37;
                     return (0, _effects.fork)(prototypes.sagas.renderPrototypeOnSelect);
 
                 case 37:
-                    _context.next = 39;
+                    _context2.next = 39;
                     return (0, _effects.fork)(prototypes.sagas.reloadIframe);
 
                 case 39:
-                    _context.next = 41;
-                    return (0, _effects.fork)(breakpoints.sagas.load);
-
-                case 41:
-                    _context.next = 43;
-                    return (0, _effects.fork)(locales.sagas.load);
-
-                case 43:
-                    _context.prev = 43;
-                    _context.next = 46;
+                    _context2.prev = 39;
+                    _context2.next = 42;
                     return _effects.put.resolve(prototypes.actions.select(prototypeName));
 
-                case 46:
-                    _context.next = 53;
+                case 42:
+                    _context2.next = 49;
                     break;
 
+                case 44:
+                    _context2.prev = 44;
+                    _context2.t0 = _context2['catch'](39);
+                    _context2.next = 48;
+                    return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            Could not select default Prototype: ' + _context2.t0.message + '\n        '));
+
                 case 48:
-                    _context.prev = 48;
-                    _context.t0 = _context['catch'](43);
-                    _context.next = 52;
-                    return (0, _effects.put)(business.actions.errorTask('@sitegeist/monocle/bootstrap', '\n            Could not select default Prototype: ' + _context.t0.message + '\n        '));
+                    return _context2.abrupt('return');
 
-                case 52:
-                    return _context.abrupt('return');
-
-                case 53:
-                    _context.next = 55;
+                case 49:
+                    _context2.next = 51;
                     return (0, _effects.put)(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
 
-                case 55:
-                    _context.next = 57;
+                case 51:
+                    _context2.next = 53;
                     return (0, _effects.fork)(routing.sagas.updateStateOnDirectRouting);
 
-                case 57:
+                case 53:
                 case 'end':
-                    return _context.stop();
+                    return _context2.stop();
             }
         }
-    }, saga, this, [[43, 48]]);
+    }, saga, this, [[39, 44]]);
 });
 
 /***/ }),
@@ -7304,32 +7344,12 @@ selectors.currentlySelected = (0, _reselect.createSelector)([selectors.currently
 
 var sagas = exports.sagas = {};
 
-sagas.load = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
-    var sitePackagesEndpoint, sites;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.next = 2;
-                    return (0, _effects.select)((0, _plowJs.$get)('env.sitePackagesEndpoint'));
-
-                case 2:
-                    sitePackagesEndpoint = _context.sent;
-                    _context.next = 5;
-                    return _business.sagas.authenticated(sitePackagesEndpoint);
-
-                case 5:
-                    sites = _context.sent;
-                    _context.next = 8;
-                    return (0, _effects.put)(actions.set(sites));
-
-                case 8:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _callee, this);
-}));
+// sagas.load = business.operation(function * () {
+//     const sitePackagesEndpoint = yield select($get('env.sitePackagesEndpoint'));
+//     const sites = yield business.authenticated(sitePackagesEndpoint);
+//
+//     yield put(actions.set(sites));
+// });
 
 /***/ }),
 /* 80 */
@@ -11969,126 +11989,99 @@ selectors.selectedPropSet = function (state) {
 
 var sagas = exports.sagas = {};
 
-sagas.load = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
-    var prototypesEndpoint, sitePackageKey, prototypes;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.next = 2;
-                    return (0, _effects.put)(actions.clear());
+// sagas.load = business.operation(function * () {
+//     yield put(actions.clear());
+//     yield put(actions.setCurrentlyRendered(null));
+//
+//     const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
+//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+//     const prototypes = yield business.authenticated(
+//         url(prototypesEndpoint, {
+//             queryParams: {sitePackageKey}
+//         })
+//     );
+//
+//     yield put(actions.add(prototypes));
+// });
 
-                case 2:
-                    _context.next = 4;
-                    return (0, _effects.put)(actions.setCurrentlyRendered(null));
-
-                case 4:
-                    _context.next = 6;
-                    return (0, _effects.select)((0, _plowJs.$get)('env.prototypesEndpoint'));
-
-                case 6:
-                    prototypesEndpoint = _context.sent;
-                    _context.next = 9;
-                    return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
-
-                case 9:
-                    sitePackageKey = _context.sent;
-                    _context.next = 12;
-                    return _business.sagas.authenticated((0, _buildUrl2.default)(prototypesEndpoint, {
-                        queryParams: { sitePackageKey: sitePackageKey }
-                    }));
-
-                case 12:
-                    prototypes = _context.sent;
-                    _context.next = 15;
-                    return (0, _effects.put)(actions.add(prototypes));
-
-                case 15:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _callee, this);
-}));
-
-sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
+sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee2() {
     var _this = this;
 
     var _loop;
 
-    return regeneratorRuntime.wrap(function _callee3$(_context4) {
+    return regeneratorRuntime.wrap(function _callee2$(_context3) {
         while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
                 case 0:
                     _loop = regeneratorRuntime.mark(function _loop() {
                         var currentlyRenderedPrototype, prototypeName;
-                        return regeneratorRuntime.wrap(function _loop$(_context3) {
+                        return regeneratorRuntime.wrap(function _loop$(_context2) {
                             while (1) {
-                                switch (_context3.prev = _context3.next) {
+                                switch (_context2.prev = _context2.next) {
                                     case 0:
-                                        _context3.next = 2;
+                                        _context2.next = 2;
                                         return (0, _effects.select)(selectors.currentlyRendered);
 
                                     case 2:
-                                        currentlyRenderedPrototype = _context3.sent;
-                                        _context3.next = 5;
+                                        currentlyRenderedPrototype = _context2.sent;
+                                        _context2.next = 5;
                                         return (0, _effects.take)(actions.select);
 
                                     case 5:
-                                        prototypeName = _context3.sent.payload;
+                                        prototypeName = _context2.sent.payload;
 
                                         if (!(currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName && (0, _dom.iframeWindow)())) {
-                                            _context3.next = 10;
+                                            _context2.next = 10;
                                             break;
                                         }
 
                                         (0, _dom.iframeWindow)().location.reload();
-                                        _context3.next = 12;
+                                        _context2.next = 12;
                                         break;
 
                                     case 10:
-                                        _context3.next = 12;
-                                        return (0, _effects.call)(_business.sagas.operation(regeneratorRuntime.mark(function _callee2() {
+                                        _context2.next = 12;
+                                        return (0, _effects.call)(_business.sagas.operation(regeneratorRuntime.mark(function _callee() {
                                             var renderPrototypesEndpoint, sitePackageKey, renderedPrototype;
-                                            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                                            return regeneratorRuntime.wrap(function _callee$(_context) {
                                                 while (1) {
-                                                    switch (_context2.prev = _context2.next) {
+                                                    switch (_context.prev = _context.next) {
                                                         case 0:
-                                                            _context2.next = 2;
+                                                            _context.next = 2;
                                                             return (0, _effects.select)((0, _plowJs.$get)('env.renderPrototypesEndpoint'));
 
                                                         case 2:
-                                                            renderPrototypesEndpoint = _context2.sent;
-                                                            _context2.next = 5;
+                                                            renderPrototypesEndpoint = _context.sent;
+                                                            _context.next = 5;
                                                             return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
 
                                                         case 5:
-                                                            sitePackageKey = _context2.sent;
-                                                            _context2.next = 8;
+                                                            sitePackageKey = _context.sent;
+                                                            _context.next = 8;
                                                             return _business.sagas.authenticated((0, _buildUrl2.default)(renderPrototypesEndpoint, {
                                                                 queryParams: { prototypeName: prototypeName, sitePackageKey: sitePackageKey }
                                                             }));
 
                                                         case 8:
-                                                            renderedPrototype = _context2.sent;
-                                                            _context2.next = 11;
+                                                            renderedPrototype = _context.sent;
+                                                            _context.next = 11;
                                                             return (0, _effects.put)(actions.setCurrentlyRendered(renderedPrototype));
 
                                                         case 11:
-                                                            _context2.next = 13;
+                                                            _context.next = 13;
                                                             return (0, _effects.take)(actions.ready);
 
                                                         case 13:
                                                         case 'end':
-                                                            return _context2.stop();
+                                                            return _context.stop();
                                                     }
                                                 }
-                                            }, _callee2, this);
+                                            }, _callee, this);
                                         })));
 
                                     case 12:
                                     case 'end':
-                                        return _context3.stop();
+                                        return _context2.stop();
                                 }
                             }
                         }, _loop, _this);
@@ -12096,49 +12089,49 @@ sagas.renderPrototypeOnSelect = regeneratorRuntime.mark(function _callee3() {
 
                 case 1:
                     if (false) {
-                        _context4.next = 5;
+                        _context3.next = 5;
                         break;
                     }
 
-                    return _context4.delegateYield(_loop(), 't0', 3);
+                    return _context3.delegateYield(_loop(), 't0', 3);
 
                 case 3:
-                    _context4.next = 1;
+                    _context3.next = 1;
                     break;
 
                 case 5:
                 case 'end':
-                    return _context4.stop();
+                    return _context3.stop();
             }
         }
-    }, _callee3, this);
+    }, _callee2, this);
 });
 
-sagas.reloadIframe = regeneratorRuntime.mark(function _callee4() {
-    return regeneratorRuntime.wrap(function _callee4$(_context5) {
+sagas.reloadIframe = regeneratorRuntime.mark(function _callee3() {
+    return regeneratorRuntime.wrap(function _callee3$(_context4) {
         while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
                 case 0:
                     if (false) {
-                        _context5.next = 6;
+                        _context4.next = 6;
                         break;
                     }
 
-                    _context5.next = 3;
+                    _context4.next = 3;
                     return (0, _effects.take)(actions.reload);
 
                 case 3:
 
                     (0, _dom.iframeWindow)().location.reload();
-                    _context5.next = 0;
+                    _context4.next = 0;
                     break;
 
                 case 6:
                 case 'end':
-                    return _context5.stop();
+                    return _context4.stop();
             }
         }
-    }, _callee4, this);
+    }, _callee3, this);
 });
 
 /***/ }),
@@ -19170,39 +19163,17 @@ selectors.currentlySelected = (0, _reselect.createSelector)([(0, _plowJs.$get)('
 
 var sagas = exports.sagas = {};
 
-sagas.load = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
-    var viewportPresetsEndpoint, sitePackageKey, breakpoints;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.next = 2;
-                    return (0, _effects.select)((0, _plowJs.$get)('env.viewportPresetsEndpoint'));
-
-                case 2:
-                    viewportPresetsEndpoint = _context.sent;
-                    _context.next = 5;
-                    return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
-
-                case 5:
-                    sitePackageKey = _context.sent;
-                    _context.next = 8;
-                    return _business.sagas.authenticated((0, _buildUrl2.default)(viewportPresetsEndpoint, {
-                        queryParams: { sitePackageKey: sitePackageKey }
-                    }));
-
-                case 8:
-                    breakpoints = _context.sent;
-                    _context.next = 11;
-                    return (0, _effects.put)(actions.set(breakpoints));
-
-                case 11:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _callee, this);
-}));
+// sagas.load = business.operation(function * () {
+//     const viewportPresetsEndpoint = yield select($get('env.viewportPresetsEndpoint'));
+//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+//     const breakpoints = yield business.authenticated(
+//         url(viewportPresetsEndpoint, {
+//             queryParams: {sitePackageKey}
+//         })
+//     );
+//
+//     yield put(actions.set(breakpoints));
+// });
 
 /***/ }),
 /* 194 */
@@ -19283,39 +19254,17 @@ selectors.current = (0, _reselect.createSelector)([(0, _plowJs.$get)('locales.cu
 
 var sagas = exports.sagas = {};
 
-sagas.load = _business.sagas.operation(regeneratorRuntime.mark(function _callee() {
-    var localePresetsEndpoint, sitePackageKey, localePresets;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-            switch (_context.prev = _context.next) {
-                case 0:
-                    _context.next = 2;
-                    return (0, _effects.select)((0, _plowJs.$get)('env.localePresetsEndpoint'));
-
-                case 2:
-                    localePresetsEndpoint = _context.sent;
-                    _context.next = 5;
-                    return (0, _effects.select)(_sites.selectors.currentlySelectedSitePackageKey);
-
-                case 5:
-                    sitePackageKey = _context.sent;
-                    _context.next = 8;
-                    return _business.sagas.authenticated((0, _buildUrl2.default)(localePresetsEndpoint, {
-                        queryParams: { sitePackageKey: sitePackageKey }
-                    }));
-
-                case 8:
-                    localePresets = _context.sent;
-                    _context.next = 11;
-                    return (0, _effects.put)(actions.set(localePresets));
-
-                case 11:
-                case 'end':
-                    return _context.stop();
-            }
-        }
-    }, _callee, this);
-}));
+// sagas.load = business.operation(function * () {
+//     const localePresetsEndpoint = yield select($get('env.localePresetsEndpoint'));
+//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
+//     const localePresets = yield business.authenticated(
+//         url(localePresetsEndpoint, {
+//             queryParams: {sitePackageKey}
+//         })
+//     );
+//
+//     yield put(actions.set(localePresets));
+// });
 
 /***/ }),
 /* 195 */
@@ -32141,6 +32090,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (el) {
     var _el$dataset = el.dataset,
         loginEndpoint = _el$dataset.loginEndpoint,
+        configurationEndpoint = _el$dataset.configurationEndpoint,
+        prototypeDetailsEndpoint = _el$dataset.prototypeDetailsEndpoint,
         renderPrototypesEndpoint = _el$dataset.renderPrototypesEndpoint,
         prototypesEndpoint = _el$dataset.prototypesEndpoint,
         viewportPresetsEndpoint = _el$dataset.viewportPresetsEndpoint,
@@ -32157,6 +32108,8 @@ exports.default = function (el) {
 
     return {
         loginEndpoint: loginEndpoint,
+        configurationEndpoint: configurationEndpoint,
+        prototypeDetailsEndpoint: prototypeDetailsEndpoint,
         renderPrototypesEndpoint: renderPrototypesEndpoint,
         prototypesEndpoint: prototypesEndpoint,
         viewportPresetsEndpoint: viewportPresetsEndpoint,

@@ -1,6 +1,8 @@
 export default el => {
     const {
         loginEndpoint,
+        configurationEndpoint,
+        prototypeDetailsEndpoint,
         renderPrototypesEndpoint,
         prototypesEndpoint,
         viewportPresetsEndpoint,
@@ -17,6 +19,8 @@ export default el => {
 
     return {
         loginEndpoint,
+        configurationEndpoint,
+        prototypeDetailsEndpoint,
         renderPrototypesEndpoint,
         prototypesEndpoint,
         viewportPresetsEndpoint,
