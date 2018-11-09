@@ -1,5 +1,6 @@
 import {$get} from 'plow-js';
 import {select, put, call, fork} from 'redux-saga/effects';
+import url from 'build-url';
 
 import * as prototypes from './prototypes';
 import * as breakpoints from './breakpoints';
@@ -7,6 +8,7 @@ import * as locales from './locales';
 import * as sites from './sites';
 import * as business from './business';
 import * as navigation from './navigation';
+import * as preview from './preview';
 import * as routing from './routing';
 import * as qrcode from './qrcode';
 
@@ -17,6 +19,7 @@ export const actions = {
     sites: sites.actions,
     business: business.actions,
     navigation: navigation.actions,
+    preview: preview.actions,
     routing: routing.actions,
     qrcode: qrcode.actions
 };
@@ -28,6 +31,7 @@ export const reducer = (state, action) => [
     sites.reducer,
     business.reducer,
     navigation.reducer,
+    preview.reducer,
     qrcode.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
@@ -38,8 +42,33 @@ export const selectors = {
     sites: sites.selectors,
     business: business.selectors,
     navigation: navigation.selectors,
+    preview: preview.selectors,
     qrcode: qrcode.selectors
 };
+
+const loadConfiguration = business.sagas.operation(function* loadConfiguration() {
+    while (true) {
+        yield take(actions.sites.select);
+
+        const sitePackageKey = yield select(selectors.sites.currentlySelectedSitePackageKey);
+        const configurationEndpoint = yield select($get('env.configurationEndpoint'));
+
+        yield put(actions.prototypes.clear());
+        yield put(actions.prototypes.setCurrentlyRendered(null));
+
+        const configuration = yield business.authenticated(
+            url(configurationEndpoint, {
+                queryParams: {sitePackageKey}
+            })
+        );
+
+        yield put(actions.sites.set(configuration.ui.sitePackages));
+        yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
+        yield put(actions.locales.set(configuration.ui.localePresets));
+        yield put(actions.preview.set(configuration.ui.preview));
+        yield put(actions.prototypes.add(configuration.styleguideObjects));
+    }
+});
 
 export const saga = function * () {
     yield put(business.actions.addTask('@sitegeist/monocle/bootstrap'));
@@ -53,23 +82,7 @@ export const saga = function * () {
     const defaultSitePackageKey = yield select($get('env.defaultSitePackageKey'));
     const sitePackageKey = routeSitePackageKey || defaultSitePackageKey;
 
-    //yield call(sites.sagas.load);
-    yield call (business.operation(function * () {
-        const configurationEndpoint = yield select($get('env.configurationEndpoint'));
-
-        yield put(actions.prototypes.clear());
-        yield put(actions.prototypes.setCurrentlyRendered(null));
-
-        const configuration = yield business.authenticated(configurationEndpoint);
-
-        yield put(actions.sites.set(configuration.ui.sitePackages));
-        yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
-        yield put(actions.locales.set(configuration.ui.localePresets));
-        yield put(actions.prototypes.add(configuration.styleguideObjects));
-
-    }));
-
-
+    yield fork(loadConfiguration);
     yield put(sites.actions.select(sitePackageKey));
 
     yield call(prototypes.sagas.load);
@@ -101,6 +114,7 @@ export const saga = function * () {
     yield fork(routing.sagas.updateHistoryWhenPrototypeChanges);
     yield fork(prototypes.sagas.renderPrototypeOnSelect);
     yield fork(prototypes.sagas.reloadIframe);
+
     //yield fork(breakpoints.sagas.load);
     //yield fork(locales.sagas.load);
 

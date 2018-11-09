@@ -11,7 +11,7 @@ import style from './style.css';
 
 @connect(state => {
     const src = selectors.navigation.previewUri(state);
-    const sourceQuerySelector = $get('env.previewSettings.sourceQuerySelector', state);
+    const sourceQuerySelector = selectors.preview.sourceQuerySelector(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
     const isVisible = Boolean(src);
     const styles = currentlySelectedBreakpoint ? {
