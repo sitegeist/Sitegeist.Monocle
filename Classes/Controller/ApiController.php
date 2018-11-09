@@ -75,9 +75,9 @@ class ApiController extends ActionController
         $value['ui'] = [
             'sitePackages' =>  $this->getSitePackages(),
             'viewportPresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'),
-            'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets')
+            'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'),
+            'preview' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview')
         ];
-        $value['preview'] = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview');
         $value['styleguideObjects'] = $this->getStyleguideObjects($sitePackageKey);
 
         $this->view->assign('value', $value);
