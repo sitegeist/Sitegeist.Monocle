@@ -112,93 +112,6 @@ therefore highly reusable.
 The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the ReactJS world.
 
-### Simulate API-Endpoints
-
-Monocle has fusion-prototypes to simulate json api responses for components.
-
-#### `Sitegeist.Monocle:DataUri`
-
-Generic data uri implementation that expects `type` and `content` as string
-
-```
-    endpointUrl = Sitegeist.Monocle:DataUri {
-        content = '{"hello":"world"}'
-        type = 'application/json'
-    }
-```
-
-The DataUri-Prototypes will encode the content as base64.
-Attention: Data Uris do not accept url-parameters. If you frontend code adds arguments to the mock you have to be aware of that.
-
-For convenience special prototypes for json and text exist:
-
-- `Sitegeist.Monocle:DataUri.Json`: And endpoint-mock with media-type `application/json` that will pass `content` trough Json.stringify
-- `Sitegeist.Monocle:DataUri.Text`: And endpoint-mock with media-type `text/plain`
-
-#### `Sitegeist.Monocle:MirrorUri`
-
-Create an uri to an monocle endpoint that returns the passed content with the given type
-
-```
-    endpointUrl = Sitegeist.Monocle:MirrorUri {
-        content = '{"hello":"world"}'
-        type = 'application/json'
-    }
-```
-
-Attention: Browsers will often crop the urls to a maximal length, be aware of that if you mock large json-structures.
-
-For convenience special prototypes for json and text exist:
-
-- `Sitegeist.Monocle:MirrorUri.Json`: And endpoint-mock with media-type `application/json` that accepts RawArray data
-- `Sitegeist.Monocle:MirrorUri.Text`: And endpoint-mock with media-type `text/plain`
-
-
-#### `Sitegeist.Monocle:StaticUri`
-
-Create an URI that will return the content of the file and the contentType for the given key.
-
-```
-    endpointUrl = Sitegeist.Monocle:StaticUri {
-        key = 'example'
-    }
-```
-
-The path and content type for each key are configured via Settings:
-
-```yaml
-Sitegeist:
-  Monocle:
-    uriMock:
-      static:
-        example:
-          path: 'resource://Vendor.Package/Private/Json/example.json'
-          contentType: 'application/json'
-```
-
-#### Mocking Uris inside the styleguide
-
-```
-prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Component) {
-	@styleguide {
-		props {
-			endpointUrl = Sitegeist.Monocle:DataUri.Json {
-				content = Neos.Fusion:RawArray {
-					term = 'hamburch'
-					suggestedTerm = 'hamburg'
-				}
-			}
-		}
-	}
-
-	endpointUrl = null
-
-	renderer = afx`
-		<div data-endpoint-url={props.endpointUrl} />
-	`
-}
-```
-
 ### Preview Configuration
 
 Some configuration is available to configure the preview.
@@ -369,18 +282,6 @@ Sitegeist:
                 height: 1000
 ```
 
-### Fusion Object Tree Caching
-
-Monocle will cache the fusion code for every site package. To invalidate this cache
-the the Fusion directories of all packages are monitored and changes trigger the flushing
-of the fusion-cache.
-
-The setting `Sitegeist.Monocle.fusion.enableObjectTreeCache` enables the caching in Monocle by default.
-
-### Routes
-
-The monocle Routes are included automatically via Settings.
-
 ### Fusion
 
 Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to your needs.
@@ -440,6 +341,105 @@ prototype(Vendor.Site:Container) {
     ...
 }
 ```
+
+### Simulate API-Endpoints
+
+Monocle has fusion-prototypes to simulate json api responses for components.
+
+#### `Sitegeist.Monocle:DataUri`
+
+Generic data uri implementation that expects `type` and `content` as string
+
+```
+    endpointUrl = Sitegeist.Monocle:DataUri {
+        content = '{"hello":"world"}'
+        type = 'application/json'
+    }
+```
+
+The DataUri-Prototypes will encode the content as base64.
+Attention: Data Uris do not accept url-parameters. If you frontend code adds arguments to the mock you have to be aware of that.
+
+For convenience special prototypes for json and text exist:
+
+- `Sitegeist.Monocle:DataUri.Json`: And endpoint-mock with media-type `application/json` that will pass `content` trough Json.stringify
+- `Sitegeist.Monocle:DataUri.Text`: And endpoint-mock with media-type `text/plain`
+
+#### `Sitegeist.Monocle:MirrorUri`
+
+Create an uri to an monocle endpoint that returns the passed content with the given type
+
+```
+    endpointUrl = Sitegeist.Monocle:MirrorUri {
+        content = '{"hello":"world"}'
+        type = 'application/json'
+    }
+```
+
+Attention: Browsers will often crop the urls to a maximal length, be aware of that if you mock large json-structures.
+
+For convenience special prototypes for json and text exist:
+
+- `Sitegeist.Monocle:MirrorUri.Json`: And endpoint-mock with media-type `application/json` that accepts RawArray data
+- `Sitegeist.Monocle:MirrorUri.Text`: And endpoint-mock with media-type `text/plain`
+
+
+#### `Sitegeist.Monocle:StaticUri`
+
+Create an URI that will return the content of the file and the contentType for the given key.
+
+```
+    endpointUrl = Sitegeist.Monocle:StaticUri {
+        key = 'example'
+    }
+```
+
+The path and content type for each key are configured via Settings:
+
+```yaml
+Sitegeist:
+  Monocle:
+    uriMock:
+      static:
+        example:
+          path: 'resource://Vendor.Package/Private/Json/example.json'
+          contentType: 'application/json'
+```
+
+#### Mocking Uris inside the styleguide
+
+```
+prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Component) {
+	@styleguide {
+		props {
+			endpointUrl = Sitegeist.Monocle:DataUri.Json {
+				content = Neos.Fusion:RawArray {
+					term = 'hamburch'
+					suggestedTerm = 'hamburg'
+				}
+			}
+		}
+	}
+
+	endpointUrl = null
+
+	renderer = afx`
+		<div data-endpoint-url={props.endpointUrl} />
+	`
+}
+```
+
+### Fusion Object Tree Caching
+
+Monocle will cache the fusion code for every site package. To invalidate this cache
+the the Fusion directories of all packages are monitored and changes trigger the flushing
+of the fusion-cache.
+
+The setting `Sitegeist.Monocle.fusion.enableObjectTreeCache` enables the caching in Monocle by default.
+
+### Routes
+
+The monocle Routes are included automatically via Settings.
 
 ## Policies
 
