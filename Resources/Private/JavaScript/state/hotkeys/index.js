@@ -4,21 +4,21 @@ import {$get, $set} from 'plow-js';
 export const actions = {};
 
 actions.set = createAction(
-    '@sitegeist/monocle/preview/set',
-    ({sourceQuerySelector}) => ({sourceQuerySelector})
+    '@sitegeist/monocle/hotkeys/set',
+    hotkeys => hotkeys
 );
 
 actions.clear = createAction(
-    '@sitegeist/monocle/preview/clear'
+    '@sitegeist/monocle/hotkeys/clear'
 );
 
 export const reducer = (state, action) => {
     switch (action.type) {
         case actions.set.toString():
-            return $set('preview', action.payload, state);
+            return $set('hotkeys', action.payload, state);
 
         case actions.clear.toString():
-            return $set('preview', {}, state);
+            return $set('hotkeys', {}, state);
 
         default:
             return state;
@@ -27,7 +27,6 @@ export const reducer = (state, action) => {
 
 export const selectors = {};
 
-selectors.sourceQuerySelector = $get('preview.sourceQuerySelector');
-selectors.defaultPrototypeName = $get('preview.defaultPrototypeName');
+selectors.all = $get('hotkeys');
 
 export const sagas = {};

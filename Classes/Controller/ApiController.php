@@ -64,7 +64,7 @@ class ApiController extends ActionController
     /**
      * Get all configurations for this site package
      *
-     * @param null $sitePackageKey
+     * @param string $sitePackageKey
      */
     public function configurationAction($sitePackageKey = null)
     {
@@ -76,6 +76,7 @@ class ApiController extends ActionController
             'sitePackages' =>  $this->getSitePackages(),
             'viewportPresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'),
             'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'),
+            'hotkeys' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.hotkeys'),
             'preview' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview')
         ];
         $value['styleguideObjects'] = $this->getStyleguideObjects($sitePackageKey);

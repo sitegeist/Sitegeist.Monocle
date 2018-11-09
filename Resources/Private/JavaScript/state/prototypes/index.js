@@ -29,6 +29,11 @@ actions.setCurrentlyRendered = createAction(
     currentlyRenderedPrototype => currentlyRenderedPrototype
 );
 
+actions.setCurrentlyRenderedPrototypeName = createAction(
+    '@sitegeist/monocle/prototypes/setCurrentlyRenderedPrototypeName',
+    currentlyRenderedPrototypeName => currentlyRenderedPrototypeName
+);
+
 actions.setCurrentHtml = createAction(
     '@sitegeist/monocle/prototypes/setCurrentHtml',
     currentlyRenderedHtml => currentlyRenderedHtml
@@ -79,6 +84,17 @@ export const reducer = (state, action) => {
 
         case actions.setCurrentlyRendered.toString():
             return $set('prototypes.currentlyRendered', action.payload, state);
+
+        case actions.setCurrentlyRenderedPrototypeName.toString():
+            return $all(
+                $set('prototypes.currentlyRendered.prototypeName', action.payload),
+                $override('prototypes.currentlyRendered', {
+                    renderedCode: '',
+                    parsedCode: '',
+                    anatomy: []
+                }),
+                state
+            );
 
         case actions.setCurrentHtml.toString():
             return $set('prototypes.currentHtml', action.payload, state);
@@ -143,6 +159,7 @@ sagas.renderPrototypeOnSelect = function * () {
         if (currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName && iframeWindow()) {
             iframeWindow().location.reload();
         } else {
+            yield put(actions.setCurrentlyRenderedPrototypeName(prototypeName));
             yield call(
                 business.operation(function * () {
                     const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
