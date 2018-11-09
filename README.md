@@ -390,10 +390,44 @@ Sitegeist.Monocle brings some fusion-prototypes that you can use or adjust to yo
 The prototype `Sitegeist.Monocle:Preview.Page` renders the preview view for a prototype, to do so it uses `Sitegeist.Monocle:Preview.Prototype` below.
 You can extend this prototype to add your styles and scripts as you would with `Neos.Neos:Page`.
 
+```
+prototype(Sitegeist.Monocle:Preview.Page) {
+    head {
+        metaViewport = '<meta name="viewport" content="width=device-width">'
+
+        stylesheets.main =  Neos.Fusion:Tag {
+           tagName = 'link'
+           attributes.rel = 'stylesheet'
+           attributes.href = Neos.Fusion:ResourceUri {
+               path = 'resource://Vendor.Site/Public/Styles/main.css'
+           }
+        }
+
+        javascripts.main = Neos.Fusion:Tag {
+           tagName = 'script'
+           attributes.src = Neos.Fusion:ResourceUri {
+               path = 'resource://Vendor.Site/Public/JavaScript/main.js'
+           }
+       }
+    }
+}
+```
+
+*You have to add the same header informations to `Sitegeist.Monocle:Preview.Page` AND to `Neos.Neos:Page` to make ensure the rendered result in the styleguide
+is identical to the frontend. To do it is recommended to centralize those in fusion-components.*
+
 #### `Sitegeist.Monocle:Preview.Prototype`
 
 The prototype `Sitegeist.Monocle:Preview.Prototype` is used to render a single prototype with applied styleguide props.
 This is useful if you want to provide the result as prop to the preview of another prototype.
+
+The prototyoe allows to specify the following options:
+
+* `prototypeName`: string The name of the prototyoe
+* `propSet`: string the name of the propSet that is applied in addition to the default props
+* `props`: array key => value pairs that are applied in addition to the defaultProps and the propSet
+
+The following example shows how the `Sitegeist.Monocle:Preview.Prototype` can be used to render a preview inside of a styleguide prop:
 
 ```
 prototype(Vendor.Site:Container) {
