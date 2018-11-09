@@ -1,9 +1,6 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
 import {$get, $set, $override} from 'plow-js';
-import {select, put} from 'redux-saga/effects';
-
-import {sagas as business} from '../business';
 
 export const actions = {};
 
@@ -62,12 +59,3 @@ selectors.currentlySelected = createSelector(
     (currentlySelectedSitePackageKey, sitesByName) =>
         sitesByName && sitesByName[currentlySelectedSitePackageKey]
 );
-
-export const sagas = {};
-
-// sagas.load = business.operation(function * () {
-//     const sitePackagesEndpoint = yield select($get('env.sitePackagesEndpoint'));
-//     const sites = yield business.authenticated(sitePackagesEndpoint);
-//
-//     yield put(actions.set(sites));
-// });

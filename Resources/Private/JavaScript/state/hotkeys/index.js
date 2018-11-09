@@ -28,5 +28,3 @@ export const reducer = (state, action) => {
 export const selectors = {};
 
 selectors.all = $get('hotkeys');
-
-export const sagas = {};

@@ -7,7 +7,7 @@ privilegeTargets:
     'Sitegeist.Monocle:Styleguide.Module':
       matcher: 'method(Sitegeist\Monocle\Controller\ModuleController->(index)Action())'
     'Sitegeist.Monocle:Styleguide.Api':
-      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(configuration|prototypeDetails|styleguideObjects|styleguideResources|sitePackages|viewportPresets|localePresets|renderPrototype)Action())'
+      matcher: 'method(Sitegeist\Monocle\Controller\ApiController->(configuration|prototypeDetails)Action())'
     'Sitegeist.Monocle:Styleguide.Mock':
       matcher: 'method(Sitegeist\Monocle\Controller\MockController->(mirror|static)Action())'
 

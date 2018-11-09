@@ -29,5 +29,3 @@ export const selectors = {};
 
 selectors.sourceQuerySelector = $get('preview.sourceQuerySelector');
 selectors.defaultPrototypeName = $get('preview.defaultPrototypeName');
-
-export const sagas = {};

@@ -136,21 +136,6 @@ selectors.selectedPropSet = state => $get('prototypes.selectedPropSet', state) |
 
 export const sagas = {};
 
-// sagas.load = business.operation(function * () {
-//     yield put(actions.clear());
-//     yield put(actions.setCurrentlyRendered(null));
-//
-//     const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
-//     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
-//     const prototypes = yield business.authenticated(
-//         url(prototypesEndpoint, {
-//             queryParams: {sitePackageKey}
-//         })
-//     );
-//
-//     yield put(actions.add(prototypes));
-// });
-
 sagas.renderPrototypeOnSelect = function * () {
     while (true) { // eslint-disable-line
         const currentlyRenderedPrototype = (yield select(selectors.currentlyRendered));
@@ -162,11 +147,11 @@ sagas.renderPrototypeOnSelect = function * () {
             yield put(actions.setCurrentlyRenderedPrototypeName(prototypeName));
             yield call(
                 business.operation(function * () {
-                    const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
+                    const renderPrototypesEndpoint = yield select($get('env.prototypeDetailsEndpoint'));
                     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
                     const renderedPrototype = yield business.authenticated(
                         url(renderPrototypesEndpoint, {
-                            queryParams: {prototypeName, sitePackageKey}
+                            queryParams: {sitePackageKey, prototypeName, }
                         })
                     );
 

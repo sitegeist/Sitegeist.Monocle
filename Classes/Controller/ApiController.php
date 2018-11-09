@@ -60,7 +60,6 @@ class ApiController extends ActionController
      */
     protected $configurationService;
 
-
     /**
      * Get all configurations for this site package
      *
@@ -82,89 +81,6 @@ class ApiController extends ActionController
         $value['styleguideObjects'] = $this->getStyleguideObjects($sitePackageKey);
 
         $this->view->assign('value', $value);
-    }
-
-    /**
-     * Get all styleguide objects
-     *
-     * @Flow\SkipCsrfProtection
-     * @param string $sitePackageKey
-     * @return void
-     * @deprecated
-     */
-    public function styleguideObjectsAction($sitePackageKey = null)
-    {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
-
-        $styleguideObjects = $this->getStyleguideObjects($sitePackageKey);
-
-        $this->view->assign('value', $styleguideObjects);
-    }
-
-    /**
-     * Find the matching structure for a prototype
-     *
-     * @param $prototypeStructures
-     * @param $prototypeName
-     * @return array
-     */
-    protected function getStructureForPrototypeName($prototypeStructures, $prototypeName)
-    {
-        foreach ($prototypeStructures as $structure) {
-            if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
-                return $structure;
-            }
-        }
-
-        return [
-            'label' => 'Other',
-            'icon' => 'icon-question',
-            'color' => 'white'
-        ];
-    }
-
-    /**
-     * Get all site packages
-     *
-     * @Flow\SkipCsrfProtection
-     * @return void
-     * @deprecated
-     */
-    public function sitePackagesAction()
-    {
-        $result = $this->getSitePackages();
-
-        $this->view->assign('value', $result);
-    }
-
-    /**
-    /**
-     * Get all configured viewport presets
-     *
-     * @Flow\SkipCsrfProtection
-     * @param string $sitePackageKey
-     * @return void
-     * @deprecated
-     */
-    public function viewportPresetsAction($sitePackageKey = null)
-    {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
-        $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'));
-    }
-
-    /**
-    /**
-     * Get all configured locale presets
-     *
-     * @Flow\SkipCsrfProtection
-     * @param string $sitePackageKey
-     * @return void
-     * @deprecated
-     */
-    public function localePresetsAction($sitePackageKey = null)
-    {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
-        $this->view->assign('value', $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'));
     }
 
     /**
@@ -260,5 +176,27 @@ class ApiController extends ActionController
             }
         }
         return $styleguideObjects;
+    }
+
+    /**
+     * Find the matching structure for a prototype
+     *
+     * @param $prototypeStructures
+     * @param $prototypeName
+     * @return array
+     */
+    protected function getStructureForPrototypeName($prototypeStructures, $prototypeName)
+    {
+        foreach ($prototypeStructures as $structure) {
+            if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
+                return $structure;
+            }
+        }
+
+        return [
+            'label' => 'Other',
+            'icon' => 'icon-question',
+            'color' => 'white'
+        ];
     }
 }

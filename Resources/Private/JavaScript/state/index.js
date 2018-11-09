@@ -51,13 +51,13 @@ export const selectors = {
 };
 
 const loadConfiguration = function* loadConfiguration() {
+    const moduleUri = yield select($get('env.moduleUri'));
+    const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
+    let [routeSitePackageKey, routePrototypeName] = routePath.split('/');
+
     while (true) {
         yield take(actions.sites.select);
         yield call(business.sagas.operation(function * () {
-            const moduleUri = yield select($get('env.moduleUri'));
-            const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
-            const [routeSitePackageKey, routePrototypeName] = routePath.split('/');
-
             const sitePackageKey = yield select(selectors.sites.currentlySelectedSitePackageKey);
             const configurationEndpoint = yield select($get('env.configurationEndpoint'));
 
@@ -97,6 +97,8 @@ const loadConfiguration = function* loadConfiguration() {
                 return;
             }
 
+            routePrototypeName = null;
+
             try {
                 yield put.resolve(prototypes.actions.select(prototypeName));
             } catch (err) {
@@ -108,6 +110,7 @@ const loadConfiguration = function* loadConfiguration() {
         }));
 
         yield put(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
+        yield put(business.actions.finishTask('@sitegeist/monocle/switch-site'));
     }
 };
 
@@ -129,10 +132,6 @@ export const saga = function * () {
     yield fork(routing.sagas.updateHistoryWhenPrototypeChanges);
     yield fork(prototypes.sagas.reloadIframe);
     yield fork(prototypes.sagas.renderPrototypeOnSelect);
-
-    //yield fork(breakpoints.sagas.load);
-    //yield fork(locales.sagas.load);
-
 
     yield fork(loadConfiguration);
     yield put(sites.actions.select(sitePackageKey));

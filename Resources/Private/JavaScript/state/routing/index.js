@@ -50,17 +50,6 @@ sagas.updateStateOnDirectRouting = function * () {
         } else {
             yield put(business.actions.addTask('@sitegeist/monocle/switch-site'));
             yield put(sites.actions.select(sitePackageKey));
-
-            yield call(prototypes.sagas.load);
-            yield call(breakpoints.sagas.load);
-
-            const listOfPrototypes = yield select(prototypes.selectors.all);
-
-            const defaultPrototypeName = yield select($get(['env', 'previewSettings', 'defaultPrototypeName']));
-            const newPrototypeName = prototypeName || defaultPrototypeName || Object.keys(listOfPrototypes)[0];
-
-            yield put(prototypes.actions.select(newPrototypeName));
-            yield put(business.actions.finishTask('@sitegeist/monocle/switch-site'));
         }
     }
 };
