@@ -76,9 +76,12 @@ class StyleguideCommandController extends CommandController
      *
      * @param string $prototypeName The prototype name of the component
      * @param string $packageKey site-package (defaults to first found)
+     * @param string $propSet The propSet used for the preview
+     * @param string $props Custom props for the preview
+     * @param string $locales Custom locales for the preview
      * @return void
      */
-    public function renderCommand($prototypeName, $packageKey = null)
+    public function renderCommand($prototypeName, $packageKey = null, $propSet = '__default', $props = '', $locales = '')
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
 
@@ -90,8 +93,10 @@ class StyleguideCommandController extends CommandController
         $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
+        $convertedProps = json_decode($props, true);
+        $convertedLocales = json_decode($locales, true);
 
-        print($fusionView->renderStyleguidePrototype($prototypeName));
+        print($fusionView->renderStyleguidePrototype($prototypeName, $propSet, $convertedProps, $convertedLocales));
     }
 
     protected function outputData($data, $format)
