@@ -90,7 +90,8 @@ class StyleguideCommandController extends CommandController
         $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        $this->output($fusionView->renderStyleguidePrototype($prototypeName));
+
+        print($fusionView->renderStyleguidePrototype($prototypeName));
     }
 
     protected function outputData($data, $format)
