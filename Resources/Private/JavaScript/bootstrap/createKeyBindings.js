@@ -7,7 +7,7 @@ import {actions, selectors} from 'state';
 export default (store) => {
     const hotkeys = selectors.hotkeys.all(store.getState());
 
-    if (hotkeys == undefined) {
+    if (hotkeys === undefined) {
         return;
     }
 

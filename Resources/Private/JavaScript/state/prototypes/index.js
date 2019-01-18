@@ -151,7 +151,7 @@ sagas.renderPrototypeOnSelect = function * () {
                     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
                     const renderedPrototype = yield business.authenticated(
                         url(renderPrototypesEndpoint, {
-                            queryParams: {sitePackageKey, prototypeName, }
+                            queryParams: {sitePackageKey, prototypeName}
                         })
                     );
 

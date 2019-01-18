@@ -53,11 +53,11 @@ export const selectors = {
 const loadConfiguration = function* loadConfiguration() {
     const moduleUri = yield select($get('env.moduleUri'));
     const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
-    let [routeSitePackageKey, routePrototypeName] = routePath.split('/');
+    let [routePrototypeName] = routePath.split('/');
 
-    while (true) {
+    while (true) { // eslint-disable-line
         yield take(actions.sites.select);
-        yield call(business.sagas.operation(function * () {
+        yield call(business.sagas.operation(function* () { // eslint-disable-line
             const sitePackageKey = yield select(selectors.sites.currentlySelectedSitePackageKey);
             const configurationEndpoint = yield select($get('env.configurationEndpoint'));
 
@@ -121,7 +121,7 @@ export const saga = function * () {
 
     const moduleUri = yield select($get('env.moduleUri'));
     const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
-    const [routeSitePackageKey, routePrototypeName] = routePath.split('/');
+    const [routeSitePackageKey] = routePath.split('/');
 
     const defaultSitePackageKey = yield select($get('env.defaultSitePackageKey'));
     const sitePackageKey = routeSitePackageKey || defaultSitePackageKey;

@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {$get} from 'plow-js';
 import debounce from 'lodash.debounce';
 
 import {selectors, actions} from 'state';

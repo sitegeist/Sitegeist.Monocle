@@ -1,8 +1,6 @@
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
 import {$get, $set} from 'plow-js';
-import {selectors as sites} from '../sites';
-import url from 'build-url';
 
 export const actions = {};
 

@@ -7,9 +7,7 @@ export default el => {
         iframeUri,
         previewUri,
         fullscreenUri,
-        defaultSitePackageKey,
-        // uiSettings,
-        // previewSettings
+        defaultSitePackageKey
     } = el.dataset;
 
     return {
@@ -20,8 +18,6 @@ export default el => {
         iframeUri,
         previewUri,
         fullscreenUri,
-        defaultSitePackageKey,
-        // uiSettings: JSON.parse(uiSettings),
-        // previewSettings: JSON.parse(previewSettings)
+        defaultSitePackageKey
     };
 };
