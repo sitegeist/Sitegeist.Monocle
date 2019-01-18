@@ -76,28 +76,34 @@ class StyleguideCommandController extends CommandController
      *
      * @param string $prototypeName The prototype name of the component
      * @param string $packageKey site-package (defaults to first found)
+     * @param string $propSet The propSet used for the preview
+     * @param string $props Custom props for the preview
+     * @param string $locales Custom locales for the preview
      * @return void
      */
-    public function renderCommand($prototypeName, $packageKey = null)
+    public function renderCommand($prototypeName, $packageKey = null, $propSet = '__default', $props = '', $locales = '')
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
+        $convertedProps = json_decode($props, true);
+        $convertedLocales = json_decode($locales, true);
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
         $controllerContext = $this->createDummyControllerContext();
 
         $fusionView = new FusionView();
         $fusionView->setControllerContext($controllerContext);
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
+        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['cli', 'fusionRootPath']);
 
         $fusionView->setPackageKey($sitePackageKey);
         $fusionView->setFusionPath($fusionRootPath);
 
         $fusionView->assignMultiple([
             'sitePackageKey' => $packageKey,
-            'prototypeName' => $prototypeName
+            'prototypeName' => $prototypeName,
+            'propSet' => $propSet,
+            'props' => $convertedProps,
+            'locales' => $convertedLocales
         ]);
 
         $this->output($fusionView->render());

@@ -76,6 +76,9 @@ Sitegeist:
       sourceQuerySelector: 'body'
       defaultPrototypeName: ~
 
+    cli:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Cli>'
+
 Neos:
   Flow:
     mvc:
