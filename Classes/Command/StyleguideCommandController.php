@@ -84,8 +84,8 @@ class StyleguideCommandController extends CommandController
     public function renderCommand($prototypeName, $packageKey = null, $propSet = '__default', $props = '', $locales = '')
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
-        $convertedProps = json_decode($props, true);
-        $convertedLocales = json_decode($locales, true);
+        $convertedProps = json_decode($props, true) ?? [];
+        $convertedLocales = json_decode($locales, true) ?? [];
 
         $controllerContext = $this->createDummyControllerContext();
 
