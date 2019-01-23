@@ -93,8 +93,8 @@ class StyleguideCommandController extends CommandController
         $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        $convertedProps = json_decode($props, true);
-        $convertedLocales = json_decode($locales, true);
+        $convertedProps = json_decode($props, true) ?? [];
+        $convertedLocales = json_decode($locales, true) ?? [];
 
         print($fusionView->renderStyleguidePrototype($prototypeName, $propSet, $convertedProps, $convertedLocales));
     }
