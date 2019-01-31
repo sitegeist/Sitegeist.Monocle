@@ -1,6 +1,7 @@
 .selector {
     display: flex;
     white-space: nowrap;
+    align-items: center;
 }
 .container {
     position: relative;

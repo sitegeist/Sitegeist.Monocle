@@ -1,5 +1,6 @@
 .inspector {
     display: flex;
+    align-items: center;
 }
 
 .container {
