@@ -5,7 +5,7 @@ export const actions = {};
 
 actions.set = createAction(
     '@sitegeist/monocle/preview/set',
-    ({sourceQuerySelector}) => ({sourceQuerySelector})
+    ({sourceQuerySelector, defaultPrototypeName}) => ({sourceQuerySelector, defaultPrototypeName})
 );
 
 actions.clear = createAction(

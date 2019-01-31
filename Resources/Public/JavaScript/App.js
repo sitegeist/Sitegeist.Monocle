@@ -36898,8 +36898,9 @@ var _plowJs = __webpack_require__(29);
 var actions = exports.actions = {};
 
 actions.set = (0, _reduxActions.createAction)('@sitegeist/monocle/preview/set', function (_ref) {
-    var sourceQuerySelector = _ref.sourceQuerySelector;
-    return { sourceQuerySelector: sourceQuerySelector };
+    var sourceQuerySelector = _ref.sourceQuerySelector,
+        defaultPrototypeName = _ref.defaultPrototypeName;
+    return { sourceQuerySelector: sourceQuerySelector, defaultPrototypeName: defaultPrototypeName };
 });
 
 actions.clear = (0, _reduxActions.createAction)('@sitegeist/monocle/preview/clear');
