@@ -7,6 +7,7 @@ import * as locales from './locales';
 import * as sites from './sites';
 import * as business from './business';
 import * as navigation from './navigation';
+import * as propsInspector from './props-inspector';
 import * as routing from './routing';
 import * as qrcode from './qrcode';
 
@@ -17,6 +18,7 @@ export const actions = {
     sites: sites.actions,
     business: business.actions,
     navigation: navigation.actions,
+    propsInspector: propsInspector.actions,
     routing: routing.actions,
     qrcode: qrcode.actions
 };
@@ -28,6 +30,7 @@ export const reducer = (state, action) => [
     sites.reducer,
     business.reducer,
     navigation.reducer,
+    propsInspector.reducer,
     qrcode.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
@@ -38,6 +41,7 @@ export const selectors = {
     sites: sites.selectors,
     business: business.selectors,
     navigation: navigation.selectors,
+    propsInspector: propsInspector.selectors,
     qrcode: qrcode.selectors
 };
 
