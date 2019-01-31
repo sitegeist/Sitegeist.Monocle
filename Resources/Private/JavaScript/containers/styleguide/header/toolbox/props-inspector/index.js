@@ -5,14 +5,17 @@ import {connect} from 'react-redux';
 import Button from '@neos-project/react-ui-components/lib/Button';
 import Icon from '@neos-project/react-ui-components/lib/Icon';
 
-import {withToggableState} from 'components';
+import {selectors, actions} from 'state';
 
 import Inspector from './inspector';
 
 import style from './style.css';
 
-@withToggableState('isOpen')
-@connect(() => ({}), {})
+@connect(state => ({
+    isOpen: selectors.propsInspector.isOpen(state)
+}), {
+    toggleIsOpen: actions.propsInspector.toggle
+})
 export default class PropsInspector extends PureComponent {
     static propTypes = {
         toggleIsOpen: PropTypes.func.isRequired,
