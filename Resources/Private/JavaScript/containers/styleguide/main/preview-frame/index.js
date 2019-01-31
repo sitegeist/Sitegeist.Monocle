@@ -40,7 +40,8 @@ export default class PreviewFrame extends PureComponent {
         sourceQuerySelector: PropTypes.string.isRequired,
         styles: PropTypes.object,
         onLoad: PropTypes.func.isRequired,
-        setCurrentHtml: PropTypes.func.isRequired
+        setCurrentHtml: PropTypes.func.isRequired,
+        isLocked: PropTypes.bool.isRequired
     };
 
     updateSrc = debounce(src => {
