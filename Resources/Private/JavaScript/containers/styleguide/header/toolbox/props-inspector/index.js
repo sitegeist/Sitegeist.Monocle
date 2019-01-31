@@ -24,7 +24,12 @@ export default class PropsInspector extends PureComponent {
 
         return (
             <div className={style.container}>
-                <Button className={style.inspector} onClick={toggleIsOpen} style="clean">
+                <Button
+                    isActive={isOpen}
+                    className={style.inspector}
+                    onClick={toggleIsOpen}
+                    style="clean"
+                    >
                     <Icon icon="check-square" className={style.icon}/>
                     Props
                 </Button>

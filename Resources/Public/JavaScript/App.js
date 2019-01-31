@@ -34589,7 +34589,12 @@ var PropsInspector = (_dec = (0, _components.withToggableState)('isOpen'), _dec2
                 { className: _style2.default.container },
                 _react2.default.createElement(
                     _Button2.default,
-                    { className: _style2.default.inspector, onClick: toggleIsOpen, style: 'clean' },
+                    {
+                        isActive: isOpen,
+                        className: _style2.default.inspector,
+                        onClick: toggleIsOpen,
+                        style: 'clean'
+                    },
                     _react2.default.createElement(_Icon2.default, { icon: 'check-square', className: _style2.default.icon }),
                     'Props'
                 ),
