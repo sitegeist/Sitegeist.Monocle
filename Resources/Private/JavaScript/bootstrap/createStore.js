@@ -24,6 +24,9 @@ export default env => {
             isOpen: false,
             searchTerm: ''
         },
+        propsInspector: {
+            isOpen: false
+        },
         qrcode: {
             isVisible: false
         }

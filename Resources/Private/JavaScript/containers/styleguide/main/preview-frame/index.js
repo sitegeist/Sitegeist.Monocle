@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import debounce from 'lodash.debounce';
+import mergeClassNames from 'classnames';
 
 import {selectors, actions} from 'state';
 import {visibility} from 'components';
@@ -12,17 +13,21 @@ import style from './style.css';
     const src = selectors.navigation.previewUri(state);
     const sourceQuerySelector = selectors.preview.sourceQuerySelector(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
+    const isLocked = Boolean(currentlySelectedBreakpoint);
     const isVisible = Boolean(src);
-    const styles = currentlySelectedBreakpoint ? {
+    const isPropsInspectorOpen = selectors.propsInspector.isOpen(state);
+
+    const styles = isLocked ? {
         width: currentlySelectedBreakpoint.width,
         transform: window.innerWidth < currentlySelectedBreakpoint.width ?
-            `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
+        `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
         height: currentlySelectedBreakpoint.height
     } : {
-        width: '100%'
+        width: isPropsInspectorOpen ? 'calc(100% - 50vw - 2rem)' : '100%',
+        minWidth: isPropsInspectorOpen ? 'calc(100% - 400px - 2rem)' : '100%'
     };
 
-    return {src, sourceQuerySelector, isVisible, styles};
+    return {src, sourceQuerySelector, isVisible, isLocked, styles};
 }, {
     onLoad: actions.prototypes.ready,
     setCurrentHtml: actions.prototypes.setCurrentHtml
@@ -34,7 +39,8 @@ export default class PreviewFrame extends PureComponent {
         sourceQuerySelector: PropTypes.string.isRequired,
         styles: PropTypes.object,
         onLoad: PropTypes.func.isRequired,
-        setCurrentHtml: PropTypes.func.isRequired
+        setCurrentHtml: PropTypes.func.isRequired,
+        isLocked: PropTypes.bool.isRequired
     };
 
     updateSrc = debounce(src => {
@@ -67,14 +73,17 @@ export default class PreviewFrame extends PureComponent {
     }
 
     render() {
-        const {styles} = this.props;
+        const {styles, isLocked} = this.props;
 
         return (
 	<iframe
     role="presentation"
     id="preview-frame"
     ref={this.iframeReference}
-    className={style.frame}
+    className={mergeClassNames({
+        [style.frame]: true,
+        [style.isLocked]: isLocked
+    })}
     style={styles}
     frameBorder="0"
     onLoad={this.iframeLoaded}

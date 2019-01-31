@@ -42,12 +42,7 @@ class ModuleController extends ActionController
     public function initializeView(ViewInterface $view)
     {
         $sitePackageKey = $this->getDefaultSitePackageKey();
-        $uiSettings = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui');
-        $previewSettings = $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview');
-
         $this->view->assign('defaultSitePackageKey', $sitePackageKey);
-        $this->view->assign('uiSettings', json_encode($uiSettings));
-        $this->view->assign('previewSettings', json_encode($previewSettings));
     }
 
     /**

@@ -10,6 +10,7 @@ import * as business from './business';
 import * as navigation from './navigation';
 import * as hotkeys from './hotkeys';
 import * as preview from './preview';
+import * as propsInspector from './props-inspector';
 import * as routing from './routing';
 import * as qrcode from './qrcode';
 
@@ -22,6 +23,7 @@ export const actions = {
     navigation: navigation.actions,
     hotkeys: hotkeys.actions,
     preview: preview.actions,
+    propsInspector: propsInspector.actions,
     routing: routing.actions,
     qrcode: qrcode.actions
 };
@@ -35,6 +37,7 @@ export const reducer = (state, action) => [
     navigation.reducer,
     hotkeys.reducer,
     preview.reducer,
+    propsInspector.reducer,
     qrcode.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
@@ -47,6 +50,7 @@ export const selectors = {
     navigation: navigation.selectors,
     hotkeys: hotkeys.selectors,
     preview: preview.selectors,
+    propsInspector: propsInspector.selectors,
     qrcode: qrcode.selectors
 };
 
