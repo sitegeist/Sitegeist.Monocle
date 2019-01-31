@@ -24,8 +24,8 @@ import style from './style.css';
         `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
         height: currentlySelectedBreakpoint.height
     } : {
-        width: isPropsInspectorOpen ? 'calc(100% - 50vw)' : '100%',
-        minWidth: isPropsInspectorOpen ? 'calc(100% - 400px)' : '100%'
+        width: isPropsInspectorOpen ? 'calc(100% - 50vw - 2rem)' : '100%',
+        minWidth: isPropsInspectorOpen ? 'calc(100% - 400px - 2rem)' : '100%'
     };
 
     return {src, sourceQuerySelector, isVisible, isLocked, styles};

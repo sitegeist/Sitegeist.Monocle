@@ -36372,8 +36372,8 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
         transform: window.innerWidth < currentlySelectedBreakpoint.width ? 'translate(-50%) scale(' + window.innerWidth / currentlySelectedBreakpoint.width + ')' : 'translate(-50%)',
         height: currentlySelectedBreakpoint.height
     } : {
-        width: isPropsInspectorOpen ? 'calc(100% - 50vw)' : '100%',
-        minWidth: isPropsInspectorOpen ? 'calc(100% - 400px)' : '100%'
+        width: isPropsInspectorOpen ? 'calc(100% - 50vw - 2rem)' : '100%',
+        minWidth: isPropsInspectorOpen ? 'calc(100% - 400px - 2rem)' : '100%'
     };
 
     return { src: src, sourceQuerySelector: sourceQuerySelector, isVisible: isVisible, isLocked: isLocked, styles: styles };
@@ -36455,7 +36455,8 @@ var PreviewFrame = (_dec = (0, _reactRedux.connect)(function (state) {
     sourceQuerySelector: _propTypes2.default.string.isRequired,
     styles: _propTypes2.default.object,
     onLoad: _propTypes2.default.func.isRequired,
-    setCurrentHtml: _propTypes2.default.func.isRequired
+    setCurrentHtml: _propTypes2.default.func.isRequired,
+    isLocked: _propTypes2.default.bool.isRequired
 }, _temp2)) || _class) || _class);
 exports.default = PreviewFrame;
 
