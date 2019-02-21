@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {$get} from 'plow-js';
 import debounce from 'lodash.debounce';
 import mergeClassNames from 'classnames';
 
@@ -12,7 +11,7 @@ import style from './style.css';
 
 @connect(state => {
     const src = selectors.navigation.previewUri(state);
-    const sourceQuerySelector = $get('env.previewSettings.sourceQuerySelector', state);
+    const sourceQuerySelector = selectors.preview.sourceQuerySelector(state);
     const currentlySelectedBreakpoint = selectors.breakpoints.currentlySelected(state);
     const isLocked = Boolean(currentlySelectedBreakpoint);
     const isVisible = Boolean(src);

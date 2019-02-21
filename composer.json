@@ -16,11 +16,11 @@
         }
     ],
     "require": {
-        "neos/neos": "*"
+        "neos/neos": "~4.2 || dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "Sitegeist\\Monocle": "Classes"
+        "psr-4": {
+            "Sitegeist\\Monocle\\": "Classes"
         }
     },
     "extra": {

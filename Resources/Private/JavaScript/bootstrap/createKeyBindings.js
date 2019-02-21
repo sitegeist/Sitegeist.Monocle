@@ -4,31 +4,39 @@ import url from 'build-url';
 
 import {actions, selectors} from 'state';
 
-export default (env, store) => {
+export default (store) => {
+    const hotkeys = selectors.hotkeys.all(store.getState());
+
+    if (hotkeys === undefined) {
+        return;
+    }
+
+    console.log(hotkeys);
+
     //
     // Open the navigation
     //
-    mousetrap.bindGlobal(env.uiSettings.hotkeys.openNavigation, () => store.dispatch(actions.navigation.open()));
+    mousetrap.bindGlobal(hotkeys.openNavigation, () => store.dispatch(actions.navigation.open()));
 
     //
     // Close the navigation
     //
-    mousetrap.bindGlobal(env.uiSettings.hotkeys.closeNavigation, () => store.dispatch(actions.navigation.close()));
+    mousetrap.bindGlobal(hotkeys.closeNavigation, () => store.dispatch(actions.navigation.close()));
 
     //
     // Navigate up
     //
-    mousetrap.bindGlobal(env.uiSettings.hotkeys.navigateUp, () => store.dispatch(actions.navigation.up()));
+    mousetrap.bindGlobal(hotkeys.navigateUp, () => store.dispatch(actions.navigation.up()));
 
     //
     // Navigate down
     //
-    mousetrap.bindGlobal(env.uiSettings.hotkeys.navigateDown, () => store.dispatch(actions.navigation.down()));
+    mousetrap.bindGlobal(hotkeys.navigateDown, () => store.dispatch(actions.navigation.down()));
 
     //
     // Open preview in new window
     //
-    mousetrap.bindGlobal(env.uiSettings.hotkeys.openPreviewInNewWindow, () => {
+    mousetrap.bindGlobal(hotkeys.openPreviewInNewWindow, () => {
         const state = store.getState();
         const previewEndpoint = $get('env.previewUri', state);
         const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);

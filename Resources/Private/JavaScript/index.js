@@ -8,7 +8,7 @@ const appContainer = document.getElementById('app');
 const env = createEnv(appContainer);
 const store = createStore(env);
 
-createKeyBindings(env, store);
+createKeyBindings(store);
 createHistoryStateHandler(env, store);
 
 ReactDOM.render(<Styleguide store={store}/>, appContainer);

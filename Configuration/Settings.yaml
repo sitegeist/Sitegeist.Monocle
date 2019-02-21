@@ -74,7 +74,10 @@ Sitegeist:
     preview:
       fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
       sourceQuerySelector: 'body'
-      # defaultPrototypeName: 'Vendor.Site:Prototype'
+      defaultPrototypeName: ~
+
+    cli:
+      fusionRootPath: '/<Sitegeist.Monocle:Preview.Cli>'
 
 Neos:
   Flow:

@@ -29,6 +29,11 @@ actions.setCurrentlyRendered = createAction(
     currentlyRenderedPrototype => currentlyRenderedPrototype
 );
 
+actions.setCurrentlyRenderedPrototypeName = createAction(
+    '@sitegeist/monocle/prototypes/setCurrentlyRenderedPrototypeName',
+    currentlyRenderedPrototypeName => currentlyRenderedPrototypeName
+);
+
 actions.setCurrentHtml = createAction(
     '@sitegeist/monocle/prototypes/setCurrentHtml',
     currentlyRenderedHtml => currentlyRenderedHtml
@@ -80,6 +85,17 @@ export const reducer = (state, action) => {
         case actions.setCurrentlyRendered.toString():
             return $set('prototypes.currentlyRendered', action.payload, state);
 
+        case actions.setCurrentlyRenderedPrototypeName.toString():
+            return $all(
+                $set('prototypes.currentlyRendered.prototypeName', action.payload),
+                $override('prototypes.currentlyRendered', {
+                    renderedCode: '',
+                    parsedCode: '',
+                    anatomy: []
+                }),
+                state
+            );
+
         case actions.setCurrentHtml.toString():
             return $set('prototypes.currentHtml', action.payload, state);
 
@@ -120,21 +136,6 @@ selectors.selectedPropSet = state => $get('prototypes.selectedPropSet', state) |
 
 export const sagas = {};
 
-sagas.load = business.operation(function * () {
-    yield put(actions.clear());
-    yield put(actions.setCurrentlyRendered(null));
-
-    const prototypesEndpoint = yield select($get('env.prototypesEndpoint'));
-    const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
-    const prototypes = yield business.authenticated(
-        url(prototypesEndpoint, {
-            queryParams: {sitePackageKey}
-        })
-    );
-
-    yield put(actions.add(prototypes));
-});
-
 sagas.renderPrototypeOnSelect = function * () {
     while (true) { // eslint-disable-line
         const currentlyRenderedPrototype = (yield select(selectors.currentlyRendered));
@@ -143,13 +144,14 @@ sagas.renderPrototypeOnSelect = function * () {
         if (currentlyRenderedPrototype && prototypeName === currentlyRenderedPrototype.prototypeName && iframeWindow()) {
             iframeWindow().location.reload();
         } else {
+            yield put(actions.setCurrentlyRenderedPrototypeName(prototypeName));
             yield call(
                 business.operation(function * () {
-                    const renderPrototypesEndpoint = yield select($get('env.renderPrototypesEndpoint'));
+                    const renderPrototypesEndpoint = yield select($get('env.prototypeDetailsEndpoint'));
                     const sitePackageKey = yield select(sites.currentlySelectedSitePackageKey);
                     const renderedPrototype = yield business.authenticated(
                         url(renderPrototypesEndpoint, {
-                            queryParams: {prototypeName, sitePackageKey}
+                            queryParams: {sitePackageKey, prototypeName}
                         })
                     );
 

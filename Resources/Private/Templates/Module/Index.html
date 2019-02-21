@@ -11,9 +11,6 @@
             id="app"
             data-default-site-package-key="{defaultSitePackageKey}"
 
-            data-ui-settings="{uiSettings}"
-            data-preview-settings="{previewSettings}"
-
             data-login-endpoint="{f:uri.action(action: 'authenticate', controller: 'Login', package: 'Neos.Neos', format: 'json')}"
 
             data-module-uri="{f:uri.action(action:'index', controller:'module', package:'Sitegeist.Monocle')}"
@@ -22,11 +19,8 @@
             data-iframe-uri="{f:uri.action(action:'index', controller:'preview', package:'Sitegeist.Monocle')}"
             data-preview-uri="{f:uri.action(action:'index', controller:'preview', package:'Sitegeist.Monocle')}"
 
-            data-prototypes-endpoint="{f:uri.action(action:'styleguideObjects', controller:'api', package:'Sitegeist.Monocle')}"
-            data-viewport-presets-endpoint="{f:uri.action(action:'viewportPresets', controller:'api', package:'Sitegeist.Monocle')}"
-            data-locale-presets-endpoint="{f:uri.action(action:'localePresets', controller:'api', package:'Sitegeist.Monocle')}"
-            data-site-packages-endpoint="{f:uri.action(action:'sitePackages', controller:'api', package:'Sitegeist.Monocle')}"
-            data-render-prototypes-endpoint="{f:uri.action(action:'renderPrototype', controller:'api', package:'Sitegeist.Monocle')}"
+            data-configuration-endpoint="{f:uri.action(action:'configuration', controller:'api', package:'Sitegeist.Monocle')}"
+            data-prototype-details-endpoint="{f:uri.action(action:'prototypeDetails', controller:'api', package:'Sitegeist.Monocle')}"
             ></div>
         <script src="{f:uri.resource(path: 'resource://Sitegeist.Monocle/Public/JavaScript/App.js')}"></script>
 	</body>

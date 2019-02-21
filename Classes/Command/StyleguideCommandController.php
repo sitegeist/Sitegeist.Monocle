@@ -84,19 +84,29 @@ class StyleguideCommandController extends CommandController
     public function renderCommand($prototypeName, $packageKey = null, $propSet = '__default', $props = '', $locales = '')
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
+        $convertedProps = json_decode($props, true) ?? [];
+        $convertedLocales = json_decode($locales, true) ?? [];
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
         $controllerContext = $this->createDummyControllerContext();
 
         $fusionView = new FusionView();
         $fusionView->setControllerContext($controllerContext);
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
-        $convertedProps = json_decode($props, true) ?? [];
-        $convertedLocales = json_decode($locales, true) ?? [];
+        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['cli', 'fusionRootPath']);
 
-        print($fusionView->renderStyleguidePrototype($prototypeName, $propSet, $convertedProps, $convertedLocales));
+        $fusionView->setPackageKey($sitePackageKey);
+        $fusionView->setFusionPath($fusionRootPath);
+
+        $fusionView->assignMultiple([
+            'sitePackageKey' => $packageKey,
+            'prototypeName' => $prototypeName,
+            'propSet' => $propSet,
+            'props' => $convertedProps,
+            'locales' => $convertedLocales
+        ]);
+
+        $this->output($fusionView->render());
     }
 
     protected function outputData($data, $format)
