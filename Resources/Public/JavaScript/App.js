@@ -593,7 +593,7 @@ var selectors = exports.selectors = {
 };
 
 var loadConfiguration = regeneratorRuntime.mark(function loadConfiguration() {
-    var moduleUri, routePath, _routePath$split, _routePath$split2, routePrototypeName;
+    var moduleUri, routePath, _routePath$split, _routePath$split2, _, routePrototypeName;
 
     return regeneratorRuntime.wrap(function loadConfiguration$(_context2) {
         while (1) {
@@ -605,7 +605,7 @@ var loadConfiguration = regeneratorRuntime.mark(function loadConfiguration() {
                 case 2:
                     moduleUri = _context2.sent;
                     routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
-                    _routePath$split = routePath.split('/'), _routePath$split2 = _slicedToArray(_routePath$split, 1), routePrototypeName = _routePath$split2[0];
+                    _routePath$split = routePath.split('/'), _routePath$split2 = _slicedToArray(_routePath$split, 2), _ = _routePath$split2[0], routePrototypeName = _routePath$split2[1];
 
                 case 5:
                     if (false) {

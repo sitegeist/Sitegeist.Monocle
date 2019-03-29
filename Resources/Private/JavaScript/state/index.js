@@ -57,7 +57,7 @@ export const selectors = {
 const loadConfiguration = function* loadConfiguration() {
     const moduleUri = yield select($get('env.moduleUri'));
     const routePath = window.location.pathname === moduleUri ? '' : window.location.pathname.substring(moduleUri.length + 1);
-    let [routePrototypeName] = routePath.split('/');
+    let [_, routePrototypeName] = routePath.split('/');
 
     while (true) { // eslint-disable-line
         yield take(actions.sites.select);
