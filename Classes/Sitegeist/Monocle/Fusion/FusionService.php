@@ -62,9 +62,8 @@ class FusionService extends NeosFusionService
         $mergedFusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
 
         $fusionAst = $this->fusionParser->parse($mergedFusionCode, $siteRootFusionPathAndFilename);
-        $finalFusionAst = $this->addStyleguidePrototypesToFusionAst($fusionAst);
 
-        return $finalFusionAst;
+        return $fusionAst;
     }
 
 
@@ -132,47 +131,5 @@ class FusionService extends NeosFusionService
                 'children' => $result
             ];
         }
-    }
-
-    /**
-     * Add styleguide rendering configuration to the fusion-ast
-     *
-     * @param array $fusionAst
-     * @return array
-     */
-    protected function addStyleguidePrototypesToFusionAst($fusionAst)
-    {
-        $styleguidePrototypeConfigurations = [];
-        $styleguideRenderingPrototypes = [];
-        $styleguidePenderingProps = [];
-
-        foreach ($fusionAst['__prototypes'] as $prototypeName => $prototypeConfiguration) {
-            if (array_key_exists('__meta', $prototypeConfiguration)
-                && array_key_exists('styleguide', $prototypeConfiguration['__meta'])
-            ) {
-                $styleguidePrototypeConfigurations[$prototypeName] = $prototypeConfiguration;
-            }
-        }
-
-        // create rendering prototypes with dummy data
-        foreach ($styleguidePrototypeConfigurations as $prototypeName => $prototypeConfiguration) {
-            $renderPrototypeFusion = [
-                '__objectType' => $prototypeName,
-                '__value' => null,
-                '__eelExpression' => null
-            ];
-            if (array_key_exists('props', $prototypeConfiguration['__meta']['styleguide']) && is_array($prototypeConfiguration['__meta']['styleguide']['props'])) {
-                $styleguidePenderingProps[$prototypeName] = $prototypeConfiguration['__meta']['styleguide']['props'];
-            }
-            $styleguideRenderingPrototypes[$prototypeName] = $renderPrototypeFusion;
-        }
-
-        // create render pathes
-        foreach ($styleguideRenderingPrototypes as $prototypeName => $prototypeConfiguration) {
-            $key = self::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-            $fusionAst[$key] = $prototypeConfiguration;
-        }
-
-        return $fusionAst;
     }
 }

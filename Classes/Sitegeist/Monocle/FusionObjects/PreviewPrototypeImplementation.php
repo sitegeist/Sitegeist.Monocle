@@ -88,12 +88,10 @@ class PreviewPrototypeImplementation extends AbstractFusionObject
         $props = $this->getProps();
         $locales = $this->getLocales();
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
 
         // render html
         $fusionView = new FusionView();
         $fusionView->setControllerContext($this->getRuntime()->getControllerContext());
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
         $html = $fusionView->renderStyleguidePrototype($prototypeName, $propSet, $props, $locales);

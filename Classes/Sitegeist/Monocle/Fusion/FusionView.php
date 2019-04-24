@@ -65,6 +65,8 @@ class FusionView extends BaseFusionView
      */
     public function renderStyleguidePrototype($prototypeName, $propSet = '__default', $props = [], $locales = [])
     {
+        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
+
         if ($locales) {
             $currentLocale = new Locale($locales[0]);
             $this->i18nService->getConfiguration()->setCurrentLocale($currentLocale);
@@ -72,15 +74,13 @@ class FusionView extends BaseFusionView
         }
 
         $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
-        $fusionAst = $this->postProcessFusionAstForPrototype($fusionAst, $prototypeName, $propSet, $props);
+        $fusionAst = $this->postProcessFusionAstForPrototype($fusionAst, $prototypePreviewRenderPath, $prototypeName, $propSet, $props);
 
-        $fusionPath = sprintf('/<%s>', $prototypeName);
         $fusionRuntime = new FusionRuntime($fusionAst, $this->controllerContext);
-
         $fusionRuntime->pushContextArray($this->variables);
 
         try {
-            $output = $fusionRuntime->render($fusionPath);
+            $output = $fusionRuntime->render($prototypePreviewRenderPath);
         } catch (RuntimeException $exception) {
             throw $exception->getPrevious();
         }
@@ -99,13 +99,24 @@ class FusionView extends BaseFusionView
      * @param array $props
      * @return array
      */
-    protected function postProcessFusionAstForPrototype(array $fusionAst, $prototypeName, $propSet, $props = [])
+    protected function postProcessFusionAstForPrototype(array $fusionAst, $prototypePreviewRenderPath, $prototypeName, $propSet, $props = [])
     {
         $this->assertWellFormedStyleguideObject($fusionAst, $prototypeName);
-
-        $prototypeConfiguration = $fusionAst['__prototypes'][$prototypeName];
         $styleguideConfiguration = $fusionAst['__prototypes'][$prototypeName]['__meta']['styleguide'];
 
+        // create render configuration ith a wrapper component
+        $prototypeConfiguration = [
+            '__objectType' => 'Neos.Fusion:Component',
+            '__value' => null,
+            '__eelExpression' => null,
+            'renderer' => [
+                '__objectType' => $prototypeName,
+                '__value' => null,
+                '__eelExpression' => null
+            ]
+        ];
+
+        // merge styleguide-props to render configuration
         if (array_key_exists('props', $styleguideConfiguration)) {
             $prototypeConfiguration = array_replace_recursive(
                 $prototypeConfiguration,
@@ -113,6 +124,7 @@ class FusionView extends BaseFusionView
             );
         }
 
+        // merge styleguide-propSet to render configuration if defined
         if (
             $propSet !== '__default' &&
             array_key_exists('propSets', $styleguideConfiguration) &&
@@ -124,28 +136,24 @@ class FusionView extends BaseFusionView
             );
         }
 
+        // merge props to render configuration if defined
         if (count($props)) {
             $prototypeConfiguration = array_replace_recursive($prototypeConfiguration, $props);
         }
 
-        $fusionAst['__prototypes'][$prototypeName] = $prototypeConfiguration;
-
-        foreach ($fusionAst['__prototypes'] as $otherPrototypeName => &$prototypeConfiguration) {
-            if ($otherPrototypeName === $prototypeName) {
-                continue;
-            }
-
-            if (
-                array_key_exists('__meta', $prototypeConfiguration) &&
-                array_key_exists('styleguide', $prototypeConfiguration['__meta']) &&
-                array_key_exists('props', $prototypeConfiguration['__meta']['styleguide'])
-            ) {
-                $prototypeConfiguration = array_replace_recursive(
-                    $prototypeConfiguration,
-                    $prototypeConfiguration['__meta']['styleguide']['props']
-                );
+        // add prop assignments to the renderer
+        foreach (array_keys($prototypeConfiguration) as $key) {
+            if (!in_array($key, ['__objectType', '__value', '__eelExpression', 'renderer'])) {
+                $prototypeConfiguration['renderer'][$key] = [
+                    '__objectType' => null,
+                    '__value' => null,
+                    '__eelExpression' => 'props.' . $key
+                ];
             }
         }
+
+        // save to fusionAst
+        $fusionAst[$prototypePreviewRenderPath] = $prototypeConfiguration;
 
         return $fusionAst;
     }

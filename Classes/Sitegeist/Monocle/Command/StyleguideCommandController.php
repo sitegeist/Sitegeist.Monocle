@@ -85,12 +85,10 @@ class StyleguideCommandController extends CommandController
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
         $controllerContext = $this->createDummyControllerContext();
 
         $fusionView = new FusionView();
         $fusionView->setControllerContext($controllerContext);
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
         $fusionView->setPackageKey($sitePackageKey);
 
         $convertedProps = json_decode($props, true) ?? [];
