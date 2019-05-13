@@ -41,52 +41,34 @@ We use semantic-versioning so every breaking change will increase the major-vers
 To render a prototype as a styleguide-item it simply has to be annotated:
 
 ```
-prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Tag) {
+prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component) {
 
-    #
-    # Styleguide annotation
-    # if this annotation is present (even when empty)
-    # the prototype is rendered in the styleguide
-    #
+    # 
+    # styleguide annotation to define title, description and props for the styleguide
+    # 
     @styleguide {
-
-        #
-        # The title of the component
-        # Optional:  by default the component name is splitted and reversed
-        #
         title = 'My Custom Prototype'
-
-        #
-        # A description of the component
-        # Optional: By default empty.
-        #
         description = 'A Prototype ....'
-
-        #
-        # Fusion-props to override during the styleguide rendering
-        # Optional: By default empty.
-        #
         props {
             content = 'Hello World'
         }
-
-        #
-        # Alternate prop sets that can overload the default props
-        # Optional: By default empty.
-        #
         propSets {
-            'level 2' {
+            headline-2 {
                 tagName = 'h2'
-            }
-            'long text' {
-                content = 'Lorem ipsum dolor sit amet ...'
-            }
+                content = 'Alternate styleguide content for h2'
+            } 
         }
     }
 
-    # normal fusion props
+    # 
+    # normal fusion props and renderer 
+    #
     tagName = 'h1'
     content = ''
+
+    renderer = afx`
+        <Neos.Fusion:Tag tagName={props.tagName}>{props.content}</Neos:Fusion:Tag>
+    `
 }
 ```
 
@@ -96,12 +78,14 @@ and ``node`` context variables are not present inside the styleguide rendering b
 That way it is ensured that your prototypes rely only on the fusion path for rendering and are
 not affected by editor data. This is important for reliable testing of components.
 
-To map an actual content node on a component-prototype use a separate fusion prototype.
+To map an actual content-node on a component-prototype use a separate fusion prototype.
 
 ```
-prototype(Vendor.Package:Content.Headline) < prototype(Neos.Fusion:Value){
-    value = Vendor.Package:Components.Headline {
-        content = ${q(node).property('title')}
+prototype(Vendor.Package:Content.Headline) < prototype(Neos.Neos:ContentComponent){
+    content = ${q(node).property('title')}
+    
+    renderer = Vendor.Package:Components.Headline {
+        @apply.props = ${props}
     }
 }
 ```
