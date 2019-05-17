@@ -10,8 +10,8 @@ import style from './style.css';
 export default class Breakpoint extends PureComponent {
     static propTypes = {
         label: PropTypes.string.isRequired,
-        dimensions: PropTypes.string.isRequired,
-        handleClick: PropTypes.func.isRequired
+        handleClick: PropTypes.func.isRequired,
+        dimensions: PropTypes.string
     };
 
     render() {
@@ -22,9 +22,11 @@ export default class Breakpoint extends PureComponent {
                 <div className={style.title}>
                     {label}
                 </div>
-                <div className={style.dimensions}>
-                    {dimensions}
-                </div>
+                {dimensions ? (
+                    <div className={style.dimensions}>
+                        {dimensions}
+                    </div>
+                ) : null}
             </button>
         );
     }
