@@ -74,7 +74,7 @@ export default class QrCode extends PureComponent {
         });
 
         return (
-	<Dialog isOpen title="QR Code" onRequestClose={this.handleClose}>
+	<Dialog isOpen title="QR Code" onRequestClose={this.handleClose} actions={[]}>
 		<div className={style.form}>
 			{this.state.qrcode && <img className={style.qrcode} src={this.state.qrcode} alt={this.props.url}/>}
 			<div className={style.url}>
