@@ -42,8 +42,8 @@ export default env => {
     //
     // Dev tools extension
     //
-    if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
-        storeEnhancers.push(window.devToolsExtension());
+    if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__) {
+        storeEnhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__());
     }
 
     //
