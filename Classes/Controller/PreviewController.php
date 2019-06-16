@@ -86,6 +86,7 @@ class PreviewController extends ActionController
 
         $this->view->setPackageKey($sitePackageKey);
         $this->view->setFusionPath($fusionRootPath);
+        $this->view->setLocales($renderLocales);
 
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,

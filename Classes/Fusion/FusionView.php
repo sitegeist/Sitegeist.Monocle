@@ -48,4 +48,17 @@ class FusionView extends BaseFusionView
         $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
         $this->parsedFusion = $fusionAst;
     }
+
+    /**
+     * Set locales for I18n
+     *
+     * @param array $locales
+     * @return void
+     */
+    public function setLocales(array $locales)
+    {
+        $currentLocale = new Locale($locales[0]);
+        $this->i18nService->getConfiguration()->setCurrentLocale($currentLocale);
+        $this->i18nService->getConfiguration()->setFallbackRule(array('strict' => false, 'order' => array_reverse($locales)));
+    }
 }
