@@ -10,13 +10,44 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
         type = ${props.prototypeName}
         element {
             @apply {
-                defaultProps = Neos.Fusion:Renderer {
-                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props<Neos.Fusion:RawArray>'}
+
+                defaultProps = Neos.Fusion:Case {
+                    directly {
+                        condition = Sitegeist.Monocle:CanRender {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
+                        }
+                        renderer = Neos.Fusion:Renderer {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
+                        }
+                    }
+
+                    asRawArray {
+                        condition = true
+                        renderer = Neos.Fusion:Renderer {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props<Neos.Fusion:RawArray>'}
+                        }
+                    }
                 }
-                selectedPropSet = Neos.Fusion:Renderer {
+
+                selectedPropSet = Neos.Fusion:Case {
                     @if.has = ${props.propSet}
-                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet + '<Neos.Fusion:RawArray>'}
+                    directly {
+                        condition = Sitegeist.Monocle:CanRender {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
+                        }
+                        renderer = Neos.Fusion:Renderer {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
+                        }
+                    }
+
+                    asRawArray {
+                        condition = true
+                        renderer = Neos.Fusion:Renderer {
+                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet + '<Neos.Fusion:RawArray>'}
+                        }
+                    }
                 }
+
                 props = ${props.props}
             }
         }
