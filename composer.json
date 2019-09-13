@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "neos/neos": "~4.2 || dev-master"
+        "neos/neos": "~4.2 || ~5.0 || dev-master"
     },
     "autoload": {
         "psr-4": {
