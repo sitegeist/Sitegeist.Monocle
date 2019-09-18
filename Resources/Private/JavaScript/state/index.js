@@ -13,6 +13,7 @@ import * as preview from './preview';
 import * as propsInspector from './props-inspector';
 import * as routing from './routing';
 import * as qrcode from './qrcode';
+import * as grid from './grid';
 
 export const actions = {
     prototypes: prototypes.actions,
@@ -25,7 +26,8 @@ export const actions = {
     preview: preview.actions,
     propsInspector: propsInspector.actions,
     routing: routing.actions,
-    qrcode: qrcode.actions
+    qrcode: qrcode.actions,
+    grid: grid.actions
 };
 
 export const reducer = (state, action) => [
@@ -38,7 +40,8 @@ export const reducer = (state, action) => [
     hotkeys.reducer,
     preview.reducer,
     propsInspector.reducer,
-    qrcode.reducer
+    qrcode.reducer,
+    grid.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
 export const selectors = {
@@ -51,7 +54,8 @@ export const selectors = {
     hotkeys: hotkeys.selectors,
     preview: preview.selectors,
     propsInspector: propsInspector.selectors,
-    qrcode: qrcode.selectors
+    qrcode: qrcode.selectors,
+    grid: grid.selectors
 };
 
 const loadConfiguration = function* loadConfiguration() {

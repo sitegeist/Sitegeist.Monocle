@@ -1,0 +1,11 @@
+.frame {
+    flex-grow: 1;
+    flex-basis: 0;
+    transition: width .3s, min-width .3s, transform .3s, left .3s;
+}
+
+.isLocked {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

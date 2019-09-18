@@ -6,6 +6,7 @@ import PropsInspector from './props-inspector';
 import ReloadTrigger from './reload-trigger';
 import QrCodeTrigger from './qrcode-trigger';
 import FullscreenToggler from './fullscreen-toggler';
+import GridToggler from './grid-toggler';
 
 import style from './style.css';
 
@@ -14,8 +15,9 @@ export default class Toolbox extends PureComponent {
         return (
 	<div className={style.toolbox}>
 		<LocaleSelector/>
-		<BreakpointSelector/>
-		<PropsInspector/>
+        <BreakpointSelector/>
+        <GridToggler/>
+        <PropsInspector/>
 		<ReloadTrigger/>
 		<QrCodeTrigger/>
 		<FullscreenToggler/>

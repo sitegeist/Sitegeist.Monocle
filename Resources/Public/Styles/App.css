@@ -3660,6 +3660,40 @@
 :root {}
 :root {}
 :root {}
+.style__selector___64uyo {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.style__icon___2Cbqb {
+     margin-right: .6em;
+ }
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
+:root {}
 .style__toolbox___bkwfX {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4098,6 +4132,70 @@
 .tabPanelTheme__panel___1xkTa {
     padding: 20px;
     height: 100%;
+}
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+:root {}
+
+.style__frame___2Up9U {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+        flex-basis: 0;
+    -webkit-transition: width .3s, min-width .3s, left .3s, -webkit-transform .3s;
+    transition: width .3s, min-width .3s, left .3s, -webkit-transform .3s;
+    transition: width .3s, min-width .3s, transform .3s, left .3s;
+    transition: width .3s, min-width .3s, transform .3s, left .3s, -webkit-transform .3s;
+}
+
+.style__isLocked___QpSbL {
+    position: relative;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
 }
 :root {}
 :root {}
