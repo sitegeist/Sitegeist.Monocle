@@ -18,7 +18,7 @@ use Neos\Flow\Core\Booting\Sequence;
 use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Monitor\FileMonitor;
 use Neos\Flow\Package\Package as BasePackage;
-use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Flow\Package\PackageManager;
 
 /**
  * The Fluid Package
@@ -43,9 +43,9 @@ class Package extends BasePackage
                 if ($step->getIdentifier() === 'neos.flow:systemfilemonitor') {
                     $templateFileMonitor = FileMonitor::createFileMonitorAtBoot('Sitegeist_Monocle_Fusion_Files', $bootstrap);
                     /**
-                     * @var PackageManagerInterface $packageManager
+                     * @var PackageManager $packageManager
                      */
-                    $packageManager = $bootstrap->getEarlyInstance(PackageManagerInterface::class);
+                    $packageManager = $bootstrap->getEarlyInstance(PackageManager::class);
 
                     foreach ($packageManager->getAvailablePackages() as $packageKey => $package) {
                         //
