@@ -17,8 +17,9 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
-use Neos\Flow\Http\Response;
 use Sitegeist\Monocle\Service\ConfigurationService;
+use Neos\Flow\Http\Component\SetHeaderComponent;
+use function GuzzleHttp\Psr7\parse_response;
 
 /**
  * Class PreviewController
@@ -113,15 +114,11 @@ class PreviewController extends ActionController
             if ($endOfHeader !== false) {
                 $header = substr($output, 0, $endOfHeader + 4);
                 try {
-                    $renderedResponse = Response::createFromRaw($header);
-
-                    /** @var Response $response */
-                    $response = $this->controllerContext->getResponse();
-                    $response->setStatus($renderedResponse->getStatusCode());
-                    foreach ($renderedResponse->getHeaders()->getAll() as $headerName => $headerValues) {
-                        $response->setHeader($headerName, $headerValues[0]);
+                    $renderedResponse = parse_response($header);
+                    $this->response->setStatusCode($renderedResponse->getStatusCode());
+                    foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
+                        $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
                     }
-
                     $output = substr($output, strlen($header));
                 } catch (\InvalidArgumentException $exception) {
                 }
