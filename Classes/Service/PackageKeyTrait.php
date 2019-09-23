@@ -2,7 +2,7 @@
 namespace Sitegeist\Monocle\Service;
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Package\PackageManagerInterface;
+use Neos\Flow\Package\PackageManager;
 use Neos\Flow\Package\PackageInterface;
 
 /**
@@ -13,7 +13,7 @@ trait PackageKeyTrait
 
     /**
      * @Flow\Inject
-     * @var \Neos\Flow\Package\PackageManagerInterface
+     * @var Neos\Flow\Package\PackageManager
      */
     protected $packageManager;
 
