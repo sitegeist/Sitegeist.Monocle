@@ -249,6 +249,18 @@ Sitegeist:
       - 'Another.Vendor.Site:Prototype'
 ```
 
+Specific components can be "unhidden" even if they match one of the `hiddenPrototypeNamePatterns` patterns:
+
+```YAML
+Sitegeist:
+  Monocle:
+    alwaysShowPrototypes:
+      - 'Vendor.Site:Some.Component.ThatShouldBeShown'
+      - 'Another.Vendor.Site:Prototype.ThatShouldBeShown'
+```
+
+This allows for including prototypes of packages selectively.
+
 ### Site-specific configuration
 
 All configurations can be overwritten for each selected site package.
