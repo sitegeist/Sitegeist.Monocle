@@ -70,6 +70,7 @@ Sitegeist:
           color: '#FFF'
 
     hiddenPrototypeNamePatterns: {  }
+    alwaysShowPrototypes: {  }
 
     preview:
       fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'

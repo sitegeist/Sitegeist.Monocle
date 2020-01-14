@@ -165,10 +165,14 @@ class ApiController extends ActionController
 
         $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
         if (is_array($hiddenPrototypeNamePatterns)) {
+            $alwaysShowPrototypes = $this->configurationService->getSiteConfiguration($sitePackageKey, 'alwaysShowPrototypes');
             foreach ($hiddenPrototypeNamePatterns as $pattern) {
                 $styleguideObjects = array_filter(
                     $styleguideObjects,
-                    function ($prototypeName) use ($pattern) {
+                    function ($prototypeName) use ($pattern, $alwaysShowPrototypes) {
+                        if (in_array($prototypeName, $alwaysShowPrototypes, true)) {
+                            return true;
+                        }
                         return fnmatch($pattern, $prototypeName) === false;
                     },
                     ARRAY_FILTER_USE_KEY
