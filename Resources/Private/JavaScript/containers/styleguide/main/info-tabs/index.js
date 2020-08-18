@@ -66,7 +66,7 @@ export default class InfoTabs extends PureComponent {
                     {description}
                 </Tabs.Panel>
                 <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}>
-                    <Code content={pretty(renderedHtml)} language="html" style={{whiteSpace:'break-spaces'}}/>
+                    <Code content={pretty(renderedHtml)} language="html" style={{whiteSpace: 'break-spaces'}}/>
                 </Tabs.Panel>
                 <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}>
                     <Code content={renderedCode} language="vim"/>
