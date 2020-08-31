@@ -15,6 +15,7 @@ namespace Sitegeist\Monocle\Controller;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
+use Neos\Flow\Http\Component\SetHeaderComponent;
 use Neos\Flow\Property\Exception\TargetNotFoundException;
 
 /**
@@ -39,7 +40,7 @@ class MockController extends ActionController
      */
     public function mirrorAction($content = '', $type = 'text/html')
     {
-        $this->response->setHeader('Content-Type', $type);
+        $this->response->setComponentParameter(SetHeaderComponent::class, 'Content-Type', $type);
         return $content;
     }
 
@@ -53,7 +54,7 @@ class MockController extends ActionController
     {
         if ($key && is_array($this->staticUriMocks) && array_key_exists($key, $this->staticUriMocks)) {
             $config = $this->staticUriMocks[$key];
-            $this->response->setHeader('Content-Type', $config['contentType']);
+            $this->response->setComponentParameter(SetHeaderComponent::class, 'Content-Type', $config['contentType']);
             return file_get_contents($config['path']);
         }
 
