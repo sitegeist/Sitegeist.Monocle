@@ -7,7 +7,7 @@ export default class Code extends Component {
     static propTypes = {
         content: PropTypes.string,
         language: PropTypes.string,
-        style: PropTypes.array
+        style: PropTypes.object
     };
 
     render() {
