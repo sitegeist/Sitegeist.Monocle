@@ -6,11 +6,12 @@ import codeStyle from './codeStyle';
 export default class Code extends Component {
     static propTypes = {
         content: PropTypes.string,
-        language: PropTypes.string
+        language: PropTypes.string,
+        style: PropTypes.object
     };
 
     render() {
-        const {content, language} = this.props;
-        return <SyntaxHighlighter language={language} style={codeStyle}>{content}</SyntaxHighlighter>;
+        const {content, language, style} = this.props;
+        return <SyntaxHighlighter customStyle={style} language={language} style={codeStyle}>{content}</SyntaxHighlighter>;
     }
 }
