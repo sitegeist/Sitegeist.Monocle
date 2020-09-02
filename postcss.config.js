@@ -27,6 +27,7 @@ module.exports = {
             }, brandVars)
         }),
         require('postcss-nested')(),
-        require('postcss-hexrgba')()
+        require('postcss-hexrgba')(),
+        require('postcss-clean')()
     ]
 };
