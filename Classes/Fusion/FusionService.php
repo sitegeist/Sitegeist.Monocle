@@ -84,6 +84,7 @@ class FusionService extends NeosFusionService
                         'path' => (isset($styleguideConfiguration['path'])) ? $styleguideConfiguration['path'] : $prototypeName,
                         'description' => (isset($styleguideConfiguration['description'])) ? $styleguideConfiguration['description'] :  '',
                         'options' => (isset($styleguideConfiguration['options'])) ? $styleguideConfiguration['options'] : null,
+                        'propSets' => (isset($styleguideConfiguration['propSets'])) ? array_keys($styleguideConfiguration['propSets']) : null,
                     ];
                 }
             }

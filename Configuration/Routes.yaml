@@ -68,3 +68,4 @@
     '@controller': 'Preview'
     '@format': 'html'
   httpMethods: ['GET','POST']
+  appendExceedingArguments: true
