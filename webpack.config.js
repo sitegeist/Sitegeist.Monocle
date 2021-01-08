@@ -1,12 +1,12 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 module.exports = {
 
     entry: {
         App: [
-            'regenerator-runtime/runtime',
-            'babel-polyfill',
+            '@babel/polyfill',
             './Resources/Private/JavaScript/index.js'
         ]
     },
@@ -66,6 +66,7 @@ module.exports = {
     },
 
     plugins: [
-        new MiniCssExtractPlugin({filename: './Styles/[name].css'})
+        new MiniCssExtractPlugin({filename: './Styles/[name].css'}),
+        new BundleAnalyzerPlugin()
     ]
 };
