@@ -12,14 +12,14 @@ import style from './style.css';
 export default class Toolbox extends PureComponent {
     render() {
         return (
-	<div className={style.toolbox}>
-		<LocaleSelector/>
-		<BreakpointSelector/>
-		<PropsInspector/>
-		<ReloadTrigger/>
-		<QrCodeTrigger/>
-		<FullscreenToggler/>
-	</div>
+            <div className={style.toolbox}>
+                <LocaleSelector/>
+                <BreakpointSelector/>
+                <PropsInspector/>
+                <ReloadTrigger/>
+                <QrCodeTrigger/>
+                <FullscreenToggler/>
+            </div>
         );
     }
 }

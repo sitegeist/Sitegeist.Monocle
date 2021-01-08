@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-import TextInput from '@neos-project/react-ui-components/lib/TextInput';
-import TextArea from '@neos-project/react-ui-components/lib/TextArea';
-import CheckBox from '@neos-project/react-ui-components/lib/CheckBox';
+import TextInput from '@neos-project/react-ui-components/lib-esm/TextInput';
+import TextArea from '@neos-project/react-ui-components/lib-esm/TextArea';
+import CheckBox from '@neos-project/react-ui-components/lib-esm/CheckBox';
 
 import style from './style.css';
 

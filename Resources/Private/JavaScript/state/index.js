@@ -105,7 +105,7 @@ const loadConfiguration = function* loadConfiguration() {
             routePrototypeName = null;
 
             try {
-                yield put.resolve(prototypes.actions.select(prototypeName));
+                yield put(prototypes.actions.select(prototypeName));
             } catch (err) {
                 yield put(business.actions.errorTask('@sitegeist/monocle/bootstrap', `
                     Could not select default Prototype: ${err.message}

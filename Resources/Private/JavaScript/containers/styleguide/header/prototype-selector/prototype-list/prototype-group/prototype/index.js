@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withHandlers} from 'recompose';
 import mergeClassNames from 'classnames';
 
-import Icon from '@neos-project/react-ui-components/lib/Icon';
+import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
 
 import style from './style.css';
 
@@ -26,7 +26,7 @@ export default class Prototype extends PureComponent {
         if (el) {
             this.el = el;
             const {color} = this.props.structure;
-            el.querySelector('i').style.color = color;
+            el.querySelector('svg').style.color = color;
         }
     };
 
@@ -49,7 +49,7 @@ export default class Prototype extends PureComponent {
                 onClick={handleClick}
                 ref={this.setIconColor}
                 >
-                <Icon icon={icon}/>
+                <Icon className={style.icon} icon={icon}/>
                 <div>
                     <div className={style.title}>
                         {title}

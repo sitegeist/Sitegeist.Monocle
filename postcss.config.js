@@ -3,9 +3,7 @@ const brandVars = brand.generateCssVarsObject(brand.config, 'brand');
 
 module.exports = {
     plugins: [
-        require('autoprefixer')({
-            browsers: ['last 2 versions']
-        }),
+        require('autoprefixer'),
         require('postcss-css-variables')({
             variables: Object.assign({
                 //
@@ -28,6 +26,8 @@ module.exports = {
         }),
         require('postcss-nested')(),
         require('postcss-hexrgba')(),
-        require('postcss-clean')()
+        require('cssnano')({
+            preset: 'default',
+        }),
     ]
 };

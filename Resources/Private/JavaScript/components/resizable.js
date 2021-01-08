@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {withState, withHandlers} from 'recompose';
 
-import Button from '@neos-project/react-ui-components/lib/Button';
-import Icon from '@neos-project/react-ui-components/lib/Icon';
+import Button from '@neos-project/react-ui-components/lib-esm/Button';
+import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
 
 import style from './resizable.css';
 
@@ -50,7 +50,7 @@ class extends PureComponent {
                     onMouseDown={startDrag}
                     />
                 <Button className={toggleHandleClassName} onClick={toggle} style="clean">
-                    <Icon icon={isCollapsed ? 'chevron-up' : 'chevron-down'}/>
+                    <Icon className={style.icon} icon={isCollapsed ? 'chevron-up' : 'chevron-down'}/>
                 </Button>
                 <Component {...props}/>
             </div>

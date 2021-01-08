@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-import TextInput from '@neos-project/react-ui-components/lib/TextInput';
+import TextInput from '@neos-project/react-ui-components/lib-esm/TextInput';
 
 import {visibility, outside, attached} from 'components';
 

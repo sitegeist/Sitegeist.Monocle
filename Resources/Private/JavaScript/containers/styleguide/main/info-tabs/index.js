@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import pretty from 'pretty';
 
-import Tabs from '@neos-project/react-ui-components/lib/Tabs';
+import Tabs from '@neos-project/react-ui-components/lib-esm/Tabs';
 
 import {visibility, resizable} from 'components';
 import {selectors} from 'state';

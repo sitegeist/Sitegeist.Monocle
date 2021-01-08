@@ -6,8 +6,8 @@ import mergeClassNames from 'classnames';
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-import Dialog from '@neos-project/react-ui-components/lib/Dialog';
-import Icon from '@neos-project/react-ui-components/lib/Icon';
+import Dialog from '@neos-project/react-ui-components/lib-esm/Dialog';
+import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
 
 import {selectors, actions} from 'state';
 import {visibility} from 'components';
@@ -67,6 +67,18 @@ export default class QrCode extends PureComponent {
         setTimeout(() => this.setState({copied: false}), 600);
     }
 
+    renderTitle() {
+        return (
+            <>
+                QR Code
+
+                <button className={style.close} onClick={this.handleClose}>
+                    <Icon className={style.icon} icon="close" />
+                </button>
+            </>
+        );
+    }
+
     render() {
         const copiedClassNames = mergeClassNames({
             [style.copied]: true,
@@ -74,22 +86,22 @@ export default class QrCode extends PureComponent {
         });
 
         return (
-	<Dialog isOpen title="QR Code" onRequestClose={this.handleClose} actions={[]}>
-		<div className={style.form}>
-			{this.state.qrcode && <img className={style.qrcode} src={this.state.qrcode} alt={this.props.url}/>}
-			<div className={style.url}>
-				{this.props.url}
-				<CopyToClipboard onCopy={this.handleCopy} text={this.props.url}>
-					<span className={style.copy} title="Copy URL to clipboard">
-						<Icon icon="clipboard"/>
-						<span className={copiedClassNames}>
-                            Copied!
-                        </span>
-					</span>
-				</CopyToClipboard>
-			</div>
-		</div>
-	</Dialog>
+            <Dialog isOpen title={this.renderTitle()} onRequestClose={this.handleClose} actions={[]}>
+                <div className={style.form}>
+                    {this.state.qrcode && <img className={style.qrcode} src={this.state.qrcode} alt={this.props.url}/>}
+                    <div className={style.url}>
+                        {this.props.url}
+                        <CopyToClipboard onCopy={this.handleCopy} text={this.props.url}>
+                            <span className={style.copy} title="Copy URL to clipboard">
+                                <Icon className={style.icon} icon="clipboard"/>
+                                <span className={copiedClassNames}>
+                                    Copied!
+                                </span>
+                            </span>
+                        </CopyToClipboard>
+                    </div>
+                </div>
+            </Dialog>
         );
     }
 }

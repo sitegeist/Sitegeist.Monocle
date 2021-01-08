@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@neos-project/react-ui-components/lib/Button';
-import Icon from '@neos-project/react-ui-components/lib/Icon';
+import Button from '@neos-project/react-ui-components/lib-esm/Button';
+import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
 
 import {withToggableState} from 'components';
 

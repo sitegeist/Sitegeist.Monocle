@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import Button from '@neos-project/react-ui-components/lib/Button';
-import Icon from '@neos-project/react-ui-components/lib/Icon';
+import Button from '@neos-project/react-ui-components/lib-esm/Button';
+import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
 
 import {visibility} from 'components';
 import {selectors} from 'state';
@@ -26,11 +26,11 @@ export default class FullscreenToggler extends PureComponent {
         const {url} = this.props;
 
         return (
-	<a href={url} target="_blank">
-		<Button className={style.selector} style="clean">
-			<Icon icon="external-link" className={style.icon}/>
-		</Button>
-	</a>
+            <a href={url} target="_blank">
+                <Button className={style.selector} style="clean">
+                    <Icon icon="external-link" className={style.icon}/>
+                </Button>
+            </a>
         );
     }
 }

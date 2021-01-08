@@ -9,8 +9,9 @@
     border: none;
     display: flex;
 }
-.prototype i {
-    font-size: 2rem;
+.icon {
+    width: 2rem;
+    height: 2rem;
     margin-right: var(--baseFontSize);
 }
 .prototype:hover,

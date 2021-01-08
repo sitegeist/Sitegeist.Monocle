@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import mousetrap from 'mousetrap';
 
-import Button from '@neos-project/react-ui-components/lib/Button';
+import Button from '@neos-project/react-ui-components/lib-esm/Button';
 
 import {withToggableState} from 'components';
 import {selectors, actions} from 'state';

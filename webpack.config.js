@@ -1,6 +1,5 @@
-const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
@@ -39,21 +38,22 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                modules: true,
-                                importLoaders: 1,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
                                 localIdentName: '[name]__[local]___[hash:base64:5]',
-                                context: __dirname
-                            }
-                        },
-                        {loader: 'postcss-loader'}
-                    ]
-                })
+                                localIdentContext: __dirname
+                            },
+                            importLoaders: 1,
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    }
+                ]
             }
         ]
     },
@@ -66,17 +66,6 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new ExtractTextPlugin({filename: './Styles/[name].css', allChunks: true}),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-            }
-        })
-    ].concat(
-        process.env.NODE_ENV === 'production' ? [
-            new webpack.optimize.UglifyJsPlugin(),
-            new webpack.optimize.AggressiveMergingPlugin()
-        ] : []
-    )
+        new MiniCssExtractPlugin({filename: './Styles/[name].css'})
+    ]
 };

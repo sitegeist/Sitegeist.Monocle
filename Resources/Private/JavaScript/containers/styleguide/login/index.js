@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withState, withHandlers} from 'recompose';
 
-import Dialog from '@neos-project/react-ui-components/lib/Dialog';
-import TextInput from '@neos-project/react-ui-components/lib/TextInput';
-import Button from '@neos-project/react-ui-components/lib/Button';
+import Dialog from '@neos-project/react-ui-components/lib-esm/Dialog';
+import TextInput from '@neos-project/react-ui-components/lib-esm/TextInput';
+import Button from '@neos-project/react-ui-components/lib-esm/Button';
 
 import {selectors, actions} from 'state';
 import {visibility} from 'components';

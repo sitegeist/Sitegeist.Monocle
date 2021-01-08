@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import Bar from '@neos-project/react-ui-components/lib/Bar';
+import Bar from '@neos-project/react-ui-components/lib-esm/Bar';
 
 import PrototypeSelector from './prototype-selector';
 import SiteSelector from './site-selector';

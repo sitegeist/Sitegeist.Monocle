@@ -4,3 +4,8 @@
         color: #fff;
     }
 }
+
+.tabNavigation__itemBtnIcon {
+    width: 1em;
+    height: 1em;
+}

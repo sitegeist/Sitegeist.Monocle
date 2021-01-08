@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 import {createAction} from 'redux-actions';
 import {createSelector} from 'reselect';
 import {$get, $set, $drop} from 'plow-js';
