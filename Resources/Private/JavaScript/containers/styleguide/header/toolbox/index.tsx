@@ -1,0 +1,23 @@
+import * as React from "react";
+
+import { BreakpointSelector } from './breakpoint-selector';
+import { LocaleSelector } from './locale-selector';
+import { PropsInspector } from './props-inspector';
+import { ReloadTrigger } from './reload-trigger';
+import { QrCodeTrigger } from './qrcode-trigger';
+import { FullscreenToggler } from './fullscreen-toggler';
+
+import style from './style.css';
+
+export function Toolbox() {
+    return (
+        <div className={style.toolbox}>
+            <LocaleSelector/>
+            <BreakpointSelector/>
+            <PropsInspector/>
+            <ReloadTrigger/>
+            <QrCodeTrigger/>
+            <FullscreenToggler/>
+        </div>
+    );
+}

@@ -33,6 +33,14 @@
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@types/classnames": "^2.2.11",
+    "@types/mousetrap": "^1.6.5",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.15",
+    "@types/recompose": "^0.30.7",
+    "@types/seamless-immutable": "^7.1.15",
+    "@types/uuid": "^8.3.0",
     "autoprefixer": "^10.2.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
@@ -69,6 +77,7 @@
     "@neos-project/react-ui-components": "^7.0.0",
     "build-url": "^6.0.1",
     "classnames": "^2.2.5",
+    "immer": "^8.0.0",
     "lodash.debounce": "^4.0.8",
     "lodash.isfunction": "^3.0.9",
     "lodash.omit": "^4.5.0",
@@ -95,7 +104,9 @@
     "redux-saga": "^1.1.3",
     "reselect": "^4.0.0",
     "seamless-immutable": "^7.1.2",
-    "uuid": "^8.3.2"
+    "typesafe-actions": "^5.1.0",
+    "uuid": "^8.3.2",
+    "zod": "^1.11.11"
   },
   "browserslist": [
     "last 2 versions"

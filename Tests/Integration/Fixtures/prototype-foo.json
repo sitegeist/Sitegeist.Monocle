@@ -1,0 +1,29 @@
+{
+  "prototypeName": "Vendor.Site:Component.Foo",
+  "renderedCode": "prototype(Vendor.Site:Component.Foo) < prototype(Neos.Fusion:Component) {\n    @styleguide {\n        title = \"Foo\"\n    }\n    renderer = Neos.Fusion:Tag {\n        tagName = \"div\"\n        content = \"FOO\"\n    }\n}\n",
+  "parsedCode": "__prototypeObjectName: 'Neos.Fusion:Component'\n__meta:\n    styleguide:\n        title: 'Foo'\nrenderer:\n    __objectType: 'Neos.Fusion:Tag'\n    __value: null\n    __eelExpression: null\n    tagName: div\n        content: 'Foo'\n    __prototypeChain:\n    - 'Neos.Fusion:Component'\n",
+  "fusionAst": {
+    "__prototypeObjectName": "Neos.Fusion:Component",
+    "__meta": {
+      "styleguide": {
+        "title": "Foo"
+      }
+    },
+    "renderer": {
+      "__objectType": "Neos.Fusion:Tag",
+      "__value": null,
+      "__eelExpression": null,
+      "tagName": "div",
+      "content": "FOO"
+    },
+    "__prototypeChain": [
+      "Neos.Fusion:Component"
+    ]
+  },
+  "anatomy": [
+    {
+      "prototypeName": "Neos.Fusion:Tag",
+      "children": []
+    }
+  ]
+}
