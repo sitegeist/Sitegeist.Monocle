@@ -81,19 +81,19 @@ sagas.operation = (...args) => function * () {
 };
 
 sagas.unauthenticated = (url, options, ...args) =>
-fetch(url, Object.assign({}, options, {credentials: 'include'}), ...args).then(
-    response => {
-        if (response.ok) {
-            return response.json();
-        }
+    fetch(url, Object.assign({}, options, {credentials: 'include'}), ...args).then(
+        response => {
+            if (response.ok) {
+                return response.json();
+            }
 
-        if (response.status === 401 || response.status === 403) {
-            return 'RE-AUTHORIZE';
-        }
+            if (response.status === 401 || response.status === 403) {
+                return 'RE-AUTHORIZE';
+            }
 
-        throw new Error(`Network response was not ok: (${response.status}) ${response.statusText}`);
-    }
-);
+            throw new Error(`Network response was not ok: (${response.status}) ${response.statusText}`);
+        }
+    );
 
 sagas.authenticated = (...args) => call(function * () {
     while (true) { // eslint-disable-line

@@ -20,7 +20,7 @@ import style from './style.css';
     const styles = isLocked ? {
         width: currentlySelectedBreakpoint.width,
         transform: window.innerWidth < currentlySelectedBreakpoint.width ?
-        `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
+            `translate(-50%) scale(${window.innerWidth / currentlySelectedBreakpoint.width})` : 'translate(-50%)',
         height: currentlySelectedBreakpoint.height
     } : {
         width: isPropsInspectorOpen ? 'calc(100% - 50vw - 2rem)' : '100%',
@@ -76,18 +76,18 @@ export default class PreviewFrame extends PureComponent {
         const {styles, isLocked} = this.props;
 
         return (
-	<iframe
-    role="presentation"
-    id="preview-frame"
-    ref={this.iframeReference}
-    className={mergeClassNames({
-        [style.frame]: true,
-        [style.isLocked]: isLocked
-    })}
-    style={styles}
-    frameBorder="0"
-    onLoad={this.iframeLoaded}
-    />
+            <iframe
+                role="presentation"
+                id="preview-frame"
+                ref={this.iframeReference}
+                className={mergeClassNames({
+                    [style.frame]: true,
+                    [style.isLocked]: isLocked
+                })}
+                style={styles}
+                frameBorder="0"
+                onLoad={this.iframeLoaded}
+                />
         );
     }
 }
