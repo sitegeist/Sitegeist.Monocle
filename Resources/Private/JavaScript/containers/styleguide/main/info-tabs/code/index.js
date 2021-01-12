@@ -20,6 +20,18 @@ export default class Code extends Component {
 
     render() {
         const {content, language, style} = this.props;
-        return <SyntaxHighlighter customStyle={style} language={language} style={codeStyle}>{content}</SyntaxHighlighter>;
+
+        return (
+            <SyntaxHighlighter
+                customStyle={{
+                    overflowX: 'visible',
+                    ...style
+                }}
+                language={language}
+                style={codeStyle}
+                >
+                    {content}
+            </SyntaxHighlighter>
+        );
     }
 }

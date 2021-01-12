@@ -9,3 +9,9 @@
     width: 1em;
     height: 1em;
 }
+
+.tabs__content {
+    height: calc(100% - 45px);
+    overflow-x: auto;
+    overflow-y: auto;
+}
