@@ -29,6 +29,7 @@ export const currentlySelected = createSelector(
     ],
     (currentlySelectedPrototypeName, prototypesByName) =>
         prototypesByName
+        && currentlySelectedPrototypeName
         && prototypesByName[currentlySelectedPrototypeName]
 );
 

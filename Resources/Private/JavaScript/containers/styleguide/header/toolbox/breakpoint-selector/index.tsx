@@ -1,5 +1,4 @@
 import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Button from "@neos-project/react-ui-components/lib-esm/Button";
@@ -20,12 +19,6 @@ interface BreakpointSelectorState {
 }
 
 class BreakpointSelectorC extends PureComponent<BreakpointSelectorProps, BreakpointSelectorState> {
-    static propTypes = {
-        label: PropTypes.string.isRequired,
-        isOpen: PropTypes.bool,
-        toggleIsOpen: PropTypes.func.isRequired
-    };
-
     state: BreakpointSelectorState = {
         isOpen: false
     };

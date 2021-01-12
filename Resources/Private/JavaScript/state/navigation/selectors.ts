@@ -27,7 +27,7 @@ interface IndexedData {
         label: string
         position: number
     }
-    options: {
+    options?: {
         position: number
     }
 }
@@ -76,9 +76,12 @@ function getSortingPriorityForSearchResults(
         return indexedDataB.structure.position - indexedDataA.structure.position;
     }
 
-    if (indexedDataA.options.position !== indexedDataB.options.position) {
-        return indexedDataB.options.position - indexedDataA.options.position;
+    if (indexedDataA.options && indexedDataB.options) {
+        if (indexedDataA.options.position !== indexedDataB.options.position) {
+            return indexedDataB.options.position - indexedDataA.options.position;
+        }
     }
+
 
     if (indexedDataA.title !== indexedDataB.title) {
         if (indexedDataA.title > indexedDataB.title) {

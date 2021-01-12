@@ -1,34 +1,30 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import QRCode from 'qrcode';
-import mergeClassNames from 'classnames';
+import * as React from "react";
+import { PureComponent } from "react";
+import { connect } from "react-redux";
+import QRCode from "qrcode";
+import cx from "classnames";
 
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import Dialog from '@neos-project/react-ui-components/lib-esm/Dialog';
-import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
+import Dialog from "@neos-project/react-ui-components/lib-esm/Dialog";
+import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
 
-import {selectors, actions} from 'state';
-import {visibility} from 'components';
+import { selectors, actions, State } from "../../../state";
+import { visibility } from "../../../components";
 
-import style from './style.css';
+import style from "./style.css";
 
-@connect(state => {
-    const url = selectors.navigation.previewUri(state);
-    const isVisible = selectors.qrcode.isVisible(state) && Boolean(url);
+interface QrCodeProps {
+    url: string
+    hide: () => void
+}
 
-    return {url, isVisible};
-}, {
-    hide: actions.qrcode.hide
-})
-@visibility
-export default class QrCode extends PureComponent {
-    static propTypes = {
-        url: PropTypes.string,
-        hide: PropTypes.func.isRequired
-    };
+interface QrCodeState {
+    qrcode: string
+    copied: boolean
+}
 
+class QrCodeC extends PureComponent<QrCodeProps, QrCodeState> {
     state = {
         qrcode: '',
         copied: false
@@ -38,13 +34,13 @@ export default class QrCode extends PureComponent {
         this.generateQRCode(this.props.url);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: QrCodeProps) {
         if (nextProps.url !== this.props.url) {
             this.generateQRCode(nextProps.url);
         }
     }
 
-    generateQRCode = async url => {
+    generateQRCode = async (url: string) => {
         this.setState({qrcode: ''});
 
         if (url) {
@@ -80,7 +76,7 @@ export default class QrCode extends PureComponent {
     }
 
     render() {
-        const copiedClassNames = mergeClassNames({
+        const copiedClassNames = cx({
             [style.copied]: true,
             [style.copiedVisible]: this.state.copied
         });
@@ -105,3 +101,12 @@ export default class QrCode extends PureComponent {
         );
     }
 }
+
+export const QrCode = connect((state: State) => {
+    const url = selectors.navigation.previewUri(state);
+    const isVisible = selectors.qrcode.isVisible(state) && Boolean(url);
+
+    return {url, isVisible};
+}, {
+    hide: actions.qrcode.hide
+})(visibility(QrCodeC));

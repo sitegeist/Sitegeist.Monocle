@@ -2,7 +2,13 @@ import { createAction } from "typesafe-actions";
 
 export const set = createAction(
     '@sitegeist/monocle/hotkeys/set',
-    (hotkeys: object) => hotkeys
+    (hotkeys: {
+        openNavigation: string
+        closeNavigation: string
+        navigateUp: string
+        navigateDown: string
+        openPreviewInNewWindow: string
+    }) => hotkeys
 )();
 
 export const clear = createAction(

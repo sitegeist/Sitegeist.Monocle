@@ -1,16 +1,21 @@
-import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import { PureComponent } from "react";
 
-import style from './style.css';
+import style from "./style.css";
 
-export default class AnatomyItem extends PureComponent {
-    static propTypes = {
-        name: PropTypes.string.isRequired,
-        children: PropTypes.array.isRequired,
-        onSelect: PropTypes.func.isRequired
-    };
+interface AnatomyItemProps {
+    name: string,
+    children: AnatomyItemChild[],
+    onSelect: (name: string) => void
+}
 
-    handleSelect = (event) => {
+interface AnatomyItemChild {
+    prototypeName: string
+    children: AnatomyItemChild[]
+}
+
+export class AnatomyItem extends PureComponent<AnatomyItemProps> {
+    handleSelect = (event: React.MouseEvent) => {
         const {name, onSelect} = this.props;
         onSelect(name);
         event.stopPropagation();

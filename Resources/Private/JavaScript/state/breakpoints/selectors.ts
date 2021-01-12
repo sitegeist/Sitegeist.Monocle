@@ -9,6 +9,11 @@ export const currentlySelected = createSelector(
         (state: State) => state.breakpoints.currentlySelected,
         all
     ],
-    (currentlySelectedBreakPoint, breakpointsByName) =>
-        breakpointsByName && breakpointsByName[currentlySelectedBreakPoint]
+    (currentlySelectedBreakPoint, breakpointsByName) => {
+        if (breakpointsByName && currentlySelectedBreakPoint) {
+            return breakpointsByName[currentlySelectedBreakPoint];
+        }
+
+        return null;
+    }
 );

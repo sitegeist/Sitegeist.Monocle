@@ -10,7 +10,9 @@ export const currentlySelected = createSelector(
         all
     ],
     (currentlySelectedLocale, localesByName) =>
-        localesByName && localesByName[currentlySelectedLocale]
+        localesByName
+        && currentlySelectedLocale
+        && localesByName[currentlySelectedLocale]
 );
 
 export const current = createSelector(
@@ -19,7 +21,7 @@ export const current = createSelector(
         all
     ],
     (currentlySelectedLocale, localesByName) => {
-        if (localesByName && localesByName[currentlySelectedLocale]) {
+        if (localesByName && currentlySelectedLocale && localesByName[currentlySelectedLocale]) {
             const locale = localesByName[currentlySelectedLocale];
             if (locale && locale.fallback) {
                 return locale.fallback.join(',');

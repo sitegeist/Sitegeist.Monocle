@@ -43,11 +43,13 @@ export function reducer(state: State, action: Action): State {
             }
 
             case getType(actions.setCurrentlyRenderedPrototypeName): {
-                draft.prototypes.currentlyRendered.prototypeName =
-                    action.payload;
-                draft.prototypes.currentlyRendered.renderedCode = '';
-                draft.prototypes.currentlyRendered.parsedCode = '';
-                draft.prototypes.currentlyRendered.anatomy = [];
+                if (draft.prototypes.currentlyRendered) {
+                    draft.prototypes.currentlyRendered.prototypeName =
+                        action.payload;
+                    draft.prototypes.currentlyRendered.renderedCode = '';
+                    draft.prototypes.currentlyRendered.parsedCode = '';
+                    draft.prototypes.currentlyRendered.anatomy = [];
+                }
                 break;
             }
 

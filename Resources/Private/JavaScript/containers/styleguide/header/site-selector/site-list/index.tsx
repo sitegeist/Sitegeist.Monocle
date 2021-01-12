@@ -11,9 +11,7 @@ import style from "./style.css";
 
 interface SiteListProps {
     sites: {
-        [key: string]: {
-            name: string
-        }
+        [key: string]: string
     }
     selectSite: (name: string) => void
     onSelectSite: (name: string) => void

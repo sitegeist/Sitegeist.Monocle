@@ -17,11 +17,20 @@ import * as routing from "./routing";
 import * as qrcode from "./qrcode";
 import { configurationSchema } from "../schema";
 
+interface AnatomyType {
+    prototypeName: string
+    children: AnatomyType[]
+}
+
 export interface State {
     readonly env: Environment
     readonly breakpoints: {
         readonly byName: {
-            readonly [key: string]: unknown
+            readonly [key: string]: {
+                label: string
+                width: number
+                height: number
+            }
         }
         readonly currentlySelected: null | string
     }
@@ -34,7 +43,7 @@ export interface State {
         }
         readonly needsAuthentication: boolean
     }
-    readonly hotkeys: {
+    readonly hotkeys: {} | {
         openNavigation: string
         closeNavigation: string
         navigateUp: string
@@ -59,9 +68,7 @@ export interface State {
     }
     readonly sites: {
         readonly byName: {
-            readonly [key: string]: {
-                name: string
-            }
+            readonly [key: string]: string
         }
         readonly currentlySelected: null | string
     }
@@ -77,7 +84,7 @@ export interface State {
                     readonly label: string
                     readonly position: number
                 }
-                readonly options: {
+                readonly options?: {
                     readonly position: number
                 }
             }
@@ -91,7 +98,7 @@ export interface State {
             readonly prototypeName: string
             readonly renderedCode: string
             readonly parsedCode: string
-            readonly anatomy: unknown[]
+            readonly anatomy: AnatomyType | AnatomyType[]
             readonly fusionAst: {
                 readonly __meta: {
                     readonly styleguide: {

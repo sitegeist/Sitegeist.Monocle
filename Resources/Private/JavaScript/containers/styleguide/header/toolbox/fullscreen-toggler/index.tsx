@@ -28,11 +28,9 @@ class FullscreenTogglerC extends PureComponent<FullscreenTogglerProps> {
     }
 }
 
-export const FullscreenToggler = visibility(
-    connect((state: State) => {
-        const url = selectors.navigation.previewUri(state);
-        const isVisible = Boolean(url);
+export const FullscreenToggler = connect((state: State) => {
+    const url = selectors.navigation.previewUri(state);
+    const isVisible = Boolean(url);
 
-        return {url, isVisible};
-    })(FullscreenTogglerC)
-);
+    return {url, isVisible};
+})(visibility(FullscreenTogglerC));

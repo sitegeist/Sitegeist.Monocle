@@ -8,7 +8,7 @@ import { Store } from "./createStore";
 export function createKeyBindings(store: Store) {
     const hotkeys = selectors.hotkeys.all(store.getState());
 
-    if (hotkeys === undefined) {
+    if (hotkeys === undefined || (!('openNavigation' in hotkeys))) {
         return;
     }
 

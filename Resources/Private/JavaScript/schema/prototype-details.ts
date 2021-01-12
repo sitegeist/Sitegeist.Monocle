@@ -15,7 +15,7 @@ export const prototypeDetailsSchema = z.object({
     renderedCode: z.string(),
     parsedCode: z.string(),
     fusionAst: z.record(z.any()),
-    anatomy: z.array(anatomyItemSchema)
+    anatomy: anatomyItemSchema.or(z.array(anatomyItemSchema))
 });
 
 export type PrototypeDetails = z.infer<typeof prototypeDetailsSchema>;

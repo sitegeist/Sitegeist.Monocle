@@ -1,7 +1,7 @@
-import * as React from 'react';
+import * as React from "react";
 import { Provider } from "react-redux";
 
-import { Store } from '../../bootstrap';
+import { Store } from "../../bootstrap";
 
 import { Header } from "./header";
 import { Main } from "./main";

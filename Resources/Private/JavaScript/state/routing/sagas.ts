@@ -22,31 +22,35 @@ export function* updateHistoryWhenPrototypeChanges() {
         const sitePackageKey = (
             yield select(sites.selectors.currentlySelectedSitePackageKey)
         ) as ReturnType<typeof sites.selectors.currentlySelectedSitePackageKey>;
-        const { title } = (
+        const currentlySelectedPrototype = (
             yield select(prototypes.selectors.currentlySelected)
         ) as ReturnType<typeof prototypes.selectors.currentlySelected>;
-        const path = `${sitePackageKey}/${prototypeName}`;
 
-        take(prototypes.actions.ready);
+        if (currentlySelectedPrototype) {
+            const { title } = currentlySelectedPrototype;
+            const path = `${sitePackageKey}/${prototypeName}`;
 
-        if (!history.state || (
-            history.state.prototypeName === prototypeName &&
-            history.state.sitePackageKey === sitePackageKey
-        )) {
-            history.replaceState(
-                {prototypeName, sitePackageKey},
-                `Monocle: ${title}`,
-                `${baseUrl}/${path}`
-            );
-        } else {
-            history.pushState(
-                {prototypeName, sitePackageKey},
-                `Monocle: ${title}`,
-                `${baseUrl}/${path}`
-            );
+            take(prototypes.actions.ready);
+
+            if (!history.state || (
+                history.state.prototypeName === prototypeName &&
+                history.state.sitePackageKey === sitePackageKey
+            )) {
+                history.replaceState(
+                    {prototypeName, sitePackageKey},
+                    `Monocle: ${title}`,
+                    `${baseUrl}/${path}`
+                );
+            } else {
+                history.pushState(
+                    {prototypeName, sitePackageKey},
+                    `Monocle: ${title}`,
+                    `${baseUrl}/${path}`
+                );
+            }
+
+            document.title = `Monocle: ${title}`;
         }
-
-        document.title = `Monocle: ${title}`;
     }
 };
 

@@ -3,7 +3,17 @@ import { createAction } from "typesafe-actions";
 export const add = createAction(
     '@sitegeist/monocle/prototypes/add',
     (listOfPrototypes: {
-        [key: string]: unknown
+        [key: string]: {
+            title: string
+            description: string
+            structure: {
+                label: string
+                position: number
+            }
+            options?: {
+                position: number
+            }
+        }
     }) => listOfPrototypes
 )();
 
@@ -16,9 +26,31 @@ export const select = createAction(
     (prototypeName: string) => prototypeName
 )();
 
+interface AnatomyType {
+    prototypeName: string
+    children: AnatomyType[]
+}
+
 export const setCurrentlyRendered = createAction(
     '@sitegeist/monocle/prototypes/setCurrentlyRendered',
-    (currentlyRenderedPrototype: unknown) => currentlyRenderedPrototype
+    (currentlyRenderedPrototype: null | {
+        prototypeName: string
+        renderedCode: string
+        parsedCode: string
+        anatomy: AnatomyType | AnatomyType[]
+        fusionAst: {
+            __meta: {
+                styleguide: {
+                    props: {
+                        [key: string]: any
+                    }
+                    propSets: {
+                        [key: string]: any
+                    }
+                }
+            }
+        }
+    }) => currentlyRenderedPrototype
 )();
 
 export const setCurrentlyRenderedPrototypeName = createAction(

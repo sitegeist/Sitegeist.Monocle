@@ -7,7 +7,7 @@ export const initialized = createAction(
 export const set = createAction(
     '@sitegeist/monocle/sites/set',
     (listOfSites: {
-        [key: string]: unknown
+        [key: string]: string
     }) => listOfSites
 )();
 
