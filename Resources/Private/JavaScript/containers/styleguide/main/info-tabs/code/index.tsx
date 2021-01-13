@@ -23,7 +23,10 @@ export class Code extends Component<CodeProps> {
 
         return (
             <SyntaxHighlighter
-                customStyle={style}
+                customStyle={{
+                    overflowX: 'visible',
+                    ...style
+                }}
                 language={language}
                 style={codeStyle}
                 >
