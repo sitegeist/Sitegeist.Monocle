@@ -33,7 +33,7 @@ final class PropValue implements \JsonSerializable
         if (!self::isValid($value)) {
             throw new \UnexpectedValueException(
                 'PropValue must be a primitive, an array or an object ' .
-                'implementing \\JsonSerializable. Got "%s" instead.',
+                'of type \\stdClass. Got "%s" instead.',
                 is_object($value) ? get_class($value) : gettype($value)
             );
         }
@@ -71,8 +71,68 @@ final class PropValue implements \JsonSerializable
             || is_int($value)
             || is_float($value)
             || is_string($value)
-            || $value instanceof \JsonSerializable
+            || $value instanceof \stdClass
         );
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isBoolean(): bool
+    {
+        return is_bool($this->value);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNumber(): bool
+    {
+        return is_int($this->value) || is_float($this->value);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isString(): bool
+    {
+        return is_string($this->value);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isList(): bool
+    {
+        if (is_array($this->value)) {
+            foreach ($this->value as $key => $value) {
+                if ($key === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDictionary(): bool
+    {
+        if ($this->value instanceof \stdClass) {
+            return true;
+        }
+
+        if (is_array($this->value)) {
+            foreach ($this->value as $key => $value) {
+                if ($key !== 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

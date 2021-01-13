@@ -14,9 +14,8 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Mvc\Controller\ControllerContext;
-use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Fusion\FusionView;
+use Sitegeist\Monocle\Domain\Fusion\Prototype;
+use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactoryInterface;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Symfony\Component\Yaml\Yaml;
 
@@ -26,56 +25,47 @@ use Symfony\Component\Yaml\Yaml;
 final class PrototypeDetailsFactory
 {
     /**
-     * @Flow\Inject
-     * @var FusionService
-     */
-    protected $fusionService;
-
-    /**
-     * @Flow\Inject
      * @var AnatomyFactory
      */
     protected $anatomyFactory;
 
     /**
+     * @var PropsCollectionFactoryInterface
+     */
+    protected $propsCollectionFactory;
+
+    /**
+     * @param PropsCollectionFactoryInterface $propsCollectionFactory
+     */
+    public function __construct(
+        PropsCollectionFactoryInterface $propsCollectionFactory
+    ) {
+        $this->anatomyFactory = new AnatomyFactory();
+        $this->propsCollectionFactory = $propsCollectionFactory;
+    }
+
+    /**
      * @param string $prototypeNameString
      * @param string $sitePackageKey
-     * @param ControllerContext $controllerContext
      * @return PrototypeDetailsInterface
      */
-    public function forPrototypeInSitePackage(
-        string $prototypeNameString,
-        string $sitePackageKey,
-        ControllerContext $controllerContext
-    ): PrototypeDetailsInterface {
-        $prototypeName = PrototypeName::fromString($prototypeNameString);
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeNameString);
-
-        // render html
-        $fusionView = new FusionView();
-        $fusionView->setControllerContext($controllerContext);
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
-        $fusionView->setPackageKey($sitePackageKey);
-
-        // render fusion source
-        $fusionObjectTree = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-        $fusionAstArray =  $fusionObjectTree['__prototypes'][$prototypeNameString];
-        $fusionAst = FusionPrototypeAst::fromArray($fusionAstArray);
-
-
+    public function forPrototype(Prototype $prototype): PrototypeDetailsInterface {
         return new PrototypeDetails(
-            $prototypeName,
+            $prototype->getName(),
             RenderedCode::fromString(
-                ReverseFusionParser::restorePrototypeCode($prototypeNameString, $fusionAstArray)
+                ReverseFusionParser::restorePrototypeCode(
+                    (string) $prototype->getName(),
+                    $prototype->getAst()
+                )
             ),
             ParsedCode::fromString(
-                Yaml::dump($fusionAstArray, 99)
+                Yaml::dump($prototype->getAst(), 99)
             ),
-            FusionPrototypeAst::fromArray($fusionAstArray),
-            $this->anatomyFactory->fromPrototypeNameAndFusionPrototypeAstForPrototypeDetails(
-                $prototypeName,
-                $fusionAst
-            )
+            FusionPrototypeAst::fromArray($prototype->getAst()),
+            $this->anatomyFactory
+                ->fromPrototypeForPrototypeDetails($prototype),
+            $this->propsCollectionFactory
+                ->fromPrototypeForPrototypeDetails($prototype)
         );
     }
 }

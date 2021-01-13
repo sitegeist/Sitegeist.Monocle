@@ -14,6 +14,8 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
+use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionInterface;
 
 /**
  * @Flow\Proxy(false)
@@ -44,4 +46,9 @@ interface PrototypeDetailsInterface extends \JsonSerializable
      * @return Anatomy
      */
     public function getAnatomy(): Anatomy;
+
+    /**
+     * @return PropsCollectionInterface
+     */
+    public function getProps(): PropsCollectionInterface;
 }

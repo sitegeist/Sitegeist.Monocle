@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 
 /**
  * @Flow\Proxy(false)

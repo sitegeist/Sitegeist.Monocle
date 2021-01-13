@@ -14,6 +14,8 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
+use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionInterface;
 
 /**
  * @Flow\Proxy(false)
@@ -46,24 +48,32 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     private $anatomy;
 
     /**
+     * @var PropsCollectionInterface
+     */
+    private $props;
+
+    /**
      * @param PrototypeName $prototypeName
      * @param RenderedCode $renderedCode
      * @param ParsedCode $parsedCode
-     * @param FusionAst $fusionAst
+     * @param FusionPrototypeAst $fusionAst
      * @param Anatomy $anatomy
+     * @param PropsCollectionInterface $props
      */
     public function __construct(
         PrototypeName $prototypeName,
         RenderedCode $renderedCode,
         ParsedCode $parsedCode,
         FusionPrototypeAst $fusionAst,
-        Anatomy $anatomy
+        Anatomy $anatomy,
+        PropsCollectionInterface $props
     ) {
         $this->prototypeName = $prototypeName;
         $this->renderedCode = $renderedCode;
         $this->parsedCode = $parsedCode;
         $this->fusionAst = $fusionAst;
         $this->anatomy = $anatomy;
+        $this->props = $props;
     }
 
     /**
@@ -107,6 +117,14 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     }
 
     /**
+     * @return PropsCollectionInterface
+     */
+    public function getProps(): PropsCollectionInterface
+    {
+        return $this->props;
+    }
+
+    /**
      * @return array<mixed>
      */
     public function jsonSerialize()
@@ -116,7 +134,8 @@ final class PrototypeDetails implements PrototypeDetailsInterface
             'renderedCode' => $this->renderedCode,
             'parsedCode' => $this->parsedCode,
             'fusionAst' => $this->fusionAst,
-            'anatomy' => $this->anatomy
+            'anatomy' => $this->anatomy,
+            'props' => $this->props
         ];
     }
 }

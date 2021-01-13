@@ -13,15 +13,15 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails\Props;
  * source code.
  */
 
-use Sitegeist\Monocle\Domain\PrototypeDetails\FusionPrototypeAst;
+use Sitegeist\Monocle\Domain\Fusion\Prototype;
 
 interface PropsCollectionFactoryInterface
 {
     /**
-     * @param FusionPrototypeAst $fusionPrototypeAst
+     * @param Prototype $prototype
      * @return PropsCollectionInterface
      */
-    public function fromFusionPrototypeAstForPrototypeDetails(
-        FusionPrototypeAst $fusionPrototypeAst
+    public function fromPrototypeForPrototypeDetails(
+        Prototype $prototype
     ): PropsCollectionInterface;
 }

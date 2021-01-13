@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace Sitegeist\Monocle\Domain\PrototypeDetails;
+namespace Sitegeist\Monocle\Domain\PrototypeDetails\Props;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -18,35 +18,34 @@ use Neos\Flow\Annotations as Flow;
 /**
  * @Flow\Proxy(false)
  */
-final class PrototypeName implements \JsonSerializable
+final class PropsCollection implements PropsCollectionInterface
 {
     /**
-     * @var string
+     * @var array|PropInterface[]
      */
-    private $value;
+    private $props;
 
     /**
-     * @param string $value
+     * @param PropInterface ...$props
      */
-    private function __construct(string $value)
+    public function __construct(PropInterface ...$props)
     {
-        $this->value = $value;
+        $this->props = $props;
     }
 
     /**
-     * @param string $string
-     * @return self
+     * @return iterable<mixed,PropInterface>
      */
-    public static function fromString(string $string): self
+    public function getProps(): iterable
     {
-        return new self($string);
+        return $this->props;
     }
 
     /**
-     * @return string
+     * @return array|PropInterface[]
      */
     public function jsonSerialize()
     {
-        return $this->value;
+        return $this->props;
     }
 }

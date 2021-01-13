@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\Prototype;
 
 /**
  * @Flow\Scope("singleton")
@@ -21,17 +22,16 @@ use Neos\Flow\Annotations as Flow;
 final class AnatomyFactory
 {
     /**
-     * @param PrototypeName $prototypeName
-     * @param FusionPrototypeAst $fusionPrototypeAst
+     * @param Prototype $prototype
      * @return Anatomy
      */
-    public function fromPrototypeNameAndFusionPrototypeAstForPrototypeDetails(
-        PrototypeName $prototypeName,
-        FusionPrototypeAst $fusionPrototypeAst
+    public function fromPrototypeForPrototypeDetails(
+        Prototype $prototype
     ): Anatomy {
         $children = [];
-        $referencedFusionObjects = $fusionPrototypeAst
-            ->getAllReferencedFusionObjects();
+        $referencedFusionObjects = FusionPrototypeAst::fromArray(
+            $prototype->getAst()
+        )->getAllReferencedFusionObjects();
 
         foreach ($referencedFusionObjects as $fusionObjectAst) {
             $children[] = $this->fromFusionObjectAstForPrototypeDetails(
@@ -39,7 +39,7 @@ final class AnatomyFactory
             );
         }
 
-        return new Anatomy($prototypeName, $children);
+        return new Anatomy($prototype->getName(), $children);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace Sitegeist\Monocle\Domain\PrototypeDetails\Props;
+namespace Sitegeist\Monocle\Domain\Fusion;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -18,7 +18,7 @@ use Neos\Flow\Annotations as Flow;
 /**
  * @Flow\Proxy(false)
  */
-final class PropName implements \JsonSerializable
+final class PrototypeName implements \JsonSerializable
 {
     /**
      * @var string
