@@ -14,7 +14,7 @@ import style from './style.css';
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
 
     return {
-        ...currentlyRenderedPrototype,
+        prototypeDetails: currentlyRenderedPrototype,
         overriddenProps: selectors.prototypes.overriddenProps(state),
         selectedPropSet: selectors.prototypes.selectedPropSet(state)
     };
@@ -24,10 +24,20 @@ import style from './style.css';
 })
 export default class Inspector extends PureComponent {
     static propTypes = {
-        fusionAst: PropTypes.object,
+        prototypeDetails: PropTypes.shape({
+            fusionAst: PropTypes.object,
+            props: PropTypes.arrayOf(PropTypes.shape({
+                name: PropTypes.string.isRequired,
+                value: PropTypes.any.isRequired,
+                editor: PropTypes.shape({
+                    identifier: PropTypes.string,
+                    options: PropTypes.any.isRequired
+                }).isRequired
+            })).isRequired
+        }).isRequired,
         overriddenProps: PropTypes.object,
-        selectedPropSet: PropTypes.string,
         isVisible: PropTypes.bool,
+        selectedPropSet: PropTypes.string,
         selectPropSet: PropTypes.func.isRequired,
         overrideProp: PropTypes.func.isRequired
     };
@@ -45,13 +55,12 @@ export default class Inspector extends PureComponent {
     };
 
     render() {
-        const {fusionAst, overriddenProps, selectedPropSet, isVisible} = this.props;
-        if (!fusionAst) {
+        const {prototypeDetails, overriddenProps, selectedPropSet, isVisible} = this.props;
+        if (!prototypeDetails || !prototypeDetails.fusionAst) {
             return null;
         }
 
-        const {props, propSets} = fusionAst.__meta.styleguide;
-        const currentProps = (propSets && selectedPropSet in propSets) ? Object.assign({}, props, propSets[selectedPropSet]) : props;
+        const {propSets} = prototypeDetails.fusionAst.__meta.styleguide;
 
         return (
             <div
@@ -67,12 +76,11 @@ export default class Inspector extends PureComponent {
                         onSelectPropSet={this.handleSelectPropSet}
                         />
                 )}
-                {currentProps && Object.keys(currentProps).map(name => (
+                {prototypeDetails.props.map(prop => (
                     <PropsItem
-                        key={name}
-                        name={name}
-                        type={typeof currentProps[name]}
-                        value={name in overriddenProps ? overriddenProps[name] : currentProps[name]}
+                        key={prop.name}
+                        prop={prop}
+                        overriddenValue={overriddenProps[prop.name]}
                         onChange={this.handleChange}
                         />
                 ))}

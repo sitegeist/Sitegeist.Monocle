@@ -76,6 +76,24 @@ final class PropValue implements \JsonSerializable
     }
 
     /**
+     * @return integer
+     */
+    public function getLength(): int
+    {
+        switch (true) {
+            case $this->isString():
+                return strlen($this->value);
+            default:
+                throw new \DomainException(
+                    sprintf(
+                        'PropValue of type "%s" has no length.',
+                        gettype($this->value)
+                    )
+                );
+        }
+    }
+
+    /**
      * @return boolean
      */
     public function isBoolean(): bool

@@ -9,36 +9,64 @@ import style from './style.css';
 
 export default class PropsItem extends PureComponent {
     static propTypes = {
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        value: PropTypes.any.isRequired,
+        prop: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            value: PropTypes.any.isRequired,
+            editor: PropTypes.shape({
+                identifier: PropTypes.string,
+                options: PropTypes.any.isRequired
+            }).isRequired
+        }),
+        overriddenValue: PropTypes.any,
         onChange: PropTypes.func.isRequired
     };
 
     handleChange = value => {
-        const {onChange, name} = this.props;
+        const {onChange, prop} = this.props;
 
         if (onChange) {
-            onChange(name, value);
+            onChange(prop.name, value);
         }
     };
 
-    renderField = (name, value, type, onChange) => {
-        switch (type) {
-            case 'string': {
-                const isLarge = value.length > 80;
-                if (isLarge) {
-                    return (
-                         <TextArea minRows={6} id={`prop-${name}`} value={value} onChange={onChange}/>
-                    );
-                }
+    renderEditor = () => {
+        const { prop, overriddenValue } = this.props;
+        const value = overriddenValue !== undefined ?
+            overriddenValue : prop.value;
+
+        switch (prop.editor.identifier) {
+            case 'Sitegeist.Monocle/Props/Editors/Checkbox':
                 return (
-                    <TextInput id={`prop-${name}`} value={value} onChange={onChange}/>
+                    <CheckBox
+                        id={`prop-${prop.name}`}
+                        isChecked={value}
+                        onChange={this.handleChange}
+                        />
                 );
-            }
-            case 'boolean':
+            case 'Sitegeist.Monocle/Props/Editors/Number':
                 return (
-                    <CheckBox id={`prop-${name}`} isChecked={value} onChange={onChange}/>
+                    <TextInput
+                        id={`prop-${prop.name}`}
+                        value={value}
+                        onChange={this.handleChange}
+                        />
+                );
+            case 'Sitegeist.Monocle/Props/Editors/Text':
+                return (
+                    <TextInput
+                        id={`prop-${prop.name}`}
+                        value={value}
+                        onChange={this.handleChange}
+                        />
+                );
+            case 'Sitegeist.Monocle/Props/Editors/TextArea':
+                return (
+                    <TextArea
+                        minRows={6}
+                        id={`prop-${prop.name}`}
+                        value={value}
+                        onChange={onChange}
+                        />
                 );
             default:
                 return 'no matching editor found';
@@ -46,15 +74,12 @@ export default class PropsItem extends PureComponent {
     }
 
     render() {
-        const {name, value, type} = this.props;
+        const {prop} = this.props;
 
         return (
-            ['string', 'boolean'].includes(type) &&
-            <div key={name} className={style.item}>
-                <label htmlFor={`prop-${name}`}>{name}</label>
-                {
-                    this.renderField(name, value, type, this.handleChange)
-                }
+            <div className={style.item}>
+                <label htmlFor={`prop-${prop.name}`}>{prop.name}</label>
+                {this.renderEditor()}
             </div>
         );
     }

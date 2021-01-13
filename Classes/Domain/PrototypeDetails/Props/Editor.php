@@ -64,12 +64,21 @@ final class Editor implements EditorInterface
                     EditorOptions::empty()
                 );
             case $propValue->isString():
-                return new self(
-                    EditorIdentifier::fromString(
-                        'Sitegeist.Monocle/Props/Editors/Text'
-                    ),
-                    EditorOptions::empty()
-                );
+                if ($propValue->getLength() > 80) {
+                    return new self(
+                        EditorIdentifier::fromString(
+                            'Sitegeist.Monocle/Props/Editors/TextArea'
+                        ),
+                        EditorOptions::empty()
+                    );
+                } else {
+                    return new self(
+                        EditorIdentifier::fromString(
+                            'Sitegeist.Monocle/Props/Editors/Text'
+                        ),
+                        EditorOptions::empty()
+                    );
+                }
             default:
                 return null;
         }
