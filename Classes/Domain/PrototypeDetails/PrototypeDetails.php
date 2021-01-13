@@ -16,6 +16,7 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionInterface;
+use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
 
 /**
  * @Flow\Proxy(false)
@@ -53,12 +54,18 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     private $props;
 
     /**
+     * @var PropSetCollection
+     */
+    private $propSets;
+
+    /**
      * @param PrototypeName $prototypeName
      * @param RenderedCode $renderedCode
      * @param ParsedCode $parsedCode
      * @param FusionPrototypeAst $fusionAst
      * @param Anatomy $anatomy
      * @param PropsCollectionInterface $props
+     * @param PropSetCollection $propSets
      */
     public function __construct(
         PrototypeName $prototypeName,
@@ -66,7 +73,8 @@ final class PrototypeDetails implements PrototypeDetailsInterface
         ParsedCode $parsedCode,
         FusionPrototypeAst $fusionAst,
         Anatomy $anatomy,
-        PropsCollectionInterface $props
+        PropsCollectionInterface $props,
+        PropSetCollection $propSets
     ) {
         $this->prototypeName = $prototypeName;
         $this->renderedCode = $renderedCode;
@@ -74,6 +82,7 @@ final class PrototypeDetails implements PrototypeDetailsInterface
         $this->fusionAst = $fusionAst;
         $this->anatomy = $anatomy;
         $this->props = $props;
+        $this->propSets = $propSets;
     }
 
     /**
@@ -125,6 +134,14 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     }
 
     /**
+     * @return PropSetCollection
+     */
+    public function getPropSets(): PropSetCollection
+    {
+        return $this->propSets;
+    }
+
+    /**
      * @return array<mixed>
      */
     public function jsonSerialize()
@@ -135,7 +152,8 @@ final class PrototypeDetails implements PrototypeDetailsInterface
             'parsedCode' => $this->parsedCode,
             'fusionAst' => $this->fusionAst,
             'anatomy' => $this->anatomy,
-            'props' => $this->props
+            'props' => $this->props,
+            'propSets' => $this->propSets
         ];
     }
 }

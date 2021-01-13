@@ -16,6 +16,7 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\Monocle\Domain\Fusion\Prototype;
 use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactoryInterface;
+use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Symfony\Component\Yaml\Yaml;
 
@@ -65,7 +66,8 @@ final class PrototypeDetailsFactory
             $this->anatomyFactory
                 ->fromPrototypeForPrototypeDetails($prototype),
             $this->propsCollectionFactory
-                ->fromPrototypeForPrototypeDetails($prototype)
+                ->fromPrototypeForPrototypeDetails($prototype),
+            PropSetCollection::fromPrototype($prototype)
         );
     }
 }
