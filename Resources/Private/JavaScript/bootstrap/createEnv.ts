@@ -52,6 +52,6 @@ export function createEnv(el: HTMLElement) {
         fullscreenUri,
         defaultSitePackageKey
     };
-};
+}
 
 export type Environment = ReturnType<typeof createEnv>;

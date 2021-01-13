@@ -1,5 +1,7 @@
-import { createStore as createReduxStore, compose, applyMiddleware } from "redux";
+import { createStore as createReduxStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import createSagaMiddleware from "redux-saga";
+
 
 import { reducer, saga, State } from "../state";
 
@@ -56,21 +58,12 @@ export function createStore(env: Environment) {
     storeEnhancers.push(applyMiddleware(sagaMiddleware));
 
     //
-    // Dev tools extension
-    //
-    // @ts-ignore
-    if (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__) {
-        // @ts-ignore
-        storeEnhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__());
-    }
-
-    //
     // Create store
     //
     const store = createReduxStore(
         reducer,
         initialState,
-        compose(...storeEnhancers)
+        composeWithDevTools(...storeEnhancers)
     );
 
     //
@@ -79,6 +72,6 @@ export function createStore(env: Environment) {
     sagaMiddleware.run(saga);
 
     return store;
-};
+}
 
 export type Store = ReturnType<typeof createStore>;

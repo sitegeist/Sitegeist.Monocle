@@ -19,7 +19,7 @@ export function* operation(task: () => SagaIterator<void>) {
     }
 
     yield put(actions.finishTask(taskName));
-};
+}
 
 export async function unauthenticated(url: string, options?: RequestInit) {
     const response = await fetch(url, { ...options, credentials: 'include' });
@@ -80,4 +80,4 @@ export function authenticated(url: string, options?: RequestInit) {
             return result;
         }
     });
-};
+}

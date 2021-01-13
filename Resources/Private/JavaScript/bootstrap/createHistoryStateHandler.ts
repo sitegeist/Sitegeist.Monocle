@@ -8,4 +8,4 @@ export function createHistoryStateHandler(store: Store) {
 
         store.dispatch(actions.routing.route(sitePackageKey, prototypeName));
     };
-};
+}

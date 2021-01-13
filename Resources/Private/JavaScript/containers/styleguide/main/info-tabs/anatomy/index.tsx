@@ -31,11 +31,11 @@ function reduceAnatomicalTreeToComponents(
     }
 
     return [];
-};
+}
 
 interface AnatomyProps {
     anatomy: AnatomyType | AnatomyType[]
-    prototypes: object
+    prototypes: Record<string, unknown>
     prototypeName: string
     select: (prototypeName: string) => void
 }

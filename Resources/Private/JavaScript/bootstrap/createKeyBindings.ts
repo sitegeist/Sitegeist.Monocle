@@ -74,4 +74,4 @@ export function createKeyBindings(store: Store) {
             }
         }
     });
-};
+}

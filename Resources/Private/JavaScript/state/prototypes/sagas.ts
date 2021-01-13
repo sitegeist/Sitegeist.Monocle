@@ -41,7 +41,7 @@ export function* renderPrototypeOnSelect() {
             });
         }
     }
-};
+}
 
 export function* reloadIframe() {
     while (true) { // eslint-disable-line
@@ -49,4 +49,4 @@ export function* reloadIframe() {
 
         iframeWindow()?.location.reload();
     }
-};
+}

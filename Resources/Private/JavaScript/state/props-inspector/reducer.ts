@@ -16,4 +16,4 @@ export function reducer(state: State, action: Action): State {
             default: break;
         }
     });
-};
+}

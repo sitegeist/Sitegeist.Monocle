@@ -34,7 +34,7 @@ class LoginC extends PureComponent<LoginProps, LoginState> {
         const { username, password } = this.state;
 
         return (
-            <Dialog isOpen title="Login" onRequestClose={() => {}} actions={this.renderActions()}>
+            <Dialog isOpen title="Login" actions={this.renderActions()}>
                 <div className={style.form}>
                     It seems, your session has expired. You need to login to continue:
                     <br/>

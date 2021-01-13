@@ -53,7 +53,7 @@ export function* updateHistoryWhenPrototypeChanges() {
             document.title = `Monocle: ${title}`;
         }
     }
-};
+}
 
 export function* updateStateOnDirectRouting() {
     while (true) { // eslint-disable-line
@@ -71,4 +71,4 @@ export function* updateStateOnDirectRouting() {
             yield put(sites.actions.select(sitePackageKey));
         }
     }
-};
+}

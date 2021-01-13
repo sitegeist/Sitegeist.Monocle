@@ -23,7 +23,7 @@ interface InfoTabsProps {
     renderedCode: string
     parsedCode: string
     anatomy: AnatomyType | AnatomyType[]
-    prototypes: object
+    prototypes: Record<string, unknown>
 }
 
 class InfoTabsC extends PureComponent<InfoTabsProps> {

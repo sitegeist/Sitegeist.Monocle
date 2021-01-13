@@ -36,14 +36,14 @@ export interface State {
     }
     readonly business: {
         readonly tasks: {
-            readonly [key: string]: object
+            readonly [key: string]: Record<string, unknown>  // @TODO: Refactor
         }
         readonly errors: {
             readonly [key: string]: string
         }
         readonly needsAuthentication: boolean
     }
-    readonly hotkeys: {} | {
+    readonly hotkeys: Record<string, never> | { // @TODO: Refactor
         openNavigation: string
         closeNavigation: string
         navigateUp: string
@@ -59,9 +59,10 @@ export interface State {
         }
         readonly currentlySelected: null | string
     }
-    readonly preview: {} | {
+    readonly preview: Record<string, never> | { // @TODO: Refactor
         readonly sourceQuerySelector: string
-        readonly defaultPrototypeName: string
+        readonly fusionRootPath: string
+        readonly defaultPrototypeName?: string | null | undefined // @TODO: Refactor
     }
     readonly propsInspector: {
         readonly isOpen: boolean
@@ -179,6 +180,7 @@ function* loadConfiguration(): SagaIterator<void> {
     const moduleUri: string = yield select(
         (state: State) => state.env.moduleUri
     );
+
     const routePath = window.location.pathname === moduleUri
         ? ''
         : window.location.pathname.substring(moduleUri.length + 1);
@@ -267,7 +269,7 @@ function* loadConfiguration(): SagaIterator<void> {
         yield put(business.actions.finishTask('@sitegeist/monocle/bootstrap'));
         yield put(business.actions.finishTask('@sitegeist/monocle/switch-site'));
     }
-};
+}
 
 export function* saga(): SagaIterator<void> {
     yield put(business.actions.addTask('@sitegeist/monocle/bootstrap'));
@@ -279,7 +281,9 @@ export function* saga(): SagaIterator<void> {
     );
     const routePath = window.location.pathname === moduleUri
         ? ''
-        : window.location.pathname.substring(moduleUri.length + 1);
+        : moduleUri === '/'
+            ? window.location.pathname.substring(1)
+            : window.location.pathname.substring(moduleUri.length + 1);
     const [routeSitePackageKey] = routePath.split('/');
 
     const defaultSitePackageKey: string = yield select(
@@ -298,4 +302,4 @@ export function* saga(): SagaIterator<void> {
     yield put(sites.actions.select(sitePackageKey));
 
     yield fork(routing.sagas.updateStateOnDirectRouting);
-};
+}
