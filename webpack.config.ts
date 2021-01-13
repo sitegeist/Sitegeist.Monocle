@@ -1,7 +1,6 @@
 import webpack from "webpack";
 import path from "path";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 const configuration: webpack.Configuration = {
     entry: {
@@ -64,9 +63,8 @@ const configuration: webpack.Configuration = {
     },
 
     plugins: [
-        new MiniCssExtractPlugin({filename: './Styles/[name].css'}),
-        // new BundleAnalyzerPlugin()
-    ]
+        new MiniCssExtractPlugin({filename: './Styles/[name].css'})
+    ],
 };
 
 export default configuration;

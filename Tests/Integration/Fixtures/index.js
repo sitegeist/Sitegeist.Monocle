@@ -6,6 +6,7 @@ module.exports = (req, res) => {
     switch (true) {
         case req.url === '/':
         case req.url.startsWith('/module'):
+        case req.url.startsWith('/Vendor'):
             send(res, 200, String(readFileSync(path.join(__dirname, 'host.html'))));
             break;
         case req.url === '/public/Styles/App.css':

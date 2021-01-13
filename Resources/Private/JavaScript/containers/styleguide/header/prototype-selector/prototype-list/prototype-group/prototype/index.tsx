@@ -33,7 +33,7 @@ export class Prototype extends PureComponent<PrototypeProps> {
         }
     };
 
-    componentWillReceiveProps({ isFocused }: PrototypeProps) {
+    UNSAFE_componentWillReceiveProps({ isFocused }: PrototypeProps) {
         if (isFocused) {
             setTimeout(() => this.el?.focus(), 0);
         }

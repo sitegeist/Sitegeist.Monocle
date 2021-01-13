@@ -27,7 +27,7 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
         }
     }, 500);
 
-    componentWillReceiveProps(newProps: PreviewFrameProps) {
+    UNSAFE_componentWillReceiveProps(newProps: PreviewFrameProps) {
         const { src } = this.props;
 
         if (src !== newProps.src && this.iframe) {

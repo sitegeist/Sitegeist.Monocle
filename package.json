@@ -9,7 +9,7 @@
     "lint:css": "stylelint 'Resources/Private/JavaScript/**/*.css'",
     "lint:scripts": "eslint Resources/Private/JavaScript/**",
     "test": "exit 0",
-    "watch": "yarn run build -- --watch"
+    "watch": "webpack --watch --mode development"
   },
   "repository": {
     "type": "git",

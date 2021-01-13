@@ -34,7 +34,7 @@ class QrCodeC extends PureComponent<QrCodeProps, QrCodeState> {
         this.generateQRCode(this.props.url);
     }
 
-    componentWillReceiveProps(nextProps: QrCodeProps) {
+    UNSAFE_componentWillReceiveProps(nextProps: QrCodeProps) {
         if (nextProps.url !== this.props.url) {
             this.generateQRCode(nextProps.url);
         }

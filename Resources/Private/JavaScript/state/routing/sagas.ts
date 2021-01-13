@@ -29,6 +29,7 @@ export function* updateHistoryWhenPrototypeChanges() {
         if (currentlySelectedPrototype) {
             const { title } = currentlySelectedPrototype;
             const path = `${sitePackageKey}/${prototypeName}`;
+            const uri = baseUrl === '/' ? `/${path}` : `${baseUrl}/${path}`;
 
             take(prototypes.actions.ready);
 
@@ -39,13 +40,13 @@ export function* updateHistoryWhenPrototypeChanges() {
                 history.replaceState(
                     {prototypeName, sitePackageKey},
                     `Monocle: ${title}`,
-                    `${baseUrl}/${path}`
+                    uri
                 );
             } else {
                 history.pushState(
                     {prototypeName, sitePackageKey},
                     `Monocle: ${title}`,
-                    `${baseUrl}/${path}`
+                    uri
                 );
             }
 
