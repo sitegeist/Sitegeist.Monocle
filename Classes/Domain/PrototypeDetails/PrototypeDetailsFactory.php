@@ -37,6 +37,7 @@ final class PrototypeDetailsFactory
 
     /**
      * @param PropsCollectionFactoryInterface $propsCollectionFactory
+     * @Flow\Autowiring(false)
      */
     public function __construct(
         PropsCollectionFactoryInterface $propsCollectionFactory

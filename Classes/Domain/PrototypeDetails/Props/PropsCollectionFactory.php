@@ -23,51 +23,23 @@ use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 final class PropsCollectionFactory implements PropsCollectionFactoryInterface
 {
     /**
+     * @Flow\Inject
+     * @var EditorFactory
+     */
+    protected $editorFactory;
+
+    /**
      * @param Prototype $fusionPrototypeAst
      * @return PropsCollectionInterface
      */
     public function fromPrototypeForPrototypeDetails(
         Prototype $prototype
     ): PropsCollectionInterface {
-        if ($prototype->extends(PrototypeName::fromString('Neos.Fusion:Component'))) {
-            return $this->fromComponentForPrototypeDetails(
-                $prototype
-            );
-        }
-
-        return new PropsCollection();
-    }
-
-    /**
-     * @param Prototype $fusionPrototypeAst
-     * @return PropsCollectionInterface
-     */
-    public function fromComponentForPrototypeDetails(
-        Prototype $component
-    ): PropsCollectionInterface {
-        assert($component->extends(PrototypeName::fromString('Neos.Fusion:Component')));
-
         $propsCollectionBuilder = new PropsCollectionBuilder();
-        $styleguideProps = $component
-            ->evaluate('/__meta/styleguide/props<Neos.Fusion:DataStructure>') ?: [];
-        $componentPropNames = $component->getKeys();
 
-        $propNames = array_merge(
-            array_filter($componentPropNames, function (string $key): bool {
-                return $key !== 'renderer';
-            }),
-            array_keys($styleguideProps)
-        );
-
-        foreach ($propNames as $propNameAsString) {
-            $value = $styleguideProps[$propNameAsString] ??
-                $component->evaluate('/' . $propNameAsString);
-
-            if (PropValue::isValid($value)) {
-                $propName = PropName::fromString($propNameAsString);
-                $propValue = PropValue::fromAny($value);
-
-                if ($editor = Editor::forPropValue($propValue)) {
+        foreach (PropName::fromPrototype($prototype) as $propName) {
+            if ($propValue = PropValue::of($prototype, $propName)) {
+                if ($editor = $this->editorFactory->forPropValue($propValue)) {
                     $propsCollectionBuilder->addProp(
                         new Prop($propName, $propValue, $editor)
                     );

@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails\Props;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\Prototype;
 
 /**
  * @Flow\Proxy(false)
@@ -31,6 +32,30 @@ final class PropName implements \JsonSerializable
     private function __construct(string $value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @param Prototype $prototype
+     * @return array|PropName[]
+     */
+    public static function fromPrototype(Prototype $prototype): array
+    {
+        $propNames = $prototype->getKeys('__meta.styleguide.props');
+        if ($prototype->isComponent()) {
+            $propNames = array_unique(
+                array_merge(
+                    array_filter(
+                        $prototype->getKeys(),
+                        function (string $key): bool {
+                            return $key !== 'renderer';
+                        }
+                    ),
+                    $propNames
+                )
+            );
+        }
+
+        return array_map([self::class, 'fromString'], $propNames);
     }
 
     /**

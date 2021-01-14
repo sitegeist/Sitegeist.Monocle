@@ -13,8 +13,8 @@ namespace Sitegeist\Monocle\Domain\Fusion;
  * source code.
  */
 
-use InvalidArgumentException;
 use Neos\Flow\Annotations as Flow;
+use Neos\Utility\Arrays;
 use Neos\Fusion\Core\Runtime as FusionRuntime;
 
 /**
@@ -69,6 +69,16 @@ final class Prototype
     }
 
     /**
+     * @return boolean
+     */
+    public function isComponent(): bool
+    {
+        return $this->extends(
+            PrototypeName::fromString('Neos.Fusion:Component')
+        );
+    }
+
+    /**
      * @param PrototypeName $ancestorPrototypeName
      * @return boolean
      */
@@ -85,16 +95,23 @@ final class Prototype
     }
 
     /**
+     * @param null|string $path
      * @return array|string[]
      */
-    public function getKeys(): array
+    public function getKeys(?string $path = null): array
     {
-        return array_filter(
-            array_keys($this->ast),
-            function(string $key): bool {
-                return substr($key, 0, 2) !== '__';
+        if ($path !== null) {
+            $ast = Arrays::getValueByPath($this->ast, $path);
+            if (!is_array($ast)) {
+                $ast = [];
             }
-        );
+        } else {
+            $ast = $this->ast;
+        }
+
+        return array_filter(array_keys($ast), function(string $key): bool {
+            return substr($key, 0, 2) !== '__';
+        });
     }
 
     /**
@@ -105,7 +122,7 @@ final class Prototype
     public function evaluate(string $path, array $context = [])
     {
         if ($path[0] !== '/') {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 '$path must start with "/".'
             );
         }

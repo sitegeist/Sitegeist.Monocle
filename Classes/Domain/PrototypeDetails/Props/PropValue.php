@@ -14,6 +14,8 @@ namespace Sitegeist\Monocle\Domain\PrototypeDetails\Props;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Sitegeist\Monocle\Domain\Fusion\Prototype;
+use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 
 /**
  * @Flow\Proxy(false)
@@ -39,6 +41,27 @@ final class PropValue implements \JsonSerializable
         }
 
         $this->value = $value;
+    }
+
+    /**
+     * @param Prototype $prototype
+     * @param PropName $propName
+     * @return null|self
+     */
+    public static function of(Prototype $prototype, PropName $propName): ?self
+    {
+        $value = $prototype
+            ->evaluate('/__meta/styleguide/props/' . $propName);
+
+        if ($prototype->extends(PrototypeName::fromString('Neos.Fusion:Component'))) {
+            $value = $value ?? $prototype->evaluate('/' . $propName);
+        }
+
+        if (PropValue::isValid($value)) {
+            return PropValue::fromAny($value);
+        }
+
+        return null;
     }
 
     /**

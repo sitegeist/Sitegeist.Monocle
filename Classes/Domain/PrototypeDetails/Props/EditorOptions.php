@@ -46,7 +46,7 @@ final class EditorOptions implements \JsonSerializable
      * @param array $array
      * @return self
      */
-    public static function fromArray(string $array): self
+    public static function fromArray(array $array): self
     {
         return new self($array);
     }

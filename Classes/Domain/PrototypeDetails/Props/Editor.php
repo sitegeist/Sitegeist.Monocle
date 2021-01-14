@@ -43,48 +43,6 @@ final class Editor implements EditorInterface
     }
 
     /**
-     * @param PropValue $propValue
-     * @return null|self
-     */
-    public static function forPropValue(PropValue $propValue): ?self
-    {
-        switch (true) {
-            case $propValue->isBoolean():
-                return new self(
-                    EditorIdentifier::fromString(
-                        'Sitegeist.Monocle/Props/Editors/Checkbox'
-                    ),
-                    EditorOptions::empty()
-                );
-            case $propValue->isNumber():
-                return new self(
-                    EditorIdentifier::fromString(
-                        'Sitegeist.Monocle/Props/Editors/Number'
-                    ),
-                    EditorOptions::empty()
-                );
-            case $propValue->isString():
-                if ($propValue->getLength() > 80) {
-                    return new self(
-                        EditorIdentifier::fromString(
-                            'Sitegeist.Monocle/Props/Editors/TextArea'
-                        ),
-                        EditorOptions::empty()
-                    );
-                } else {
-                    return new self(
-                        EditorIdentifier::fromString(
-                            'Sitegeist.Monocle/Props/Editors/Text'
-                        ),
-                        EditorOptions::empty()
-                    );
-                }
-            default:
-                return null;
-        }
-    }
-
-    /**
      * @return EditorIdentifier
      */
     public function getIdentifier(): EditorIdentifier
