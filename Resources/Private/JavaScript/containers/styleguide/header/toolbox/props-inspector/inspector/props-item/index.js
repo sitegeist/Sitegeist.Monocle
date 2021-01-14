@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import TextInput from '@neos-project/react-ui-components/lib-esm/TextInput';
 import TextArea from '@neos-project/react-ui-components/lib-esm/TextArea';
 import CheckBox from '@neos-project/react-ui-components/lib-esm/CheckBox';
+import SelectBox from '@neos-project/react-ui-components/lib-esm/SelectBox';
 
 import style from './style.css';
 
@@ -66,6 +67,18 @@ export default class PropsItem extends PureComponent {
                         id={`prop-${prop.name}`}
                         value={value}
                         onChange={this.handleChange}
+                        />
+                );
+            case 'Sitegeist.Monocle/Props/Editors/SelectBox':
+                return (
+                    <SelectBox
+                        id={`prop-${prop.name}`}
+                        value={value}
+                        options={Object.entries(prop.editor.options.options).map(([label, value]) => ({
+                            label,
+                            value
+                        }))}
+                        onValueChange={this.handleChange}
                         />
                 );
             default:
