@@ -47,7 +47,7 @@ export const configurationSchema = z.object({
     ui: z.object({
         sitePackages: z.record(z.string()),
         viewportPresets: z.record(viewportPresetSchema.or(z.null())),
-        localePresets: z.record(localePresetSchema),
+        localePresets: z.record(localePresetSchema).or(z.null()),
         hotkeys: hotkeysSchema,
         preview: z.object({
             fusionRootPath: z.string(),
