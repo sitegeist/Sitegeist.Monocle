@@ -105,8 +105,16 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
+        $propsCollectionFactoryClassName = $this->configurationService
+            ->getSiteConfiguration(
+                $sitePackageKey,
+                'propsCollectionFactoryImplementation'
+            );
+        $propsCollectionFactory = $this->objectManager
+            ->get(trim($propsCollectionFactoryClassName));
+
         $prototypeDetailsFactory = new PrototypeDetailsFactory(
-            new PropsCollectionFactory()
+            $propsCollectionFactory
         );
 
         $prototype = $this->prototypeRepository
