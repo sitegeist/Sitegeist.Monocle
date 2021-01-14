@@ -65,7 +65,7 @@ export default class PropsItem extends PureComponent {
                         minRows={6}
                         id={`prop-${prop.name}`}
                         value={value}
-                        onChange={onChange}
+                        onChange={this.handleChange}
                         />
                 );
             default:

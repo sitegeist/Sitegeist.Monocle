@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --mode production",
-    "lint": "yarn run lint:scripts && npm run lint:css",
+    "lint": "yarn run lint:scripts && yarn run lint:css",
     "lint:css": "stylelint 'Resources/Private/JavaScript/**/*.css'",
     "lint:scripts": "eslint Resources/Private/JavaScript/**",
     "test": "exit 0",
-    "watch": "yarn run build -- --watch"
+    "watch": "webpack --watch --mode development"
   },
   "repository": {
     "type": "git",

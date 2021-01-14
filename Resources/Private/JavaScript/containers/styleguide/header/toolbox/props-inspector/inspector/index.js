@@ -33,8 +33,8 @@ export default class Inspector extends PureComponent {
                     identifier: PropTypes.string,
                     options: PropTypes.any.isRequired
                 }).isRequired
-            })).isRequired
-        }).isRequired,
+            }))
+        }),
         overriddenProps: PropTypes.object,
         isVisible: PropTypes.bool,
         selectedPropSet: PropTypes.string,
@@ -60,8 +60,6 @@ export default class Inspector extends PureComponent {
             return null;
         }
 
-        const {propSets} = prototypeDetails.fusionAst.__meta.styleguide;
-
         return (
             <div
                 className={mergeClassnames({
@@ -69,14 +67,18 @@ export default class Inspector extends PureComponent {
                     [style.isVisible]: isVisible
                 })}
                 >
-                {propSets && (
+                {prototypeDetails.propSets && (
                     <PropSetSelector
-                        label={selectedPropSet in propSets ? selectedPropSet : 'Default'}
-                        propSets={propSets}
+                        label={
+                            prototypeDetails.propSets.some(
+                                propSet => propSet.name === selectedPropSet
+                            ) ?  selectedPropSet : 'Default'
+                        }
+                        propSets={prototypeDetails.propSets}
                         onSelectPropSet={this.handleSelectPropSet}
                         />
                 )}
-                {prototypeDetails.props.map(prop => (
+                {prototypeDetails.props && prototypeDetails.props.map(prop => (
                     <PropsItem
                         key={prop.name}
                         prop={prop}

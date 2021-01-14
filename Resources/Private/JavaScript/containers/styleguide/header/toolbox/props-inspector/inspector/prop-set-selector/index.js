@@ -17,7 +17,10 @@ export default class PropSetSelector extends PureComponent {
         toggleIsOpen: PropTypes.func.isRequired,
         isOpen: PropTypes.bool,
         label: PropTypes.string.isRequired,
-        propSets: PropTypes.object
+        propSets: PropTypes.arrayOf(PropTypes.shape({
+            name: PropTypes.string,
+            overrides: PropTypes.objectOf(PropTypes.any)
+        }))
     };
 
     handleSelectPropSet = propSet => {

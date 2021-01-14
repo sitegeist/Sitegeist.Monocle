@@ -17,7 +17,10 @@ import style from './style.css';
 })
 export default class PropSetList extends PureComponent {
     static propTypes = {
-        propSets: PropTypes.object,
+        propSets: PropTypes.arrayOf(PropTypes.shape({
+            name: PropTypes.string,
+            overrides: PropTypes.objectOf(PropTypes.any)
+        })),
         handleSelectPropSet: PropTypes.func.isRequired
     };
 
@@ -33,12 +36,12 @@ export default class PropSetList extends PureComponent {
                         label={'Default'}
                         onClick={handleSelectPropSet}
                         />
-                    {Object.keys(propSets).map(
-                        propSetName => (
+                    {propSets.map(
+                        propSet => (
                             <PropSet
-                                key={propSetName}
-                                name={propSetName}
-                                label={propSetName}
+                                key={propSet.name}
+                                name={propSet.name}
+                                label={propSet.name}
                                 onClick={handleSelectPropSet}
                                 />
                         )
