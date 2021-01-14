@@ -215,7 +215,10 @@ function* loadConfiguration(): SagaIterator<void> {
                 yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
                 yield put(actions.locales.set(configuration.ui.localePresets));
                 yield put(actions.preview.set(configuration.ui.preview));
-                yield put(actions.prototypes.add(configuration.styleguideObjects));
+
+                if (!Array.isArray(configuration.styleguideObjects)) {
+                    yield put(actions.prototypes.add(configuration.styleguideObjects));
+                }
 
                 const listOfPrototypes = (
                     yield select(prototypes.selectors.all)

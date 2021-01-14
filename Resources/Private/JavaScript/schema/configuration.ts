@@ -55,10 +55,12 @@ export const configurationSchema = z.object({
             defaultPrototypeName: z.string().optional().or(z.null())
         })
     }),
-    styleguideObjects: z.record(styleguideObjectSchema)
+    styleguideObjects: z.record(styleguideObjectSchema).or(z.array(z.any()))
 })
 
-export type Configuration = z.infer<typeof configurationSchema>;
+export type Configuration =
+    Omit<z.infer<typeof configurationSchema>, 'styleguideObjects'>
+    & { styleguideObjects: Record<string, z.infer<typeof styleguideObjectSchema>> };
 
 export function getDefaultPrototypeNameFromConfiguration(configuration: Configuration): string {
     if (configuration.ui.preview.defaultPrototypeName) {
