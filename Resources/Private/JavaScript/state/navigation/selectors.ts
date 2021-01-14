@@ -25,7 +25,7 @@ interface IndexedData {
     description: string
     structure: {
         label: string
-        position: number
+        position?: number
     }
     options?: {
         position: number
@@ -72,7 +72,11 @@ function getSortingPriorityForSearchResults(
     const { indexedData: indexedDataA } = searchResultA;
     const { indexedData: indexedDataB } = searchResultB;
 
-    if (indexedDataA.structure.position !== indexedDataB.structure.position) {
+    if (
+        indexedDataB.structure.position !== undefined
+        && indexedDataA.structure.position !== undefined
+        && indexedDataA.structure.position !== indexedDataB.structure.position
+    ) {
         return indexedDataB.structure.position - indexedDataA.structure.position;
     }
 

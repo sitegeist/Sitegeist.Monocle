@@ -9,7 +9,15 @@ export function reducer(state: State, action: Action): State {
     return produce(state, draft => {
         switch (action.type) {
             case getType(actions.set): {
-                draft.breakpoints.byName = action.payload;
+                for (const [
+                    viewportPresetName,
+                    viewportPresetOrNull
+                ] of Object.entries(action.payload)) {
+                    if (viewportPresetOrNull !== null) {
+                        draft.breakpoints.byName[viewportPresetName] =
+                            viewportPresetOrNull;
+                    }
+                }
                 break;
             }
 

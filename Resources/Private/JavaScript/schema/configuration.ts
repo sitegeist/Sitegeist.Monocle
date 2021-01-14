@@ -30,10 +30,10 @@ const styleguideObjectSchema = z.object({
     path: z.string(),
     description: z.string(),
     options: z.any().optional().or(z.null()),
-    propSets: z.record(z.any()).optional().or(z.null()),
+    propSets: z.array(z.any()).optional().or(z.null()),
     structure: z.object({
-        position: z.number(),
-        match: z.string(),
+        position: z.number().optional(),
+        match: z.string().optional(),
         label: z.string(),
         icon: z.string(),
         color: z.string()
@@ -46,7 +46,7 @@ export const configurationSchema = z.object({
     sitePackage: z.string(),
     ui: z.object({
         sitePackages: z.record(z.string()),
-        viewportPresets: z.record(viewportPresetSchema),
+        viewportPresets: z.record(viewportPresetSchema.or(z.null())),
         localePresets: z.record(localePresetSchema),
         hotkeys: hotkeysSchema,
         preview: z.object({

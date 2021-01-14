@@ -3,7 +3,7 @@ import { createAction } from "typesafe-actions";
 export const set = createAction(
     '@sitegeist/monocle/breakpoints/set',
     (listOfBreakpoints: {
-        [key: string]: {
+        [key: string]: null | {
             label: string
             width: number
             height: number

@@ -245,8 +245,8 @@
 .style__list___HdlW7{width:100vh;max-width:200px}.style__locales___2GCTo{max-height:calc(100vh - 80px);overflow-y:scroll;overflow-x:hidden}.style__separator___cyjjo{margin:0;border-color:#999}
 .style__selector___1X8Ql{display:-webkit-box;display:-ms-flexbox;display:flex;white-space:nowrap;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__container___1FemG{position:relative}.style__icon___3awEe{width:1em;height:1em;margin-right:.6em}
 .style__propSet___H7RUQ{cursor:pointer;color:#fff;background-color:#323232;padding:1em;width:100%;text-align:left;font-size:14px;border:none}.style__propSet___H7RUQ:hover{background-color:#00adee}.style__title___hwYVc{font-size:120%;display:inline-block;margin-right:.4em}
-.style__list___2zUXH{margin-top:-1rem;margin-bottom:1rem;width:100%}.style__propSets___3g6CE{max-height:calc(100vh - 80px);overflow-y:scroll;overflow-x:hidden}.style__separator___MU2Ry{margin:0;border-color:#999}
-.style__selector___2ExfO{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;border:1px solid #3f3f3f;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:1rem}.style__container___3adPw{width:100%;max-width:800px;margin:0 auto;position:relative;}.style__container___3adPw label{display:block;margin-bottom:.6rem}.style__icon___2BR7g{margin-left:.6em}
+.style__list___2zUXH{position:absolute;top:100%;margin-top:-1px;margin-bottom:1rem;width:100%;border:1px solid #3f3f3f}.style__propSets___3g6CE{max-height:calc(100vh - 80px);overflow-y:auto;overflow-x:hidden}.style__separator___MU2Ry{margin:0;border-color:#999}
+.style__selector___2ExfO{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;border:1px solid #3f3f3f;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-bottom:1rem}.style__container___3adPw{width:100%;max-width:800px;margin:0 auto;position:relative;}.style__container___3adPw label{display:block;margin-bottom:.6rem}.style__icon___2BR7g{margin-left:.6em;width:1em;height:1em}
 .style__textArea___1Bi79 {
     width: 100%;
     height: 40px;

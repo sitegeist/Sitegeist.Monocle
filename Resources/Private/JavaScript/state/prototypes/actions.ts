@@ -8,7 +8,7 @@ export const add = createAction(
             description: string
             structure: {
                 label: string
-                position: number
+                position?: number
             }
             options?: {
                 position: number

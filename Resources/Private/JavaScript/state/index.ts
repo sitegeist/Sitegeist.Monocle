@@ -83,7 +83,7 @@ export interface State {
                 readonly description: string
                 readonly structure: {
                     readonly label: string
-                    readonly position: number
+                    readonly position?: number
                 }
                 readonly options?: {
                     readonly position: number
