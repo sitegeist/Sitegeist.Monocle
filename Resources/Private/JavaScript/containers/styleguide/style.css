@@ -6,3 +6,13 @@ body {
 body {
     margin: 0;
 }
+
+:global {
+    svg:not(:root).neos-svg-inline--fa {
+        overflow: visible;
+    }
+
+    .neos-svg-inline--fa.fa-w-14 {
+        width: .875em;
+    }
+}
