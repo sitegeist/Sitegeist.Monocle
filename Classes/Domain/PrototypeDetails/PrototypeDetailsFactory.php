@@ -26,25 +26,16 @@ use Symfony\Component\Yaml\Yaml;
 final class PrototypeDetailsFactory
 {
     /**
+     * @Flow\Inject
      * @var AnatomyFactory
      */
     protected $anatomyFactory;
 
     /**
+     * @Flow\Inject
      * @var PropsCollectionFactoryInterface
      */
     protected $propsCollectionFactory;
-
-    /**
-     * @param PropsCollectionFactoryInterface $propsCollectionFactory
-     * @Flow\Autowiring(false)
-     */
-    public function __construct(
-        PropsCollectionFactoryInterface $propsCollectionFactory
-    ) {
-        $this->anatomyFactory = new AnatomyFactory();
-        $this->propsCollectionFactory = $propsCollectionFactory;
-    }
 
     /**
      * @param string $prototypeNameString

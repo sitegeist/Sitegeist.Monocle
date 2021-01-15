@@ -1,8 +1,6 @@
 
 Sitegeist:
   Monocle:
-    propsCollectionFactoryImplementation: >
-      Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactory
     uriMock:
       #the static file uris to mock
       static: {}

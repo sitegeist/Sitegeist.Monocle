@@ -17,7 +17,6 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Sitegeist\Monocle\Domain\Fusion\PrototypeRepository;
-use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactory;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Service\ConfigurationService;
@@ -105,24 +104,13 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
-        $propsCollectionFactoryClassName = $this->configurationService
-            ->getSiteConfiguration(
-                $sitePackageKey,
-                'propsCollectionFactoryImplementation'
-            );
-        $propsCollectionFactory = $this->objectManager
-            ->get(trim($propsCollectionFactoryClassName));
-
-        $prototypeDetailsFactory = new PrototypeDetailsFactory(
-            $propsCollectionFactory
-        );
-
         $prototype = $this->prototypeRepository
             ->findOneByPrototypeNameInSitePackage(
                 $prototypeName,
                 $sitePackageKey
             );
-        $prototypeDetails = $prototypeDetailsFactory->forPrototype($prototype);
+        $prototypeDetails = $this->prototypeDetailsFactory
+            ->forPrototype($prototype);
 
         $this->view->assign('value', $prototypeDetails);
     }
