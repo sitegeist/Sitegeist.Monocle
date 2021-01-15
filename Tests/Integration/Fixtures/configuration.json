@@ -1,0 +1,77 @@
+{
+  "sitePackage": "Vendor.Site",
+  "ui": {
+    "sitePackages": {
+      "Vendor.Site": "Vendor.Site",
+      "Vendor.Shop": "Vendor.Shop",
+      "Vendor.Portal": "Vendor.Portal"
+    },
+    "viewportPresets": {
+      "xs": {
+        "label": "xtra small",
+        "width": 400,
+        "height": 600
+      },
+      "md": {
+        "label": "medium",
+        "width": 600,
+        "height": 400
+      },
+      "l": {
+        "label": "wide",
+        "width": 800,
+        "height": 600
+      }
+    },
+    "localePresets": {
+      "en": {
+        "label": "English"
+      },
+      "de": {
+        "label": "German"
+      }
+    },
+    "hotkeys": {
+      "openNavigation": "ctrl+f",
+      "closeNavigation": "esc",
+      "navigateUp": "up",
+      "navigateDown": "down",
+      "openPreviewInNewWindow": "ctrl+space"
+    },
+    "preview": {
+      "fusionRootPath": "/<Sitegeist.Monocle:Preview.Page>",
+      "sourceQuerySelector": "body",
+      "defaultPrototypeName": null
+    }
+  },
+  "styleguideObjects": {
+    "Vendor.Site:Component.Foo": {
+      "title": "Foo",
+      "path": "Component.Foo",
+      "description": "",
+      "options": null,
+      "propSets": null,
+      "structure": {
+        "position": 400,
+        "match": "Component",
+        "label": "Component",
+        "icon": "icon-certificate",
+        "color": "#D1E751"
+      }
+    },
+    "Vendor.Site:Component.Bar": {
+      "title": "Bar",
+      "path": "Component.Bar",
+      "description": "",
+      "options": null,
+      "propSets": null,
+      "structure": {
+        "position": 400,
+        "match": "Component",
+        "label": "Component",
+        "icon": "icon-certificate",
+        "color": "#D1E751"
+      }
+    }
+  }
+}

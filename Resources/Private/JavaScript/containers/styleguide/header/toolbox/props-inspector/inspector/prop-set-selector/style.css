@@ -3,6 +3,7 @@
     display: flex;
     border: 1px solid var(--brandColorsContrastDark);
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 .container {
@@ -18,4 +19,6 @@
 }
 .icon {
     margin-left: .6em;
+    width: 1em;
+    height: 1em;
 }
