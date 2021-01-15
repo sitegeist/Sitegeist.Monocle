@@ -74,10 +74,7 @@ export class PropsItem extends PureComponent<PropsItemProps> {
                     <SelectBox
                         id={`prop-${prop.name}`}
                         value={value}
-                        options={Object.entries(prop.editor.options.options).map(([label, value]) => ({
-                            label,
-                            value
-                        }))}
+                        options={prop.editor.options.options}
                         onValueChange={this.handleChange}
                         />
                 );

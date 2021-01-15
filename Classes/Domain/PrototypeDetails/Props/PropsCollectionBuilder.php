@@ -21,15 +21,15 @@ use Neos\Flow\Annotations as Flow;
 final class PropsCollectionBuilder
 {
     /**
-     * @var array<string,Prop>
+     * @var array<string,PropInterface>
      */
     private $props = [];
 
     /**
-     * @param Prop $prop
+     * @param PropInterface $prop
      * @return self
      */
-    public function addProp(Prop $prop): self
+    public function addProp(PropInterface $prop): self
     {
         if (isset($this->props[(string) $prop->getName()])) {
             throw new \DomainException(

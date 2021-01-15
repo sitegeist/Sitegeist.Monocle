@@ -39,7 +39,7 @@ final class PropsCollectionFactory implements PropsCollectionFactoryInterface
 
         foreach (PropName::fromPrototype($prototype) as $propName) {
             if ($propValue = PropValue::of($prototype, $propName)) {
-                if ($editor = $this->editorFactory->forPropValue($propValue)) {
+                if ($editor = $this->editorFactory->for($prototype, $propName)) {
                     $propsCollectionBuilder->addProp(
                         new Prop($propName, $propValue, $editor)
                     );

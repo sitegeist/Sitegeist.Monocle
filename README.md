@@ -43,9 +43,9 @@ To render a prototype as a styleguide-item it simply has to be annotated:
 ```
 prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component) {
 
-    # 
+    #
     # styleguide annotation to define title, description and props for the styleguide
-    # 
+    #
     @styleguide {
         title = 'My Custom Prototype'
         description = 'A Prototype ....'
@@ -56,12 +56,12 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component)
             headline-2 {
                 tagName = 'h2'
                 content = 'Alternate styleguide content for h2'
-            } 
+            }
         }
     }
 
-    # 
-    # normal fusion props and renderer 
+    #
+    # normal fusion props and renderer
     #
     tagName = 'h1'
     content = ''
@@ -83,7 +83,7 @@ To map an actual content-node on a component-prototype use a separate fusion pro
 ```
 prototype(Vendor.Package:Content.Headline) < prototype(Neos.Neos:ContentComponent){
     content = ${q(node).property('title')}
-    
+
     renderer = Vendor.Package:Components.Headline {
         @apply.props = ${props}
     }
@@ -424,6 +424,45 @@ prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Compon
 	`
 }
 ```
+
+### Props & Prop Editors
+
+By default, Monocle will scan the `@styleguide.props` path in your fusion code for prop values. If your subject happens to be a `Neos.Fusion:Component` (which in most cases it will be), Monocle also scans all default values of your Component props.
+
+Given a prop value, Monocle will check its type and provide a fitting editor configuration. Below is a table for all standard cases:
+
+| Value Type | Editor |
+|-|-|
+| `string` (with less than 81 characters) | TextField |
+| `string` (with more than 80 characters) | TextArea |
+| `int` or `float` | Number |
+| `boolean` | CheckBox |
+
+Additionally, if you want more control over which editor is used you can include a custom configuration under the `@styleguide.options.propEditors` path in your fusion code:
+
+```
+prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
+	@styleguide {
+        options {
+            propEditors {
+                severity {
+                    editor = 'Sitegeist.Monocle/Props/Editors/SelectBox'
+                    editorOptions {
+                        options {
+                            'Info' = 'info'
+                            'Success' = 'success'
+                            'Warning' = 'warning'
+                            'Error' = 'error'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+If you are using `PackageFactory.AtomicFusion.PropTypes` then check out `Sitegeist.Monocle.PropTypes`. This packages automatically generates editor configurations that that fit your PropTypes.
 
 ### Fusion Object Tree Caching
 
