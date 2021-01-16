@@ -23,13 +23,16 @@ interface InspectorProps {
         }[]
         propSets: {
             name: string
-            overrides: Record<'string', any>
+            overrides: Record<string, any>
         }[]
     }
     overriddenProps: {
         [key: string]: any
     }
-    selectedPropSet: string
+    selectedPropSet: {
+        name: string
+        overrides: Record<string, any>
+    }
     isVisible: boolean
     selectPropSet: (propSetName: string) => void
     overrideProp: (name: string, value: any) => void
@@ -62,25 +65,35 @@ class InspectorC extends PureComponent<InspectorProps> {
                 })}
                 >
                 {Boolean(prototypeDetails.propSets.length) && (
-                    <PropSetSelector
-                        enable={Boolean(prototypeDetails.propSets.length)}
-                        label={
-                            prototypeDetails.propSets.some(
-                                propSet => propSet.name === selectedPropSet
-                            ) ?  selectedPropSet : 'Default'
-                        }
-                        propSets={prototypeDetails.propSets}
-                        onSelectPropSet={this.handleSelectPropSet}
-                        />
+                    <div className={style.container}>
+                        <PropSetSelector
+                            enable={Boolean(prototypeDetails.propSets.length)}
+                            label={
+                                selectedPropSet.name === '__default'
+                                    ? 'Default'
+                                    : selectedPropSet.name
+                            }
+                            propSets={prototypeDetails.propSets}
+                            onSelectPropSet={this.handleSelectPropSet}
+                            />
+                    </div>
                 )}
-                {prototypeDetails.props && prototypeDetails.props.map(prop => (
-                    <PropsItem
-                        key={prop.name}
-                        prop={prop}
-                        overriddenValue={overriddenProps[prop.name]}
-                        onChange={this.handleChange}
-                        />
-                ))}
+                {prototypeDetails.props && (
+                    <div className={style.container}>
+                        {prototypeDetails.props.map(prop => (
+                            <PropsItem
+                                key={prop.name}
+                                prop={prop}
+                                overriddenValue={
+                                    overriddenProps[prop.name] !== undefined
+                                        ? overriddenProps[prop.name]
+                                        : selectedPropSet.overrides[prop.name]
+                                }
+                                onChange={this.handleChange}
+                                />
+                        ))}
+                    </div>
+                )}
             </div>
         );
     }

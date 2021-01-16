@@ -60,7 +60,7 @@ export const setCurrentlyRendered = createAction(
         }[]
         propSets: {
             name: string
-            overrides: Record<'string', any>
+            overrides: Record<string, any>
         }[]
     }) => currentlyRenderedPrototype
 )();

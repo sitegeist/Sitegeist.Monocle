@@ -4,12 +4,10 @@
     border: 1px solid var(--brandColorsContrastDark);
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
 }
 .container {
     width: 100%;
     max-width: 800px;
-    margin: 0 auto 1rem;
     position: relative;
 
     label {

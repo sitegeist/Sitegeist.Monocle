@@ -10,7 +10,7 @@ import style from "./style.css";
 interface PropSetListProps {
     propSets: {
         name: string
-        overrides: Record<'string', any>
+        overrides: Record<string, any>
     }[]
     onSelectPropSet: (propSetName: string) => void
 }

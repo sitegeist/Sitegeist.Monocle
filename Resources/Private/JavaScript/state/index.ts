@@ -122,7 +122,7 @@ export interface State {
             }[]
             readonly propSets: {
                 readonly name: string
-                readonly overrides: Record<'string', any>
+                readonly overrides: Record<string, any>
             }[]
         }
         readonly currentHtml: string
