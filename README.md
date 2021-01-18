@@ -427,7 +427,9 @@ prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Compon
 
 ### Props & Prop Editors
 
-By default, Monocle will scan the `@styleguide.props` path in your fusion code for prop values. If your subject happens to be a `Neos.Fusion:Component` (which in most cases it will be), Monocle also scans all default values of your Component props.
+While previewing Fusion prototypes the Monocle UI offers a mechanism to override certain properties of that prototype in an ad-hoc fashion. This allows you to quickly examine whether your prototype works in certain unforseen configurations (longer or shorter text for instance).
+
+Monocle will try to reproduce the API of your prototype from multiple sources and will offer all props as editable that can be plausibly associated with a specific editor configuration. By default, Monocle will scan the `@styleguide.props` path in your fusion code for prop values. If your prototype happens to be a `Neos.Fusion:Component` (which in most cases it'll likely be), Monocle also scans all default values of your Component props.
 
 Given a prop value, Monocle will check its type and provide a fitting editor configuration. Below is a table for all standard cases:
 
@@ -435,10 +437,10 @@ Given a prop value, Monocle will check its type and provide a fitting editor con
 |-|-|
 | `string` (with less than 81 characters) | TextField |
 | `string` (with more than 80 characters) | TextArea |
-| `int` or `float` | Number |
+| `int` or `float` | TextField |
 | `boolean` | CheckBox |
 
-Additionally, if you want more control over which editor is used you can include a custom configuration under the `@styleguide.options.propEditors` path in your fusion code:
+Additionally, if you need more control over which editor is used you may include a custom configuration under the `@styleguide.options.propEditors` path in your fusion code:
 
 ```
 prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
@@ -449,10 +451,22 @@ prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
                     editor = 'Sitegeist.Monocle/Props/Editors/SelectBox'
                     editorOptions {
                         options {
-                            'Info' = 'info'
-                            'Success' = 'success'
-                            'Warning' = 'warning'
-                            'Error' = 'error'
+                            info {
+                                label = 'Info'
+                                value = 'info'
+                            }
+                            success {
+                                label = 'Success'
+                                value = 'success'
+                            }
+                            warning {
+                                label = 'Warning'
+                                value = 'warning'
+                            }
+                            error {
+                                label = 'Error'
+                                value = 'error'
+                            }
                         }
                     }
                 }
@@ -462,7 +476,9 @@ prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-If you are using `PackageFactory.AtomicFusion.PropTypes` then check out `Sitegeist.Monocle.PropTypes`. This packages automatically generates editor configurations that that fit your PropTypes.
+An overview of available editors can be found under [[PropEditors](./Documentation/PropEditors.md)].
+
+If you are using [`PackageFactory.AtomicFusion.PropTypes`](https://github.com/PackageFactory/atomic-fusion-proptypes) then check out [`Sitegeist.Monocle.PropTypes`](https://github.com/sitegeist/Sitegeist.Monocle.PropTypes). This package automatically generates editor configurations that that fit your PropTypes.
 
 ### Fusion Object Tree Caching
 
