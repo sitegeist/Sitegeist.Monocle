@@ -114,8 +114,6 @@ final class EditorFactory
         switch ($manualConfiguration['editor']) {
             case 'Sitegeist.Monocle/Props/Editors/Checkbox':
                 return $this->checkbox();
-            case 'Sitegeist.Monocle/Props/Editors/Number':
-                return $this->number();
             case 'Sitegeist.Monocle/Props/Editors/Text':
                 return $this->text();
             case 'Sitegeist.Monocle/Props/Editors/TextArea':
@@ -143,21 +141,6 @@ final class EditorFactory
         return new Editor(
             EditorIdentifier::fromString(
                 'Sitegeist.Monocle/Props/Editors/Checkbox'
-            ),
-            EditorOptions::empty()
-        );
-    }
-
-    /**
-     * Provides a Number editor
-     *
-     * @return EditorInterface
-     */
-    public function number(): EditorInterface
-    {
-        return new Editor(
-            EditorIdentifier::fromString(
-                'Sitegeist.Monocle/Props/Editors/Number'
             ),
             EditorOptions::empty()
         );
