@@ -109,7 +109,7 @@ final class Prototype
             $ast = $this->ast;
         }
 
-        return array_filter(array_keys($ast), function(string $key): bool {
+        return array_filter(array_keys($ast), function (string $key): bool {
             return substr($key, 0, 2) !== '__';
         });
     }

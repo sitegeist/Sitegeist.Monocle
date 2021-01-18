@@ -42,7 +42,7 @@ final class FusionPrototypeAst implements \JsonSerializable
      */
     public function getAllReferencedFusionObjects(): \Iterator
     {
-        $findReferencedFusionPrototypeAstsRecursively = function(
+        $findReferencedFusionPrototypeAstsRecursively = function (
             array $astExcerpt
         ) use (&$findReferencedFusionPrototypeAstsRecursively): \Iterator {
             if (isset($astExcerpt['__objectType'])) {

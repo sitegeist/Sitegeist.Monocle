@@ -42,7 +42,8 @@ final class PrototypeDetailsFactory
      * @param string $sitePackageKey
      * @return PrototypeDetailsInterface
      */
-    public function forPrototype(Prototype $prototype): PrototypeDetailsInterface {
+    public function forPrototype(Prototype $prototype): PrototypeDetailsInterface
+    {
         return new PrototypeDetails(
             $prototype->getName(),
             RenderedCode::fromString(

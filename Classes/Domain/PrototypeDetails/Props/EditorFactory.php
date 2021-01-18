@@ -71,13 +71,14 @@ final class EditorFactory
             case $propValue->isBoolean():
                 return $this->checkBox();
             case $propValue->isNumber():
-                return $this->number();
+                return $this->text();
             case $propValue->isString():
                 if ($propValue->getLength() <= 80) {
                     return $this->text();
                 } else {
                     return $this->textArea();
                 }
+                break;
             default:
                 return null;
         }
@@ -128,7 +129,6 @@ final class EditorFactory
                     )
                 );
         }
-
     }
 
     /**
