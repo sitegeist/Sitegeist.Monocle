@@ -43,9 +43,9 @@ To render a prototype as a styleguide-item it simply has to be annotated:
 ```
 prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component) {
 
-    # 
+    #
     # styleguide annotation to define title, description and props for the styleguide
-    # 
+    #
     @styleguide {
         title = 'My Custom Prototype'
         description = 'A Prototype ....'
@@ -56,12 +56,12 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component)
             headline-2 {
                 tagName = 'h2'
                 content = 'Alternate styleguide content for h2'
-            } 
+            }
         }
     }
 
-    # 
-    # normal fusion props and renderer 
+    #
+    # normal fusion props and renderer
     #
     tagName = 'h1'
     content = ''
@@ -83,7 +83,7 @@ To map an actual content-node on a component-prototype use a separate fusion pro
 ```
 prototype(Vendor.Package:Content.Headline) < prototype(Neos.Neos:ContentComponent){
     content = ${q(node).property('title')}
-    
+
     renderer = Vendor.Package:Components.Headline {
         @apply.props = ${props}
     }
@@ -424,6 +424,61 @@ prototype(Vendor.Package:Component.SearchExample) < prototype(Neos.Fusion:Compon
 	`
 }
 ```
+
+### Props & Prop Editors
+
+While previewing Fusion prototypes the Monocle UI offers a mechanism to override certain properties of that prototype in an ad-hoc fashion. This allows you to quickly examine whether your prototype works in certain unforseen configurations (longer or shorter text for instance).
+
+Monocle will try to reproduce the API of your prototype from multiple sources and will offer all props as editable that can be plausibly associated with a specific editor configuration. By default, Monocle will scan the `@styleguide.props` path in your fusion code for prop values. If your prototype happens to be a `Neos.Fusion:Component` (which in most cases it'll likely be), Monocle also scans all default values of your Component props.
+
+Given a prop value, Monocle will check its type and provide a fitting editor configuration. Below is a table for all standard cases:
+
+| Value Type | Editor |
+|-|-|
+| `string` (with less than 81 characters) | TextField |
+| `string` (with more than 80 characters) | TextArea |
+| `int` or `float` | TextField |
+| `boolean` | CheckBox |
+
+Additionally, if you need more control over which editor is used you may include a custom configuration under the `@styleguide.options.propEditors` path in your fusion code:
+
+```
+prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
+	@styleguide {
+        options {
+            propEditors {
+                severity {
+                    editor = 'Sitegeist.Monocle/Props/Editors/SelectBox'
+                    editorOptions {
+                        options {
+                            info {
+                                label = 'Info'
+                                value = 'info'
+                            }
+                            success {
+                                label = 'Success'
+                                value = 'success'
+                            }
+                            warning {
+                                label = 'Warning'
+                                value = 'warning'
+                            }
+                            error {
+                                label = 'Error'
+                                value = 'error'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+An overview of available editors can be found under [[PropEditors](./Documentation/PropEditors.md)].
+
+If you are using [`PackageFactory.AtomicFusion.PropTypes`](https://github.com/PackageFactory/atomic-fusion-proptypes) then check out [`Sitegeist.Monocle.PropTypes`](https://github.com/sitegeist/Sitegeist.Monocle.PropTypes). This package automatically generates editor configurations that that fit your PropTypes.
 
 ### Fusion Object Tree Caching
 

@@ -9,8 +9,9 @@ import style from "./style.css";
 
 interface PropSetListProps {
     propSets: {
-        [key: string]: any
-    }
+        name: string
+        overrides: Record<string, any>
+    }[]
     onSelectPropSet: (propSetName: string) => void
 }
 
@@ -31,12 +32,12 @@ class PropSetListC extends PureComponent<PropSetListProps> {
                         label={'Default'}
                         onClick={this.handleSelectPropSet}
                         />
-                    {Object.keys(propSets).map(
-                        propSetName => (
+                    {propSets.map(
+                        propSet => (
                             <PropSet
-                                key={propSetName}
-                                name={propSetName}
-                                label={propSetName}
+                                key={propSet.name}
+                                name={propSet.name}
+                                label={propSet.name}
                                 onClick={this.handleSelectPropSet}
                                 />
                         )

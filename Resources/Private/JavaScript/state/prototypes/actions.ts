@@ -50,6 +50,18 @@ export const setCurrentlyRendered = createAction(
                 }
             }
         }
+        props: {
+            name: string
+            value: any
+            editor: {
+                identifier: string
+                options: any
+            }
+        }[]
+        propSets: {
+            name: string
+            overrides: Record<string, any>
+        }[]
     }) => currentlyRenderedPrototype
 )();
 

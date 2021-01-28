@@ -27,9 +27,9 @@ export interface State {
     readonly breakpoints: {
         readonly byName: {
             readonly [key: string]: {
-                label: string
-                width: number
-                height: number
+                readonly label: string
+                readonly width: number
+                readonly height: number
             }
         }
         readonly currentlySelected: null | string
@@ -44,11 +44,11 @@ export interface State {
         readonly needsAuthentication: boolean
     }
     readonly hotkeys: Record<string, never> | { // @TODO: Refactor
-        openNavigation: string
-        closeNavigation: string
-        navigateUp: string
-        navigateDown: string
-        openPreviewInNewWindow: string
+        readonly openNavigation: string
+        readonly closeNavigation: string
+        readonly navigateUp: string
+        readonly navigateDown: string
+        readonly openPreviewInNewWindow: string
     }
     readonly locales: {
         readonly byName: {
@@ -112,6 +112,18 @@ export interface State {
                     }
                 }
             }
+            readonly props: {
+                readonly name: string
+                readonly value: any
+                readonly editor: {
+                    readonly identifier: string
+                    readonly options: any
+                }
+            }[]
+            readonly propSets: {
+                readonly name: string
+                readonly overrides: Record<string, any>
+            }[]
         }
         readonly currentHtml: string
     }

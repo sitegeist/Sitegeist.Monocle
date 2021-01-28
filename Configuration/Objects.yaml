@@ -12,3 +12,6 @@ Sitegeist\Monocle\Aspects\FusionCachingAspect:
         arguments:
           1:
             value: Sitegeist_Monocle_Fusion
+
+Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactoryInterface:
+  className: Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactory

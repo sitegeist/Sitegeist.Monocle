@@ -16,12 +16,11 @@ namespace Sitegeist\Monocle\Controller;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
+use Sitegeist\Monocle\Domain\Fusion\PrototypeRepository;
 use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Fusion\FusionView;
-use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
-use Symfony\Component\Yaml\Yaml;
 use Sitegeist\Monocle\Service\ConfigurationService;
+use Sitegeist\Monocle\Domain\PrototypeDetails\PrototypeDetailsFactory;
 
 /**
  * Class ApiController
@@ -61,6 +60,18 @@ class ApiController extends ActionController
     protected $configurationService;
 
     /**
+     * @Flow\Inject
+     * @var PrototypeRepository
+     */
+    protected $prototypeRepository;
+
+    /**
+     * @Flow\Inject
+     * @var PrototypeDetailsFactory
+     */
+    protected $prototypeDetailsFactory;
+
+    /**
      * Get all configurations for this site package
      *
      * @param string $sitePackageKey
@@ -93,30 +104,15 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        $prototype = $this->prototypeRepository
+            ->findOneByPrototypeNameInSitePackage(
+                $prototypeName,
+                $sitePackageKey
+            );
+        $prototypeDetails = $this->prototypeDetailsFactory
+            ->forPrototype($prototype);
 
-        $prototypePreviewRenderPath = FusionService::RENDERPATH_DISCRIMINATOR . str_replace(['.', ':'], ['_', '__'], $prototypeName);
-
-        // render html
-        $fusionView = new FusionView();
-        $fusionView->setControllerContext($this->getControllerContext());
-        $fusionView->setFusionPath($prototypePreviewRenderPath);
-        $fusionView->setPackageKey($sitePackageKey);
-
-        // render fusion source
-        $fusionObjectTree = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-        $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
-        $fusionCode = ReverseFusionParser::restorePrototypeCode($prototypeName, $fusionAst);
-
-        $result = [
-            'prototypeName' => $prototypeName,
-            'renderedCode' => $fusionCode,
-            'parsedCode' => Yaml::dump($fusionAst, 99),
-            'fusionAst' => $fusionAst,
-            'anatomy' => $this->fusionService->getAnatomicalPrototypeTreeFromAstExcerpt($fusionAst)
-        ];
-
-        $this->view->assign('value', $result);
+        $this->view->assign('value', $prototypeDetails);
     }
 
     /**

@@ -66,6 +66,7 @@ export function reducer(state: State, action: Action): State {
 
             case getType(actions.selectPropSet): {
                 draft.prototypes.selectedPropSet = action.payload;
+                draft.prototypes.overriddenProps = {};
                 break;
             }
 

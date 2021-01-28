@@ -162,7 +162,7 @@ export const previewUri = createSelector(
         return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
             queryParams: {
                 prototypeName,
-                propSet,
+                propSet: propSet.name,
                 sitePackageKey,
                 locales,
                 props: JSON.stringify(props)

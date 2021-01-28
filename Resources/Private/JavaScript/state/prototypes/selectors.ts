@@ -35,7 +35,10 @@ export const currentlySelected = createSelector(
 
 export const selectedPropSet = createSelector(
     [
-        (state: State) => state.prototypes.selectedPropSet
+        (state: State) => state.prototypes.selectedPropSet,
+        currentlyRendered
     ],
-    propSetName => propSetName ?? '__default'
+    (propSetName, prototypeDetails) => prototypeDetails?.propSets.find(
+        propSet => propSet.name === propSetName
+    ) ?? { name: '__default', overrides: {} }
 );

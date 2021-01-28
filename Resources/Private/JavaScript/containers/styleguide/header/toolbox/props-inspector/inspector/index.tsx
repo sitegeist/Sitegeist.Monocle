@@ -12,22 +12,27 @@ import { PropsItem } from "./props-item";
 import style from "./style.css";
 
 interface InspectorProps {
-    fusionAst: {
-        __meta: {
-            styleguide: {
-                props: {
-                    [key: string]: any
-                }
-                propSets: {
-                    [key: string]: any
-                }
+    prototypeDetails: null | {
+        props: {
+            name: string
+            value: any
+            editor: {
+                identifier: string
+                options: any
             }
-        }
+        }[]
+        propSets: {
+            name: string
+            overrides: Record<string, any>
+        }[]
     }
     overriddenProps: {
         [key: string]: any
     }
-    selectedPropSet: string
+    selectedPropSet: {
+        name: string
+        overrides: Record<string, any>
+    }
     isVisible: boolean
     selectPropSet: (propSetName: string) => void
     overrideProp: (name: string, value: any) => void
@@ -47,13 +52,10 @@ class InspectorC extends PureComponent<InspectorProps> {
     };
 
     render() {
-        const {fusionAst, overriddenProps, selectedPropSet, isVisible} = this.props;
-        if (!fusionAst) {
+        const {prototypeDetails, overriddenProps, selectedPropSet, isVisible} = this.props;
+        if (!prototypeDetails) {
             return null;
         }
-
-        const {props, propSets} = fusionAst.__meta.styleguide;
-        const currentProps = (propSets && selectedPropSet in propSets) ? Object.assign({}, props, propSets[selectedPropSet]) : props;
 
         return (
             <div
@@ -62,23 +64,36 @@ class InspectorC extends PureComponent<InspectorProps> {
                     [style.isVisible]: isVisible
                 })}
                 >
-                {propSets && (
-                    <PropSetSelector
-                        enable={Boolean(propSets)}
-                        label={selectedPropSet in propSets ? selectedPropSet : 'Default'}
-                        propSets={propSets}
-                        onSelectPropSet={this.handleSelectPropSet}
-                        />
+                {Boolean(prototypeDetails.propSets.length) && (
+                    <div className={style.container}>
+                        <PropSetSelector
+                            enable={Boolean(prototypeDetails.propSets.length)}
+                            label={
+                                selectedPropSet.name === '__default'
+                                    ? 'Default'
+                                    : selectedPropSet.name
+                            }
+                            propSets={prototypeDetails.propSets}
+                            onSelectPropSet={this.handleSelectPropSet}
+                            />
+                    </div>
                 )}
-                {currentProps && Object.keys(currentProps).map(name => (
-                    <PropsItem
-                        key={name}
-                        name={name}
-                        type={typeof currentProps[name]}
-                        value={name in overriddenProps ? overriddenProps[name] : currentProps[name]}
-                        onChange={this.handleChange}
-                        />
-                ))}
+                {prototypeDetails.props && (
+                    <div className={style.container}>
+                        {prototypeDetails.props.map(prop => (
+                            <PropsItem
+                                key={prop.name}
+                                prop={prop}
+                                overriddenValue={
+                                    overriddenProps[prop.name] !== undefined
+                                        ? overriddenProps[prop.name]
+                                        : selectedPropSet.overrides[prop.name]
+                                }
+                                onChange={this.handleChange}
+                                />
+                        ))}
+                    </div>
+                )}
             </div>
         );
     }
@@ -88,7 +103,7 @@ export const Inspector = connect((state: State) => {
     const currentlyRenderedPrototype = selectors.prototypes.currentlyRendered(state);
 
     return {
-        ...currentlyRenderedPrototype,
+        prototypeDetails: currentlyRenderedPrototype,
         overriddenProps: selectors.prototypes.overriddenProps(state),
         selectedPropSet: selectors.prototypes.selectedPropSet(state)
     };
