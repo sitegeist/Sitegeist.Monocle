@@ -129,7 +129,23 @@ final class PropValue implements \JsonSerializable
      */
     public function isNumber(): bool
     {
-        return is_int($this->value) || is_float($this->value);
+        return $this->isInteger() || $this->isFloat();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInteger(): bool
+    {
+        return is_int($this->value);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFloat(): bool
+    {
+        return is_float($this->value);
     }
 
     /**

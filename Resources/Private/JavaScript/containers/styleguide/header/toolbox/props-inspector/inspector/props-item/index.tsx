@@ -14,26 +14,62 @@ interface PropsItemProps {
         value: any
         editor: {
             identifier: string
-            options: any
+            options: {
+                castValueTo?: string
+            } | any
         }
     }
-    overriddenValue: any
     onChange: (name: string, value: any) => void
 }
 
-export class PropsItem extends PureComponent<PropsItemProps> {
-    handleChange = (value: any) => {
+interface PropsItemState {
+    initialValue: string
+    value: string
+}
+
+export class PropsItem extends PureComponent<PropsItemProps, PropsItemState> {
+    state = {
+        initialValue: '',
+        value: ''
+    };
+
+    static getDerivedStateFromProps(props: PropsItemProps, state: PropsItemState): PropsItemState {
+        if (state.initialValue !== props.prop.value) {
+            return {
+                ...state,
+                initialValue: props.prop.value,
+                value: props.prop.value
+            };
+        }
+
+        return state;
+    }
+
+    castToFinalValueType(value: string) {
+        const { prop } = this.props;
+
+        switch (prop.editor.options.castValueTo) {
+            case 'integer':
+                return parseInt(value, 10);
+            case 'float':
+                return parseFloat(value);
+            default:
+                return value;
+        }
+    }
+
+    handleChange = (value: string) => {
         const { onChange, prop } = this.props;
 
         if (onChange) {
-            onChange(prop.name, value);
+            onChange(prop.name, this.castToFinalValueType(value));
+            this.setState({ value });
         }
     };
 
     renderEditor = () => {
-        const { prop, overriddenValue } = this.props;
-        const value = overriddenValue !== undefined ?
-            overriddenValue : prop.value;
+        const { prop } = this.props;
+        const { value } = this.state;
 
         switch (prop.editor.identifier) {
             case 'Sitegeist.Monocle/Props/Editors/Checkbox':

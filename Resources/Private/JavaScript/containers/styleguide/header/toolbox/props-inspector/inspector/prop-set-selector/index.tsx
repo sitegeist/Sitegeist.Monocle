@@ -3,7 +3,6 @@ import { PureComponent } from "react";
 
 import Button from "@neos-project/react-ui-components/lib-esm/Button";
 import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
-import DropDown from "@neos-project/react-ui-components/lib-esm/DropDown";
 
 import { PropSetList } from "./prop-set-list";
 
