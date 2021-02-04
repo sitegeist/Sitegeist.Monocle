@@ -78,6 +78,6 @@ final class EditorOptions implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return $this->value;
+        return $this->value ?: new \stdClass;
     }
 }
