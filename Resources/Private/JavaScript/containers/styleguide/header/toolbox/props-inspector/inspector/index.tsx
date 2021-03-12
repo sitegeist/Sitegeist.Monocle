@@ -52,7 +52,7 @@ class InspectorC extends PureComponent<InspectorProps> {
     };
 
     render() {
-        const {prototypeDetails, overriddenProps, selectedPropSet, isVisible} = this.props;
+        const {prototypeDetails, selectedPropSet, isVisible} = this.props;
         if (!prototypeDetails) {
             return null;
         }
@@ -84,11 +84,6 @@ class InspectorC extends PureComponent<InspectorProps> {
                             <PropsItem
                                 key={prop.name}
                                 prop={prop}
-                                overriddenValue={
-                                    overriddenProps[prop.name] !== undefined
-                                        ? overriddenProps[prop.name]
-                                        : selectedPropSet.overrides[prop.name]
-                                }
                                 onChange={this.handleChange}
                                 />
                         ))}

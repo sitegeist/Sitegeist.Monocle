@@ -71,7 +71,7 @@ final class EditorFactory
             case $propValue->isBoolean():
                 return $this->checkBox();
             case $propValue->isNumber():
-                return $this->text();
+                return $this->number('float');
             case $propValue->isString():
                 if ($propValue->getLength() <= 80) {
                     return $this->text();
@@ -173,6 +173,29 @@ final class EditorFactory
                 'Sitegeist.Monocle/Props/Editors/TextArea'
             ),
             EditorOptions::empty()
+        );
+    }
+
+    /**
+     * Provides a Number editor
+     *
+     * @return EditorInterface
+     */
+    public function number(string $numberType): EditorInterface
+    {
+        if (!in_array($numberType, ['integer', 'float'])) {
+            throw new \UnexpectedValueException(
+                '$numberType must be either "integer" or "float".'
+            );
+        }
+
+        return new Editor(
+            EditorIdentifier::fromString(
+                'Sitegeist.Monocle/Props/Editors/Text'
+            ),
+            EditorOptions::fromArray([
+                'castValueTo' => $numberType
+            ])
         );
     }
 

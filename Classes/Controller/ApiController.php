@@ -104,6 +104,8 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
+        $this->response->setHeader('Content-Type', 'application/json');
+
         $prototype = $this->prototypeRepository
             ->findOneByPrototypeNameInSitePackage(
                 $prototypeName,
@@ -112,7 +114,7 @@ class ApiController extends ActionController
         $prototypeDetails = $this->prototypeDetailsFactory
             ->forPrototype($prototype);
 
-        $this->view->assign('value', $prototypeDetails);
+        return json_encode($prototypeDetails);
     }
 
     /**
