@@ -104,7 +104,7 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction($sitePackageKey, $prototypeName)
     {
-        $this->response->setHeader('Content-Type', 'application/json');
+        $this->response->setContentType('application/json');
 
         $prototype = $this->prototypeRepository
             ->findOneByPrototypeNameInSitePackage(
