@@ -5,6 +5,7 @@ prototype(Sitegeist.Monocle:Preview.Cli) < prototype(Neos.Fusion:Value) {
     value = Sitegeist.Monocle:Preview.Prototype {
         sitePackageKey = ${sitePackageKey}
         prototypeName = ${prototypeName}
+        useCase = ${useCase}
         propSet = ${propSet}
         props = ${props}
         locales = ${locales}

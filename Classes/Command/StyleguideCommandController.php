@@ -75,13 +75,14 @@ class StyleguideCommandController extends CommandController
      * Render a given fusion component to HTML
      *
      * @param string $prototypeName The prototype name of the component
-     * @param string $packageKey site-package (defaults to first found)
-     * @param string $propSet The propSet used for the preview
-     * @param string $props Custom props for the preview
-     * @param string $locales Custom locales for the preview
+     * @param string|null $packageKey site-package (defaults to first found)
+     * @param string|null $useCase The useCase for the preview
+     * @param string|null $propSet The propSet used for the preview
+     * @param string|null  $props Custom props for the preview
+     * @param string|null $locales Custom locales for the preview
      * @return void
      */
-    public function renderCommand($prototypeName, $packageKey = null, $propSet = '__default', $props = '', $locales = '')
+    public function renderCommand($prototypeName, $packageKey = null, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
     {
         $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
         $convertedProps = json_decode($props, true) ?? [];
@@ -98,9 +99,18 @@ class StyleguideCommandController extends CommandController
         $fusionView->setPackageKey($sitePackageKey);
         $fusionView->setFusionPath($fusionRootPath);
 
+        if ($useCase == '__default') {
+            $useCase = null;
+        }
+
+        if ($propSet == '__default') {
+            $propSet = null;
+        }
+
         $fusionView->assignMultiple([
             'sitePackageKey' => $packageKey,
             'prototypeName' => $prototypeName,
+            'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $convertedProps,
             'locales' => $convertedLocales

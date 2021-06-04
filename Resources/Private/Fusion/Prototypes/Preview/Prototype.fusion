@@ -3,52 +3,78 @@
 #
 prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component){
     prototypeName = null
-    props = Neos.Fusion:RawArray
+    useCase = null
     propSet = null
+    props = Neos.Fusion:DataStructure
 
-    renderer = Neos.Fusion:Renderer {
-        type = ${props.prototypeName}
-        element {
-            @apply {
+    renderer = Neos.Fusion:Component {
 
-                defaultProps = Neos.Fusion:Case {
-                    directly {
-                        condition = Sitegeist.Monocle:CanRender {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
-                        }
-                        renderer = Neos.Fusion:Renderer {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
-                        }
-                    }
+        prototypeName = ${props.prototypeName}
 
-                    asRawArray {
-                        condition = true
-                        renderer = Neos.Fusion:Renderer {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props<Neos.Fusion:RawArray>'}
-                        }
-                    }
+        defaultProps = Neos.Fusion:Case {
+            directly {
+                condition = Sitegeist.Monocle:CanRender {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
                 }
-
-                selectedPropSet = Neos.Fusion:Case {
-                    @if.has = ${props.propSet}
-                    directly {
-                        condition = Sitegeist.Monocle:CanRender {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
-                        }
-                        renderer = Neos.Fusion:Renderer {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
-                        }
-                    }
-
-                    asRawArray {
-                        condition = true
-                        renderer = Neos.Fusion:Renderer {
-                            renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet + '<Neos.Fusion:RawArray>'}
-                        }
-                    }
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
                 }
+            }
 
-                props = ${props.props}
+            asRawArray {
+                condition = true
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props<Neos.Fusion:DataStructure>'}
+                }
+            }
+        }
+
+        propsFromUseCase = Neos.Fusion:Case {
+            @if.hasUseCase = ${props.useCase}
+            directly {
+                condition = Sitegeist.Monocle:CanRender {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/useCases/' + props.useCase + '/props'}
+                }
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/useCases/' + props.useCase + '/props'}
+                }
+            }
+
+            asRawArray {
+                condition = true
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/useCases/' + props.useCase + '/props<Neos.Fusion:DataStructure>'}
+                }
+            }
+        }
+
+        propsFromPropSet = Neos.Fusion:Case {
+            @if.has = ${props.propSet}
+            directly {
+                condition = Sitegeist.Monocle:CanRender {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
+                }
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
+                }
+            }
+
+            asRawArray {
+                condition = true
+                renderer = Neos.Fusion:Renderer {
+                    renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet + '<Neos.Fusion:DataStructure>'}
+                }
+            }
+        }
+
+        renderer = Neos.Fusion:Renderer {
+            type = ${props.prototypeName}
+            element {
+                @apply {
+                    defaultPropsOrUseCaseProps = ${props.propsFromUseCase || props.defaultProps}
+                    propsFromPropSet = ${props.propsFromPropSet}
+                    props = ${props.props}
+                }
             }
         }
     }

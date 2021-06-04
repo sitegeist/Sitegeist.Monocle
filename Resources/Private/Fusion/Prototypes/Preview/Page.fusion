@@ -21,7 +21,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
     }
 
     # The content of the head tag, integrators can add their own head content in this array.
-    head = Neos.Fusion:Array {
+    head = Neos.Fusion:Join {
         @position = 'after headTag'
 
         characterSetMetaTag = Neos.Fusion:Tag {
@@ -38,10 +38,10 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
         }
 
         # Link tags for stylesheets in the head should go here
-        stylesheets = Neos.Fusion:Array
+        stylesheets = Neos.Fusion:Join
 
         # Script includes in the head should go here
-        javascripts = Neos.Fusion:Array {
+        javascripts = Neos.Fusion:Join {
             @position = 'after stylesheets'
         }
     }
@@ -58,7 +58,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
 
 
     # Content of the body tag. To be defined by the integrator.
-    body = Neos.Fusion:Array {
+    body = Neos.Fusion:Join {
         @position = 'after bodyTag'
 
         preview = Sitegeist.Monocle:Preview.Prototype {
@@ -67,8 +67,20 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
             propSet = ${propSet}
             props = ${props}
             locales = ${locales}
+            useCase = ${useCase}
 
             @process.applyContainer = Neos.Fusion:Case {
+                hasUseCaseContainer {
+                    condition = Sitegeist.Monocle:CanRender {
+                        @if.has = ${useCase}
+                        renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/useCases/' + useCase + '/container'}
+                    }
+                    renderer = Neos.Fusion:Renderer {
+                        renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/useCases/' + useCase + '/container'}
+                        element.content = ${value}
+                    }
+                }
+
                 hasStyleguideContainer {
                     condition = Sitegeist.Monocle:CanRender {
                         renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/container'}
@@ -78,6 +90,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
                         element.content = ${value}
                     }
                 }
+
                 noContainer {
                     condition = true
                     renderer = ${value}
