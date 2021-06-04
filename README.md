@@ -99,7 +99,7 @@ presentational-components vs. container-components in the ReactJS world.
 ### Preview Containers
 
 Often components have to be rendered in the styleguide inside another component. In this case a `container`
-can be defined in the styleguide annotation. The container is the applied as processor to the uppermost prototype.
+can be defined in the styleguide annotation. The container is applied as a processor to the uppermost prototype.
 
 ```
 prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
