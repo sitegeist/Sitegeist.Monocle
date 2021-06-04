@@ -124,8 +124,8 @@ prototype(Vendor.Site:ExampleContainer) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-*Please note that containers are only rendered for the uppermost prototype that is rendered in the styleguide. For all other
-prototype only the renderer is evaluated. This also applies to prototypes rendered by `Sitegeist.Monocle:Preview.Prototype`.*
+*When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements 
+the container will be omitted. This also applies to prototypes rendered by `Sitegeist.Monocle:Preview.Prototype`.*
 
 ### Preview Configuration
 
