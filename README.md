@@ -96,6 +96,37 @@ therefore highly reusable.
 The distinction between rendering- and mapping-prototypes can be compared to
 presentational-components vs. container-components in the ReactJS world.
 
+### Preview Containers
+
+Often components have to be rendered in the styleguide inside another component. In this case a `container`
+can be defined in the styleguide annotation. The container is applied as a processor to the uppermost prototype.
+
+```
+prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        container = Vendor.Site:ExampleContainer
+    }
+
+    renderer = afx`
+        <h1>Hello World</h1>
+    `
+}
+```
+
+The `container` prototype has to accept the prop `content` that will contain the rendered prototype.
+
+```
+prototype(Vendor.Site:ExampleContainer) < prototype(Neos.Fusion:Component) {
+    content = null
+    renderer = afx`
+        <div class="container">{props.content}</div>
+    `
+}
+```
+
+*When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements 
+the container will be omitted. This also applies to prototypes rendered by `Sitegeist.Monocle:Preview.Prototype`.*
+
 ### Preview Configuration
 
 Some configuration is available to configure the preview.
