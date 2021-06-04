@@ -67,6 +67,22 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
             propSet = ${propSet}
             props = ${props}
             locales = ${locales}
+
+            @process.applyContainer = Neos.Fusion:Case {
+                hasStyleguideContainer {
+                    condition = Sitegeist.Monocle:CanRender {
+                        renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/container'}
+                    }
+                    renderer = Neos.Fusion:Renderer {
+                        renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/container'}
+                        element.content = ${value}
+                    }
+                }
+                noContainer {
+                    condition = true
+                    renderer = ${value}
+                }
+            }
         }
     }
 
