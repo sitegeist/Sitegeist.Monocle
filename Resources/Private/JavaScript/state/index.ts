@@ -94,6 +94,7 @@ export interface State {
             readonly [key: string]: any
         }
         readonly selectedPropSet: null | string
+        readonly selectedUseCase: null | string
         readonly currentlySelected: null | string
         readonly currentlyRendered: null | {
             readonly prototypeName: string
@@ -109,6 +110,9 @@ export interface State {
                         readonly propSets: {
                             readonly [key: string]: any
                         }
+                        readonly useCases: {
+                            readonly [key: string]: any
+                        }
                     }
                 }
             }
@@ -121,6 +125,10 @@ export interface State {
                 }
             }[]
             readonly propSets: {
+                readonly name: string
+                readonly overrides: Record<string, any>
+            }[]
+            readonly useCases: {
                 readonly name: string
                 readonly overrides: Record<string, any>
             }[]

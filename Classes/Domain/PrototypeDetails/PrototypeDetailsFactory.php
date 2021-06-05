@@ -17,6 +17,8 @@ use Neos\Flow\Annotations as Flow;
 use Sitegeist\Monocle\Domain\Fusion\Prototype;
 use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactoryInterface;
 use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
+use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCase;
+use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCaseCollection;
 use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Symfony\Component\Yaml\Yaml;
 
@@ -60,7 +62,8 @@ final class PrototypeDetailsFactory
                 ->fromPrototypeForPrototypeDetails($prototype),
             $this->propsCollectionFactory
                 ->fromPrototypeForPrototypeDetails($prototype),
-            PropSetCollection::fromPrototype($prototype)
+            PropSetCollection::fromPrototype($prototype),
+            UseCaseCollection::fromPrototype($prototype)
         );
     }
 }

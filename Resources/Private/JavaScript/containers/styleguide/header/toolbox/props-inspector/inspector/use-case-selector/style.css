@@ -1,0 +1,22 @@
+.selector {
+    width: 100%;
+    display: flex;
+    border: 1px solid var(--brandColorsContrastDark);
+    justify-content: space-between;
+    align-items: center;
+}
+.container {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+
+    label {
+        display: block;
+        margin-bottom: .6rem;
+    }
+}
+.icon {
+    margin-left: .6em;
+    width: 1em;
+    height: 1em;
+}

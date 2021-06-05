@@ -20,6 +20,7 @@ export function reducer(state: State, action: Action): State {
                 draft.prototypes.byName = {};
                 draft.prototypes.overriddenProps = {};
                 draft.prototypes.selectedPropSet = '';
+                draft.prototypes.selectedUseCase = '';
                 break;
             }
 
@@ -34,6 +35,7 @@ export function reducer(state: State, action: Action): State {
                 draft.prototypes.currentlySelected = action.payload;
                 draft.prototypes.overriddenProps = {};
                 draft.prototypes.selectedPropSet = '';
+                draft.prototypes.selectedUseCase = '';
                 break;
             }
 
@@ -66,6 +68,12 @@ export function reducer(state: State, action: Action): State {
 
             case getType(actions.selectPropSet): {
                 draft.prototypes.selectedPropSet = action.payload;
+                draft.prototypes.overriddenProps = {};
+                break;
+            }
+
+            case getType(actions.selectUseCase): {
+                draft.prototypes.selectedUseCase = action.payload;
                 draft.prototypes.overriddenProps = {};
                 break;
             }

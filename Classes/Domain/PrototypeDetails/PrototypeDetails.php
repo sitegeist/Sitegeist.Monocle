@@ -17,6 +17,7 @@ use Neos\Flow\Annotations as Flow;
 use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionInterface;
 use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
+use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCaseCollection;
 
 /**
  * @Flow\Proxy(false)
@@ -59,6 +60,11 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     private $propSets;
 
     /**
+     * @var UseCaseCollection
+     */
+    private $useCases;
+
+    /**
      * @param PrototypeName $prototypeName
      * @param RenderedCode $renderedCode
      * @param ParsedCode $parsedCode
@@ -66,6 +72,7 @@ final class PrototypeDetails implements PrototypeDetailsInterface
      * @param Anatomy $anatomy
      * @param PropsCollectionInterface $props
      * @param PropSetCollection $propSets
+     * @param UseCaseCollection $useCases
      */
     public function __construct(
         PrototypeName $prototypeName,
@@ -74,7 +81,8 @@ final class PrototypeDetails implements PrototypeDetailsInterface
         FusionPrototypeAst $fusionAst,
         Anatomy $anatomy,
         PropsCollectionInterface $props,
-        PropSetCollection $propSets
+        PropSetCollection $propSets,
+        UseCaseCollection $useCases
     ) {
         $this->prototypeName = $prototypeName;
         $this->renderedCode = $renderedCode;
@@ -83,6 +91,7 @@ final class PrototypeDetails implements PrototypeDetailsInterface
         $this->anatomy = $anatomy;
         $this->props = $props;
         $this->propSets = $propSets;
+        $this->useCases = $useCases;
     }
 
     /**
@@ -142,6 +151,14 @@ final class PrototypeDetails implements PrototypeDetailsInterface
     }
 
     /**
+     * @return UseCaseCollection
+     */
+    public function getUseCases(): UseCaseCollection
+    {
+        return $this->useCases;
+    }
+
+    /**
      * @return array<mixed>
      */
     public function jsonSerialize()
@@ -153,7 +170,8 @@ final class PrototypeDetails implements PrototypeDetailsInterface
             'fusionAst' => $this->fusionAst,
             'anatomy' => $this->anatomy,
             'props' => $this->props,
-            'propSets' => $this->propSets
+            'propSets' => $this->propSets,
+            'useCases' => $this->useCases
         ];
     }
 }

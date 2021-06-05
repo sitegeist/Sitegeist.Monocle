@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import {actions, selectors, State} from "../../../../../../state";
 
+import { UseCaseSelector } from "./use-case-selector";
 import { PropSetSelector } from "./prop-set-selector";
 import { PropsItem } from "./props-item";
 
@@ -25,6 +26,11 @@ interface InspectorProps {
             name: string
             overrides: Record<string, any>
         }[]
+        useCases: {
+            name: string
+            title: string
+            overrides: Record<string, any>
+        }[]
     }
     overriddenProps: {
         [key: string]: any
@@ -33,8 +39,13 @@ interface InspectorProps {
         name: string
         overrides: Record<string, any>
     }
+    selectedUseCase: {
+        name: string
+        overrides: Record<string, any>
+    }
     isVisible: boolean
     selectPropSet: (propSetName: string) => void
+    selectUseCase: (useCaseName: string) => void
     overrideProp: (name: string, value: any) => void
 }
 
@@ -45,6 +56,12 @@ class InspectorC extends PureComponent<InspectorProps> {
         selectPropSet(propSetName);
     };
 
+    handleSelectUseCase = (useCaseName: string) => {
+        const { selectUseCase } = this.props;
+
+        selectUseCase(useCaseName);
+    };
+
     handleChange = (name: string, value: any) => {
         const { overrideProp } = this.props;
 
@@ -52,7 +69,7 @@ class InspectorC extends PureComponent<InspectorProps> {
     };
 
     render() {
-        const {prototypeDetails, selectedPropSet, isVisible} = this.props;
+        const {prototypeDetails, selectedPropSet, selectedUseCase, isVisible} = this.props;
         if (!prototypeDetails) {
             return null;
         }
@@ -64,6 +81,20 @@ class InspectorC extends PureComponent<InspectorProps> {
                     [style.isVisible]: isVisible
                 })}
                 >
+                {Boolean(prototypeDetails.useCases.length) && (
+                    <div className={style.container}>
+                        <UseCaseSelector
+                            enable={Boolean(prototypeDetails.useCases.length)}
+                            label={
+                                selectedUseCase.name === '__default'
+                                    ? 'Default'
+                                    : selectedUseCase.name
+                            }
+                            useCases={prototypeDetails.useCases}
+                            onSelectUseCase={this.handleSelectUseCase}
+                            />
+                    </div>
+                )}
                 {Boolean(prototypeDetails.propSets.length) && (
                     <div className={style.container}>
                         <PropSetSelector
@@ -100,9 +131,11 @@ export const Inspector = connect((state: State) => {
     return {
         prototypeDetails: currentlyRenderedPrototype,
         overriddenProps: selectors.prototypes.overriddenProps(state),
-        selectedPropSet: selectors.prototypes.selectedPropSet(state)
+        selectedPropSet: selectors.prototypes.selectedPropSet(state),
+        selectedUseCase: selectors.prototypes.selectedUseCase(state)
     };
 }, {
     overrideProp: actions.prototypes.overrideProp,
-    selectPropSet: actions.prototypes.selectPropSet
+    selectPropSet: actions.prototypes.selectPropSet,
+    selectUseCase: actions.prototypes.selectUseCase
 })(InspectorC)
