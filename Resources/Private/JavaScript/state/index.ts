@@ -130,6 +130,7 @@ export interface State {
             }[]
             readonly useCases: {
                 readonly name: string
+                readonly title: string
                 readonly overrides: Record<string, any>
             }[]
         }
