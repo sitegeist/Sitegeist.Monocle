@@ -49,7 +49,8 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
         }
 
         propsFromPropSet = Neos.Fusion:Case {
-            @if.has = ${props.propSet}
+            @if.hasProSet = ${props.propSet}
+            @if.hasNoUseCase = ${!props.useCase}
             directly {
                 condition = Sitegeist.Monocle:CanRender {
                     renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
