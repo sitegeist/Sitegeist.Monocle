@@ -49,7 +49,7 @@ final class UseCaseCollection implements \JsonSerializable
                 $useCaseName = UseCaseName::fromString((string)$useCaseNameAsString);
                 $useCaseTitle = UseCaseTitle::fromString((string)($useCaseAst['title'] ?? $useCaseNameAsString));
                 $values = $prototype->evaluate(sprintf(
-                    '/__meta/styleguide/useCases/props/%s<Neos.Fusion:DataStructure>',
+                    '/__meta/styleguide/useCases/%s/props<Neos.Fusion:DataStructure>',
                     $useCaseName
                 ));
                 $overrides = [];

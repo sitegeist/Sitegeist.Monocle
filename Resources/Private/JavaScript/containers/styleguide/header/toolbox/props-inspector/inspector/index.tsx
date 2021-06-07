@@ -96,7 +96,7 @@ class InspectorC extends PureComponent<InspectorProps> {
                             />
                     </div>
                 )}
-                {Boolean(prototypeDetails.propSets.length) && (
+                {(Boolean(prototypeDetails.propSets.length) && !prototypeDetails.useCases.length) && (
                     <div className={style.container}>
                         <PropSetSelector
                             enable={Boolean(prototypeDetails.propSets.length)}
