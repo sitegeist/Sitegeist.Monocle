@@ -67,6 +67,7 @@ export const setCurrentlyRendered = createAction(
         }[]
         useCases: {
             name: string
+            title: string
             overrides: Record<string, any>
         }[]
     }) => currentlyRenderedPrototype

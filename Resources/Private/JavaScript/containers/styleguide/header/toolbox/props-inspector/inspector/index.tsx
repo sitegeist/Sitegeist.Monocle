@@ -41,6 +41,7 @@ interface InspectorProps {
     }
     selectedUseCase: {
         name: string
+        title: string
         overrides: Record<string, any>
     }
     isVisible: boolean
@@ -88,7 +89,7 @@ class InspectorC extends PureComponent<InspectorProps> {
                             label={
                                 selectedUseCase.name === '__default'
                                     ? 'Default'
-                                    : selectedUseCase.name
+                                    : selectedUseCase.title
                             }
                             useCases={prototypeDetails.useCases}
                             onSelectUseCase={this.handleSelectUseCase}

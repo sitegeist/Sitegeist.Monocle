@@ -50,5 +50,5 @@ export const selectedUseCase = createSelector(
     ],
     (useCaseName, prototypeDetails) => prototypeDetails?.useCases.find(
         useCase => useCase.name === useCaseName
-    ) ?? { name: '__default', overrides: {} }
+    ) ?? { name: '__default', title: 'Default', overrides: {} }
 );
