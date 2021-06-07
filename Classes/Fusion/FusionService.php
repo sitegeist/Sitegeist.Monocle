@@ -83,7 +83,10 @@ class FusionService extends NeosFusionService
                     if (array_key_exists('useCases', $styleguideConfiguration)) {
                         $useCases = [];
                         foreach ($styleguideConfiguration['useCases'] as $key => $config) {
-                            $useCases[(string)$key] = (is_array($config) && isset($config['title'])) ? (string)$config['title'] : (string)$key;
+                            $useCases[] = [
+                                "title" => (is_array($config) && isset($config['title'])) ? (string)$config['title'] : (string)$key,
+                                "name" => (string)$key
+                            ];
                         }
                     }
                     $styleguideObjects[$prototypeFullName] = [
