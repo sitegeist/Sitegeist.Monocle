@@ -149,10 +149,11 @@ export const previewUri = createSelector(
         prototypes.selectors.currentlyRendered,
         prototypes.selectors.overriddenProps,
         prototypes.selectors.selectedPropSet,
+        prototypes.selectors.selectedUseCase,
         locales.selectors.current,
         sites.selectors.currentlySelectedSitePackageKey
     ],
-    (endpoint, renderedPrototype, props, propSet, locales, sitePackageKey) => {
+    (endpoint, renderedPrototype, props, propSet, useCase, locales, sitePackageKey) => {
         if (!renderedPrototype) {
             return null;
         }
@@ -163,6 +164,7 @@ export const previewUri = createSelector(
             queryParams: {
                 prototypeName,
                 propSet: propSet.name,
+                useCase: useCase.name,
                 sitePackageKey,
                 locales,
                 props: JSON.stringify(props)

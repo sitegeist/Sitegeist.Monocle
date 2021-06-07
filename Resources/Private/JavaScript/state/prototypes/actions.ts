@@ -47,6 +47,9 @@ export const setCurrentlyRendered = createAction(
                     propSets: {
                         [key: string]: any
                     }
+                    useCases: {
+                        [key: string]: any
+                    }
                 }
             }
         }
@@ -60,6 +63,11 @@ export const setCurrentlyRendered = createAction(
         }[]
         propSets: {
             name: string
+            overrides: Record<string, any>
+        }[]
+        useCases: {
+            name: string
+            title: string
             overrides: Record<string, any>
         }[]
     }) => currentlyRenderedPrototype
@@ -90,5 +98,10 @@ export const overrideProp = createAction(
 
 export const selectPropSet = createAction(
     '@sitegeist/monocle/prototypes/selectPropSet',
+    (name: string) => name
+)();
+
+export const selectUseCase = createAction(
+    '@sitegeist/monocle/prototypes/selectUseCase',
     (name: string) => name
 )();

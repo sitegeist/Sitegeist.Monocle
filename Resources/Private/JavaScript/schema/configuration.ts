@@ -31,6 +31,7 @@ const styleguideObjectSchema = z.object({
     description: z.string(),
     options: z.any().optional().or(z.null()),
     propSets: z.array(z.any()).optional().or(z.null()),
+    useCases: z.array(z.any()).optional().or(z.null()),
     structure: z.object({
         position: z.number().optional(),
         match: z.string().optional(),

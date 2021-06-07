@@ -29,7 +29,8 @@ export function createStore(env: Environment) {
             currentHtml: '',
             currentlyRendered: null,
             currentlySelected: null,
-            selectedPropSet: null
+            selectedPropSet: null,
+            selectedUseCase: null
         },
         navigation: {
             currentIndex: -1,

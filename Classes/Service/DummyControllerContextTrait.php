@@ -24,26 +24,20 @@ trait DummyControllerContextTrait
      */
     protected function createDummyControllerContext()
     {
-        $httpResponseFactory = new ResponseFactory();
         $actionRequestFactory = new ActionRequestFactory();
         $serverRequestFactory = new ServerRequestFactory();
 
         /** @var ServerRequestInterface */
         $httpRequest = $serverRequestFactory->createServerRequest('GET', 'http://neos.io');
-        
+
         /** @var ActionRequest */
         $actionRequest = $actionRequestFactory->createActionRequest($httpRequest);
-        
-        /** @var ResponseInterface */
-        $httpResponse = $httpResponseFactory->createResponse();
-        $actionRespone = new ActionResponse();
-        $actionRespone->applyToHttpResponse($httpResponse);
+        $actionResponse = new ActionResponse();
 
         $arguments = new Arguments([]);
         $uriBuilder = new UriBuilder();
         $uriBuilder->setRequest($actionRequest);
-        
 
-        return new ControllerContext($actionRequest, $actionRespone, $arguments, $uriBuilder);
+        return new ControllerContext($actionRequest, $actionResponse, $arguments, $uriBuilder);
     }
 }

@@ -60,12 +60,13 @@ class PreviewController extends ActionController
     /**
      * @param  string $prototypeName
      * @param  string $sitePackageKey
-     * @param  string $propSet
-     * @param  string $props props as json encoded string
-     * @param  string $locales locales-fallback-chain as comma sepertated string
+     * @param  string|null $useCase
+     * @param  string|null  $propSet
+     * @param  string|null  $props props as json encoded string
+     * @param  string|null  $locales locales-fallback-chain as comma sepertated string
      * @return void
      */
-    public function indexAction($prototypeName, $sitePackageKey, $propSet = '__default', $props = '', $locales = '')
+    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
     {
         $renderProps = [];
 
@@ -74,6 +75,14 @@ class PreviewController extends ActionController
             if (is_array($data)) {
                 $renderProps = $data;
             }
+        }
+
+        if ($useCase == '__default') {
+            $useCase = null;
+        }
+
+        if ($propSet == '__default') {
+            $propSet = null;
         }
 
         if ($locales) {
@@ -92,6 +101,7 @@ class PreviewController extends ActionController
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
+            'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $renderProps,
             'locales' => $renderLocales

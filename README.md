@@ -52,10 +52,13 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component)
         props {
             content = 'Hello World'
         }
-        propSets {
-            headline-2 {
-                tagName = 'h2'
-                content = 'Alternate styleguide content for h2'
+        useCases {
+            h2 {
+                title = "My Custom Prototype as Headline 2"
+                props {
+                    tagName = 'h2'
+                    content = 'Alternate styleguide content for h2'
+                }
             }
         }
     }
@@ -124,8 +127,65 @@ prototype(Vendor.Site:ExampleContainer) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-*When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements 
+*When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements
 the container will be omitted. This also applies to prototypes rendered by `Sitegeist.Monocle:Preview.Prototype`.*
+
+### Use Cases
+
+The `useCases` section of the styleguide annotation allows to configure scenarios the component shall be previewed in.
+If a useCase defines `props` or `container` those are will override the styleguide settings for this component. The `title`
+is optional and will fallback to the key the useCase is defined in.
+
+```
+prototype(Vendor.Site:Example.Component) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Example"
+
+        container = Vendor.Site:Example.Container
+        props {
+            title = 'Hello world!'
+        }
+
+        useCases {
+            case1 {
+                title = "Use case with varying props"
+                props {
+                    title = Hello special world!'
+                }
+            }
+            case2 {
+                title = "Use case with another container"
+                container = Vendor.Site:Example.AnotherContainer
+            }
+        }
+```
+
+### Prop Sets !!!deprecated!!!
+
+!!! PropSets are deprecated and should not be mixed with UseCases. Monocle will not show the PropSet selector for components
+that have useCases and the API endpoint will ignore propSets once a useCase is selected. The PropSet Feature will be
+removed in one of the next major versions once if causes extra effort to the monocle maintenance !!!
+
+PropSets allow to specify additional values for props that are merged into the main styleguide props of a component to
+allow to simulate wider range of scenarios a component may be used.
+
+```
+prototype(Vendor.Site:Example.Component) < prototype(Neos.Fusion:Component) {
+
+    @styleguide {
+        title = "Example"
+        props {
+            title = 'Hello world!'
+        }
+        propSets {
+            longTitle {
+                title = 'A very long title for testing ... because reasons'
+            }
+        }
+    }
+}
+```
 
 ### Preview Configuration
 

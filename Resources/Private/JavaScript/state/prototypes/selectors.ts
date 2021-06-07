@@ -42,3 +42,13 @@ export const selectedPropSet = createSelector(
         propSet => propSet.name === propSetName
     ) ?? { name: '__default', overrides: {} }
 );
+
+export const selectedUseCase = createSelector(
+    [
+        (state: State) => state.prototypes.selectedUseCase,
+        currentlyRendered
+    ],
+    (useCaseName, prototypeDetails) => prototypeDetails?.useCases.find(
+        useCase => useCase.name === useCaseName
+    ) ?? { name: '__default', title: 'Default', overrides: {} }
+);
