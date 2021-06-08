@@ -5,6 +5,7 @@ import { LocaleSelector } from './locale-selector';
 import { PropsInspector } from './props-inspector';
 import { ReloadTrigger } from './reload-trigger';
 import { QrCodeTrigger } from './qrcode-trigger';
+import { GridTrigger } from './grid-trigger';
 import { FullscreenToggler } from './fullscreen-toggler';
 
 import style from './style.css';
@@ -15,6 +16,7 @@ export function Toolbox() {
             <LocaleSelector/>
             <BreakpointSelector/>
             <PropsInspector/>
+            <GridTrigger/>
             <ReloadTrigger/>
             <QrCodeTrigger/>
             <FullscreenToggler/>

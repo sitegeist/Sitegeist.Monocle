@@ -40,6 +40,9 @@ export function createStore(env: Environment) {
         propsInspector: {
             isOpen: false
         },
+        gridPreview: {
+            isVisible: false
+        },
         qrCode: {
             isVisible: false
         },
