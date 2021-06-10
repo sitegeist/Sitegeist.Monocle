@@ -18,6 +18,12 @@ trait PackageKeyTrait
     protected $packageManager;
 
     /**
+     * @Flow\InjectConfiguration("packages")
+     * @var mixed[]
+     */
+    protected $packageConfigurations;
+
+    /**
      * Determine the default site package key
      *
      * @return string
@@ -30,16 +36,17 @@ trait PackageKeyTrait
 
     /**
      * Get a list of all active site package keys
-     * @return array
+     * @return string[]
      */
-    protected function getActiveSitePackageKeys()
+    protected function getActiveSitePackageKeys(): array
     {
         $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
-        $result = [];
+        $sitePackageKeys = [];
         foreach ($sitePackages as $sitePackage) {
             $packageKey = $sitePackage->getPackageKey();
-            $result[] = $packageKey;
+            $sitePackageKeys[] = $packageKey;
         }
-        return $result;
+        $configuredPackageKeys = $this->packageConfigurations ? array_keys($this->packageConfigurations) : [];
+        return array_unique(array_merge($sitePackageKeys, $configuredPackageKeys));
     }
 }

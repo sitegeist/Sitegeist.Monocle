@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Fusion;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Package\PackageManager;
 use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
 
 /**
@@ -29,6 +30,12 @@ class FusionService extends NeosFusionService
      * @var array
      */
     protected $autoIncludeConfiguration = array();
+
+    /**
+     * @Flow\Inject
+     * @var PackageManager
+     */
+    protected $packageManager;
 
     /**
      * Returns a merged fusion object tree in the context of the given site-package
@@ -53,15 +60,22 @@ class FusionService extends NeosFusionService
     public function getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey)
     {
         $siteRootFusionPathAndFilename = sprintf($this->siteRootFusionPattern, $siteResourcesPackageKey);
+        $package = $this->packageManager->getPackage($siteResourcesPackageKey);
 
-        $mergedFusionCode = '';
-        $mergedFusionCode .= $this->generateNodeTypeDefinitions();
-        $mergedFusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
-        $mergedFusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
-        $mergedFusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
-        $mergedFusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
+        $fusionCode = '';
 
-        return $this->fusionParser->parse($mergedFusionCode, $siteRootFusionPathAndFilename);
+        if ($package->getComposerManifest('type') == 'neos-site') {
+            $fusionCode .= $this->generateNodeTypeDefinitions();
+            $fusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
+            $fusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
+            $fusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
+            $fusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
+        } else {
+            $fusionCode .= 'include: resource://Sitegeist.Monocle/Private/Fusion/Root.fusion' . PHP_EOL;
+            $fusionCode .= 'include: resource://' . $siteResourcesPackageKey . '/Private/Fusion/Root.fusion' . PHP_EOL;
+        }
+
+        return $this->fusionParser->parse($fusionCode, $siteRootFusionPathAndFilename);
     }
 
 
