@@ -68,6 +68,8 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
             }
         }
 
+        props = ${props.props}
+
         renderer = Neos.Fusion:Renderer {
             type = ${props.prototypeName}
             element {
