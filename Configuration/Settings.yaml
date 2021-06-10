@@ -11,6 +11,8 @@ Sitegeist:
     fusion:
       enableObjectTreeCache: true
 
+    defaultPackageKey: null
+
     packages: {  }
 
     ui:
