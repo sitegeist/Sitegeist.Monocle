@@ -2,6 +2,7 @@
 namespace Sitegeist\Monocle\Service;
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ObjectManagement\ObjectManager;
 use Neos\Flow\Package\PackageManager;
 use Neos\Flow\Package\PackageInterface;
 use Neos\Neos\Domain\Repository\DomainRepository;
@@ -20,9 +21,9 @@ trait PackageKeyTrait
 
     /**
      * @Flow\Inject
-     * @var Neos\Neos\Domain\Repository\DomainRepository
+     * @var ObjectManager
      */
-    protected $domainRepository;
+    protected $objectManager;
 
     /**
      * @Flow\InjectConfiguration("defaultPackageKey")
@@ -44,9 +45,12 @@ trait PackageKeyTrait
     protected function getDefaultSitePackageKey()
     {
         try {
-            $domain = $this->domainRepository->findOneByActiveRequest();
-            if ($domain && $domain->getSite()) {
-                return $domain->getSite()->getSiteResourcesPackageKey();
+            if ($this->objectManager->hasInstance('Neos\Neos\Domain\Repository\DomainRepository')) {
+                $domainRepository = $this->objectManager->getInstance('Neos\Neos\Domain\Repository\DomainRepository');
+                $domain = $domainRepository->findOneByActiveRequest();
+                if ($domain && $domain->getSite()) {
+                    return $domain->getSite()->getSiteResourcesPackageKey();
+                }
             }
         } catch (\Exception $e) {
             // ignore errors that may occur if no database is present

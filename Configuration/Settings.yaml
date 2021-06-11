@@ -87,31 +87,4 @@ Neos:
     mvc:
       routes:
         'Sitegeist.Monocle':
-          position: 'before Neos.Neos'
-    security:
-      authentication:
-        providers:
-          Neos.Neos:Backend:
-            requestPatterns:
-              'Sitegeist.Monocle:monocleControllers':
-                pattern: ControllerObjectName
-                patternOptions:
-                  controllerObjectNamePattern: 'Sitegeist\Monocle\Controller\.*'
-  Neos:
-    fusion:
-      autoInclude:
-        Sitegeist.Monocle: true
-
-    modules:
-      administration:
-        submodules:
-          monocle:
-            label: Monocle
-            controller: \Sitegeist\Monocle\Controller\StyleguideController
-            description: 'A styleguide for fusion prototypes and the idea of components'
-            icon: icon-magic
-            privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
-            additionalResources:
-              styleSheets:
-                module: 'resource://Sitegeist.Monocle/Public/Styles/Module.css'
-
+          position: "start"

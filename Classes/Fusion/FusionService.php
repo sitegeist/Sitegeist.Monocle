@@ -15,27 +15,34 @@ namespace Sitegeist\Monocle\Fusion;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\PackageManager;
-use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
+use Neos\Fusion\Core\Parser;
 
 /**
  * Class FusionService
  * @package Sitegeist\Monocle\Fusion
  */
-class FusionService extends NeosFusionService
+class FusionService
 {
     const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
-
-    /**
-     * @Flow\InjectConfiguration(path="fusion.autoInclude", package="Neos.Neos")
-     * @var array
-     */
-    protected $autoIncludeConfiguration = array();
 
     /**
      * @Flow\Inject
      * @var PackageManager
      */
     protected $packageManager;
+
+    /**
+     * @Flow\Inject
+     * @var Parser
+     */
+    protected $fusionParser;
+
+    /**
+     * Pattern used for determining the Fusion root file for a site
+     *
+     * @var string
+     */
+    protected $siteRootFusionPattern = 'resource://%s/Private/Fusion/Root.fusion';
 
     /**
      * Returns a merged fusion object tree in the context of the given site-package
@@ -65,11 +72,11 @@ class FusionService extends NeosFusionService
         $fusionCode = '';
 
         if ($package->getComposerManifest('type') == 'neos-site') {
-            $fusionCode .= $this->generateNodeTypeDefinitions();
-            $fusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
-            $fusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
-            $fusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
-            $fusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
+//            $fusionCode .= $this->generateNodeTypeDefinitions();
+//            $fusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
+//            $fusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
+//            $fusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
+//            $fusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
         } else {
             $fusionCode .= 'include: resource://Sitegeist.Monocle/Private/Fusion/Root.fusion' . PHP_EOL;
             $fusionCode .= 'include: resource://' . $siteResourcesPackageKey . '/Private/Fusion/Root.fusion' . PHP_EOL;
