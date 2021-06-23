@@ -352,7 +352,7 @@ Sitegeist:
 
 This allows for including prototypes of packages selectively.
 
-### Site-specific configuration
+### Package-specific configuration
 
 All configurations can be overwritten for each selected site package.
 
@@ -367,6 +367,19 @@ Sitegeist:
                 label: 'extra wide'
                 width: 1600
                 height: 1000
+```
+
+This packages configuration can also be used to configure non-site packages for previewing in the styleguide.
+
+When a prototyope of a non-site package is rendered Monocle will only load the Root.fusion of this specific package and the Monocle Root.fusion. Every other fusion including the default fusion has to be included
+explicitly. This mimics the behavior of the classic FusionView that is used for FusionRendering of Flow Controller Actions.
+
+```YAML
+Sitegeist:
+  Monocle:
+    packages:
+      #add a key to the package list without package specific configuration
+      'Vendor.Example': {}
 ```
 
 ### Fusion
@@ -384,19 +397,19 @@ prototype(Sitegeist.Monocle:Preview.Page) {
         metaViewport = '<meta name="viewport" content="width=device-width">'
 
         stylesheets.main =  Neos.Fusion:Tag {
-           tagName = 'link'
-           attributes.rel = 'stylesheet'
-           attributes.href = Neos.Fusion:ResourceUri {
-               path = 'resource://Vendor.Site/Public/Styles/main.css'
-           }
+            tagName = 'link'
+            attributes.rel = 'stylesheet'
+            attributes.href = Neos.Fusion:ResourceUri {
+                path = 'resource://Vendor.Site/Public/Styles/main.css'
+            }
         }
 
         javascripts.main = Neos.Fusion:Tag {
-           tagName = 'script'
-           attributes.src = Neos.Fusion:ResourceUri {
-               path = 'resource://Vendor.Site/Public/JavaScript/main.js'
-           }
-       }
+            tagName = 'script'
+            attributes.src = Neos.Fusion:ResourceUri {
+                path = 'resource://Vendor.Site/Public/JavaScript/main.js'
+            }
+        }
     }
 }
 ```
