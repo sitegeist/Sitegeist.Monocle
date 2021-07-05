@@ -64,12 +64,12 @@ class PreviewController extends ActionController
      * @param  string|null  $propSet
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
+     * @param  bool|null $showGrid
      * @return void
      */
-    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
+    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '', ?bool $showGrid = false)
     {
         $renderProps = [];
-
         if ($props) {
             $data = json_decode($props, true);
             if (is_array($data)) {
@@ -104,7 +104,8 @@ class PreviewController extends ActionController
             'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $renderProps,
-            'locales' => $renderLocales
+            'locales' => $renderLocales,
+            'showGrid' => $showGrid
         ]);
 
         // get the status and headers from the view

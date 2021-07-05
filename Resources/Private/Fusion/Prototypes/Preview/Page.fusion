@@ -57,9 +57,25 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
     }
 
 
+
     # Content of the body tag. To be defined by the integrator.
     body = Neos.Fusion:Join {
         @position = 'after bodyTag'
+
+        grid = Neos.Fusion:Component {
+            @position = 'before preview'
+            @if.gridIsEnabled = ${showGrid}
+
+            gridComponentUrl = Neos.Fusion:ResourceUri {
+                package = 'Sitegeist.Monocle'
+                path = 'JavaScript/Grid.js'
+            }
+
+            renderer = afx`
+                <monocle-layout-grid style="position: absolute; display:block; width: 100%; height: 100%; pointer-events: none; z-index: 999999;" />
+                <script src={props.gridComponentUrl}></script>
+            `
+        }
 
         preview = Sitegeist.Monocle:Preview.Prototype {
             sitePackageKey = ${sitePackageKey}

@@ -16,7 +16,6 @@ interface PreviewFrameProps {
     onLoad: () => void
     setCurrentHtml: (html: string) => void
     isLocked: boolean
-    isGridVisible: boolean
 }
 
 class PreviewFrameC extends PureComponent<PreviewFrameProps> {
@@ -52,13 +51,10 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
     }
 
     render() {
-        const { styles, isLocked, isGridVisible } = this.props;
-        
+        const { styles, isLocked } = this.props;
+
         return (
             <div>
-                {isGridVisible && 
-                    <div>Grid is visible</div>
-                }
                 <iframe
                     role="presentation"
                     id="preview-frame"
@@ -83,7 +79,6 @@ export const PreviewFrame = connect((state: State) => {
     const isLocked = Boolean(currentlySelectedBreakpoint);
     const isVisible = Boolean(src);
     const isPropsInspectorOpen = selectors.propsInspector.isOpen(state);
-    const isGridVisible = selectors.grid.isVisible(state);
 
     const styles = currentlySelectedBreakpoint ? {
         width: currentlySelectedBreakpoint.width,
@@ -95,7 +90,7 @@ export const PreviewFrame = connect((state: State) => {
         minWidth: isPropsInspectorOpen ? 'calc(100% - 400px - 2rem)' : '100%'
     };
 
-    return {src, sourceQuerySelector, isVisible, isLocked, isGridVisible, styles};
+    return {src, sourceQuerySelector, isVisible, isLocked, styles};
 }, {
     onLoad: actions.prototypes.ready,
     setCurrentHtml: actions.prototypes.setCurrentHtml

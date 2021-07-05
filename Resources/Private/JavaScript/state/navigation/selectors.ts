@@ -6,6 +6,7 @@ import { State } from "..";
 import * as prototypes from '../prototypes';
 import * as sites from '../sites';
 import * as locales from '../locales';
+import * as grid from '../grid';
 
 export const searchTerm = (state: State) =>
     state.navigation.searchTerm
@@ -151,24 +152,39 @@ export const previewUri = createSelector(
         prototypes.selectors.selectedPropSet,
         prototypes.selectors.selectedUseCase,
         locales.selectors.current,
-        sites.selectors.currentlySelectedSitePackageKey
+        sites.selectors.currentlySelectedSitePackageKey,
+        grid.selectors.isVisible
     ],
-    (endpoint, renderedPrototype, props, propSet, useCase, locales, sitePackageKey) => {
+    (endpoint, renderedPrototype, props, propSet, useCase, locales, sitePackageKey, showGrid) => {
         if (!renderedPrototype) {
             return null;
         }
 
         const {prototypeName} = renderedPrototype;
 
-        return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
-            queryParams: {
-                prototypeName,
-                propSet: propSet.name,
-                useCase: useCase.name,
-                sitePackageKey,
-                locales,
-                props: JSON.stringify(props)
-            }
-        });
+        if (showGrid) {
+            return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
+                queryParams: {
+                    prototypeName,
+                    propSet: propSet.name,
+                    useCase: useCase.name,
+                    showGrid: "1",
+                    sitePackageKey,
+                    locales,
+                    props: JSON.stringify(props)
+                }
+            });
+        } else {
+            return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
+                queryParams: {
+                    prototypeName,
+                    propSet: propSet.name,
+                    useCase: useCase.name,
+                    sitePackageKey,
+                    locales,
+                    props: JSON.stringify(props)
+                }
+            });
+        }
     }
 );

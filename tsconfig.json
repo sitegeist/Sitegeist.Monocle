@@ -5,7 +5,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "baseUrl": "./",
     "moduleResolution": "node",
@@ -15,7 +15,7 @@
     "lib": [
       "es2017",
       "dom"
-    ],
+    ]
   },
   "exclude": ["**/JavaScript.old/**"]
 }
