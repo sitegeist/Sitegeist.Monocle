@@ -44,6 +44,7 @@ final class PrototypeRepository
         if (isset($fusionObjectTree['__prototypes'][$prototypeName])) {
             $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
             $fusionRuntime = $this->fusionRuntimeFactory->create($fusionObjectTree);
+            $fusionRuntime->setEnableContentCache(false);
 
             return new Prototype(
                 PrototypeName::fromString($prototypeName),
