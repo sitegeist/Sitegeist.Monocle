@@ -11,6 +11,7 @@
     transition: transform .3s;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .isVisible {
