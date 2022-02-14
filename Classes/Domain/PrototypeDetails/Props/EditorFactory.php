@@ -32,6 +32,9 @@ final class EditorFactory
         Prototype $prototype,
         PropName $propName
     ): ?EditorInterface {
+        if (($hidePropsInInspector = $prototype->evaluate('/__meta/styleguide/options/hidePropsInInspector')) && in_array((string)$propName, $hidePropsInInspector, true)) {
+            return null;
+        }
         if ($manualConfiguration = $prototype->evaluate(
             sprintf(
                 '/__meta/styleguide/options/propEditors/%s<Neos.Fusion:DataStructure>',
