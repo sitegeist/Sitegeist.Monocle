@@ -64,7 +64,7 @@ class PreviewController extends ActionController
      * @param  string|null  $propSet
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
-     * @return void
+     * @return string
      */
     public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
     {
@@ -77,11 +77,11 @@ class PreviewController extends ActionController
             }
         }
 
-        if ($useCase == '__default') {
+        if ($useCase === '__default') {
             $useCase = null;
         }
 
-        if ($propSet == '__default') {
+        if ($propSet === '__default') {
             $propSet = null;
         }
 
@@ -109,8 +109,7 @@ class PreviewController extends ActionController
 
         // get the status and headers from the view
         $result = $this->view->render();
-        $result = $this->mergeHttpResponseFromOutput($result);
-        return $result;
+        return $this->mergeHttpResponseFromOutput($result);
     }
 
     /**
@@ -119,7 +118,7 @@ class PreviewController extends ActionController
      */
     protected function mergeHttpResponseFromOutput($output)
     {
-        if (substr($output, 0, 5) === 'HTTP/') {
+        if (strpos($output, 'HTTP/') === 0) {
             $endOfHeader = strpos($output, "\r\n\r\n");
             if ($endOfHeader !== false) {
                 $header = substr($output, 0, $endOfHeader + 4);
