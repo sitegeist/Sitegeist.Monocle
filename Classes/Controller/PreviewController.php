@@ -13,13 +13,13 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
+use GuzzleHttp\Psr7\Message;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\ConfigurationService;
 use Neos\Flow\Http\Component\SetHeaderComponent;
-use function GuzzleHttp\Psr7\parse_response;
 
 /**
  * Class PreviewController
@@ -124,7 +124,7 @@ class PreviewController extends ActionController
             if ($endOfHeader !== false) {
                 $header = substr($output, 0, $endOfHeader + 4);
                 try {
-                    $renderedResponse = parse_response($header);
+                    $renderedResponse = Message::parseResponse($header);
                     $this->response->setStatusCode($renderedResponse->getStatusCode());
                     foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
                         $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
