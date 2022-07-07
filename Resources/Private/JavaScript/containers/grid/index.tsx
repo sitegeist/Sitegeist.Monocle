@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 
 import style from "./style.css";
@@ -9,7 +10,6 @@ export function Grid() {
     };
 
     useEffect(() => {
-        resizeListener,
         // set resize listener
         window.addEventListener('resize', resizeListener);
         // clean up function
@@ -17,9 +17,9 @@ export function Grid() {
           // remove resize listener
           window.removeEventListener('resize', resizeListener);
         }
-    }, [])
+    }, [resizeListener])
 
     return (
-        <div className={style.main}>{"This is the Grid component"}</div>
+        <div className={style.main}>{"This is the Grid component!"}</div>
     );
 }
