@@ -8,6 +8,7 @@ import { selectors, actions, State } from "../../../../state";
 import { visibility } from "../../../../components";
 
 import style from "./style.css";
+import { Grid } from "../../../grid";
 
 interface PreviewFrameProps {
     src: string
@@ -54,7 +55,8 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
         const { styles, isLocked } = this.props;
 
         return (
-            <div>
+            <div className={style.frameWrapper}>
+                <Grid />
                 <iframe
                     role="presentation"
                     id="preview-frame"

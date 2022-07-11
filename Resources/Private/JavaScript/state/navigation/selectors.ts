@@ -162,29 +162,16 @@ export const previewUri = createSelector(
 
         const {prototypeName} = renderedPrototype;
 
-        if (showGrid) {
-            return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
-                queryParams: {
-                    prototypeName,
-                    propSet: propSet.name,
-                    useCase: useCase.name,
-                    showGrid: "1",
-                    sitePackageKey,
-                    locales,
-                    props: JSON.stringify(props)
-                }
-            });
-        } else {
-            return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
-                queryParams: {
-                    prototypeName,
-                    propSet: propSet.name,
-                    useCase: useCase.name,
-                    sitePackageKey,
-                    locales,
-                    props: JSON.stringify(props)
-                }
-            });
-        }
+        return buildUrl(`${window.location.protocol}//${window.location.host}${endpoint}`, {
+            queryParams: {
+                prototypeName,
+                propSet: propSet.name,
+                useCase: useCase.name,
+                sitePackageKey,
+                locales,
+                showGrid: showGrid ? '1' : '0',
+                props: JSON.stringify(props)
+            }
+        });    
     }
 );

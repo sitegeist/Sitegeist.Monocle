@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from "react";
 import { useState, useEffect } from 'react';
 
 import style from "./style.css";
@@ -20,6 +20,10 @@ export function Grid() {
     }, [resizeListener])
 
     return (
-        <div className={style.main}>{"This is the Grid component!"}</div>
+        <div className={style.grid}>
+            
+        </div>
     );
+
+
 }
