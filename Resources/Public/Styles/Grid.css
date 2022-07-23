@@ -589,7 +589,6 @@
 .style__toolbox___19BHw{display:-webkit-box;display:-ms-flexbox;display:flex}
 .style__bar___98Wqi{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.style__section___3WP0r{-ms-flex-preferred-size:0;flex-basis:0}
 .style__frameWrapper___coRjO{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;-webkit-transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,transform .3s,left .3s;transition:width .3s,min-width .3s,transform .3s,left .3s,-webkit-transform .3s;position:relative}.style__frame___-KHZs,.style__isLocked___saHMV{height:100%}.style__isLocked___saHMV{position:relative;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}
-.style__grid___HmjFV{position:absolute;inset:0;z-index:1999;pointer-events:none;width:100%;height:100%;background-color:#f0f8ff;opacity:.4}
 .style__tabs___2cLAB {
     height: 100%;
 }

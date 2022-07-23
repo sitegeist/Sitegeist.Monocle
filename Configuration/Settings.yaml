@@ -25,6 +25,35 @@ Sitegeist:
 
       # localePresets: {  }
 
+      # grid settings
+      grid:
+
+        small:
+          # when is this grid applied
+          minWidth: 0px
+          maxWidth: 399px
+          # Number of columns
+          columns: 6
+          # overall width of the grid
+          width: 100%
+          # space between columns
+          gutter: 16px
+          # space around columns but in content section
+          offset: 16px
+
+        medium:
+          # when is this grid applied
+          minWidth: 400px
+          maxWidth: 1023px
+          # Number of columns
+          columns: 12
+          # overall width of the grid
+          width: 100%
+          # space between columns
+          gutter: 16px
+          # space around columns but in content section
+          offset: 16px
+
       viewportPresets:
         xs:
           label: 'xtra small'
@@ -76,7 +105,7 @@ Sitegeist:
 
     preview:
       fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
-      sourceQuerySelector: 'body'
+      sourceQuerySelector: '#monocle-preview'
       defaultPrototypeName: ~
 
     cli:

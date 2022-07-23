@@ -98,6 +98,10 @@ class PreviewController extends ActionController
         $this->view->setFusionPath($fusionRootPath);
         $this->view->setLocales($renderLocales);
 
+        if ($showGrid) {
+            $gridConfiguration = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grid']);
+        }
+
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
@@ -105,7 +109,7 @@ class PreviewController extends ActionController
             'propSet' => $propSet,
             'props' => $renderProps,
             'locales' => $renderLocales,
-            'showGrid' => $showGrid
+            'grid' => $gridConfiguration ?? null
         ]);
 
         // get the status and headers from the view
