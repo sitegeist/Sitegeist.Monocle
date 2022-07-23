@@ -66,7 +66,15 @@ trait PackageKeyTrait
      */
     protected function getActiveSitePackageKeys(): array
     {
-        $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        /**
+         * Adjust to a breaking api change in neos 8
+         * @todo remove once Neos 7 Support is dropped
+         */
+        if (version_compare(FLOW_VERSION_BRANCH, '8.0') >= 0) {
+            $sitePackages = $this->packageManager->getFilteredPackages('available', 'neos-site');
+        } else {
+            $sitePackages = $this->packageManager->getFilteredPackages('available', null, 'neos-site');
+        }
         $sitePackageKeys = [];
         foreach ($sitePackages as $sitePackage) {
             $packageKey = $sitePackage->getPackageKey();

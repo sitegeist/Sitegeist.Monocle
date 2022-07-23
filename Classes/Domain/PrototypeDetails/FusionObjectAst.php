@@ -55,7 +55,7 @@ final class FusionObjectAst
                 yield self::fromArray($astExcerpt);
             } else {
                 foreach ($astExcerpt as $key => $value) {
-                    if (substr($key, 0, 2) === '__') {
+                    if (is_string($key) && substr($key, 0, 2) === '__') {
                         continue;
                     }
 

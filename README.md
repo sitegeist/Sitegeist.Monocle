@@ -29,8 +29,7 @@ use Monocle to render Fluid based Prototypes without any limitation.
 
 ## Installation
 
-Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~4.0"` to the require section of the composer.json
-or run `composer require sitegeist/monocle`.
+Sitegeist.Monocle is available via packagist and can be installed with the command `composer require sitegeist/monocle`.
 
 We use semantic-versioning so every breaking change will increase the major-version number.
 
