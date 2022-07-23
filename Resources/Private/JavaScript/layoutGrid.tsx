@@ -9,6 +9,8 @@ class MonocleLayoutGrid extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({mode: 'closed'});
+        this.target.style.width = "100%";
+        this.target.style.height = "100%";
         shadow.appendChild(this.target);
     }
 

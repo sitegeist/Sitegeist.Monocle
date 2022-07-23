@@ -31,20 +31,33 @@ Sitegeist:
         small:
           # when is this grid applied
           minWidth: 0px
-          maxWidth: 399px
+          maxWidth: 599px
           # Number of columns
-          columns: 6
+          columns: 4
           # overall width of the grid
           width: 100%
           # space between columns
           gutter: 16px
           # space around columns but in content section
-          offset: 16px
+          offset: 10px
 
         medium:
           # when is this grid applied
-          minWidth: 400px
+          minWidth: 600px
           maxWidth: 1023px
+          # Number of columns
+          columns: 8
+          # overall width of the grid
+          width: 100%
+          # space between columns
+          gutter: 16px
+          # space around columns but in content section
+          offset: 10px 20px
+
+        large:
+          # when is this grid applied
+          minWidth: 1024px
+          maxWidth: 2047px
           # Number of columns
           columns: 12
           # overall width of the grid
@@ -52,7 +65,7 @@ Sitegeist:
           # space between columns
           gutter: 16px
           # space around columns but in content section
-          offset: 16px
+          offset: 0
 
       viewportPresets:
         xs:
