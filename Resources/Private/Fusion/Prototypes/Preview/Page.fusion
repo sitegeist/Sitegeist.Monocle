@@ -64,6 +64,8 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
         @position = '20'
         tagName = 'body'
         omitClosingTag = TRUE
+        # do not commit
+        attributes.style = "padding: 0; margin: 0;"
     }
 
     # Content of the body tag. To be defined by the integrator.

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState, useEffect, PureComponent, Component} from 'react';
+import {PureComponent, Component} from 'react';
 
 interface SubgridState {
     isActive: boolean
@@ -8,10 +8,12 @@ interface SubgridState {
 interface IGridDefinition {
     minWidth: string
     maxWidth: string
+    label: string
     columns: number
     width: string
     gutter: string
-    offset: string
+    padding: string
+    margin: string
 }
 
 interface IGridConfigurationList {
@@ -55,22 +57,24 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
         const {name, grid} = this.props;
         if (this.state.isActive) {
             return (
-                <div style={{
-                    width: grid.width,
-                    height: "100%",
-                    boxSizing: "content-box",
-                }}
-                     >
-                   <div style={{
-                        display: "grid",
-                        color: "white",
-                        opacity: "0.2",
+                <div
+                    style={{
+                        width: grid.width,
+                        margin: grid.margin ?? "0",
                         height: "100%",
-                        margin: grid.offset ?? 0,
-                        gridGap: grid.gutter ?? 0,
-                        gridTemplateColumns: "repeat(" + grid.columns +  ", 1fr)",
-                        gridTemplateRows: "100%"
+                        opacity: "0.2",
                     }}
+                    >
+                    <div
+                        style={{
+                            display: "grid",
+                            height: "100%",
+                            boxSizing: "border-box",
+                            padding: grid.padding ?? 0,
+                            gridGap: grid.gutter ?? 0,
+                            gridTemplateColumns: "repeat(" + grid.columns +  ", 1fr)",
+                            gridTemplateRows: "100%"
+                        }}
                         >
                         {[...Array(grid.columns)].map((e, index) => (
                             <div
@@ -78,8 +82,11 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
                                     backgroundColor: "deeppink",
                                     height: "100%",
                                     display: "grid-item",
+                                    color: "white",
+                                    fontFamily: "sans-serif",
+                                    minWidth: 0
                                 }}
-                                >&nbsp;{index > 0 ? index + 1 : name}</div>
+                                >&nbsp;{(index > 0) ? (index + 1) : (grid.label ?? name)}</div>
                             )
                         )};
                     </div>

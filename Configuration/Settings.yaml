@@ -38,8 +38,8 @@ Sitegeist:
           width: 100%
           # space between columns
           gutter: 16px
-          # space around columns but in content section
-          offset: 10px
+          # outer padding
+          padding: 10px
 
         medium:
           # when is this grid applied
@@ -48,24 +48,25 @@ Sitegeist:
           # Number of columns
           columns: 8
           # overall width of the grid
-          width: 100%
+          width: 80%
           # space between columns
           gutter: 16px
-          # space around columns but in content section
-          offset: 10px 20px
+          # outer padding
+          padding: 10px 20px
+          margin: 0 auto
 
         large:
           # when is this grid applied
           minWidth: 1024px
-          maxWidth: 2047px
+          #maxWidth: null
           # Number of columns
           columns: 12
           # overall width of the grid
           width: 100%
           # space between columns
           gutter: 16px
-          # space around columns but in content section
-          offset: 0
+          # outer padding
+          padding: 0
 
       viewportPresets:
         xs:
