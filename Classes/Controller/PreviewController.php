@@ -127,7 +127,14 @@ class PreviewController extends ActionController
                     $renderedResponse = Message::parseResponse($header);
                     $this->response->setStatusCode($renderedResponse->getStatusCode());
                     foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
-                        $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        /**
+                         * @todo remove "setComponentParameter()" call once Neos 5 support is dropped
+                         */
+                        if (version_compare(FLOW_VERSION_BRANCH, '7.0') >= 0) {
+                            $this->response->setHttpHeader($headerName, $headerValues);
+                        } else {
+                            $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        }
                     }
                     $output = substr($output, strlen($header));
                 } catch (\InvalidArgumentException $exception) {
