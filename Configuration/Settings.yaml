@@ -25,48 +25,7 @@ Sitegeist:
 
       # localePresets: {  }
 
-      # grid settings
-      grid:
-
-        small:
-          # when is this grid applied
-          minWidth: 0px
-          maxWidth: 599px
-          # Number of columns
-          columns: 4
-          # overall width of the grid
-          width: 100%
-          # space between columns
-          gutter: 16px
-          # outer padding
-          padding: 10px
-
-        medium:
-          # when is this grid applied
-          minWidth: 600px
-          maxWidth: 1023px
-          # Number of columns
-          columns: 8
-          # overall width of the grid
-          width: 80%
-          # space between columns
-          gutter: 16px
-          # outer padding
-          padding: 10px 20px
-          margin: 0 auto
-
-        large:
-          # when is this grid applied
-          minWidth: 1024px
-          #maxWidth: null
-          # Number of columns
-          columns: 12
-          # overall width of the grid
-          width: 100%
-          # space between columns
-          gutter: 16px
-          # outer padding
-          padding: 0
+      grid: {}
 
       viewportPresets:
         xs:

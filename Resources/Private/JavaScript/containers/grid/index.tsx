@@ -6,8 +6,7 @@ interface SubgridState {
 }
 
 interface IGridDefinition {
-    minWidth: string
-    maxWidth: string
+    mediaQuery: string
     label: string
     columns: number
     width: string
@@ -33,24 +32,20 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
 
     constructor(props: SubGridProps) {
         super(props)
-        this.state = { isActive: window.matchMedia(this.createMediaQueryString()).matches };
-    }
-
-    createMediaQueryString(): string {
-        const {grid} = this.props;
-        const queries: string[] = [];
-        if (grid.minWidth) {
-            queries.push('(min-width: ' + grid.minWidth + ')');
+        const {grid} = props;
+        if (grid.mediaQuery) {
+            this.state = {isActive: window.matchMedia(grid.mediaQuery).matches};
+        } else {
+            this.state = {isActive: true};
         }
-        if (grid.maxWidth) {
-            queries.push('(max-width: ' + grid.maxWidth + ')');
-        }
-        return queries.join(' and ');
     }
 
     componentDidMount() {
-        const handler = (e:MediaQueryListEvent) => this.setState({isActive: e.matches});
-        window.matchMedia(this.createMediaQueryString()).addEventListener('change', handler);
+        const {grid} = this.props;
+        if (grid.mediaQuery) {
+            const handler = (e: MediaQueryListEvent) => this.setState({isActive: e.matches});
+            window.matchMedia(grid.mediaQuery).addEventListener('change', handler);
+        }
     }
 
     render() {
