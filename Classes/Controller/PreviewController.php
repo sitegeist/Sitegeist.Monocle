@@ -65,7 +65,7 @@ class PreviewController extends ActionController
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
      * @param  bool|null $showGrid
-     * @return void
+     * @return string
      */
     public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '', ?bool $showGrid = false)
     {
@@ -77,11 +77,11 @@ class PreviewController extends ActionController
             }
         }
 
-        if ($useCase == '__default') {
+        if ($useCase === '__default') {
             $useCase = null;
         }
 
-        if ($propSet == '__default') {
+        if ($propSet === '__default') {
             $propSet = null;
         }
 
@@ -114,8 +114,7 @@ class PreviewController extends ActionController
 
         // get the status and headers from the view
         $result = $this->view->render();
-        $result = $this->mergeHttpResponseFromOutput($result);
-        return $result;
+        return $this->mergeHttpResponseFromOutput($result);
     }
 
     /**
@@ -124,7 +123,7 @@ class PreviewController extends ActionController
      */
     protected function mergeHttpResponseFromOutput($output)
     {
-        if (substr($output, 0, 5) === 'HTTP/') {
+        if (strpos($output, 'HTTP/') === 0) {
             $endOfHeader = strpos($output, "\r\n\r\n");
             if ($endOfHeader !== false) {
                 $header = substr($output, 0, $endOfHeader + 4);
@@ -132,7 +131,14 @@ class PreviewController extends ActionController
                     $renderedResponse = Message::parseResponse($header);
                     $this->response->setStatusCode($renderedResponse->getStatusCode());
                     foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
-                        $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        /**
+                         * @todo remove "setComponentParameter()" call once Neos 5 support is dropped
+                         */
+                        if (version_compare(FLOW_VERSION_BRANCH, '7.0') >= 0) {
+                            $this->response->setHttpHeader($headerName, $headerValues);
+                        } else {
+                            $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        }
                     }
                     $output = substr($output, strlen($header));
                 } catch (\InvalidArgumentException $exception) {
