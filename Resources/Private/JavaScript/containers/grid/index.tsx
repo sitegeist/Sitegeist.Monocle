@@ -10,8 +10,9 @@ interface IGridDefinition {
     label: string
     columns: number
     width: string
+    maxWidth: string
     gutter: string
-    padding: string
+    gap: string
     margin: string
 }
 
@@ -55,7 +56,8 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
                 <div
                     style={{
                         width: grid.width,
-                        margin: grid.margin ?? "0",
+                        maxWidth: grid.maxWidth ?? null,
+                        margin: grid.margin ?? "0 auto",
                         height: "100%",
                         opacity: "0.2",
                     }}
@@ -65,8 +67,8 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
                             display: "grid",
                             height: "100%",
                             boxSizing: "border-box",
-                            padding: grid.padding ?? 0,
-                            gridGap: grid.gutter ?? 0,
+                            padding: grid.gutter ?? 0,
+                            gridGap: grid.gap ?? 0,
                             gridTemplateColumns: "repeat(" + grid.columns +  ", 1fr)",
                             gridTemplateRows: "100%"
                         }}
