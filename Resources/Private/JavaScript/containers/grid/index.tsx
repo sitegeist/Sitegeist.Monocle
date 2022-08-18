@@ -9,10 +9,10 @@ interface IGridDefinition {
     mediaQuery: string
     label: string
     columns: number
-    width: string
-    maxWidth: string
     gutter: string
     gap: string
+    width: string
+    maxWidth: string
     margin: string
 }
 
@@ -55,11 +55,11 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
             return (
                 <div
                     style={{
-                        width: grid.width,
+                        width: grid.width ?? "100%",
                         maxWidth: grid.maxWidth ?? null,
                         margin: grid.margin ?? "0 auto",
                         height: "100%",
-                        opacity: "0.2",
+                        opacity: "0.2"
                     }}
                     >
                     <div
@@ -85,7 +85,7 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
                                 }}
                                 >&nbsp;{(index > 0) ? (index + 1) : (grid.label ?? name)}</div>
                             )
-                        )};
+                        )}
                     </div>
                 </div>
             );
