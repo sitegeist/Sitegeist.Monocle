@@ -47,7 +47,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
 
         gridJavascript = Neos.Fusion:Tag {
             @position = 'after javascripts'
-            @if.gridIsEnabled = ${grid}
+            @if.gridIsEnabled = ${grids}
             tagName = 'script'
             attributes.src =  Neos.Fusion:ResourceUri {
                 package = 'Sitegeist.Monocle'
@@ -73,11 +73,9 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
         @position = 'after bodyTag'
 
         grid = afx`
-            <monocle-layout-grid
-                @if.isEnabled={grid}
-                configuration={Json.stringify(grid)}
-                style="position: fixed; display:block; width: 100%; height: 100%; pointer-events: none; z-index: 999999;"
-            ></monocle-layout-grid>
+            <Neos.Fusion:Loop @if.isEnabled={grids} items={grids} itemKey="name" itemName="grid">
+                <monocle-layout-grid label={name} {...grid}></monocle-layout-grid>
+            </Neos.Fusion:Loop>
         `
 
         preview = Neos.Fusion:Tag {

@@ -99,7 +99,7 @@ class PreviewController extends ActionController
         $this->view->setLocales($renderLocales);
 
         if ($showGrid) {
-            $gridConfiguration = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grid']);
+            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grid']);
         }
 
         $this->view->assignMultiple([
@@ -109,7 +109,7 @@ class PreviewController extends ActionController
             'propSet' => $propSet,
             'props' => $renderProps,
             'locales' => $renderLocales,
-            'grid' => $gridConfiguration ?? null
+            'grids' => $gridConfigurations ?? null
         ]);
 
         // get the status and headers from the view

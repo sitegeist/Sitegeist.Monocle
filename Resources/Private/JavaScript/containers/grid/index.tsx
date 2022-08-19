@@ -1,7 +1,7 @@
 import * as React from "react";
 import {PureComponent, Component} from 'react';
 
-interface SubgridState {
+interface GridState {
     isActive: boolean
 }
 
@@ -16,50 +16,37 @@ interface IGridDefinition {
     margin: string
 }
 
-interface IGridConfigurationList {
-    [key: string]: IGridDefinition
-}
+export class Grid extends Component<IGridDefinition, GridState> {
 
-interface SubGridProps {
-    name: string
-    grid: IGridDefinition
-}
-
-interface GridProps {
-    grids: () => IGridConfigurationList
-}
-
-class Subgrid extends Component<SubGridProps, SubgridState> {
-
-    constructor(props: SubGridProps) {
+    constructor(props: IGridDefinition) {
         super(props)
-        const {grid} = props;
-        if (grid.mediaQuery) {
-            this.state = {isActive: window.matchMedia(grid.mediaQuery).matches};
+        const {mediaQuery} = this.props;
+        if (props.mediaQuery) {
+            this.state = {isActive: window.matchMedia(mediaQuery).matches};
         } else {
             this.state = {isActive: true};
         }
     }
 
     componentDidMount() {
-        const {grid} = this.props;
-        if (grid.mediaQuery) {
+        const {mediaQuery} = this.props;
+        if (mediaQuery) {
             const handler = (e: MediaQueryListEvent) => this.setState({isActive: e.matches});
-            window.matchMedia(grid.mediaQuery).addEventListener('change', handler);
+            window.matchMedia(mediaQuery).addEventListener('change', handler);
         }
     }
 
     render() {
-        const {name, grid} = this.props;
+        const {label, width, maxWidth, margin, gutter, gap, columns} = this.props;
         if (this.state.isActive) {
             return (
                 <div
                     style={{
-                        width: grid.width ?? "100%",
-                        maxWidth: grid.maxWidth ?? null,
-                        margin: grid.margin ?? "0 auto",
+                        width: width ?? "100%",
+                        maxWidth: maxWidth ?? null,
+                        margin: margin ?? "0 auto",
                         height: "100%",
-                        opacity: "0.2"
+
                     }}
                     >
                     <div
@@ -67,23 +54,23 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
                             display: "grid",
                             height: "100%",
                             boxSizing: "border-box",
-                            padding: grid.gutter ?? 0,
-                            gridGap: grid.gap ?? 0,
-                            gridTemplateColumns: "repeat(" + grid.columns +  ", 1fr)",
-                            gridTemplateRows: "100%"
+                            padding: gutter ?? 0,
+                            gridGap: gap ?? 0,
+                            gridTemplateColumns: "repeat(" + columns +  ", 1fr)",
+                            gridTemplateRows: "100%",
                         }}
                         >
-                        {[...Array(grid.columns)].map((e, index) => (
+                        {[...Array(columns)].map((e, index) => (
                             <div
                                 style={{
-                                    backgroundColor: "deeppink",
+                                    backgroundColor: "rgba(255,20,147,0.2)",
                                     height: "100%",
                                     display: "grid-item",
                                     color: "white",
                                     fontFamily: "sans-serif",
                                     minWidth: 0
                                 }}
-                                >&nbsp;{(index > 0) ? (index + 1) : (grid.label ?? name)}</div>
+                                >&nbsp;{(index > 0) ? (index + 1) : label}</div>
                             )
                         )}
                     </div>
@@ -92,27 +79,5 @@ class Subgrid extends Component<SubGridProps, SubgridState> {
         } else {
             return '';
         }
-    }
-}
-
-export class Grid extends PureComponent<GridProps> {
-    render() {
-        const { grids } = this.props;
-
-        const subgrids: any[] = [];
-
-        Object.entries(grids).forEach(
-            (value, index) => {
-                const key: string = value[0];
-                const config: IGridDefinition = value[1];
-                subgrids.push(<Subgrid key={key} name={key} grid={config} />);
-            }
-        );
-
-        return (
-            <React.Fragment>
-                {subgrids}
-            </React.Fragment>
-        );
     }
 }
