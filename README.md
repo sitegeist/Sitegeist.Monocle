@@ -238,6 +238,50 @@ prototype(Sitegeist.Monocle:Preview.Page) {
 }
 
 ```
+#### Grids
+
+The key `grids` in the monocle ui configuration allows to specify a responsive layout grid that
+can be activated in the monocle ui or the preview endpoint.
+
+Each grid has the following options:
+* `mediaQuery` (string) media query the grid shall be active for
+* `label` (string, optional) name of the grid cofiguration
+* `columns` (int) number of columns
+* `gap` (string) gap bettween columns, css units like "10px"
+* `gutter` (string) outer border around of the grid, css dimensions like for padding"0px 20px"
+* `width` (string, optional) css with of the grid. default (100%)
+* `maxWidth` (string, optional) css max-with of the grid
+
+```YAML
+Sitegeist:
+  Monocle:
+    ui:
+      grids:
+        small:
+          mediaQuery: '(min-width:0px) and (max-width: 599px)'
+          label: "Small"
+
+          columns: 4
+          gap: 16px
+          gutter: 10px 20px
+
+        medium:
+          mediaQuery: '(min-width:600px) and (max-width: 1023px)'
+          label: Medium
+
+          columns: 8
+          gap: 16px
+          gutter: 10px 20px
+
+        large:
+          mediaQuery: '(min-width:1024px)'
+          label: Large
+
+          columns: 12
+          maxWidth: 1024px
+          gap: 16px
+          gutter: 10px 20px
+```
 
 #### Viewports
 

@@ -99,7 +99,7 @@ class PreviewController extends ActionController
         $this->view->setLocales($renderLocales);
 
         if ($showGrid) {
-            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grid']);
+            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grids']);
         }
 
         $this->view->assignMultiple([
