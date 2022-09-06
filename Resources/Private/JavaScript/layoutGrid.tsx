@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Grid } from "./containers";
+import { Grid } from "./grid";
 
 class MonocleLayoutGrid extends HTMLElement {
 
