@@ -46,7 +46,9 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
 
     iframeLoaded = () => {
         const { onLoad, setCurrentHtml, sourceQuerySelector } = this.props;
-        setCurrentHtml(this.iframe?.contentDocument?.querySelector(sourceQuerySelector)?.innerHTML ?? '');
+        const html = this.iframe?.contentDocument?.querySelector(sourceQuerySelector)?.innerHTML ?? '';
+        const htmlWithoutGrids = html.replace(/<monocle-layout-grid[^>]*><\/monocle-layout-grid>/g, "");
+        setCurrentHtml(htmlWithoutGrids);
         onLoad();
     }
 

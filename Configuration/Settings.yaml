@@ -78,7 +78,7 @@ Sitegeist:
 
     preview:
       fusionRootPath: '/<Sitegeist.Monocle:Preview.Page>'
-      sourceQuerySelector: '#monocle-preview'
+      sourceQuerySelector: 'body'
       defaultPrototypeName: ~
 
     cli:
