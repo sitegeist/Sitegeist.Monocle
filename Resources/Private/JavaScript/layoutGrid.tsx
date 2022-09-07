@@ -13,16 +13,7 @@ class MonocleLayoutGrid extends HTMLElement {
         shadow.appendChild(this.target);
     }
 
-    connectedCallback() {
-
-        this.style.width = "100%";
-        this.style.height = "100%";
-        this.style.position = "fixed";
-        this.style.zIndex = "99999";
-
-        this.target.style.width = "100%";
-        this.target.style.height = "100%";
-
+    render() {
         ReactDOM.render(
             <Grid
                 label={this.getAttribute("label") ?? ''}
@@ -37,6 +28,25 @@ class MonocleLayoutGrid extends HTMLElement {
             this.target
         );
     }
+
+    connectedCallback() {
+        this.style.width = "100%";
+        this.style.height = "100%";
+        this.style.position = "fixed";
+        this.style.zIndex = "99999";
+
+        this.target.style.width = "100%";
+        this.target.style.height = "100%";
+
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    static get observedAttributes() { return ['label', 'mediaQuery', 'gap', 'gutter', 'columns', 'width', 'maxWidth', 'margin'];}
+
 }
 
 customElements.define('monocle-layout-grid', MonocleLayoutGrid);

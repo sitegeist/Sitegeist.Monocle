@@ -73,7 +73,9 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
 
         grid = afx`
             <Neos.Fusion:Loop @if.isEnabled={grids} items={grids} itemKey="name" itemName="grid">
-                <monocle-layout-grid label={name} {...grid}></monocle-layout-grid>
+                <Neos.Fusion:Fragment @if.hasMinimalProps={grid.mediaQuery && grid.columns && grid.gap && grid.gutter}>
+                    <monocle-layout-grid label={name} {...grid}></monocle-layout-grid>
+                </Neos.Fusion:Fragment>
             </Neos.Fusion:Loop>
         `
 
