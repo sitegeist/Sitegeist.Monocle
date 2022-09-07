@@ -4,7 +4,8 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const configuration: webpack.Configuration = {
     entry: {
-        App: './Resources/Private/JavaScript/index.tsx'
+        App: './Resources/Private/JavaScript/index.tsx',
+        Grid: './Resources/Private/JavaScript/layoutGrid.tsx'
     },
 
     output: {

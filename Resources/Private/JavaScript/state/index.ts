@@ -15,6 +15,7 @@ import * as preview from "./preview";
 import * as propsInspector from "./props-inspector";
 import * as routing from "./routing";
 import * as qrcode from "./qrcode";
+import * as grid from "./grid";
 import { configurationSchema } from "../schema";
 
 interface AnatomyType {
@@ -66,6 +67,9 @@ export interface State {
     }
     readonly propsInspector: {
         readonly isOpen: boolean
+    }
+    readonly gridPreview: {
+        readonly isVisible: boolean
     }
     readonly sites: {
         readonly byName: {
@@ -155,6 +159,7 @@ export type Action =
     | propsInspector.Action
     | routing.Action
     | qrcode.Action
+    | grid.Action
 ;
 
 export const actions = {
@@ -168,7 +173,8 @@ export const actions = {
     preview: preview.actions,
     propsInspector: propsInspector.actions,
     routing: routing.actions,
-    qrcode: qrcode.actions
+    qrcode: qrcode.actions,
+    grid: grid.actions
 };
 
 export const reducer = (state: State, action: Action) => [
@@ -181,7 +187,8 @@ export const reducer = (state: State, action: Action) => [
     hotkeys.reducer,
     preview.reducer,
     propsInspector.reducer,
-    qrcode.reducer
+    qrcode.reducer,
+    grid.reducer
 ].reduce((state, reducer) => reducer(state, action), state);
 
 export const selectors = {
@@ -194,7 +201,8 @@ export const selectors = {
     hotkeys: hotkeys.selectors,
     preview: preview.selectors,
     propsInspector: propsInspector.selectors,
-    qrcode: qrcode.selectors
+    qrcode: qrcode.selectors,
+    grid: grid.selectors
 };
 
 function* loadConfiguration(): SagaIterator<void> {

@@ -44,6 +44,17 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
         javascripts = Neos.Fusion:Join {
             @position = 'after stylesheets'
         }
+
+        # JS to render the grid visualization if requested
+        gridJavascript = Neos.Fusion:Tag {
+            @position = 'after javascripts'
+            @if.gridIsEnabled = ${grids}
+            tagName = 'script'
+            attributes.src =  Neos.Fusion:ResourceUri {
+                package = 'Sitegeist.Monocle'
+                path = 'JavaScript/Grid.js'
+            }
+        }
     }
 
     closingHeadTag = '</head>'
@@ -56,10 +67,17 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
         omitClosingTag = TRUE
     }
 
-
     # Content of the body tag. To be defined by the integrator.
     body = Neos.Fusion:Join {
         @position = 'after bodyTag'
+
+        grid = afx`
+            <Neos.Fusion:Loop @if.isEnabled={grids} items={grids} itemKey="name" itemName="grid">
+                <Neos.Fusion:Fragment @if.hasMinimalProps={grid.mediaQuery && grid.columns && grid.gap && grid.gutter}>
+                    <monocle-layout-grid label={name} {...grid}></monocle-layout-grid>
+                </Neos.Fusion:Fragment>
+            </Neos.Fusion:Loop>
+        `
 
         preview = Sitegeist.Monocle:Preview.Prototype {
             sitePackageKey = ${sitePackageKey}
@@ -98,7 +116,6 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
             }
         }
     }
-
 
     closingBodyTag = '</body>'
     closingBodyTag.@position = 'end 100'

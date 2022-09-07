@@ -584,10 +584,11 @@
 .style__inspector___2d1EH{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__container___15wYM{position:relative}.style__icon___1BbqY{width:1em;height:1em;margin-right:.6em}
 .style__selector___3OGes{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__icon___-XcpB{width:1em;height:1em}
 .style__selector___5ek5B{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__icon___23F1I{width:1em;height:1em}
+.style__selector___1P4zG{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__icon___1CBVs{width:1em;height:1em}
 .style__selector___1XncN{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.style__icon___vYHgl{width:1em;height:1em}
 .style__toolbox___19BHw{display:-webkit-box;display:-ms-flexbox;display:flex}
 .style__bar___98Wqi{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.style__section___3WP0r{-ms-flex-preferred-size:0;flex-basis:0}
-.style__frame___-KHZs{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;-webkit-transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,transform .3s,left .3s;transition:width .3s,min-width .3s,transform .3s,left .3s,-webkit-transform .3s}.style__isLocked___saHMV{position:relative;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}
+.style__frameWrapper___coRjO{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-ms-flex-preferred-size:0;flex-basis:0;-webkit-transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,left .3s,-webkit-transform .3s;transition:width .3s,min-width .3s,transform .3s,left .3s;transition:width .3s,min-width .3s,transform .3s,left .3s,-webkit-transform .3s;position:relative}.style__frame___-KHZs,.style__isLocked___saHMV{height:100%}.style__isLocked___saHMV{position:relative;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}
 .style__tabs___2cLAB {
     height: 100%;
 }

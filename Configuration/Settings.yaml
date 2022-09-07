@@ -25,6 +25,8 @@ Sitegeist:
 
       # localePresets: {  }
 
+      # grids: {}
+
       viewportPresets:
         xs:
           label: 'xtra small'

@@ -64,12 +64,12 @@ class PreviewController extends ActionController
      * @param  string|null  $propSet
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
+     * @param  bool|null $showGrid
      * @return string
      */
-    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
+    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '', ?bool $showGrid = false)
     {
         $renderProps = [];
-
         if ($props) {
             $data = json_decode($props, true);
             if (is_array($data)) {
@@ -98,13 +98,18 @@ class PreviewController extends ActionController
         $this->view->setFusionPath($fusionRootPath);
         $this->view->setLocales($renderLocales);
 
+        if ($showGrid) {
+            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grids']);
+        }
+
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
             'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $renderProps,
-            'locales' => $renderLocales
+            'locales' => $renderLocales,
+            'grids' => $gridConfigurations ?? null
         ]);
 
         // get the status and headers from the view
