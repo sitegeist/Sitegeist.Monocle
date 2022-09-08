@@ -34,6 +34,7 @@ class MonocleLayoutGrid extends HTMLElement {
         this.style.height = "100%";
         this.style.position = "fixed";
         this.style.zIndex = "99999";
+        this.style.pointerEvents = "none";
 
         this.target.style.width = "100%";
         this.target.style.height = "100%";
