@@ -111,7 +111,7 @@ Neos:
             label: Monocle
             controller: \Sitegeist\Monocle\Controller\StyleguideController
             description: 'A styleguide for fusion prototypes and the idea of components'
-            icon: icon-magic
+            icon: fas fa-magic
             privilegeTarget: 'Sitegeist.Monocle:Backend.Styleguide'
             additionalResources:
               styleSheets:
