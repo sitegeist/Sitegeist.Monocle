@@ -101,12 +101,15 @@ presentational-components vs. container-components in the ReactJS world.
 ### Preview Containers
 
 Often components have to be rendered in the styleguide inside another component. In this case a `container`
-can be defined in the styleguide annotation. The container is applied as a processor to the uppermost prototype.
+can be defined in the styleguide annotation. The container is applied as a processor to the currently previewed
+prototype with the rendered content available as `value` in the context.
 
 ```
 prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
     @styleguide {
-        container = Vendor.Site:ExampleContainer
+        container = Vendor.Site:ExampleContainer {
+            content = ${value}
+        }
     }
 
     renderer = afx`
@@ -115,15 +118,25 @@ prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-The `container` prototype has to accept the prop `content` that will contain the rendered prototype.
+*For flexibility it is advisible to define a prop `content = ${value}` on container prototyoes which ensures
+that the containers can be used as processor or via afx with tag children.*
 
 ```
 prototype(Vendor.Site:ExampleContainer) < prototype(Neos.Fusion:Component) {
-    content = null
+    content = ${value}
     renderer = afx`
         <div class="container">{props.content}</div>
     `
 }
+
+# Use of container as processor ... content passed via `value` context
+example_processor = 'Hello World'
+example_processor.@process.inContainer = Vendor.Site:ExampleContainer
+
+# Use of container in afx ... content passed as `content`-prp
+example_afx = afx`
+    <Vendor.Site:ExampleContainer>Hello World'</Vendor.Site:ExampleContainer>
+`
 ```
 
 *When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements
@@ -474,7 +487,7 @@ The prototyoe allows to specify the following options:
 The following example shows how the `Sitegeist.Monocle:Preview.Prototype` can be used to render a preview inside of a styleguide prop:
 
 ```
-prototype(Vendor.Site:Container) {
+prototype(Vendor.Site:ContainerExample) {
     @styleguide{
         props.content = Sitegeist.Monocle:Preview.Prototype {
             prototypeName = 'Vendor.Site:Item'

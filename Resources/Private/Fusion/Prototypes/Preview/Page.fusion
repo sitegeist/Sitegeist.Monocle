@@ -95,7 +95,6 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
                     }
                     renderer = Neos.Fusion:Renderer {
                         renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/useCases/' + useCase + '/container'}
-                        element.content = ${value}
                     }
                 }
 
@@ -105,7 +104,6 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
                     }
                     renderer = Neos.Fusion:Renderer {
                         renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/container'}
-                        element.content = ${value}
                     }
                 }
 
