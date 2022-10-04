@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "neos/neos": "~5.0 || ^7.0 || ^8.0 || dev-master",
-        "guzzlehttp/psr7": "^1.4 || ^2.0"
+        "neos/neos": "^9.0 || dev-master",
+        "guzzlehttp/psr7": "^1.8.4 || ^2.1.1"
     },
     "autoload": {
         "psr-4": {
