@@ -65,7 +65,6 @@ class FusionService extends NeosFusionService
         $fusionCode = '';
 
         if ($package->getComposerManifest('type') == 'neos-site') {
-            $fusionCode .= $this->generateNodeTypeDefinitions();
             $fusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
             $fusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
             $fusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
