@@ -30,7 +30,7 @@ final class UseCaseCollection implements \JsonSerializable
     /**
      * @param UseCase ...$useCases
      */
-    private function __construct(UseCase ...$useCases)
+    public function __construct(UseCase ...$useCases)
     {
         $this->useCases = $useCases;
     }

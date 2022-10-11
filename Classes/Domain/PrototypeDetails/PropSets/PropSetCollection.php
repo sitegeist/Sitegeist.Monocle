@@ -30,7 +30,7 @@ final class PropSetCollection implements \JsonSerializable
     /**
      * @param PropSet ...$propSets
      */
-    private function __construct(PropSet ...$propSets)
+    public function __construct(PropSet ...$propSets)
     {
         $this->propSets = $propSets;
     }

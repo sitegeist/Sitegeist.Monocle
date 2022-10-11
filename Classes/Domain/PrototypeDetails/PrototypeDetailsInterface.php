@@ -17,6 +17,7 @@ use Neos\Flow\Annotations as Flow;
 use Sitegeist\Monocle\Domain\Fusion\PrototypeName;
 use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionInterface;
 use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
+use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCaseCollection;
 
 /**
  * @Flow\Proxy(false)
@@ -52,6 +53,11 @@ interface PrototypeDetailsInterface extends \JsonSerializable
      * @return PropsCollectionInterface
      */
     public function getProps(): PropsCollectionInterface;
+
+    /**
+     * @return UseCaseCollection
+     */
+    public function getUseCases(): UseCaseCollection;
 
     /**
      * @return PropSetCollection

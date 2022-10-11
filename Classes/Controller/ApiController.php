@@ -17,10 +17,10 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Sitegeist\Monocle\Domain\Fusion\PrototypeRepository;
+use Sitegeist\Monocle\Domain\PrototypeDetails\PrototypeDetailsFactoryInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Service\ConfigurationService;
-use Sitegeist\Monocle\Domain\PrototypeDetails\PrototypeDetailsFactory;
 
 /**
  * Class ApiController
@@ -67,7 +67,7 @@ class ApiController extends ActionController
 
     /**
      * @Flow\Inject
-     * @var PrototypeDetailsFactory
+     * @var PrototypeDetailsFactoryInterface
      */
     protected $prototypeDetailsFactory;
 
