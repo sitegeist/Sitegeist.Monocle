@@ -46,7 +46,7 @@ class InfoTabsC extends PureComponent<InfoTabsProps> {
                     {description}
                 </Tabs.Panel>
                 <Tabs.Panel title="HTML" icon="code" theme={tabPanelTheme}>
-                    <Code content={prettify(renderedHtml)} language="html" style={{whiteSpace: 'break-spaces'}}/>
+                    <Code content={prettify(renderedHtml) || renderedHtml} language="html" style={{whiteSpace: 'break-spaces'}}/>
                 </Tabs.Panel>
                 <Tabs.Panel title="Fusion" icon="terminal" theme={tabPanelTheme}>
                     <Code content={renderedCode} language="vim"/>
