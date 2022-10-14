@@ -46,7 +46,9 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
 
     iframeLoaded = () => {
         const { onLoad, setCurrentHtml, sourceQuerySelector } = this.props;
-        setCurrentHtml(this.iframe?.contentDocument?.querySelector(sourceQuerySelector)?.innerHTML ?? '');
+        const html = this.iframe?.contentDocument?.querySelector(sourceQuerySelector)?.innerHTML ?? '';
+        const htmlWithoutGrids = html.replace(/<monocle-layout-grid[^>]*><\/monocle-layout-grid>/g, "");
+        setCurrentHtml(htmlWithoutGrids);
         onLoad();
     }
 
@@ -54,18 +56,20 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
         const { styles, isLocked } = this.props;
 
         return (
-            <iframe
-                role="presentation"
-                id="preview-frame"
-                ref={this.iframeReference}
-                className={cx({
-                    [style.frame]: true,
-                    [style.isLocked]: isLocked
-                })}
-                style={styles}
-                frameBorder="0"
-                onLoad={this.iframeLoaded}
-                />
+            <div className={style.frameWrapper}>
+                <iframe
+                    role="presentation"
+                    id="preview-frame"
+                    ref={this.iframeReference}
+                    className={cx({
+                        [style.frame]: true,
+                        [style.isLocked]: isLocked
+                    })}
+                    style={styles}
+                    frameBorder="0"
+                    onLoad={this.iframeLoaded}
+                    />
+            </div>
         );
     }
 }

@@ -13,13 +13,13 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
+use GuzzleHttp\Psr7\Message;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\ConfigurationService;
 use Neos\Flow\Http\Component\SetHeaderComponent;
-use function GuzzleHttp\Psr7\parse_response;
 
 /**
  * Class PreviewController
@@ -64,12 +64,12 @@ class PreviewController extends ActionController
      * @param  string|null  $propSet
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
-     * @return void
+     * @param  bool|null $showGrid
+     * @return string
      */
-    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
+    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '', ?bool $showGrid = false)
     {
         $renderProps = [];
-
         if ($props) {
             $data = json_decode($props, true);
             if (is_array($data)) {
@@ -77,11 +77,11 @@ class PreviewController extends ActionController
             }
         }
 
-        if ($useCase == '__default') {
+        if ($useCase === '__default') {
             $useCase = null;
         }
 
-        if ($propSet == '__default') {
+        if ($propSet === '__default') {
             $propSet = null;
         }
 
@@ -98,19 +98,23 @@ class PreviewController extends ActionController
         $this->view->setFusionPath($fusionRootPath);
         $this->view->setLocales($renderLocales);
 
+        if ($showGrid) {
+            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grids']);
+        }
+
         $this->view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
             'prototypeName' => $prototypeName,
             'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $renderProps,
-            'locales' => $renderLocales
+            'locales' => $renderLocales,
+            'grids' => $gridConfigurations ?? null
         ]);
 
         // get the status and headers from the view
         $result = $this->view->render();
-        $result = $this->mergeHttpResponseFromOutput($result);
-        return $result;
+        return $this->mergeHttpResponseFromOutput($result);
     }
 
     /**
@@ -119,15 +123,22 @@ class PreviewController extends ActionController
      */
     protected function mergeHttpResponseFromOutput($output)
     {
-        if (substr($output, 0, 5) === 'HTTP/') {
+        if (strpos($output, 'HTTP/') === 0) {
             $endOfHeader = strpos($output, "\r\n\r\n");
             if ($endOfHeader !== false) {
                 $header = substr($output, 0, $endOfHeader + 4);
                 try {
-                    $renderedResponse = parse_response($header);
+                    $renderedResponse = Message::parseResponse($header);
                     $this->response->setStatusCode($renderedResponse->getStatusCode());
                     foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
-                        $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        /**
+                         * @todo remove "setComponentParameter()" call once Neos 5 support is dropped
+                         */
+                        if (version_compare(FLOW_VERSION_BRANCH, '7.0') >= 0) {
+                            $this->response->setHttpHeader($headerName, $headerValues);
+                        } else {
+                            $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
+                        }
                     }
                     $output = substr($output, strlen($header));
                 } catch (\InvalidArgumentException $exception) {

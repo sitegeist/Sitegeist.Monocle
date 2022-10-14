@@ -29,8 +29,7 @@ use Monocle to render Fluid based Prototypes without any limitation.
 
 ## Installation
 
-Sitegeist.Monocle is available via packagist. `"sitegeist/monocle" : "~4.0"` to the require section of the composer.json
-or run `composer require sitegeist/monocle`.
+Sitegeist.Monocle is available via packagist and can be installed with the command `composer require sitegeist/monocle`.
 
 We use semantic-versioning so every breaking change will increase the major-version number.
 
@@ -102,12 +101,15 @@ presentational-components vs. container-components in the ReactJS world.
 ### Preview Containers
 
 Often components have to be rendered in the styleguide inside another component. In this case a `container`
-can be defined in the styleguide annotation. The container is applied as a processor to the uppermost prototype.
+can be defined in the styleguide annotation. The container is applied as a processor to the currently previewed
+prototype with the rendered content available as `value` in the context.
 
 ```
 prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
     @styleguide {
-        container = Vendor.Site:ExampleContainer
+        container = Vendor.Site:ExampleContainer {
+            content = ${value}
+        }
     }
 
     renderer = afx`
@@ -116,15 +118,25 @@ prototype(Vendor.Site:ExampleComponent) < prototype(Neos.Fusion:Component) {
 }
 ```
 
-The `container` prototype has to accept the prop `content` that will contain the rendered prototype.
+*For flexibility it is advisible to define a prop `content = ${value}` on container prototyoes which ensures
+that the containers can be used as processor or via afx with tag children.*
 
 ```
 prototype(Vendor.Site:ExampleContainer) < prototype(Neos.Fusion:Component) {
-    content = null
+    content = ${value}
     renderer = afx`
         <div class="container">{props.content}</div>
     `
 }
+
+# Use of container as processor ... content passed via `value` context
+example_processor = 'Hello World'
+example_processor.@process.inContainer = Vendor.Site:ExampleContainer
+
+# Use of container in afx ... content passed as `content`-prp
+example_afx = afx`
+    <Vendor.Site:ExampleContainer>Hello World'</Vendor.Site:ExampleContainer>
+`
 ```
 
 *When multiple styleguide elements are nested please note that only the container for the outermost element will be rendered. For all nested elements
@@ -238,6 +250,50 @@ prototype(Sitegeist.Monocle:Preview.Page) {
     }
 }
 
+```
+#### Grids
+
+The key `grids` in the monocle ui configuration allows to specify a responsive layout grid visualization
+that can be activated in the monocle ui or the preview endpoint.
+
+Each grid has the following options:
+* `mediaQuery` (string, required) media query the grid shall be active for
+* `columns` (int, required) number of columns
+* `gap` (string, required) gap between columns, css units like "10px"
+* `gutter` (string, required) border around of the grid, css dimensions like for padding "0px 20px"
+
+* `label` (string, optional) name of the grid configuration
+* `width` (string, default: 100%) css with of the grid. default
+* `maxWidth` (string, optional) css max-with of the grid
+* `margin` (string, default: "0px auto") css margin around the grid
+
+!!! The grid visualization assumes that the body of the document has no padding or margin. If this is not the case the grid may not
+be positioned or dimensioned correctly !!!
+
+```YAML
+Sitegeist:
+  Monocle:
+    ui:
+      grids:
+        small:
+          mediaQuery: '(min-width:0px) and (max-width: 599px)'
+          label: "Small"
+          columns: 4
+          gap: 16px
+          gutter: 10px 20px
+        medium:
+          mediaQuery: '(min-width:600px) and (max-width: 1023px)'
+          label: Medium
+          columns: 8
+          gap: 16px
+          gutter: 10px 20px
+        large:
+          mediaQuery: '(min-width:1024px)'
+          label: Large
+          columns: 12
+          maxWidth: 1024px
+          gap: 16px
+          gutter: 10px 20px
 ```
 
 #### Viewports
@@ -431,7 +487,7 @@ The prototyoe allows to specify the following options:
 The following example shows how the `Sitegeist.Monocle:Preview.Prototype` can be used to render a preview inside of a styleguide prop:
 
 ```
-prototype(Vendor.Site:Container) {
+prototype(Vendor.Site:ContainerExample) {
     @styleguide{
         props.content = Sitegeist.Monocle:Preview.Prototype {
             prototypeName = 'Vendor.Site:Item'
@@ -548,7 +604,7 @@ Additionally, if you need more control over which editor is used you may include
 
 ```
 prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
-	@styleguide {
+    @styleguide {
         options {
             propEditors {
                 severity {
@@ -583,6 +639,20 @@ prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
 An overview of available editors can be found under [[PropEditors](./Documentation/PropEditors.md)].
 
 If you are using [`PackageFactory.AtomicFusion.PropTypes`](https://github.com/PackageFactory/atomic-fusion-proptypes) then check out [`Sitegeist.Monocle.PropTypes`](https://github.com/sitegeist/Sitegeist.Monocle.PropTypes). This package automatically generates editor configurations that that fit your PropTypes.
+
+#### Hide props in Inspector
+
+Sometimes it can be useful to remove editors for props completely (for example for props that contain HTML). This can be done with the `hidePropsInInspector` option:
+
+```
+prototype(Vendor.Package:SomeComponent) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        options {
+            hidePropsInInspector = ${['header', 'content']}
+        }
+    }
+}
+```
 
 ### Fusion Object Tree Caching
 

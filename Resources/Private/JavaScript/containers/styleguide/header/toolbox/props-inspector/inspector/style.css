@@ -20,7 +20,7 @@
 .container {
     padding: 1rem;
     flex-grow: 0;
-    flex-shrink: 0;
+    overflow-y: auto;
 
     + .container {
         background-color: rgba(0, 0, 0, .3);
