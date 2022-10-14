@@ -49,7 +49,7 @@ final class FusionPrototypeAst implements \JsonSerializable
                 yield FusionObjectAst::fromArray($astExcerpt);
             } else {
                 foreach ($astExcerpt as $key => $value) {
-                    if (substr($key, 0, 2) === '__') {
+                    if (substr((string) $key, 0, 2) === '__') {
                         continue;
                     }
 
