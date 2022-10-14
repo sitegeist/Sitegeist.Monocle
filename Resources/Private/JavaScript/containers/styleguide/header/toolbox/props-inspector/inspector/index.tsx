@@ -82,8 +82,8 @@ class InspectorC extends PureComponent<InspectorProps> {
                     [style.isVisible]: isVisible
                 })}
                 >
-                {Boolean(prototypeDetails.useCases.length) && (
-                    <div className={style.container}>
+                <div className={style.container}>
+                    {Boolean(prototypeDetails.useCases.length) && (
                         <UseCaseSelector
                             enable={Boolean(prototypeDetails.useCases.length)}
                             label={
@@ -94,10 +94,9 @@ class InspectorC extends PureComponent<InspectorProps> {
                             useCases={prototypeDetails.useCases}
                             onSelectUseCase={this.handleSelectUseCase}
                             />
-                    </div>
-                )}
-                {(Boolean(prototypeDetails.propSets.length) && !prototypeDetails.useCases.length) && (
-                    <div className={style.container}>
+
+                    )}
+                    {(Boolean(prototypeDetails.propSets.length) && !prototypeDetails.useCases.length) && (
                         <PropSetSelector
                             enable={Boolean(prototypeDetails.propSets.length)}
                             label={
@@ -108,19 +107,15 @@ class InspectorC extends PureComponent<InspectorProps> {
                             propSets={prototypeDetails.propSets}
                             onSelectPropSet={this.handleSelectPropSet}
                             />
-                    </div>
-                )}
-                {prototypeDetails.props && (
-                    <div className={style.container}>
-                        {prototypeDetails.props.map(prop => (
-                            <PropsItem
-                                key={prop.name}
-                                prop={prop}
-                                onChange={this.handleChange}
-                                />
-                        ))}
-                    </div>
-                )}
+                    )}
+                    {prototypeDetails.props && prototypeDetails.props.map(prop => (
+                        <PropsItem
+                            key={prop.name}
+                            prop={prop}
+                            onChange={this.handleChange}
+                            />
+                    ))}
+                </div>
             </div>
         );
     }
