@@ -604,7 +604,7 @@ Additionally, if you need more control over which editor is used you may include
 
 ```
 prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
-	@styleguide {
+    @styleguide {
         options {
             propEditors {
                 severity {
@@ -639,6 +639,20 @@ prototype(Vendor.Package:MyAlertComponent) < prototype(Neos.Fusion:Component) {
 An overview of available editors can be found under [[PropEditors](./Documentation/PropEditors.md)].
 
 If you are using [`PackageFactory.AtomicFusion.PropTypes`](https://github.com/PackageFactory/atomic-fusion-proptypes) then check out [`Sitegeist.Monocle.PropTypes`](https://github.com/sitegeist/Sitegeist.Monocle.PropTypes). This package automatically generates editor configurations that that fit your PropTypes.
+
+#### Hide props in Inspector
+
+Sometimes it can be useful to remove editors for props completely (for example for props that contain HTML). This can be done with the `hidePropsInInspector` option:
+
+```
+prototype(Vendor.Package:SomeComponent) < prototype(Neos.Fusion:Component) {
+    @styleguide {
+        options {
+            hidePropsInInspector = ${['header', 'content']}
+        }
+    }
+}
+```
 
 ### Fusion Object Tree Caching
 
