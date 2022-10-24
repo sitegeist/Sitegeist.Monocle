@@ -17,6 +17,7 @@
     .message {
         text-align: center;
         width: 100%;
+        white-space: pre-line;
     }
 }
 

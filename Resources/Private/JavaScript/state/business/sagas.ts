@@ -21,6 +21,24 @@ export function* operation(task: () => SagaIterator<void>) {
     yield put(actions.finishTask(taskName));
 }
 
+const throwErrorWithMessageFromFailedHttpResponse = async (response: Response) => {
+    const message = await response.text();
+    if (message.includes('Flow-Debug-Exception-Header')) {
+        // similar how the neos-ui "hacks" it
+        // https://github.com/neos/neos-ui/blob/e53f8e20ee70ca832828f033f5a69c8223a2deab/packages/neos-ui/src/index.js#L161-L191
+        const htmlContainer = document.createElement('div');
+        htmlContainer.innerHTML = message;
+        const exceptionHeader = htmlContainer.querySelector('.Flow-Debug-Exception-Header');
+        if (exceptionHeader && exceptionHeader.textContent?.trim().length) {
+            const exceptionSubject = exceptionHeader.querySelector('.ExceptionSubject')!;
+            const exceptionBody = exceptionHeader.querySelector('.ExceptionBody')!;
+            throw new Error(`Network response was not ok: (${response.status})\n\n${exceptionSubject.textContent}\n${exceptionBody.textContent}`);
+        }
+        throw new Error(`Network response was not ok: (${response.status})\nUnknown error from unexpected HTML response.`);
+    }
+    throw new Error(`Network response was not ok: (${response.status})\n${response.statusText}`);
+}
+
 export async function unauthenticated(url: string, options?: RequestInit) {
     const response = await fetch(url, { ...options, credentials: 'include' });
 
@@ -32,7 +50,7 @@ export async function unauthenticated(url: string, options?: RequestInit) {
         return 'RE-AUTHORIZE';
     }
 
-    throw new Error(`Network response was not ok: (${response.status}) ${response.statusText}`);
+    await throwErrorWithMessageFromFailedHttpResponse(response)
 }
 
 export function authenticated(url: string, options?: RequestInit) {
