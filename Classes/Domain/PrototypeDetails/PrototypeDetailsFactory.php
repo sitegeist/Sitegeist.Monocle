@@ -25,7 +25,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * @Flow\Scope("singleton")
  */
-final class PrototypeDetailsFactory
+final class PrototypeDetailsFactory implements PrototypeDetailsFactoryInterface
 {
     /**
      * @Flow\Inject

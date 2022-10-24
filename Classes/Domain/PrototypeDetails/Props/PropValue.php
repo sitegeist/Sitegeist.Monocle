@@ -34,9 +34,12 @@ final class PropValue implements \JsonSerializable
     {
         if (!self::isValid($value)) {
             throw new \UnexpectedValueException(
-                'PropValue must be a primitive, an array or an object ' .
-                'of type \\stdClass. Got "%s" instead.',
-                is_object($value) ? get_class($value) : gettype($value)
+                sprintf(
+                    'PropValue must be a primitive, an array or an object ' .
+                    'of type \\stdClass. Got "%s" instead.',
+                    is_object($value) ? get_class($value) : gettype($value)
+                ),
+                1665434215
             );
         }
 
