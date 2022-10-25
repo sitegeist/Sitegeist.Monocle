@@ -23,20 +23,35 @@ export function* operation(task: () => SagaIterator<void>) {
 
 const throwErrorWithMessageFromFailedHttpResponse = async (response: Response) => {
     const message = await response.text();
-    if (message.includes('Flow-Debug-Exception-Header')) {
-        // similar how the neos-ui "hacks" it
-        // https://github.com/neos/neos-ui/blob/e53f8e20ee70ca832828f033f5a69c8223a2deab/packages/neos-ui/src/index.js#L161-L191
-        const htmlContainer = document.createElement('div');
-        htmlContainer.innerHTML = message;
-        const exceptionHeader = htmlContainer.querySelector('.Flow-Debug-Exception-Header');
-        if (exceptionHeader && exceptionHeader.textContent?.trim().length) {
-            const exceptionSubject = exceptionHeader.querySelector('.ExceptionSubject')!;
-            const exceptionBody = exceptionHeader.querySelector('.ExceptionBody')!;
-            throw new Error(`Network response was not ok: (${response.status})\n\n${exceptionSubject.textContent}\n${exceptionBody.textContent}`);
-        }
-        throw new Error(`Network response was not ok: (${response.status})\nUnknown error from unexpected HTML response.`);
+
+    if (message.includes('Flow-Debug-Exception-Header') === false
+        && message.includes('neos-error-screen') === false) {
+        throw new Error(`Network response was not ok: (${response.status})\n${response.statusText}`);
     }
-    throw new Error(`Network response was not ok: (${response.status})\n${response.statusText}`);
+
+    const htmlContainer = document.createElement('div');
+    htmlContainer.innerHTML = message;
+
+    // similar how the neos-ui "hacks" it
+    // https://github.com/neos/neos-ui/blob/e53f8e20ee70ca832828f033f5a69c8223a2deab/packages/neos-ui/src/index.js#L161-L191
+    const exceptionHeader = htmlContainer.querySelector('.Flow-Debug-Exception-Header');
+    if (exceptionHeader && exceptionHeader.textContent?.trim().length) {
+        const exceptionSubject = exceptionHeader.querySelector('.ExceptionSubject')!;
+        const exceptionBody = exceptionHeader.querySelector('.ExceptionBody')!;
+        throw new Error(`Network response was not ok: (${response.status})\n\n${exceptionSubject.textContent}\n${exceptionBody.textContent}`);
+    }
+
+    const neosErrorScreen = htmlContainer.querySelector('.neos-error-screen');
+    if (neosErrorScreen && neosErrorScreen.textContent?.trim().length) {
+        const neos8FusionSyntaxErrorHeading = neosErrorScreen.querySelector("h3")?.textContent
+        throw new Error(`Network response was not ok: (${response.status})\n\n${
+            neos8FusionSyntaxErrorHeading?.length
+                ? neos8FusionSyntaxErrorHeading
+                : neosErrorScreen.textContent
+        }`);
+    }
+
+    throw new Error(`Network response was not ok: (${response.status})\nUnknown error from unexpected HTML response.`);
 }
 
 export async function unauthenticated(url: string, options?: RequestInit) {
