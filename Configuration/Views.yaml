@@ -1,0 +1,13 @@
+-
+  requestFilter: 'isPackage("Sitegeist.Monocle") && isController("Styleguide")'
+  viewObjectName: 'Neos\Fusion\View\FusionView'
+  options:
+    fusionPathPatterns:
+      - 'resource://Sitegeist.Monocle/Private/Fusion/Backend'
+
+-
+  requestFilter: 'isPackage("Sitegeist.Monocle") && isController("Module")'
+  viewObjectName: 'Neos\Fusion\View\FusionView'
+  options:
+    fusionPathPatterns:
+      - 'resource://Sitegeist.Monocle/Private/Fusion/Backend'

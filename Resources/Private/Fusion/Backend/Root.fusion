@@ -1,0 +1,5 @@
+include: resource://Neos.Fusion/Private/Fusion/Root.fusion
+include: **/*.fusion
+
+Sitegeist.Monocle.StyleguideController.index = Sitegeist.Monocle:Backend.Styleguide
+Sitegeist.Monocle.ModuleController.index = Sitegeist.Monocle:Backend.Module

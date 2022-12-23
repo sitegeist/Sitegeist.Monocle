@@ -1,0 +1,69 @@
+prototype(Sitegeist.Monocle:Backend.Module) < prototype(Neos.Fusion:Component) {
+
+    loginEndpoint = Neos.Fusion:ActionUri {
+        request = ${request.mainRequest}
+        action = 'authenticate'
+        controller = 'Login'
+        package = 'Neos.Neos'
+        format = 'json'
+    }
+
+    login-endpoint="{f:uri.action(action: 'authenticate', controller: 'Login', package: 'Neos.Neos', format: 'json')}"
+
+    moduleUri = Neos.Fusion:ActionUri {
+        request = ${request.mainRequest}
+        action = 'index'
+        controller = 'Module'
+        package = 'Sitegeist.Monocle'
+    }
+
+    previewUri = Neos.Fusion:ActionUri {
+        request = ${request.mainRequest}
+        action = 'index'
+        controller = 'preview'
+        package = 'Sitegeist.Monocle'
+    }
+
+    configurationUri = Neos.Fusion:ActionUri {
+        request = ${request.mainRequest}
+        action = 'configuration'
+        controller = 'api'
+        package = 'Sitegeist.Monocle'
+    }
+
+    detailsUri = Neos.Fusion:ActionUri {
+        request = ${request.mainRequest}
+        action = 'prototypeDetails'
+        controller = 'api'
+        package = 'Sitegeist.Monocle'
+    }
+
+    renderer = afx`
+        {'<!doctype html>'}
+        <html>
+            <head>
+                <meta charset="UTF-8" />
+                <link rel="stylesheet" href={StaticResource.uri("Sitegeist.Monocle", "Public/Fonts/NotoSans/NotoSans.css")} />
+                <link rel="stylesheet" href={StaticResource.uri("Sitegeist.Monocle", "Public/Styles/App.css")} />
+            </head>
+            <body style="padding:0; background-color:#222;">
+                <div
+                    id="app"
+                    data-default-site-package-key={defaultSitePackageKey}
+
+                    data-login-endpoint={props.loginEndpoint}
+
+                    data-module-uri={props.moduleUri}
+                    data-fullscreen-uri={props.moduleUri}
+
+                    data-iframe-uri={props.previewUri}
+                    data-preview-uri={props.previewUri}
+
+                    data-configuration-endpoint={props.configurationUri}
+                    data-prototype-details-endpoint={props.detailsUri}
+                ></div>
+                <script src={StaticResource.uri("Sitegeist.Monocle", "Public/JavaScript/App.js")}></script>
+            </body>
+        </html>
+    `
+}

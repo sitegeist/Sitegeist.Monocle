@@ -1,0 +1,16 @@
+prototype(Sitegeist.Monocle:Backend.Styleguide) < prototype(Neos.Fusion:Component) {
+    renderer = afx`
+        <p>
+            <Neos.Fusion:Link.Action
+                href.action="index"
+                href.controller="module"
+                href.package="Sitegeist.Monocle"
+                href.request={request.parentRequest}
+                class="neos-button" target="_blank"
+            >
+                Open Styleguide in new Window <i class="icon-external-link"></i>
+            </Neos.Fusion:Link.Action>
+        </p>
+        <p><br/>The Preview component works best in an individual browser window</p>
+    `
+}
