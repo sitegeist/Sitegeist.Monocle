@@ -59,6 +59,13 @@ class Package extends BasePackage
                                 $templateFileMonitor->monitorDirectory($templatesPath);
                             }
                         }
+
+                        if (method_exists($package, 'getPackagePath')) {
+                            $templatesPath = $package->getPackagePath() . 'NodeTypes';
+                            if (is_dir($templatesPath)) {
+                                $templateFileMonitor->monitorDirectory($templatesPath);
+                            }
+                        }
                     }
 
                     $templateFileMonitor->detectChanges();
