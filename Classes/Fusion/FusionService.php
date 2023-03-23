@@ -25,7 +25,6 @@ use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
  */
 class FusionService extends NeosFusionService
 {
-
     /**
      * @Flow\Inject
      * @var PackageManager
@@ -55,7 +54,7 @@ class FusionService extends NeosFusionService
     public function getFusionConfigurationForPackageKey(string $packageKey): FusionConfiguration
     {
         $package = $this->packageManager->getPackage($packageKey);
-        $siteRootFusionPathAndFilename = sprintf( 'resource://%s/Private/Fusion/Root.fusion', $packageKey);
+        $siteRootFusionPathAndFilename = sprintf('resource://%s/Private/Fusion/Root.fusion', $packageKey);
 
         // always include monocle prototypes
         $fusionCodeCollection = FusionSourceCodeCollection::tryFromFilePath('resource://Sitegeist.Monocle/Private/Fusion/Root.fusion');

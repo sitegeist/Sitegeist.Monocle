@@ -22,7 +22,6 @@ use Neos\Neos\Controller\Module\AbstractModuleController;
  */
 class StyleguideController extends AbstractModuleController
 {
-
     /**
      * @return void
      */
