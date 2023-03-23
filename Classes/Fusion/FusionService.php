@@ -15,6 +15,8 @@ namespace Sitegeist\Monocle\Fusion;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\PackageManager;
+use Neos\Fusion\Core\FusionConfiguration;
+use Neos\Fusion\Core\FusionSourceCodeCollection;
 use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
 
 /**
@@ -23,13 +25,6 @@ use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
  */
 class FusionService extends NeosFusionService
 {
-    const RENDERPATH_DISCRIMINATOR = 'monoclePrototypeRenderer_';
-
-    /**
-     * @Flow\InjectConfiguration(path="fusion.autoInclude", package="Neos.Neos")
-     * @var array
-     */
-    protected $autoIncludeConfiguration = array();
 
     /**
      * @Flow\Inject
@@ -43,41 +38,42 @@ class FusionService extends NeosFusionService
      * @param string $siteResourcesPackageKey
      * @return array The merged object tree as of the given node
      * @throws \Neos\Neos\Domain\Exception
-     * @deprecated
-     */
-    public function getMergedTypoScriptObjectTreeForSitePackage($siteResourcesPackageKey)
-    {
-        return $this->getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey);
-    }
-
-    /**
-     * Returns a merged fusion object tree in the context of the given site-package
-     *
-     * @param string $siteResourcesPackageKey
-     * @return array The merged object tree as of the given node
-     * @throws \Neos\Neos\Domain\Exception
      */
     public function getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey)
     {
-        $siteRootFusionPathAndFilename = sprintf($this->siteRootFusionPattern, $siteResourcesPackageKey);
-        $package = $this->packageManager->getPackage($siteResourcesPackageKey);
-
-        $fusionCode = '';
-
-        if ($package->getComposerManifest('type') == 'neos-site') {
-            $fusionCode .= $this->generateNodeTypeDefinitions();
-            $fusionCode .= $this->getFusionIncludes($this->prepareAutoIncludeFusion());
-            $fusionCode .= $this->getFusionIncludes($this->prependFusionIncludes);
-            $fusionCode .= $this->readExternalFusionFile($siteRootFusionPathAndFilename);
-            $fusionCode .= $this->getFusionIncludes($this->appendFusionIncludes);
-        } else {
-            $fusionCode .= 'include: resource://Sitegeist.Monocle/Private/Fusion/Root.fusion' . PHP_EOL;
-            $fusionCode .= 'include: resource://' . $siteResourcesPackageKey . '/Private/Fusion/Root.fusion' . PHP_EOL;
-        }
-
-        return $this->fusionParser->parse($fusionCode, $siteRootFusionPathAndFilename);
+        return $this->getFusionConfigurationForPackageKey($siteResourcesPackageKey)->toArray();
     }
 
+
+    /**
+     * Returns fusion configuration for the given package
+     *
+     * @param string $packageKey
+     * @return array The merged object tree as of the given node
+     * @throws \Neos\Neos\Domain\Exception
+     */
+    public function getFusionConfigurationForPackageKey(string $packageKey): FusionConfiguration
+    {
+        $package = $this->packageManager->getPackage($packageKey);
+        $siteRootFusionPathAndFilename = sprintf( 'resource://%s/Private/Fusion/Root.fusion', $packageKey);
+
+        // always include monocle prototypes
+        $fusionCodeCollection = FusionSourceCodeCollection::tryFromFilePath('resource://Sitegeist.Monocle/Private/Fusion/Root.fusion');
+
+        // use autoinclude for neos-site packages only as this is a neos specific behavior
+        if ($package->getComposerManifest('type') == 'neos-site') {
+            $fusionCodeCollection = $fusionCodeCollection->union(
+                $this->fusionSourceCodeFactory->createFromAutoIncludes()
+            );
+        }
+
+        // and the root fusion of package
+        $fusionCodeCollection = $fusionCodeCollection->union(
+            FusionSourceCodeCollection::tryFromFilePath($siteRootFusionPathAndFilename)
+        );
+
+        return $this->fusionParser->parseFromSource($fusionCodeCollection);
+    }
 
     /**
      * Get all styleguide objects for the given fusion-ast
