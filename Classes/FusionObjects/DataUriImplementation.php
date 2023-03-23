@@ -9,7 +9,6 @@ use Neos\Fusion\FusionObjects\AbstractFusionObject;
  */
 class DataUriImplementation extends AbstractFusionObject
 {
-
     /**
      * @return string
      */

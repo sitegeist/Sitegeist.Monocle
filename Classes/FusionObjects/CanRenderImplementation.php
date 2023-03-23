@@ -10,7 +10,6 @@ use Neos\Fusion\FusionObjects\AbstractFusionObject;
  */
 class CanRenderImplementation extends AbstractFusionObject
 {
-
     /**
      * Fusion path which shall be checked
      *
