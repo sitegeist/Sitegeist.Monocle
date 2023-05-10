@@ -24,7 +24,6 @@ use Neos\Flow\Property\Exception\TargetNotFoundException;
  */
 class MockController extends ActionController
 {
-
     /**
      * @var array
      * @Flow\InjectConfiguration(path="uriMock.static")
