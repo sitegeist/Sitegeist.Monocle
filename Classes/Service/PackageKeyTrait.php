@@ -11,7 +11,6 @@ use Neos\Neos\Domain\Repository\DomainRepository;
  */
 trait PackageKeyTrait
 {
-
     /**
      * @Flow\Inject
      * @var Neos\Flow\Package\PackageManager

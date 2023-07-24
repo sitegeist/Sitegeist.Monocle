@@ -26,7 +26,6 @@ use Neos\Flow\Package\PackageManager;
  */
 class Package extends BasePackage
 {
-
     /**
      * Invokes custom PHP code directly after the package manager has been initialized.
      *

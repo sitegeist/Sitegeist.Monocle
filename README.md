@@ -69,7 +69,7 @@ prototype(Vendor.Package:Components.Headline) < prototype(Neos.Fusion:Component)
     content = ''
 
     renderer = afx`
-        <Neos.Fusion:Tag tagName={props.tagName}>{props.content}</Neos:Fusion:Tag>
+        <Neos.Fusion:Tag tagName={props.tagName}>{props.content}</Neos.Fusion:Tag>
     `
 }
 ```
