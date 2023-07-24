@@ -19,14 +19,6 @@
 
 .container {
     padding: 1rem;
-    flex-grow: 0;
+    flex-grow: 1;
     overflow-y: auto;
-
-    + .container {
-        background-color: rgba(0, 0, 0, .3);
-        border-top: 1px solid rgba(153, 153, 153, .3);
-        overflow-y: auto;
-        flex-grow: 1;
-        flex-shrink: 1;
-    }
 }
