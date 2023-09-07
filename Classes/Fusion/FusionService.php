@@ -17,13 +17,14 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\PackageManager;
 use Neos\Fusion\Core\FusionConfiguration;
 use Neos\Fusion\Core\FusionSourceCodeCollection;
-use \Neos\Neos\Domain\Service\FusionService as NeosFusionService;
+use Neos\Fusion\Core\Parser;
+use Neos\Neos\Domain\Service\FusionSourceCodeFactory;
 
 /**
  * Class FusionService
  * @package Sitegeist\Monocle\Fusion
  */
-class FusionService extends NeosFusionService
+class FusionService
 {
     /**
      * @Flow\Inject
@@ -32,13 +33,25 @@ class FusionService extends NeosFusionService
     protected $packageManager;
 
     /**
+     * @Flow\Inject
+     * @var Parser
+     */
+    protected $fusionParser;
+
+    /**
+     * @Flow\Inject
+     * @var FusionSourceCodeFactory
+     */
+    protected $fusionSourceCodeFactory;
+
+    /**
      * Returns a merged fusion object tree in the context of the given site-package
      *
      * @param string $siteResourcesPackageKey
-     * @return array The merged object tree as of the given node
+     * @deprecated use getFusionConfigurationForPackageKey instead
      * @throws \Neos\Neos\Domain\Exception
      */
-    public function getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey)
+    public function getMergedFusionObjectTreeForSitePackage($siteResourcesPackageKey): array
     {
         return $this->getFusionConfigurationForPackageKey($siteResourcesPackageKey)->toArray();
     }
@@ -60,7 +73,7 @@ class FusionService extends NeosFusionService
         $fusionCodeCollection = FusionSourceCodeCollection::tryFromFilePath('resource://Sitegeist.Monocle/Private/Fusion/Root.fusion');
 
         // use autoinclude for neos-site packages only as this is a neos specific behavior
-        if ($package->getComposerManifest('type') == 'neos-site') {
+        if ($package->getComposerManifest('type') === 'neos-site') {
             $fusionCodeCollection = $fusionCodeCollection->union(
                 $this->fusionSourceCodeFactory->createFromAutoIncludes()
             );
@@ -76,12 +89,13 @@ class FusionService extends NeosFusionService
 
     /**
      * Get all styleguide objects for the given fusion-ast
-     *
-     * @param array $fusionAst
-     * @return array
      */
-    public function getStyleguideObjectsFromFusionAst($fusionAst)
+    public function getStyleguideObjectsFromFusionAst(array|FusionConfiguration $fusionAst): array
     {
+        if (is_object($fusionAst) && $fusionAst instanceof FusionConfiguration) {
+            $fusionAst = $fusionAst->toArray();
+        }
+
         $styleguideObjects = [];
         if ($fusionAst && $fusionAst['__prototypes']) {
             foreach ($fusionAst['__prototypes'] as $prototypeFullName => $prototypeObject) {

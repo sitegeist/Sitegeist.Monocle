@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Fusion;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Fusion\Core\FusionConfiguration;
 use Neos\Fusion\View\FusionView as BaseFusionView;
 use Neos\Fusion\Core\Runtime as FusionRuntime;
 use Neos\Flow\I18n\Locale;
@@ -45,8 +46,15 @@ class FusionView extends BaseFusionView
      */
     protected function loadFusion()
     {
-        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($this->getOption('packageKey'));
-        $this->parsedFusion = $fusionAst;
+        $parsedFusion = $this->fusionService->getFusionConfigurationForPackageKey($this->getOption('packageKey'));
+        /** @todo remove the switch after Neos 8 support is removed */
+        $r = new \ReflectionClass(static::class);
+        $parsedFusionType = $r->getProperty('parsedFusion')->getType();
+        if ($parsedFusionType?->getName() === FusionConfiguration::class) {
+            $this->parsedFusion = $parsedFusion;
+        } else {
+            $this->parsedFusion = $parsedFusion->toArray();
+        }
     }
 
     /**
