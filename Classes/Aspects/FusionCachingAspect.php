@@ -16,6 +16,7 @@ namespace Sitegeist\Monocle\Aspects;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Aop\JoinPointInterface;
 use Neos\Cache\Frontend\VariableFrontend;
+use Neos\Fusion\Core\FusionConfiguration;
 
 /**
  * @Flow\Scope("singleton")
@@ -30,22 +31,26 @@ class FusionCachingAspect
     protected $fusionCache;
 
     /**
-     * @Flow\Around("setting(Sitegeist.Monocle.fusion.enableObjectTreeCache) && method(Sitegeist\Monocle\Fusion\FusionService->getMergedFusionObjectTreeForSitePackage())")
+     * @Flow\Around("setting(Sitegeist.Monocle.fusion.enableObjectTreeCache) && method(Sitegeist\Monocle\Fusion\FusionService->getFusionConfigurationForPackageKey())")
      * @param JoinPointInterface $joinPoint The current join point
      * @return mixed
      */
-    public function cacheGetMergedFusionObjectTree(JoinPointInterface $joinPoint)
+    public function cacheFusionConfigurationForPackageKey(JoinPointInterface $joinPoint)
     {
-        $siteResourcesPackageKey = $joinPoint->getMethodArgument('siteResourcesPackageKey');
-        $cacheIdentifier = str_replace('.', '_', $siteResourcesPackageKey);
+        $packageKey = $joinPoint->getMethodArgument('packageKey');
+        $cacheIdentifier = str_replace('.', '_', $packageKey);
 
         if ($this->fusionCache->has($cacheIdentifier)) {
-            $fusionObjectTree = $this->fusionCache->get($cacheIdentifier);
+            $fusionConfigurationArray = $this->fusionCache->get($cacheIdentifier);
+            $fusionConfiguration = FusionConfiguration::fromArray($fusionConfigurationArray);
         } else {
-            $fusionObjectTree = $joinPoint->getAdviceChain()->proceed($joinPoint);
-            $this->fusionCache->set($cacheIdentifier, $fusionObjectTree);
+            /**
+             * @var FusionConfiguration $fusionConfiguration
+             */
+            $fusionConfiguration = $joinPoint->getAdviceChain()->proceed($joinPoint);
+            $this->fusionCache->set($cacheIdentifier, $fusionConfiguration->toArray());
         }
 
-        return $fusionObjectTree;
+        return $fusionConfiguration;
     }
 }

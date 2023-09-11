@@ -14,6 +14,7 @@ namespace Sitegeist\Monocle\Domain\Fusion;
  */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Fusion\Core\FusionConfiguration;
 use Neos\Fusion\Core\Runtime as FusionRuntime;
 use Neos\Fusion\Core\RuntimeFactory as FusionRuntimeFactory;
 use Sitegeist\Monocle\Fusion\FusionService;
@@ -39,8 +40,8 @@ final class PrototypeRepository
         string $prototypeName,
         string $sitePackageKey
     ): ?Prototype {
-        $fusionObjectTree = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-
+        $fusionConfiguration = $this->fusionService->getFusionConfigurationForPackageKey($sitePackageKey);
+        $fusionObjectTree = $fusionConfiguration->toArray();
         if (isset($fusionObjectTree['__prototypes'][$prototypeName])) {
             $fusionAst =  $fusionObjectTree['__prototypes'][$prototypeName];
             $fusionRuntime = $this->fusionRuntimeFactory->create($fusionObjectTree);
