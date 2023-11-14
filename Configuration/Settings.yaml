@@ -89,7 +89,7 @@ Neos:
     mvc:
       routes:
         'Sitegeist.Monocle':
-          position: 'before Neos.Neos'
+          position: 'start 1'
     security:
       authentication:
         providers:
