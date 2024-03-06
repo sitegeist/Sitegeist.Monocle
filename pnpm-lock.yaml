@@ -158,10 +158,10 @@ devDependencies:
     specifier: ^8.3.0
     version: 8.3.4
   '@typescript-eslint/eslint-plugin':
-    specifier: ^4.13.0
+    specifier: ^4.33.0
     version: 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.9.5)
   '@typescript-eslint/parser':
-    specifier: ^4.13.0
+    specifier: ^4.33.0
     version: 4.33.0(eslint@7.32.0)(typescript@4.9.5)
   autoprefixer:
     specifier: ^10.4.12
@@ -173,13 +173,13 @@ devDependencies:
     specifier: ^0.20.1
     version: 0.20.1
   eslint:
-    specifier: ^7.17.0
+    specifier: ^7.32.0
     version: 7.32.0
   eslint-plugin-jsx-a11y:
-    specifier: ^6.4.1
+    specifier: ^6.8.0
     version: 6.8.0(eslint@7.32.0)
   eslint-plugin-react:
-    specifier: ^7.22.0
+    specifier: ^7.34.0
     version: 7.34.0(eslint@7.32.0)
   postcss:
     specifier: ^8.4.18
@@ -191,13 +191,13 @@ devDependencies:
     specifier: ^2.13.8
     version: 2.13.9(redux@4.2.1)
   stylelint:
-    specifier: ^13.8.0
+    specifier: ^13.13.1
     version: 13.13.1
   ts-node:
     specifier: ^9.1.1
     version: 9.1.1(typescript@4.9.5)
   typescript:
-    specifier: ^4.1.3
+    specifier: ^4.9.5
     version: 4.9.5
 
 packages:
