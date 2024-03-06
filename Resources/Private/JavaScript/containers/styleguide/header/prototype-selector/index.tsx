@@ -3,13 +3,13 @@ import { PureComponent } from "react";
 import { connect } from "react-redux";
 import mousetrap from "mousetrap";
 
-import Button from "@neos-project/react-ui-components/lib-esm/Button";
+import { Button } from "@neos-project/react-ui-components";
 
 import { selectors, actions, State } from "../../../../state";
 
 import { PrototypeList } from "./prototype-list";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PrototypeSelectorProps {
     toggle: () => void

@@ -2,9 +2,9 @@ import * as React from "react";
 import { PureComponent } from "react";
 import cx from "classnames";
 
-import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
+import { Icon } from "@neos-project/react-ui-components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PrototypeProps {
     title: string

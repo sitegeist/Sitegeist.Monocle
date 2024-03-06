@@ -52,7 +52,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
             tagName = 'script'
             attributes.src =  Neos.Fusion:ResourceUri {
                 package = 'Sitegeist.Monocle'
-                path = 'JavaScript/Grid.js'
+                path = 'Build/Grid.js'
             }
         }
     }

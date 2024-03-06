@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { visibility } from "../../../components";
 import { selectors, State } from "../../../state";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 export function LoaderC() {
     return (

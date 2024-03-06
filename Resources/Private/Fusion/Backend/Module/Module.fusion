@@ -44,7 +44,10 @@ prototype(Sitegeist.Monocle:Backend.Module) < prototype(Neos.Fusion:Component) {
             <head>
                 <meta charset="UTF-8" />
                 <link rel="stylesheet" href={StaticResource.uri("Sitegeist.Monocle", "Public/Fonts/NotoSans/NotoSans.css")} />
-                <link rel="stylesheet" href={StaticResource.uri("Sitegeist.Monocle", "Public/Styles/App.css")} />
+                <link rel="stylesheet" href={StaticResource.uri("Sitegeist.Monocle", "Public/Build/App.css")} />
+                <script>
+                    {'window.require = function () {return null;}'}
+                </script>
             </head>
             <body style="padding:0; background-color:#222;">
                 <div
@@ -62,7 +65,7 @@ prototype(Sitegeist.Monocle:Backend.Module) < prototype(Neos.Fusion:Component) {
                     data-configuration-endpoint={props.configurationUri}
                     data-prototype-details-endpoint={props.detailsUri}
                 ></div>
-                <script src={StaticResource.uri("Sitegeist.Monocle", "Public/JavaScript/App.js")}></script>
+                <script src={StaticResource.uri("Sitegeist.Monocle", "Public/Build/App.js")}></script>
             </body>
         </html>
     `

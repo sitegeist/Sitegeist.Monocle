@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import Bar from "@neos-project/react-ui-components/lib-esm/Bar";
+import { Bar } from "@neos-project/react-ui-components";
 
 import { PrototypeSelector } from "./prototype-selector";
 import { SiteSelector } from "./site-selector";
 import { Toolbox } from "./toolbox";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 export function Header() {
     return (

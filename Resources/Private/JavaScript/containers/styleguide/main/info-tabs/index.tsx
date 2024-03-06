@@ -3,7 +3,7 @@ import { PureComponent } from "react";
 import { connect } from "react-redux";
 import prettify from "html-prettify";
 
-import Tabs from "@neos-project/react-ui-components/lib-esm/Tabs";
+import { Tabs } from "@neos-project/react-ui-components";
 
 import { visibility, resizable } from "../../../../components";
 import { selectors, State } from "../../../../state";
@@ -11,9 +11,9 @@ import { selectors, State } from "../../../../state";
 import { Code } from "./code";
 import { Anatomy, AnatomyType } from "./anatomy";
 
-import style from "./style.css";
-import tabTheme from "./tabTheme.css";
-import tabPanelTheme from "./tabPanelTheme.css";
+import style from "./style.module.css";
+import tabTheme from "./tabTheme.module.css";
+import tabPanelTheme from "./tabPanelTheme.module.css";
 
 interface InfoTabsProps {
     title?: string

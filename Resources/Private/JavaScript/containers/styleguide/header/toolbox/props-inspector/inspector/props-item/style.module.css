@@ -3,8 +3,8 @@
     max-width: 800px;
     margin: 0 auto 1rem;
 
-    label {
-        display: block;
-        margin-bottom: .6rem;
-    }
+}
+.item label {
+    display: block;
+    margin-bottom: .6rem;
 }

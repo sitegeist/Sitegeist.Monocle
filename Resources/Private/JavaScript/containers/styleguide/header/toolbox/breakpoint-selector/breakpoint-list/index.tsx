@@ -6,7 +6,7 @@ import { selectors, actions, State } from "../../../../../../state";
 
 import { Breakpoint } from "./breakpoint";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface BreakpointListProps {
     breakpoints: {

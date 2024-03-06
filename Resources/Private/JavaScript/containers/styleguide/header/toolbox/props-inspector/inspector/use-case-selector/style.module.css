@@ -10,10 +10,10 @@
     max-width: 800px;
     position: relative;
 
-    label {
-        display: block;
-        margin-bottom: .6rem;
-    }
+}
+.container label {
+    display: block;
+    margin-bottom: .6rem;
 }
 .icon {
     margin-left: .6em;

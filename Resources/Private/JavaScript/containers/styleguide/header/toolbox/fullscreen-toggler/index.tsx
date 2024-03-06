@@ -2,13 +2,12 @@ import * as React from "react";
 import { PureComponent } from "react";
 import {connect} from "react-redux";
 
-import Button from "@neos-project/react-ui-components/lib-esm/Button";
-import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
+import { Button, Icon } from "@neos-project/react-ui-components";
 
 import { visibility } from "../../../../../components";
 import { selectors, State } from "../../../../../state";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface FullscreenTogglerProps {
     url: string

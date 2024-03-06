@@ -8,7 +8,7 @@ import { QrCodeTrigger } from './qrcode-trigger';
 import { GridTrigger } from './grid-trigger';
 import { FullscreenToggler } from './fullscreen-toggler';
 
-import style from './style.css';
+import style from './style.module.css';
 
 export function Toolbox() {
     return (
