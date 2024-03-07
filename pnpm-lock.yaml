@@ -17,9 +17,6 @@ dependencies:
   '@fortawesome/free-solid-svg-icons':
     specifier: ^6.5.1
     version: 6.5.1
-  '@fortawesome/react-fontawesome':
-    specifier: ^0.1.14
-    version: 0.1.19(@fortawesome/fontawesome-svg-core@6.5.1)(react@17.0.2)
   '@friendsofreactjs/react-css-themr':
     specifier: ^4.3.2
     version: 4.3.3(react@17.0.2)
@@ -682,17 +679,6 @@ packages:
       react: '>=16.x'
     dependencies:
       '@fortawesome/fontawesome-svg-core': 1.3.0
-      prop-types: 15.8.1
-      react: 17.0.2
-    dev: false
-
-  /@fortawesome/react-fontawesome@0.1.19(@fortawesome/fontawesome-svg-core@6.5.1)(react@17.0.2):
-    resolution: {integrity: sha512-Hyb+lB8T18cvLNX0S3llz7PcSOAJMLwiVKBuuzwM/nI5uoBw+gQjnf9il0fR1C3DKOI5Kc79pkJ4/xB0Uw9aFQ==}
-    peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~1 || ~6
-      react: '>=16.x'
-    dependencies:
-      '@fortawesome/fontawesome-svg-core': 6.5.1
       prop-types: 15.8.1
       react: 17.0.2
     dev: false
