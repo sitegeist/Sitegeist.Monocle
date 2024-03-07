@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/sitegeist/Sitegeist.Monocle#readme",
   "devDependencies": {
-    "@types/classnames": "^2.2.11",
     "@types/lodash.debounce": "^4.0.6",
     "@types/mousetrap": "^1.6.5",
     "@types/qrcode": "^1.3.5",
@@ -58,7 +57,7 @@
     "@friendsofreactjs/react-css-themr": "^4.3.2",
     "@neos-project/brand": "^1.1.0",
     "@neos-project/react-ui-components": "~8.3.0",
-    "classnames": "^2.2.5",
+    "classnames": "^2.5.1",
     "html-prettify": "^1.0.3",
     "immer": "^10.0.3",
     "lodash.debounce": "^4.0.8",
