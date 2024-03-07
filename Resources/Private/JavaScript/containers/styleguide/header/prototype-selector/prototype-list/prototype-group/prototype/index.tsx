@@ -56,7 +56,7 @@ export class Prototype extends PureComponent<PrototypeProps> {
                 onClick={this.handleClick}
                 ref={this.setIconColor}
                 >
-                <Icon className={style.icon} icon={icon}/>
+                <Icon className={style.icon} icon={icon} size="2x"/>
                 <div>
                     <div className={style.title}>
                         {title}
