@@ -39,8 +39,8 @@ dependencies:
     specifier: ^1.0.3
     version: 1.0.7
   immer:
-    specifier: ^8.0.0
-    version: 8.0.4
+    specifier: ^10.0.3
+    version: 10.0.3
   lodash.debounce:
     specifier: ^4.0.8
     version: 4.0.8
@@ -2388,8 +2388,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /immer@8.0.4:
-    resolution: {integrity: sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==}
+  /immer@10.0.3:
+    resolution: {integrity: sha512-pwupu3eWfouuaowscykeckFmVTpqbzW+rXFCX8rQLkZzM9ftBmU/++Ra+o+L27mz03zJTlyV4UUr+fdKNffo4A==}
     dev: false
 
   /immutable@3.8.2:
