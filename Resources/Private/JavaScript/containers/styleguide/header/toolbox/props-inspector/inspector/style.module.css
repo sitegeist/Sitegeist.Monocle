@@ -6,7 +6,7 @@
     height: calc(100vh - 41px);
     width: 50vw;
     max-width: 430px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, .5);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 50%);
     transform: translateX(100%);
     transition: transform .3s;
     display: flex;

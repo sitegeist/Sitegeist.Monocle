@@ -12,13 +12,6 @@
     align-content: center;
     justify-content: center;
 
-    h1,
-    h2,
-    .message {
-        text-align: center;
-        width: 100%;
-        white-space: pre-line;
-    }
 }
 
 .severity-warning {
@@ -38,4 +31,11 @@
 
 .message {
     max-width: 40em;
+}
+.container h1,
+.container h2,
+.container .message {
+    text-align: center;
+    width: 100%;
+    white-space: pre-line;
 }

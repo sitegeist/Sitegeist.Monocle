@@ -27,7 +27,7 @@
     font-size: 80%;
     color: var(--brandColorsContrastBright);
 }
-.prototype:hover .name,
-.isFocused .name {
+.isFocused .name,
+.prototype:hover .name {
     color: var(--brandColorsContrastBrightest);
 }
