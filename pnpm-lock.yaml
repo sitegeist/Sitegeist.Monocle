@@ -56,9 +56,6 @@ dependencies:
   normalize.css:
     specifier: ^8.0.1
     version: 8.0.1
-  plow-js:
-    specifier: ^2.2.0
-    version: 2.2.0
   prop-types:
     specifier: ^15.5.10
     version: 15.8.1
@@ -3188,12 +3185,6 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
     dev: true
-
-  /plow-js@2.2.0:
-    resolution: {integrity: sha512-o4Term6lGrZX5JpsneWaTXa10hLpnpol95SdvJla+G/NRRraRqOpgV7Dq8qQPIcMPbVLhOlERRuJzGF8O9/Q6Q==}
-    optionalDependencies:
-      immutable: 3.8.2
-    dev: false
 
   /plow-js@3.0.0:
     resolution: {integrity: sha512-in222krkkAB6e3bYiRNj6Reh47UrGpjW+SJ1IamRkeFxsb6z2wGhDQ+SFiIhUMZWZ/LHRllz/lm1wUhwvM9Z/g==}
