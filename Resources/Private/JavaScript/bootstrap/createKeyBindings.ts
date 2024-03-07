@@ -1,4 +1,5 @@
 import mousetrap from "mousetrap";
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 import buildUrl from "build-url";
 
 import { actions, selectors } from "../state";
