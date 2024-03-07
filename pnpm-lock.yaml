@@ -53,9 +53,6 @@ dependencies:
   normalize.css:
     specifier: ^8.0.1
     version: 8.0.1
-  prop-types:
-    specifier: ^15.5.10
-    version: 15.8.1
   qrcode:
     specifier: ^1.4.4
     version: 1.5.3
