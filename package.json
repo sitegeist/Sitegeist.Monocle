@@ -58,7 +58,6 @@
     "@friendsofreactjs/react-css-themr": "^4.3.2",
     "@neos-project/brand": "^1.1.0",
     "@neos-project/react-ui-components": "~8.3.0",
-    "build-url": "^6.0.1",
     "classnames": "^2.2.5",
     "html-prettify": "^1.0.3",
     "immer": "^10.0.3",

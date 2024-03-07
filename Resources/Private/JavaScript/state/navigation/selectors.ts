@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
-import buildUrl from "build-url";
 
+import { buildUrl } from "../../utils";
 import { State } from "..";
 
 import * as prototypes from '../prototypes';
@@ -172,6 +172,6 @@ export const previewUri = createSelector(
                 showGrid: showGrid ? '1' : '0',
                 props: JSON.stringify(props)
             }
-        });    
+        });
     }
 );

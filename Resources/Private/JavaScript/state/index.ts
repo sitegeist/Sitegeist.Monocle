@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { select, put, fork, take } from "redux-saga/effects";
-import buildUrl from "build-url";
 
+import { buildUrl } from "../utils";
 import { Environment } from "../bootstrap";
 
 import * as prototypes from "./prototypes";

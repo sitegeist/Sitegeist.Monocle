@@ -37,14 +37,6 @@ react-dom/cjs/react-dom.production.min.js:
    * LICENSE file in the root directory of this source tree.
    */
 
-build-url/dist/build-url.js:
-  /**
-   * build-url - A small library that builds a URL given its components
-   * @version v6.0.0
-   * @link https://github.com/steverydz/build-url#readme
-   * @license MIT
-   */
-
 react-is/cjs/react-is.production.min.js:
   /** @license React v16.13.1
    * react-is.production.min.js

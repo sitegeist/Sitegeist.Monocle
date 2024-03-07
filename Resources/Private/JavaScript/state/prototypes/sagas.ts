@@ -1,6 +1,6 @@
 import { take, select, put } from "redux-saga/effects";
-import buildUrl from "build-url";
 
+import { buildUrl } from "../../utils";
 import { State } from "..";
 
 import * as business from "../business";
