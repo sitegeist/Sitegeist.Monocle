@@ -3,7 +3,7 @@ import {PureComponent} from "react";
 import cx from "classnames";
 import {connect} from "react-redux";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 import { State } from "../../../state";
 

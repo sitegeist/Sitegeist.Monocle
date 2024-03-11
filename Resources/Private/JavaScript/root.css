@@ -1,0 +1,30 @@
+/**
+ * !!! THIS FILE HAS BEEN GENERATED !!!
+ * Do not modify it manually!
+ */
+:root {
+    --goldenUnit: 40px;
+    --spacing: 16px;
+    --halfSpacing: 8px;
+    --sidebarWidth: 320px;
+    --baseFontSize: 14px;
+    --brandColorsPrimaryViolet: #26224C;
+    --brandColorsPrimaryBlue: #00ADEE;
+    --brandColorsContrastDarkest: #141414;
+    --brandColorsContrastDarker: #222;
+    --brandColorsContrastDark: #3f3f3f;
+    --brandColorsContrastNeutral: #323232;
+    --brandColorsContrastBright: #999;
+    --brandColorsContrastBrighter: #adadad;
+    --brandColorsContrastBrightest: #FFF;
+    --brandColorsSuccess: #00a338;
+    --brandColorsWarn: #ff8700;
+    --brandColorsError: #ff460d;
+    --brandColorsUncheckedCheckboxTick: #5B5B5B;
+    --brandFontsHeadingsFamily: Open Sans;
+    --brandFontsHeadingsStyle: Light;
+    --brandFontsHeadingsCssWeight: 300;
+    --brandFontsCopyFamily: Open Sans;
+    --brandFontsCopyStyle: Regular;
+    --brandFontsCopyCssWeight: 400;
+}

@@ -1,6 +1,7 @@
 import mousetrap from "mousetrap";
-import buildUrl from "build-url";
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind';
 
+import { buildUrl } from "../utils";
 import { actions, selectors } from "../state";
 
 import { Store } from "./createStore";

@@ -7,7 +7,7 @@ import { selectors, actions, State } from "../../../../../../state";
 
 import { Locale } from "./locale";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface LocaleListProps {
     locales: {

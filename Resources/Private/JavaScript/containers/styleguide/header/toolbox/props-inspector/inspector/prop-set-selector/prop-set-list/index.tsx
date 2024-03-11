@@ -5,7 +5,7 @@ import {visibility, outside} from "../../../../../../../../components";
 
 import { PropSet } from "./prop-set";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PropSetListProps {
     propSets: {

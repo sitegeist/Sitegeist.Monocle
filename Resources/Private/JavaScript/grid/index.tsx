@@ -1,5 +1,5 @@
 import * as React from "react";
-import {PureComponent, Component} from 'react';
+import {Component} from 'react';
 
 interface GridState {
     isActive: boolean

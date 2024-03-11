@@ -1,12 +1,14 @@
 import * as React from "react";
 import { PureComponent } from "react";
 
-import TextInput from "@neos-project/react-ui-components/lib-esm/TextInput";
-import TextArea from "@neos-project/react-ui-components/lib-esm/TextArea";
-import CheckBox from "@neos-project/react-ui-components/lib-esm/CheckBox";
-import SelectBox from "@neos-project/react-ui-components/lib-esm/SelectBox";
+import {
+    TextInput,
+    TextArea,
+    CheckBox,
+    SelectBox
+} from "@neos-project/react-ui-components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PropsItemProps {
     prop: {

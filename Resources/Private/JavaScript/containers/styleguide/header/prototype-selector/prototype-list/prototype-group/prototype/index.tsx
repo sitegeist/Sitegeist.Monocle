@@ -2,9 +2,9 @@ import * as React from "react";
 import { PureComponent } from "react";
 import cx from "classnames";
 
-import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
+import { Icon } from "@neos-project/react-ui-components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PrototypeProps {
     title: string
@@ -56,7 +56,7 @@ export class Prototype extends PureComponent<PrototypeProps> {
                 onClick={this.handleClick}
                 ref={this.setIconColor}
                 >
-                <Icon className={style.icon} icon={icon}/>
+                <Icon className={style.icon} icon={icon} size="2x"/>
                 <div>
                     <div className={style.title}>
                         {title}

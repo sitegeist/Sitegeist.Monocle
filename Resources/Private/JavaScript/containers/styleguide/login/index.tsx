@@ -2,14 +2,12 @@ import * as React from "react";
 import { PureComponent } from "react";
 import {connect} from "react-redux";
 
-import Dialog from "@neos-project/react-ui-components/lib-esm/Dialog";
-import TextInput from "@neos-project/react-ui-components/lib-esm/TextInput";
-import Button from "@neos-project/react-ui-components/lib-esm/Button";
+import { Dialog, TextInput, Button } from "@neos-project/react-ui-components";
 
 import { selectors, actions, State } from "../../../state";
 import { visibility } from "../../../components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface LoginProps {
     authorize: (username: string, password: string) => void

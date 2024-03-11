@@ -2,12 +2,11 @@ import * as React from "react";
 import { PureComponent } from "react";
 import {connect} from "react-redux";
 
-import Button from "@neos-project/react-ui-components/lib-esm/Button";
-import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
+import { Button, Icon } from "@neos-project/react-ui-components";
 
 import { selectors, actions, State } from "../../../../../state";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface GridTriggerProps {
     toggle: () => void
@@ -25,10 +24,10 @@ class GridTriggerC extends PureComponent<GridTriggerProps> {
         const { isOpen } = this.props;
 
         return (
-            <Button 
+            <Button
                 isActive={isOpen}
-                className={style.selector} 
-                onClick={this.handleToggle} 
+                className={style.selector}
+                onClick={this.handleToggle}
                 style="clean"
                 >
                 <Icon icon={isOpen ? "border-all" : "border-none"}  className={style.icon}/>

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { PureComponent } from "react";
 
-import TextInput from "@neos-project/react-ui-components/lib-esm/TextInput";
+import { TextInput } from "@neos-project/react-ui-components";
 
 import { visibility, outside, attached } from "../../../../../components";
 
 import { PrototypeGroup } from "./prototype-group";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PrototypeListProps {
     searchTerm: string

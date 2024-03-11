@@ -6,13 +6,12 @@ import cx from "classnames";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import Dialog from "@neos-project/react-ui-components/lib-esm/Dialog";
-import Icon from "@neos-project/react-ui-components/lib-esm/Icon";
+import { Dialog, Icon } from "@neos-project/react-ui-components";
 
 import { selectors, actions, State } from "../../../state";
 import { visibility } from "../../../components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface QrCodeProps {
     url: string

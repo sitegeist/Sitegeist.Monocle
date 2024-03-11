@@ -3,7 +3,7 @@ import { PureComponent } from "react";
 
 import { Prototype } from "./prototype";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PrototypeGroupProps {
     label: string

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import style from "./outside.css";
+import style from "./outside.module.css";
 
 interface OutsideProps {
     onClickOutside?: () => void

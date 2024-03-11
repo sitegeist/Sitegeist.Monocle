@@ -1,0 +1,61 @@
+.loader {
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: white;
+    z-index: 900;
+    cursor: wait;
+}
+
+.caption {
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.imagemark {
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+.imagemark path {
+    fill: #fff;
+}
+
+.monocle {
+    position: absolute;
+    top: 48%;
+    left: 23%;
+    z-index: 9;
+    border-radius: 100%;
+    width: 28%;
+    height: 28%;
+    transform: rotate(45deg);
+    overflow: hidden;
+}
+
+.monocleBackground {
+    position: absolute;
+    background: linear-gradient(to bottom, #f2f6f8 0, #d8e1e7 50%, #b5c6d0 51%, #f2f6f8 100%);
+    width: 200%;
+    height: 200%;
+    animation: glare linear 1s;
+    transform: translateY(-50%);
+}
+
+@keyframes glare {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-50%);
+    }
+}

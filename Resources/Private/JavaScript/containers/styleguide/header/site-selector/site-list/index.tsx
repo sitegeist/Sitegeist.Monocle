@@ -7,7 +7,7 @@ import { selectors, actions, State } from "../../../../../state";
 
 import { Site } from "./site";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface SiteListProps {
     sites: {

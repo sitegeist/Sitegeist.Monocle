@@ -1,6 +1,0 @@
-.main {
-    height: calc(100vh - var(--goldenUnit));
-    margin-top: var(--goldenUnit);
-    display: flex;
-    flex-direction: column;
-}

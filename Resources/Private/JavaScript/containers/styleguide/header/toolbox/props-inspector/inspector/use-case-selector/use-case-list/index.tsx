@@ -5,7 +5,7 @@ import {visibility, outside} from "../../../../../../../../components";
 
 import { UseCase } from "./use-case";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface UseCaseListProps {
     useCases: {
