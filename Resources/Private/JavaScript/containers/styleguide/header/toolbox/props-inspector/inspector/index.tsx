@@ -10,7 +10,7 @@ import { UseCaseSelector } from "./use-case-selector";
 import { PropSetSelector } from "./prop-set-selector";
 import { PropsItem } from "./props-item";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface InspectorProps {
     prototypeDetails: null | {

@@ -7,7 +7,7 @@ import cx from "classnames";
 import { selectors, actions, State } from "../../../../state";
 import { visibility } from "../../../../components";
 
-import style from "./style.css";
+import style from "./style.module.css";
 
 interface PreviewFrameProps {
     src: string

@@ -10,7 +10,7 @@ import { Login } from "./login";
 import { QrCode } from "./qrcode";
 import { ErrorMessage } from "./error-message";
 
-import "./style.css";
+import "./style.module.css";
 
 interface StyleguideProps {
     store: Store

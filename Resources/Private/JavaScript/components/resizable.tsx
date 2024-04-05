@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 
-import Button from '@neos-project/react-ui-components/lib-esm/Button';
-import Icon from '@neos-project/react-ui-components/lib-esm/Icon';
+import { Button, Icon } from '@neos-project/react-ui-components';
 
-import style from './resizable.css';
+import style from './resizable.module.css';
 
 interface ResizableOptions {
     initialHeight: number

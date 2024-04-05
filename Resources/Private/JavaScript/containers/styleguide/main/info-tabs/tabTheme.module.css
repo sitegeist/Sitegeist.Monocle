@@ -1,0 +1,17 @@
+.tabNavigation__item--isActive {
+    background-color: #00ADEE;
+    > .tabNavigation__itemBtn {
+        color: #fff;
+    }
+}
+
+.tabNavigation__itemBtnIcon {
+    width: 1em;
+    height: 1em;
+}
+
+.tabs__content {
+    height: calc(100% - 45px);
+    overflow-x: auto;
+    overflow-y: auto;
+}

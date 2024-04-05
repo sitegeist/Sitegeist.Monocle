@@ -1,0 +1,15 @@
+.list {
+    width: 100vh;
+    max-width: 300px;
+}
+
+.breakpoints {
+    max-height: calc(100vh - 2 * var(--goldenUnit));
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.separator {
+    margin: 0;
+    border-color: var(--brandColorsContrastBright);
+}
