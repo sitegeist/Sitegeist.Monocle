@@ -16,10 +16,11 @@ namespace Sitegeist\Monocle\Controller;
 use GuzzleHttp\Psr7\Message;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Sitegeist\Monocle\Service\ConfigurationService;
-use Neos\Flow\Http\Component\SetHeaderComponent;
 
 /**
  * Class PreviewController
@@ -114,12 +115,20 @@ class PreviewController extends ActionController
 
         // get the status and headers from the view
         $result = $this->view->render();
+        if ($result instanceof ResponseInterface) {
+            return (string)$result->getBody();
+        }
+        if ($result instanceof StreamInterface) {
+            return (string)$result;
+        }
+        // support for neos 8.3
         return $this->mergeHttpResponseFromOutput($result);
     }
 
     /**
      * @param string $output
      * @return string The message body without the message head
+     * @deprecated remove once Neos 8.3 is no longer supported
      */
     protected function mergeHttpResponseFromOutput($output)
     {
@@ -131,14 +140,7 @@ class PreviewController extends ActionController
                     $renderedResponse = Message::parseResponse($header);
                     $this->response->setStatusCode($renderedResponse->getStatusCode());
                     foreach ($renderedResponse->getHeaders() as $headerName => $headerValues) {
-                        /**
-                         * @todo remove "setComponentParameter()" call once Neos 5 support is dropped
-                         */
-                        if (version_compare(FLOW_VERSION_BRANCH, '7.0') >= 0) {
-                            $this->response->setHttpHeader($headerName, $headerValues);
-                        } else {
-                            $this->response->setComponentParameter(SetHeaderComponent::class, $headerName, $headerValues);
-                        }
+                        $this->response->setHttpHeader($headerName, $headerValues);
                     }
                     $output = substr($output, strlen($header));
                 } catch (\InvalidArgumentException $exception) {

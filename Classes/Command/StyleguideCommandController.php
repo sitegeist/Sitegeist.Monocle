@@ -13,6 +13,8 @@ namespace Sitegeist\Monocle\Command;
  * source code.
  */
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Annotations as Flow;
@@ -115,8 +117,15 @@ class StyleguideCommandController extends CommandController
             'props' => $convertedProps,
             'locales' => $convertedLocales
         ]);
-
-        $this->output($fusionView->render());
+        $result = $fusionView->render();
+        if ($result instanceof ResponseInterface) {
+            return (string) $result->getBody();
+        }
+        if ($result instanceof StreamInterface) {
+            return (string) $result;
+        }
+        // support for Neos 8.3
+        $this->output();
     }
 
     protected function outputData($data, $format)
