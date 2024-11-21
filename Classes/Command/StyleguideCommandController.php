@@ -125,7 +125,7 @@ class StyleguideCommandController extends CommandController
             return (string) $result;
         }
         // support for Neos 8.3
-        $this->output();
+        $this->output($result);
     }
 
     protected function outputData($data, $format)
