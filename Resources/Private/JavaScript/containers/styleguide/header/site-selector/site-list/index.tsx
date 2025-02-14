@@ -34,6 +34,7 @@ class SiteListC extends PureComponent<SiteListProps> {
                             <Site
                                 key={site}
                                 name={site}
+                                title={sites[site]}
                                 onClick={this.handleSelectSite}
                                 />
                         )

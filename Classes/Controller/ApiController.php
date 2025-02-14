@@ -140,7 +140,7 @@ class ApiController extends ActionController
         $result = [];
 
         foreach ($sitePackageKeys as $sitePackageKey) {
-            $result[$sitePackageKey] = $sitePackageKey;
+            $result[$sitePackageKey] = $this->configurationService->getSiteConfiguration($sitePackageKey, 'title') ?? $sitePackageKey;
         }
         return $result;
     }
