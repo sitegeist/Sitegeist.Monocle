@@ -5,6 +5,7 @@ import style from "./style.module.css";
 
 interface SiteProps {
     name: string
+    title: string
     onClick: (name: string) => void
 }
 
@@ -17,12 +18,12 @@ export class Site extends PureComponent<SiteProps> {
     }
 
     render() {
-        const { name } = this.props;
+        const { name, title } = this.props;
 
         return (
             <button className={style.site} onClick={this.handleClick}>
                 <div className={style.title}>
-                    {name}
+                    {title ?? name}
                 </div>
             </button>
         );

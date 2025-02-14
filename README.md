@@ -417,6 +417,7 @@ Sitegeist:
   Monocle:
     packages:
       'Vendor.Site':
+        title: 'Site'
         ui:
           viewportPresets:
               xxl:

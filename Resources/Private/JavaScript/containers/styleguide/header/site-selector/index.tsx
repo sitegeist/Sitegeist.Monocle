@@ -54,6 +54,6 @@ export const SiteSelector = connect((state: State) => {
 
     return {
         hasMultipleSites: sites && Object.keys(sites).length > 1,
-        label: currentlySelectedSitePackageKey ? currentlySelectedSitePackageKey : '---'
+        label: currentlySelectedSitePackageKey ? sites[currentlySelectedSitePackageKey] : '---'
     };
 })(SiteSelectorC);
