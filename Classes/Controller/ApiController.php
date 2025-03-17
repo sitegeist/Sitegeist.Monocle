@@ -157,8 +157,20 @@ class ApiController extends ActionController
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
         $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
 
-        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
-            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
+        $structureSource = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structureSource');
+        switch ($structureSource) {
+            case 'title':
+                foreach ($styleguideObjects as &$styleguideObject) {
+                    $this->transformTitleStructure($prototypeStructures, $styleguideObject);
+                }
+                break;
+
+            case 'prototypeName':
+            default:
+                foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
+                    $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
+                }
+                break;
         }
 
         $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
@@ -181,7 +193,7 @@ class ApiController extends ActionController
     }
 
     /**
-     * Find the matching structure for a prototype
+     * Find the matching structure for a prototype by prototypeName
      *
      * @param $prototypeStructures
      * @param $prototypeName
@@ -196,6 +208,34 @@ class ApiController extends ActionController
         }
 
         return [
+            'label' => 'Other',
+            'icon' => 'icon-question',
+            'color' => 'white'
+        ];
+    }
+
+    /**
+     * Transform styleguideObject based on title structure
+     *
+     * @param $prototypeStructures
+     * @param $styleguideObject
+     */
+    protected function transformTitleStructure($prototypeStructures, &$styleguideObject)
+    {
+        foreach ($prototypeStructures as $structure) {
+            $regex = sprintf('!%s!', $structure['match']);
+            if (preg_match($regex, $styleguideObject['title'], $matches)) {
+                $styleguideObject['structure'] = $structure;
+
+                if (count($matches) > 1) {
+                    $styleguideObject['title'] = $matches[1];
+                } else {
+                    $styleguideObject['title'] = preg_replace($regex, '', $styleguideObject['title']);
+                }
+            }
+        }
+
+        $styleguideObject['structure'] = [
             'label' => 'Other',
             'icon' => 'icon-question',
             'color' => 'white'
