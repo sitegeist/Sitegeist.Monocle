@@ -38,7 +38,7 @@ class FusionCachingAspect
     public function cacheFusionConfigurationForPackageKey(JoinPointInterface $joinPoint)
     {
         $packageKey = $joinPoint->getMethodArgument('packageKey');
-        $cacheIdentifier = str_replace('.', '_', $packageKey);
+        $cacheIdentifier = str_replace(['.', ':'], '_', $packageKey);
 
         if ($this->fusionCache->has($cacheIdentifier)) {
             $fusionConfigurationArray = $this->fusionCache->get($cacheIdentifier);

@@ -89,6 +89,7 @@ class FusionService
 
     /**
      * Get all styleguide objects for the given fusion-ast
+     * @return array<string, array{title: string, path:string, description:string, options: null|string, propSets: null|string[], useCases: null|array<int, array{title:string, name:string}>}>
      */
     public function getStyleguideObjectsFromFusionAst(array|FusionConfiguration $fusionAst): array
     {

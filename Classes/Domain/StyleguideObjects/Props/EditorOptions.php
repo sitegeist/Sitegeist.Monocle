@@ -14,7 +14,6 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\Props;
  */
 
 use Neos\Flow\Annotations as Flow;
-use UnexpectedValueException;
 
 #[Flow\Proxy(false)]
 final readonly class EditorOptions implements \JsonSerializable

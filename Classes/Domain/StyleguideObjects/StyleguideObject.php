@@ -19,14 +19,27 @@ use Neos\Flow\Annotations as Flow;
 final readonly class StyleguideObject implements \JsonSerializable
 {
     public function __construct(
-        public StyleguideObjectName $name
+        public StyleguideObjectIdentifier $identifier,
+        public StyleguideObjectName $name,
+        public StyleguideStructure $structure,
+        public string $description,
     ) {
     }
 
     public function jsonSerialize(): mixed
     {
-        return ['name' => $this->name];
+        // this reflects the old format that the monocle ui expects
+        // @todo it should be refactored to math the new names later
+        return [
+            'identifier' => $this->identifier,
+            'path' => $this->identifier,
+            'structure'  => $this->structure,
+            'title' => $this->name,
+            'description' => $this->description,
+            'options' => null,
+            'propSets' => null,
+            'useCases'  => null,
+        ];
+
     }
-
-
 }

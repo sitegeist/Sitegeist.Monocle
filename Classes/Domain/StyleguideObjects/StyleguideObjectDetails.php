@@ -23,31 +23,12 @@ final readonly class StyleguideObjectDetails implements \JsonSerializable
 {
 
     public function __construct(
+        public StyleguideObjectIdentifier $identifier,
         public StyleguideObjectName $name,
         public PropsCollection $props,
         public PropSetCollection $propSets,
         public UseCaseCollection $useCases
     ) {
-    }
-
-    public function getName(): StyleguideObjectName
-    {
-        return $this->name;
-    }
-
-    public function getProps(): PropsCollectionInterface
-    {
-        return $this->props;
-    }
-
-    public function getUseCases(): UseCaseCollection
-    {
-        return $this->useCases;
-    }
-
-    public function getPropSets(): PropSetCollection
-    {
-        return $this->propSets;
     }
 
     /**
@@ -56,6 +37,7 @@ final readonly class StyleguideObjectDetails implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'identifier' => $this->identifier,
             'name' => $this->name,
             'props' => $this->props,
             'propSets' => $this->propSets,

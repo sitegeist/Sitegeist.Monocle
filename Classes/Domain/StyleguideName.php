@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
@@ -20,18 +19,11 @@ namespace Sitegeist\Monocle\Domain;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class StyleguideProviderIdentifier
+final readonly class StyleguideName
 {
     public function __construct(
         public string $value
     ) {
-        if (str_contains(':', $value)) {
-            throw new \InvalidArgumentException('StyleguideProviderIdentifier must not contain ":".');
-        }
-    }
 
-    public function equals(StyleguideProviderIdentifier $other): bool
-    {
-        return $this->value === $other->value;
     }
 }

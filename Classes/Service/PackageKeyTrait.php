@@ -56,7 +56,7 @@ trait PackageKeyTrait
         }
 
         $sitePackageKeys = $this->getActiveSitePackageKeys();
-        return reset($sitePackageKeys);
+        return 'NeosFusionSite::' . reset($sitePackageKeys);
     }
 
     /**

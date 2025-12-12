@@ -14,7 +14,6 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\UseCases;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Sitegeist\Monocle\Domain\StyleguideObjects\Props\PropValue;
 
 #[Flow\Proxy(false)]
 final readonly class UseCase implements \JsonSerializable

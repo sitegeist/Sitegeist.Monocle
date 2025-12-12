@@ -3,21 +3,23 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;
-use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectName;
-use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
-use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectDetails;
-use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 interface StyleguideProviderInterface
 {
-    public function getIdentifier(): StyleguideProviderIdentifier;
+    public static function getProviderIdentifier(): StyleguideProviderIdentifier;
 
-    public function getName(): StyleguideProviderName;
+    public function getStyleguideMetadataCollection(): StyleguideMetadataCollection;
 
-    public function getStyleguideObjectList(): StyleguideObjectCollection;
-
-    public function getStyleguideObjectDetails(StyleguideObjectName $styleguideObject): StyleguideObjectDetails;
-
-    public function renderStyleguideObject(StyleguideObjectName $styleguideObject, array $props = [], ?PropSetName $propSet = null, ?UseCaseName $useCase = null): string;
+    public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface;
 }

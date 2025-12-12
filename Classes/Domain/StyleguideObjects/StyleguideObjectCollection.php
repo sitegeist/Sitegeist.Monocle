@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 namespace Sitegeist\Monocle\Domain\StyleguideObjects;
 
 /**
@@ -31,7 +32,11 @@ final readonly class StyleguideObjectCollection implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return $this->styleguideObjects;
+        $result = [];
+        foreach ($this->styleguideObjects as $styleguideObject) {
+            $result[$styleguideObject->identifier->value] = $styleguideObject;
+        }
+        return $result;
     }
 
 }

@@ -27,11 +27,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 final class PrototypeDetailsFactory implements PrototypeDetailsFactoryInterface
 {
-    /**
-     * @Flow\Inject
-     * @var AnatomyFactory
-     */
-    protected $anatomyFactory;
 
     /**
      * @Flow\Inject
