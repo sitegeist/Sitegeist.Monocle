@@ -48,18 +48,6 @@ final class PrototypeDetailsFactory implements PrototypeDetailsFactoryInterface
     {
         return new PrototypeDetails(
             $prototype->getName(),
-            RenderedCode::fromString(
-                ReverseFusionParser::restorePrototypeCode(
-                    (string) $prototype->getName(),
-                    $prototype->getAst()
-                )
-            ),
-            ParsedCode::fromString(
-                Yaml::dump($prototype->getAst(), 99)
-            ),
-            FusionPrototypeAst::fromArray($prototype->getAst()),
-            $this->anatomyFactory
-                ->fromPrototypeForPrototypeDetails($prototype),
             $this->propsCollectionFactory
                 ->fromPrototypeForPrototypeDetails($prototype),
             PropSetCollection::fromPrototype($prototype),

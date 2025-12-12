@@ -30,26 +30,6 @@ interface PrototypeDetailsInterface extends \JsonSerializable
     public function getPrototypeName(): PrototypeName;
 
     /**
-     * @return RenderedCode
-     */
-    public function getRenderedCode(): RenderedCode;
-
-    /**
-     * @return ParsedCode
-     */
-    public function getParsedCode(): ParsedCode;
-
-    /**
-     * @return FusionPrototypeAst
-     */
-    public function getFusionAst(): FusionPrototypeAst;
-
-    /**
-     * @return Anatomy
-     */
-    public function getAnatomy(): Anatomy;
-
-    /**
      * @return PropsCollectionInterface
      */
     public function getProps(): PropsCollectionInterface;

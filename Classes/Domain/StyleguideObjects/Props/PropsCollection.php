@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\Props;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class PropsCollection implements PropsCollectionInterface
+final readonly class PropsCollection
 {
     /**
      * @var Prop[]
