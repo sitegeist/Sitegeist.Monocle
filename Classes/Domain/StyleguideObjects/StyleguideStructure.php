@@ -13,6 +13,4 @@ final readonly class StyleguideStructure
         public string $color,
     ) {
     }
-
-
 }

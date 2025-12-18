@@ -1,6 +1,13 @@
 
 Sitegeist:
   Monocle:
+
+    # The providers that are asked for styleguides.
+    # each provider has to implement the StyleguideProviderInterface
+    styleguideProviders:
+      NeosFusionSite: Sitegeist\Monocle\StyleguideProvider\NeosFusionSite\NeosFusionSiteStyleguideProvider
+      CpxPackage: Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxPackageStyleguideProvider
+
     uriMock:
       #the static file uris to mock
       static: {}

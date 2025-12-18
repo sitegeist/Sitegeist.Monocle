@@ -19,7 +19,6 @@ use Sitegeist\Monocle\Domain\PrototypeDetails\Props\PropsCollectionFactoryInterf
 use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetCollection;
 use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCase;
 use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCaseCollection;
-use Sitegeist\Monocle\Fusion\ReverseFusionParser;
 use Symfony\Component\Yaml\Yaml;
 
 /**

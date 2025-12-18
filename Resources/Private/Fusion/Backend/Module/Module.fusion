@@ -52,7 +52,8 @@ prototype(Sitegeist.Monocle:Backend.Module) < prototype(Neos.Fusion:Component) {
             <body style="padding:0; background-color:#222;">
                 <div
                     id="app"
-                    data-default-site-package-key={defaultSitePackageKey}
+                    data-default-styleguide-address={defaultStyleguideAddress}
+                    data-default-site-package-key={defaultStyleguideAddress}
 
                     data-login-endpoint={props.loginEndpoint}
 

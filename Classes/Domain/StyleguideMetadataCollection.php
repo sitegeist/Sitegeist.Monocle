@@ -16,10 +16,12 @@ namespace Sitegeist\Monocle\Domain;
  * source code.
  */
 
+use Exception;
 use Neos\Flow\Annotations as Flow;
+use Traversable;
 
 #[Flow\Proxy(false)]
-final readonly class StyleguideMetadataCollection implements \JsonSerializable
+final readonly class StyleguideMetadataCollection implements \JsonSerializable, \IteratorAggregate
 {
     /**
      * @var StyleguideMetadata[]
@@ -39,6 +41,14 @@ final readonly class StyleguideMetadataCollection implements \JsonSerializable
             $allItems[] = $metadata->metadataItems;
         }
         return new self(...array_merge(...$allItems));
+    }
+
+    /**
+     * @return \Generator<StyleguideMetadata>
+     */
+    public function getIterator(): \Generator
+    {
+        yield from $this->metadataItems;
     }
 
     public function jsonSerialize(): mixed

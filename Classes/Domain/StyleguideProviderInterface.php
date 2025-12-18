@@ -17,9 +17,7 @@ namespace Sitegeist\Monocle\Domain;
 
 interface StyleguideProviderInterface
 {
-    public static function getProviderIdentifier(): StyleguideProviderIdentifier;
-
-    public function getStyleguideMetadataCollection(): StyleguideMetadataCollection;
+    public function getStyleguideMetadataCollection(StyleguideProviderIdentifier $providerIdentifier): StyleguideMetadataCollection;
 
     public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface;
 }

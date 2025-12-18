@@ -38,6 +38,7 @@ final readonly class StyleguideObjectDetails implements \JsonSerializable
     {
         return [
             'identifier' => $this->identifier,
+            'prototypeName' => $this->identifier,
             'name' => $this->name,
             'props' => $this->props,
             'propSets' => $this->propSets,

@@ -34,4 +34,9 @@ final readonly class StyleguideProviderIdentifier
     {
         return $this->value === $other->value;
     }
+
+    public static function fromString(string $string): self
+    {
+        return new self($string);
+    }
 }

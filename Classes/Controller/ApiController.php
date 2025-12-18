@@ -20,7 +20,6 @@ use Neos\Flow\Mvc\Controller\ActionController;
 use Sitegeist\Monocle\Domain\StyleguideAddress;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideRepository;
-use Sitegeist\Monocle\Service\PackageKeyTrait;
 use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
@@ -29,8 +28,6 @@ use Sitegeist\Monocle\Service\ConfigurationService;
  */
 class ApiController extends ActionController
 {
-    use PackageKeyTrait;
-
     protected $defaultViewObjectName = 'Neos\Flow\Mvc\View\JsonView';
 
     #[Flow\Inject]
@@ -44,21 +41,27 @@ class ApiController extends ActionController
      */
     public function configurationAction(?string $sitePackageKey = null): void
     {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        if ($sitePackageKey) {
+            $styleguideAddress = $this->styleguideRepository->getDefault()->address;
+        } else {
+            $styleguideAddress = StyleguideAddress::fromString($sitePackageKey);
+        }
+
         $allStyleguides = $this->styleguideRepository->getAllStyleGuides();
-        $styleguide = $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($sitePackageKey));
+        $styleguide = $this->styleguideRepository->getStyleGuide($styleguideAddress);
 
         $value = [];
-        $value['sitePackage'] = $sitePackageKey;
+        $value['styleguide'] = $styleguideAddress->toString();
+        $value['sitePackage'] = $styleguideAddress->toString();
         $value['ui'] = [
             'sitePackages' => $allStyleguides,
-            'viewportPresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'),
-            'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'),
-            'hotkeys' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.hotkeys'),
-            'preview' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview')
+            'styleguides' => $allStyleguides,
+            'viewportPresets' => $this->configurationService->getSiteConfiguration($styleguideAddress->toString(), 'ui.viewportPresets'),
+            'localePresets' => $this->configurationService->getSiteConfiguration($styleguideAddress->toString(), 'ui.localePresets'),
+            'hotkeys' => $this->configurationService->getSiteConfiguration($styleguideAddress->toString(), 'ui.hotkeys'),
+            'preview' => $this->configurationService->getSiteConfiguration($styleguideAddress->toString(), 'preview')
         ];
         $value['styleguideObjects'] = $styleguide->getStyleguideObjectList();
-
         $this->view->assign('value', $value);
     }
 
@@ -67,9 +70,9 @@ class ApiController extends ActionController
      */
     public function prototypeDetailsAction(string $sitePackageKey, string $prototypeName): void
     {
-        $styleguide = $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($sitePackageKey));
+        $styleguideAddress = StyleguideAddress::fromString($sitePackageKey);
+        $styleguide = $this->styleguideRepository->getStyleGuide($styleguideAddress);
         $styleguideObjectDetails = $styleguide->getStyleguideObjectDetails(StyleguideObjectIdentifier::fromString($prototypeName));
-
         $this->view->assign('value', $styleguideObjectDetails);
     }
 }

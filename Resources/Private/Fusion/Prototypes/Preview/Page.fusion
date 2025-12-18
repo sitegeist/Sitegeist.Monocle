@@ -89,7 +89,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
 
             @process.applyContainer = Neos.Fusion:Case {
                 hasUseCaseContainer {
-                    condition = Sitegeist.Monocle:CanRender {
+                    condition = Neos.Fusion:CanRender {
                         @if.has = ${useCase}
                         renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/useCases/' + useCase + '/container'}
                     }
@@ -99,7 +99,7 @@ prototype(Sitegeist.Monocle:Preview.Page) < prototype(Neos.Fusion:Http.Message) 
                 }
 
                 hasStyleguideContainer {
-                    condition = Sitegeist.Monocle:CanRender {
+                    condition = Neos.Fusion:CanRender {
                         renderPath = ${'/<' + prototypeName + '>/__meta/styleguide/container'}
                     }
                     renderer = Neos.Fusion:Renderer {

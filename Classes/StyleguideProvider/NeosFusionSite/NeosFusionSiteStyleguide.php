@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\Monocle\StyleguideProvider;
+namespace Sitegeist\Monocle\StyleguideProvider\NeosFusionSite;
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\I18n\LocaleCollection;
+use Neos\Fusion\View\FusionView;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Sitegeist\Monocle\Domain\StyleguideIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\Props\PropsCollection;
@@ -20,9 +24,11 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
 use \Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Service\ConfigurationService;
+use Sitegeist\Monocle\Service\DummyControllerContextTrait;
 
-class NeosNeosFusionSiteStyleguide implements StyleguideInterface
+class NeosFusionSiteStyleguide implements StyleguideInterface
 {
+    use DummyControllerContextTrait;
 
     #[Flow\Inject]
     protected FusionService $fusionService;
@@ -36,6 +42,11 @@ class NeosNeosFusionSiteStyleguide implements StyleguideInterface
         protected StyleguideIdentifier $identifier,
     ) {
         $this->sitePackageKey = $identifier->value;
+    }
+
+    public function getStyleguideIdentifier(): StyleguideIdentifier
+    {
+        return $this->identifier;
     }
 
     public function getStyleguideObjectList(): StyleguideObjectCollection
@@ -105,9 +116,36 @@ class NeosNeosFusionSiteStyleguide implements StyleguideInterface
         return new StyleguideObjectCollection(... $result);
     }
 
-    public function renderStyleguideObject(StyleguideObjectIdentifier $styleguideObject, array $props = [], ?PropSetName $propSet = null, ?UseCaseName $useCase = null): string
+    public function renderStyleguideObject(StyleguideObjectIdentifier $styleguideObject, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
     {
-        return "not implemented yet";
+        $sitePackageKey = $this->identifier->value;
+
+        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
+
+        $view = new \Sitegeist\Monocle\Fusion\FusionView();
+        $view->setControllerContext($this->createDummyControllerContext());
+
+        $view->setPackageKey($sitePackageKey);
+        $view->setFusionPath($fusionRootPath);
+        $view->setLocales($locales);
+
+        $view->assignMultiple([
+            'sitePackageKey' => $sitePackageKey,
+            'prototypeName' => $styleguideObject->value,
+            'useCase' => $useCase,
+            'propSet' => $propSet,
+            'props' => $props,
+            'locales' => $locales
+        ]);
+
+        // get the status and headers from the view
+        $result = $view->render();
+        if ($result instanceof ResponseInterface) {
+            return (string)$result->getBody();
+        }
+        if ($result instanceof StreamInterface) {
+            return (string)$result;
+        }
     }
 
     /**

@@ -1,5 +1,0 @@
-prototype(Sitegeist.Monocle:CanRender) {
-    @class = 'Sitegeist\\Monocle\\FusionObjects\\CanRenderImplementation'
-    type = null
-    path = null
-}

@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Controller;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Domain\StyleguideRepository;
 use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
@@ -25,13 +25,11 @@ use Sitegeist\Monocle\Service\ConfigurationService;
  */
 class ModuleController extends ActionController
 {
-    use PackageKeyTrait;
+    #[Flow\Inject]
+    protected StyleguideRepository $styleguideRepository;
 
-    /**
-     * @Flow\Inject
-     * @var ConfigurationService
-     */
-    protected $configurationService;
+    #[Flow\Inject]
+    protected ConfigurationService $configurationService;
 
     /**
      * Initialize the view
@@ -41,8 +39,8 @@ class ModuleController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $sitePackageKey = $this->getDefaultSitePackageKey();
-        $this->view->assign('defaultSitePackageKey', $sitePackageKey);
+        $styleguideAddress = $this->styleguideRepository->getDefault()->address->toString();
+        $this->view->assign('defaultStyleguideAddress', $styleguideAddress);
     }
 
     /**
