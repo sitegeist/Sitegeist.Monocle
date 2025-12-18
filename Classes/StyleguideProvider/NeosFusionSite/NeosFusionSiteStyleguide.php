@@ -19,6 +19,7 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectDetails;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectName;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectPath;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideStructure;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
@@ -51,45 +52,13 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
 
     public function getStyleguideObjectList(): StyleguideObjectCollection
     {
-        return $this->getStyleguideObjects($this->sitePackageKey);
-    }
-
-    public function getStyleguideObjectDetails(StyleguideObjectIdentifier $styleguideObject): StyleguideObjectDetails
-    {
-        $prototypeName = $styleguideObject->value;
-
         $fusionAst = $this->fusionService->getFusionConfigurationForPackageKey($this->sitePackageKey);
-        $styleguideObjectsFromFusion = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
-
-        $styleguideObjectFromFusion = $styleguideObjectsFromFusion[$prototypeName] ?? null;
-        if (is_null($styleguideObjectFromFusion)) {
-            throw new \Exception($prototypeName . " not found");
-        }
-
-        return new StyleguideObjectDetails(
-            StyleguideObjectIdentifier::fromString($prototypeName),
-            StyleguideObjectName::fromString($styleguideObjectFromFusion['title']),
-            new PropsCollection(),
-            new PropSetCollection(),
-            new UseCaseCollection()
-        );
-    }
-
-    /**
-     * @param $sitePackageKey
-     * @param $styleguideObject
-     * @return array
-     * @throws \Neos\Neos\Domain\Exception
-     */
-    protected function getStyleguideObjects($sitePackageKey): StyleguideObjectCollection
-    {
-        $fusionAst = $this->fusionService->getFusionConfigurationForPackageKey($sitePackageKey);
         $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
-        $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
+        $prototypeStructures = $this->configurationService->getSiteConfiguration($this->sitePackageKey, 'ui.structure');
 
-        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
+        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($this->sitePackageKey, 'hiddenPrototypeNamePatterns');
         if (is_array($hiddenPrototypeNamePatterns)) {
-            $alwaysShowPrototypes = $this->configurationService->getSiteConfiguration($sitePackageKey, 'alwaysShowPrototypes');
+            $alwaysShowPrototypes = $this->configurationService->getSiteConfiguration($this->sitePackageKey, 'alwaysShowPrototypes');
             foreach ($hiddenPrototypeNamePatterns as $pattern) {
                 $styleguideObjects = array_filter(
                     $styleguideObjects,
@@ -109,6 +78,7 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
             $result[] = new StyleguideObject(
                 StyleguideObjectIdentifier::fromString($prototypeName),
                 StyleguideObjectName::fromString($styleguideObject['title']),
+                StyleguideObjectPath::fromString($prototypeName),
                 $this->getStructureForPrototypeName($prototypeStructures, $prototypeName),
                 $styleguideObject['description']
             );
@@ -116,7 +86,28 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
         return new StyleguideObjectCollection(... $result);
     }
 
-    public function renderStyleguideObject(StyleguideObjectIdentifier $styleguideObject, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
+    public function getStyleguideObjectDetails(StyleguideObjectIdentifier $identifier): StyleguideObjectDetails
+    {
+        $prototypeName = $identifier->value;
+
+        $fusionAst = $this->fusionService->getFusionConfigurationForPackageKey($this->sitePackageKey);
+        $styleguideObjectsFromFusion = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
+
+        $styleguideObjectFromFusion = $styleguideObjectsFromFusion[$prototypeName] ?? null;
+        if (is_null($styleguideObjectFromFusion)) {
+            throw new \Exception($prototypeName . " not found");
+        }
+
+        return new StyleguideObjectDetails(
+            StyleguideObjectIdentifier::fromString($prototypeName),
+            StyleguideObjectName::fromString($styleguideObjectFromFusion['title']),
+            new PropsCollection(),
+            new PropSetCollection(),
+            new UseCaseCollection()
+        );
+    }
+
+    public function renderStyleguideObject(StyleguideObjectIdentifier $identifier, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
     {
         $sitePackageKey = $this->identifier->value;
 
@@ -131,7 +122,7 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
 
         $view->assignMultiple([
             'sitePackageKey' => $sitePackageKey,
-            'prototypeName' => $styleguideObject->value,
+            'prototypeName' => $identifier->value,
             'useCase' => $useCase,
             'propSet' => $propSet,
             'props' => $props,

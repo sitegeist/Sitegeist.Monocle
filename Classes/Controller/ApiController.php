@@ -42,9 +42,9 @@ class ApiController extends ActionController
     public function configurationAction(?string $sitePackageKey = null): void
     {
         if ($sitePackageKey) {
-            $styleguideAddress = $this->styleguideRepository->getDefault()->address;
-        } else {
             $styleguideAddress = StyleguideAddress::fromString($sitePackageKey);
+        } else {
+            $styleguideAddress = $this->styleguideRepository->getDefault()->address;
         }
 
         $allStyleguides = $this->styleguideRepository->getAllStyleGuides();

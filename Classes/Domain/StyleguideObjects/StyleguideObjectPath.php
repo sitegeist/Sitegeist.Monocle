@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class StyleguideObjectIdentifier implements \JsonSerializable
+final readonly class StyleguideObjectPath implements \JsonSerializable
 {
     private function __construct(public string $value)
     {
@@ -29,11 +29,6 @@ final readonly class StyleguideObjectIdentifier implements \JsonSerializable
     public static function fromString(string $string): self
     {
         return new self($string);
-    }
-
-    public function equals(StyleguideObjectIdentifier $other): bool
-    {
-        return $this->value === $other->value;
     }
 
     /**

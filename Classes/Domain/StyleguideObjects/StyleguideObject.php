@@ -21,6 +21,7 @@ final readonly class StyleguideObject implements \JsonSerializable
     public function __construct(
         public StyleguideObjectIdentifier $identifier,
         public StyleguideObjectName $name,
+        public StyleguideObjectPath $path,
         public StyleguideStructure $structure,
         public string $description,
     ) {
@@ -32,7 +33,7 @@ final readonly class StyleguideObject implements \JsonSerializable
         // @todo it should be refactored to math the new names later
         return [
             'identifier' => $this->identifier,
-            'path' => $this->identifier,
+            'path' => $this->path,
             'structure'  => $this->structure,
             'title' => $this->name,
             'description' => $this->description,

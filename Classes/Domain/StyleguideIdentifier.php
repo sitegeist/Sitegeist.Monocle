@@ -25,6 +25,11 @@ final readonly class StyleguideIdentifier
     ) {
     }
 
+    public static function fromString(string $value): self
+    {
+        return new self( $value);
+    }
+
     public function equals(StyleguideIdentifier $other): bool
     {
         return $this->value === $other->value;

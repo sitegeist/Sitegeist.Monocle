@@ -6,6 +6,7 @@ namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\FlowPackageInterface;
 use Neos\Flow\Package\PackageManager;
+use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader;
 use Sitegeist\Monocle\Domain\StyleguideAddress;
 use Sitegeist\Monocle\Domain\StyleguideIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideInterface;
@@ -27,15 +28,38 @@ class CpxPackageStyleguideProvider implements StyleguideProviderInterface
 
     public function getStyleguideMetadataCollection(StyleguideProviderIdentifier $providerIdentifier): StyleguideMetadataCollection
     {
-        return new StyleguideMetadataCollection();
+        $items = [];
+        if (class_exists(\PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader::class)) {
+            $packages = $this->packageManager->getFlowPackages();
+            foreach ($packages as $package) {
+                $componentPath = $package->getPackagePath() . '/Components';
+                if (file_exists($componentPath) && is_dir($componentPath)) {
+                    $identifier = StyleguideIdentifier::fromString($package->getPackageKey());
+                    $items[] = new StyleguideMetadata(
+                        $identifier,
+                        StyleguideName::fromString($package->getComposerName()),
+                        new StyleguideAddress(
+                            $providerIdentifier,
+                            $identifier,
+                        )
+                    );
+                }
+            }
+        }
+        return new StyleguideMetadataCollection(...$items);
     }
 
     public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface
     {
-        if (class_exists(\Neos\Neos\Domain\Service\FusionSourceCodeFactory::class)) {
-            return new CpxPackageStyleguide($identifier);
-        } else {
-            throw new \InvalidArgumentException('Neos Fusion styleguides can only work with Neos');
+        if (class_exists(\PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader::class)) {
+            $package = $this->packageManager->getPackage($identifier->value);
+            if ($package instanceof FlowPackageInterface) {
+                return new \Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxPackageStyleguide(
+                    $identifier,
+                    $package,
+                );
+            }
         }
+        throw new \InvalidArgumentException('Neos Fusion styleguides can only work with Neos');
     }
 }

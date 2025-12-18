@@ -30,7 +30,7 @@ interface StyleguideInterface
 
     public function getStyleguideObjectList(): StyleguideObjectCollection;
 
-    public function getStyleguideObjectDetails(StyleguideObjectIdentifier $styleguideObject): StyleguideObjectDetails;
+    public function getStyleguideObjectDetails(StyleguideObjectIdentifier $identifier): StyleguideObjectDetails;
 
-    public function renderStyleguideObject(StyleguideObjectIdentifier $styleguideObject, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string;
+    public function renderStyleguideObject(StyleguideObjectIdentifier $identifier, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string;
 }

@@ -26,4 +26,9 @@ final readonly class StyleguideName
     ) {
 
     }
+
+    public static function fromString(string $value): self
+    {
+        return new self($value);
+    }
 }
