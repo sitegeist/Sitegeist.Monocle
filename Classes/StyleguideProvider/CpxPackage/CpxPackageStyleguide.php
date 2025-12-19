@@ -10,6 +10,7 @@ use Neos\Flow\Package\PackageManager;
 use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfiguration;
 use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader;
 use PackageFactory\PHPComponentEngine\ComponentInterface;
+use Sitegeist\Monocle\Domain\StyleguideAddress;
 use Sitegeist\Monocle\Domain\StyleguideIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\Props\PropsCollection;
@@ -44,15 +45,20 @@ class CpxPackageStyleguide implements StyleguideInterface
     protected array $items;
 
     public function __construct(
-        protected StyleguideIdentifier $identifier,
+        protected StyleguideAddress $styleguideAddress,
         protected FlowPackageInterface $package,
     ) {
         $this->package = $package;
     }
 
+    public function getStyleguideAddress(): StyleguideAddress
+    {
+        return $this->styleguideAddress;
+    }
+
     public function getStyleguideIdentifier(): StyleguideIdentifier
     {
-        return $this->identifier;
+        return $this->styleguideAddress->styleguide;
     }
 
     public function getStyleguideObjectList(): StyleguideObjectCollection
@@ -64,16 +70,9 @@ class CpxPackageStyleguide implements StyleguideInterface
     public function getStyleguideObjectDetails(StyleguideObjectIdentifier $identifier): StyleguideObjectDetails
     {
         $list = $this->buildItemList();
-        foreach ($list as $item) {
-            if ($item->styleguideObject->identifier->equals($identifier)) {
-                return new StyleguideObjectDetails(
-                    $item->styleguideObject->identifier,
-                    $item->styleguideObject->name,
-                    new PropsCollection(),
-                    new PropSetCollection(),
-                    new UseCaseCollection()
-                );
-            }
+        $item = $list->find($identifier);
+        if ($item instanceof CpxComponentMetadata) {
+            return $item->prepareStyleguideObjectDetails();
         }
         throw new \InvalidArgumentException($identifier->value . ' not found');
     }
@@ -81,12 +80,15 @@ class CpxPackageStyleguide implements StyleguideInterface
     public function renderStyleguideObject(StyleguideObjectIdentifier $identifier, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
     {
         $list = $this->buildItemList();
-        foreach ($list as $item) {
-            if ($item->styleguideObject->identifier->equals($identifier)) {
-                $propsStyleguideConfig = Yaml::parse(file_get_contents($item->componentStyleguideConfigFile));
-                $props = array_merge($propsStyleguideConfig['props'] ?? [], $props);
-                $component = $item->componentPhpClassName::create(...$props);
-                return $component->render('styleguide.yaml', $propsStyleguideConfig);
+        $item = $list->find($identifier);
+        if ($item instanceof CpxComponentMetadata) {
+            $component = CpxComponentFactory::buildComponentFromMetadata($item, $props, $propSet, $useCase, true);
+            $previewComponentConfiguration = $this->configurationService->getStyleguideConfiguration($this->styleguideAddress, 'preview');
+            if ($previewComponentConfiguration) {
+                $preview = CpxComponentFactory::buildComponentFromConfiguration($previewComponentConfiguration, ['content' => $component]);
+                return $preview->render();
+            } else {
+                return $component->render();
             }
         }
         throw new \InvalidArgumentException($identifier->value . ' not found');
@@ -100,14 +102,17 @@ class CpxPackageStyleguide implements StyleguideInterface
             /**
              * @var TranspilerConfiguration $configuration
              */
+            $identifier = StyleguideObjectIdentifier::fromString($configuration->moduleId);
+
             $componentId = str_replace('.cpx', '', $configuration->moduleId);
             list($package, $path) = explode('/', $componentId, 2);
-            $phpClass = str_replace('.', '\\', $package) . '\\Components\\' . str_replace('/', '\\', $path);
-            if (!class_exists($phpClass) || !is_subclass_of($phpClass, ComponentInterface::class, true)) {
+
+            $phpClass = CpxComponentFactory::classNameFromComponentIdentifier($identifier);
+            if ($phpClass == null) {
                 continue;
             }
 
-            $yamlFile = str_replace ('.cpx', '.styleguide.yaml', $configuration->src);
+            $yamlFile = str_replace('.cpx', '.styleguide.yaml', $configuration->src);
             if (!file_exists($yamlFile)) {
                 continue;
             }
@@ -116,10 +121,10 @@ class CpxPackageStyleguide implements StyleguideInterface
 
             $items[] = new CpxComponentMetadata(
                 new StyleguideObject(
-                    StyleguideObjectIdentifier::fromString(str_replace('/', ':', $componentId)),
+                    $identifier,
                     StyleguideObjectName::fromString($pathSegments[array_key_last($pathSegments)]),
                     StyleguideObjectPath::fromString(str_replace('/', '.', $path)),
-                    new StyleguideStructure('', '' , ''),
+                    new StyleguideStructure('', '', ''),
                     ''
                 ),
                 $phpClass,
@@ -128,5 +133,4 @@ class CpxPackageStyleguide implements StyleguideInterface
         }
         return new CpxComponentMetadataCollection(...$items);
     }
-
 }

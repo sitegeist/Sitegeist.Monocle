@@ -41,6 +41,5 @@ final readonly class StyleguideObject implements \JsonSerializable
             'propSets' => null,
             'useCases'  => null,
         ];
-
     }
 }

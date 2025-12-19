@@ -39,7 +39,9 @@ class ModuleController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $styleguideAddress = $this->styleguideRepository->getDefault()->address->toString();
+        $defaultStyleguide = $this->styleguideRepository->getDefault();
+        $styleguideAddress = $defaultStyleguide->address->toString();
+
         $this->view->assign('defaultStyleguideAddress', $styleguideAddress);
     }
 

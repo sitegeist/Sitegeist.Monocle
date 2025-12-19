@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-
 /**
  * This file is part of the Sitegeist.Monocle package
  *
@@ -27,12 +26,11 @@ final readonly class StyleguideIdentifier
 
     public static function fromString(string $value): self
     {
-        return new self( $value);
+        return new self($value);
     }
 
     public function equals(StyleguideIdentifier $other): bool
     {
         return $this->value === $other->value;
     }
-
 }

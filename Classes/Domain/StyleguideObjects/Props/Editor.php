@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\Props;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class Editor
+final readonly class Editor implements \JsonSerializable
 {
     public function __construct(
         public EditorIdentifier $identifier,

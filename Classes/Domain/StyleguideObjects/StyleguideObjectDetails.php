@@ -21,7 +21,6 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseCollection;
 #[Flow\Proxy(false)]
 final readonly class StyleguideObjectDetails implements \JsonSerializable
 {
-
     public function __construct(
         public StyleguideObjectIdentifier $identifier,
         public StyleguideObjectName $name,

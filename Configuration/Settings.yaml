@@ -8,19 +8,16 @@ Sitegeist:
       NeosFusionSite: Sitegeist\Monocle\StyleguideProvider\NeosFusionSite\NeosFusionSiteStyleguideProvider
       CpxPackage: Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxPackageStyleguideProvider
 
-    uriMock:
-      #the static file uris to mock
-      static: {}
-      # key:
-      #   path: 'resource://Vendor.Package/Private/Json/example.json'
-      #   contentType: 'application/json'
 
     fusion:
       enableObjectTreeCache: true
 
-    defaultPackageKey: null
+    # the styleguide to open by default
+    # Example: 'CpxPackage::Vendor.Site'
+    defaultStyleguide: null
 
-    packages: {  }
+    # configurations per styleguide address
+    styleguides: {}
 
     ui:
       hotkeys:

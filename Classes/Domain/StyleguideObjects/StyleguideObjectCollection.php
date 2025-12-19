@@ -38,5 +38,4 @@ final readonly class StyleguideObjectCollection implements \JsonSerializable
         }
         return $result;
     }
-
 }

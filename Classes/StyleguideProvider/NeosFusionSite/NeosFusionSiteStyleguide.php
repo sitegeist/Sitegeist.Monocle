@@ -9,6 +9,7 @@ use Neos\Flow\I18n\LocaleCollection;
 use Neos\Fusion\View\FusionView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Sitegeist\Monocle\Domain\StyleguideAddress;
 use Sitegeist\Monocle\Domain\StyleguideIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\Props\PropsCollection;
@@ -40,14 +41,19 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
     private string $sitePackageKey;
 
     public function __construct(
-        protected StyleguideIdentifier $identifier,
+        protected StyleguideAddress $address,
     ) {
-        $this->sitePackageKey = $identifier->value;
+        $this->sitePackageKey = $address->styleguide->value;
+    }
+
+    public function getStyleguideAddress(): StyleguideAddress
+    {
+        return $this->address;
     }
 
     public function getStyleguideIdentifier(): StyleguideIdentifier
     {
-        return $this->identifier;
+        return $this->address->styleguide;
     }
 
     public function getStyleguideObjectList(): StyleguideObjectCollection
@@ -109,7 +115,7 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
 
     public function renderStyleguideObject(StyleguideObjectIdentifier $identifier, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
     {
-        $sitePackageKey = $this->identifier->value;
+        $sitePackageKey = $this->address->styleguide->value;
 
         $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['preview', 'fusionRootPath']);
 

@@ -19,5 +19,5 @@ interface StyleguideProviderInterface
 {
     public function getStyleguideMetadataCollection(StyleguideProviderIdentifier $providerIdentifier): StyleguideMetadataCollection;
 
-    public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface;
+    public function getStyleguide(StyleguideAddress $address): StyleguideInterface;
 }

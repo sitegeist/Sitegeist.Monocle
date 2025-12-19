@@ -5,8 +5,6 @@ namespace Sitegeist\Monocle\Domain;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
-use Neos\Flow\Reflection\ReflectionService;
-use function PHPUnit\Framework\fileExists;
 
 #[Flow\Scope("singleton")]
 class StyleguideRepository
@@ -14,10 +12,10 @@ class StyleguideRepository
     #[Flow\Inject]
     protected ObjectManagerInterface $objectManager;
 
-    #[Flow\InjectConfiguration(path: 'styleguideProviders')]
+    #[Flow\InjectConfiguration(package: 'Sitegeist.Monocle', path: 'styleguideProviders')]
     protected array $styleguideProviderConfiguration;
 
-    #[Flow\InjectConfiguration(path: 'defaultStyleguide')]
+    #[Flow\InjectConfiguration(package: 'Sitegeist.Monocle', path: 'defaultStyleguide')]
     protected ?string $defaultStyleguide;
 
     /**
@@ -28,7 +26,10 @@ class StyleguideRepository
     public function getDefault(): StyleguideMetadata
     {
         $all = $this->getAllStyleGuides();
-        return $all->metadataItems[array_key_first($all->metadataItems)];
+        if ($this->defaultStyleguide) {
+            return $all->byAddress(StyleguideAddress::fromString($this->defaultStyleguide));
+        }
+        return $all->first();
     }
 
     public function getAllStyleGuides(): StyleguideMetadataCollection
@@ -46,7 +47,7 @@ class StyleguideRepository
         $providers = $this->getProviders();
         $provider = $providers[$address->provider->value] ?? null;
         if ($provider instanceof StyleguideProviderInterface) {
-            return $provider->getStyleguide($address->styleguide);
+            return $provider->getStyleguide($address);
         }
 
         throw new \Exception(sprintf('Styleguide %s in Provider %s was not found', $address->styleguide->value, $address->provider->value));

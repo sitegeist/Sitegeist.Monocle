@@ -28,7 +28,6 @@ use Sitegeist\Monocle\Fusion\FusionView;
  */
 class PreviewController extends ActionController
 {
-
     /**
      * @var string
      */
@@ -58,10 +57,9 @@ class PreviewController extends ActionController
      * @param  string|null  $propSet
      * @param  string|null  $props props as json encoded string
      * @param  string|null  $locales locales-fallback-chain as comma sepertated string
-     * @param  bool|null $showGrid
      * @return string
      */
-    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '', ?bool $showGrid = false): string
+    public function indexAction(string $prototypeName, string $sitePackageKey, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = ''): string
     {
         $renderProps = [];
         if ($props) {
@@ -84,10 +82,6 @@ class PreviewController extends ActionController
         } else {
             $renderLocales = $this->localeFallback ?: [$this->defaultLocale];
         }
-
-//        if ($showGrid) {
-//            $gridConfigurations = $this->configurationService->getSiteConfiguration($sitePackageKey, ['ui', 'grids']);
-//        }
 
         $styleguide = $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($sitePackageKey));
         $result = $styleguide->renderStyleguideObject(

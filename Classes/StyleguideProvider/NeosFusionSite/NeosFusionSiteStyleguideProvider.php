@@ -20,7 +20,6 @@ use Sitegeist\Monocle\Domain\StyleguideProviderInterface;
  */
 class NeosFusionSiteStyleguideProvider implements StyleguideProviderInterface
 {
-
     #[Flow\Inject]
     protected PackageManager $packageManager;
 
@@ -49,10 +48,10 @@ class NeosFusionSiteStyleguideProvider implements StyleguideProviderInterface
         }
     }
 
-    public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface
+    public function getStyleguide(StyleguideAddress $address): StyleguideInterface
     {
         if (class_exists(\Neos\Neos\Domain\Service\FusionSourceCodeFactory::class)) {
-            return new NeosFusionSiteStyleguide($identifier);
+            return new NeosFusionSiteStyleguide($address);
         } else {
             throw new \InvalidArgumentException('Neos Fusion styleguides can only work with Neos');
         }

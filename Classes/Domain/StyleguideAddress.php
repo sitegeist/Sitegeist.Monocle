@@ -28,10 +28,10 @@ final readonly class StyleguideAddress
 
     public static function fromString(string $value): self
     {
-        list ($provider, $styleguide) = explode('::', $value, 2);
+        list($provider, $styleguide) = explode('::', $value, 2);
         return new self(
             new StyleguideProviderIdentifier($provider),
-            new StyleguideIdentifier( $styleguide)
+            new StyleguideIdentifier($styleguide)
         );
     }
 
@@ -39,5 +39,4 @@ final readonly class StyleguideAddress
     {
         return $this->provider->value . '::' . $this->styleguide->value;
     }
-
 }

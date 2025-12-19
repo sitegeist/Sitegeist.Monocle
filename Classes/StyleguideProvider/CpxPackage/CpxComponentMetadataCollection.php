@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;
-
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 
 /**
  * @implements \IteratorAggregate<CpxComponentMetadata>
@@ -13,14 +13,26 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;
 readonly class CpxComponentMetadataCollection implements \IteratorAggregate
 {
     /**
-     * @var CpxComponentMetadata[]
+     * @var array<string, CpxComponentMetadata>
      */
-    public array $item;
+    public array $items;
 
     public function __construct(
         CpxComponentMetadata ... $items
     ) {
-        $this->item = $items;
+        $itemsIndexedById = [];
+        foreach ($items as $item) {
+            $itemsIndexedById[$item->styleguideObject->identifier->value] = $item;
+        }
+        $this->items = $itemsIndexedById;
+    }
+
+    public function find(StyleguideObjectIdentifier $identifier): ?CpxComponentMetadata
+    {
+        if (array_key_exists($identifier->value, $this->items)) {
+            return $this->items[$identifier->value];
+        }
+        return null;
     }
 
     /**
@@ -28,13 +40,13 @@ readonly class CpxComponentMetadataCollection implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        yield from $this->item;
+        yield from $this->items;
     }
 
     public function asStyleguideObjectCollection(): StyleguideObjectCollection
     {
         $items = [];
-        foreach ($this->item as $item) {
+        foreach ($this->items as $item) {
             $items[] = $item->styleguideObject;
         }
         return new StyleguideObjectCollection(... $items);

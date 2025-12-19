@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\Props;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class Prop
+final readonly class Prop implements \JsonSerializable
 {
     public function __construct(
         public PropName $name,

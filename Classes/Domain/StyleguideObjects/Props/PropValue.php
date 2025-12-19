@@ -19,7 +19,8 @@ use Neos\Flow\Annotations as Flow;
 final readonly class PropValue implements \JsonSerializable
 {
     private function __construct(
-        public mixed $value)
+        public mixed $value
+    )
     {
         if (!self::isValid($value)) {
             throw new \UnexpectedValueException(

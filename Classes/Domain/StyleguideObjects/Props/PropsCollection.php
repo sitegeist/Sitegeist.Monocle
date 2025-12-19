@@ -16,7 +16,7 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects\Props;
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
-final readonly class PropsCollection
+final readonly class PropsCollection implements \JsonSerializable
 {
     /**
      * @var Prop[]
@@ -29,14 +29,6 @@ final readonly class PropsCollection
     public function __construct(Prop ...$props)
     {
         $this->props = $props;
-    }
-
-    /**
-     * @return iterable<mixed,Prop>
-     */
-    public function getProps(): iterable
-    {
-        return $this->props;
     }
 
     /**

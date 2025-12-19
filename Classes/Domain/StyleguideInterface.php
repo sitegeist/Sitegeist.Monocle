@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-
 /**
  * This file is part of the Sitegeist.Monocle package
  *
@@ -26,6 +25,8 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
 
 interface StyleguideInterface
 {
+    public function getStyleguideAddress(): StyleguideAddress;
+
     public function getStyleguideIdentifier(): StyleguideIdentifier;
 
     public function getStyleguideObjectList(): StyleguideObjectCollection;

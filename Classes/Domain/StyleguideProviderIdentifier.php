@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-
 /**
  * This file is part of the Sitegeist.Monocle package
  *

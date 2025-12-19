@@ -80,7 +80,7 @@ class StyleguideCommandController extends CommandController
     {
         $styleguide =  $styleguide ? $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($styleguide)) : $this->styleguideRepository->getDefault();
         $styleguideObjects =  $styleguide->getStyleguideObjectList();
-        $styleguideObjects = json_decode(json_encode($styleguideObjects, JSON_THROW_ON_ERROR), true, 512,JSON_THROW_ON_ERROR);
+        $styleguideObjects = json_decode(json_encode($styleguideObjects, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
         $this->outputData($styleguideObjects, $format);
     }
 

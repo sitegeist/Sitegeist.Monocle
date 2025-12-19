@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-
 /**
  * This file is part of the Sitegeist.Monocle package
  *
@@ -24,14 +23,28 @@ use Traversable;
 final readonly class StyleguideMetadataCollection implements \JsonSerializable, \IteratorAggregate
 {
     /**
-     * @var StyleguideMetadata[]
+     * @var array<string, StyleguideMetadata>
      */
     public array $metadataItems;
 
     public function __construct(
         StyleguideMetadata ... $metadata
     ) {
-        $this->metadataItems = $metadata;
+        $items = [];
+        foreach ($metadata as $metadataItem) {
+            $items[$metadataItem->address->toString()] = $metadataItem;
+        }
+        $this->metadataItems = $items;
+    }
+
+    public function byAddress(StyleguideAddress $address): ?StyleguideMetadata
+    {
+        return $this->metadataItems[$address->toString()] ?? null;
+    }
+
+    public function first(): ?StyleguideMetadata
+    {
+        return $this->metadataItems[array_key_first($this->metadataItems)] ?? null;
     }
 
     public static function fromMultiple(StyleguideMetadataCollection ... $metadataCollection): self

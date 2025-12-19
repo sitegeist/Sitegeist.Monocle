@@ -22,7 +22,6 @@ use Sitegeist\Monocle\StyleguideProvider\NeosFusionSite\CpxPackageStyleguide;
  */
 class CpxPackageStyleguideProvider implements StyleguideProviderInterface
 {
-
     #[Flow\Inject]
     protected PackageManager $packageManager;
 
@@ -49,13 +48,13 @@ class CpxPackageStyleguideProvider implements StyleguideProviderInterface
         return new StyleguideMetadataCollection(...$items);
     }
 
-    public function getStyleguide(StyleguideIdentifier $identifier): StyleguideInterface
+    public function getStyleguide(StyleguideAddress $address): StyleguideInterface
     {
         if (class_exists(\PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader::class)) {
-            $package = $this->packageManager->getPackage($identifier->value);
+            $package = $this->packageManager->getPackage($address->styleguide->value);
             if ($package instanceof FlowPackageInterface) {
                 return new \Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxPackageStyleguide(
-                    $identifier,
+                    $address,
                     $package,
                 );
             }

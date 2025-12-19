@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Domain;
 
-
 /**
  * This file is part of the Sitegeist.Monocle package
  *
@@ -24,7 +23,6 @@ final readonly class StyleguideName
     public function __construct(
         public string $value
     ) {
-
     }
 
     public static function fromString(string $value): self
