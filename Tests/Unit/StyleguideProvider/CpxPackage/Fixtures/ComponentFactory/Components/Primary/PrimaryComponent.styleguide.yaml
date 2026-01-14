@@ -1,0 +1,22 @@
+title: "Primary"
+description: "Primary component"
+props:
+  title: "Default Title"
+  items:
+    - "alpha"
+    - __type: "Sitegeist.Monocle.Tests/ListItem/ListItemComponent"
+      label: "Item from primary"
+  nested:
+    __type: "Sitegeist.Monocle.Tests/Nested/NestedComponent"
+propSets:
+  highlighted:
+    title: "Highlighted Title"
+useCases:
+  compact:
+    props:
+      title: "Compact Title"
+      items:
+        - "compact"
+      nested:
+        __type: "Sitegeist.Monocle.Tests/Nested/NestedComponent"
+        label: "Nested Compact"

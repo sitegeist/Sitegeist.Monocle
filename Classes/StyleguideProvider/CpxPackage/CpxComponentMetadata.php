@@ -22,6 +22,10 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObject;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectDetails;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectName;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectPath;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideStructure;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCase;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
@@ -40,6 +44,60 @@ readonly class CpxComponentMetadata
         public string $componentPhpClassName,
         public string $componentStyleguideConfigFile,
     ) {
+    }
+
+    public static function fromComponentIdentifier(StyleguideObjectIdentifier $identifier): self
+    {
+        $identifierValue = $identifier->value;
+        $componentId = str_replace('.cpx', '', $identifierValue);
+        if (!str_contains($componentId, '/')) {
+            throw new \InvalidArgumentException(sprintf('Invalid component identifier "%s"', $identifierValue));
+        }
+
+        [, $path] = explode('/', $componentId, 2);
+        $pathSegments = explode('/', $path);
+
+        $styleguideObject = new StyleguideObject(
+            StyleguideObjectIdentifier::fromString($identifierValue),
+            StyleguideObjectName::fromString($pathSegments[array_key_last($pathSegments)]),
+            StyleguideObjectPath::fromString(str_replace('/', '.', $path)),
+            new StyleguideStructure('', '', ''),
+            ''
+        );
+
+        $componentClass = self::classNameFromComponentIdentifier($identifierValue);
+        $componentReflection = new \ReflectionClass($componentClass);
+        $componentFileName = $componentReflection->getFileName();
+        if (!$componentFileName) {
+            throw new \InvalidArgumentException(sprintf('Component class "%s" has no source file', $componentClass));
+        }
+        $styleguideFile = dirname($componentFileName) . '/' . pathinfo($componentFileName, PATHINFO_FILENAME) . '.styleguide.yaml';
+
+        return new self($styleguideObject, $componentClass, $styleguideFile);
+    }
+
+    /**
+     * @return class-string<ComponentInterface>
+     */
+    private static function classNameFromComponentIdentifier(string $identifier): string
+    {
+        $componentId = str_replace('.cpx', '', $identifier);
+        if (!str_contains($componentId, '/')) {
+            throw new \InvalidArgumentException(sprintf('Invalid component identifier "%s"', $identifier));
+        }
+
+        [$package, $path] = explode('/', $componentId, 2);
+        $phpClass = str_replace('.', '\\', $package) . '\\Components\\' . str_replace('/', '\\', $path);
+
+        if (!class_exists($phpClass)) {
+            throw new \InvalidArgumentException(sprintf('Component class "%s" could not be resolved', $phpClass));
+        }
+
+        if (!is_subclass_of($phpClass, ComponentInterface::class, true)) {
+            throw new \InvalidArgumentException(sprintf('Component class "%s" must implement %s', $phpClass, ComponentInterface::class));
+        }
+
+        return $phpClass;
     }
 
     public function prepareStyleguideObjectDetails(): StyleguideObjectDetails

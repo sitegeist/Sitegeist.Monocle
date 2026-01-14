@@ -39,7 +39,7 @@ final readonly class StyleguideObjectIdentifier implements \JsonSerializable
     /**
      * @return string
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->value;
     }
