@@ -28,7 +28,7 @@ export function* updateHistoryWhenPrototypeChanges() {
 
         if (currentlySelectedPrototype) {
             const { title } = currentlySelectedPrototype;
-            const path = `${sitePackageKey}/${prototypeName}`;
+            const path = `${encodeURIComponent(sitePackageKey)}/${encodeURIComponent(prototypeName)}`;
             const uri = baseUrl === '/' ? `/${path}` : `${baseUrl}/${path}`;
 
             take(prototypes.actions.ready);

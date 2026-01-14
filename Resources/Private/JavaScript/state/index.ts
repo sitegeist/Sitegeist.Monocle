@@ -214,7 +214,9 @@ function* loadConfiguration(): SagaIterator<void> {
         ? ''
         : window.location.pathname.substring(moduleUri.length + 1);
     const routePathSplitted = routePath.split('/');
-    let routePrototypeName: null | string = routePathSplitted[1];
+    let routePrototypeName: null | string = routePathSplitted[1]
+        ? decodeURIComponent(routePathSplitted[1])
+        : null;
 
     while (true) { // eslint-disable-line
         yield take(actions.sites.select);
@@ -316,7 +318,10 @@ export function* saga(): SagaIterator<void> {
         : moduleUri === '/'
             ? window.location.pathname.substring(1)
             : window.location.pathname.substring(moduleUri.length + 1);
-    const [routeSitePackageKey] = routePath.split('/');
+    const [routeSitePackageKeyEncoded] = routePath.split('/');
+    const routeSitePackageKey = routeSitePackageKeyEncoded
+        ? decodeURIComponent(routeSitePackageKeyEncoded)
+        : '';
 
     const defaultSitePackageKey: string = yield select(
         (state: State) => state.env.defaultSitePackageKey
