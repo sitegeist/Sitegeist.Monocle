@@ -5,6 +5,7 @@ import cx from "classnames";
 
 import { Grid } from "../../../../grid";
 import { selectors, State } from "../../../../state";
+import { iframeWindow } from "../../../../dom";
 import type { GridDefinition } from "../../../../schema";
 
 import style from "./style.module.css";
@@ -50,6 +51,7 @@ class PreviewGridOverlayC extends PureComponent<PreviewGridOverlayProps> {
                             width={grid.width ?? "100%"}
                             maxWidth={grid.maxWidth ?? "100%"}
                             margin={grid.margin ?? "0 auto"}
+                            matchMediaWindow={iframeWindow() ?? undefined}
                             />
                     ))}
                 </div>
