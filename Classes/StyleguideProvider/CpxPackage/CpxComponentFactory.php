@@ -158,7 +158,7 @@ final class CpxComponentFactory
     /**
      * @param array<string, mixed> $configuration
      */
-    private static function createFromConfiguration(array $configuration): ComponentInterface
+    private static function createFromConfiguration(array $configuration): object
     {
         if (!self::isComponentConfiguration($configuration)) {
             throw new \InvalidArgumentException('Component configuration requires a "__type" key');
@@ -172,8 +172,13 @@ final class CpxComponentFactory
             $props[$key] = self::mapPropValue($value);
         }
 
-        $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
-
-        return self::create($metadata, $props);
+        $type = $configuration['__type'];
+        if (is_subclass_of($type, ComponentInterface::class, true)) {
+            $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
+            return self::create($metadata, $props);
+        } else {
+            $className = CpxComponentMetadata::classNameFromIdentifier($type);
+            return $className::create(...$props);
+        }
     }
 }
