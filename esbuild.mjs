@@ -6,7 +6,6 @@ const isWatch = process.argv.includes("--watch");
 const options = {
     entryPoints: {
         App: "./Resources/Private/JavaScript/index.tsx",
-        Grid: "./Resources/Private/JavaScript/layoutGrid.tsx",
     },
     external: ["@neos-project/utils-helpers"],
     sourcemap: true,

@@ -17,6 +17,7 @@ import * as routing from "./routing";
 import * as qrcode from "./qrcode";
 import * as grid from "./grid";
 import { configurationSchema } from "../schema";
+import type { GridDefinition } from "../schema";
 
 interface AnatomyType {
     prototypeName: string
@@ -70,6 +71,9 @@ export interface State {
     }
     readonly gridPreview: {
         readonly isVisible: boolean
+        readonly grids: {
+            readonly [key: string]: GridDefinition
+        }
     }
     readonly sites: {
         readonly byName: {
@@ -246,6 +250,7 @@ function* loadConfiguration(): SagaIterator<void> {
                 yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
                 yield put(actions.locales.set(configuration.ui.localePresets));
                 yield put(actions.preview.set(configuration.ui.preview));
+                yield put(actions.grid.set(configuration.ui.grids ?? {}));
 
                 if (!Array.isArray(configuration.styleguideObjects)) {
                     yield put(actions.prototypes.add(configuration.styleguideObjects));

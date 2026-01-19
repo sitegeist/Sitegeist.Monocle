@@ -59,7 +59,8 @@ class ApiController extends ActionController
             'viewportPresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.viewportPresets'),
             'localePresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.localePresets'),
             'hotkeys' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.hotkeys'),
-            'preview' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'preview')
+            'preview' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'preview'),
+            'grids' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.grids')
         ];
         $value['styleguideObjects'] = $styleguide->getStyleguideObjectList();
 
