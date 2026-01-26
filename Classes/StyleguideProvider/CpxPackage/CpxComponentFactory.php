@@ -74,7 +74,7 @@ final class CpxComponentFactory
     /**
      * @param class-string<ComponentInterface> $className
      * @param array<string, mixed> $props
-     * @return array<int, mixed>
+     * @return array<string, mixed>
      */
     private static function mapPropsToArguments(string $className, array $props): array
     {
@@ -85,46 +85,25 @@ final class CpxComponentFactory
         foreach ($factoryMethodReflection->getParameters() as $parameterReflection) {
             $name = $parameterReflection->getName();
             if (array_key_exists($name, $props)) {
-                $arguments[] = self::mapPropValueForParameter($parameterReflection, $props[$name]);
+                $arguments[$name] = self::mapPropValue($props[$name]);
+            } elseif ($parameterReflection->isDefaultValueAvailable()) {
+                $arguments[$name] = $parameterReflection->getDefaultValue();
                 continue;
+            } else {
+                $arguments[$name] = null;
             }
+            unset($props[$name]);
+        }
 
-            if ($parameterReflection->isDefaultValueAvailable()) {
-                $arguments[] = $parameterReflection->getDefaultValue();
-                continue;
-            }
-
-            $arguments[] = null;
+        if (count($props) > 0) {
+            throw new \Exception(sprintf('Superficial props "%s" were given for "%s"', implode(', ',array_keys($props)), $className));
         }
 
         return $arguments;
     }
 
-    private static function mapPropValueForParameter(\ReflectionParameter $parameter, mixed $value): mixed
-    {
-        $type = $parameter->getType();
-        if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
-            $className = $type->getName();
-            if (is_a($className, \BackedEnum::class, true)) {
-                if ($value instanceof $className) {
-                    return $value;
-                }
-                if (is_array($value) && array_key_exists('value', $value)) {
-                    return $className::from($value['value']);
-                }
-                return $className::from($value);
-            }
-        }
-
-        return self::mapPropValue($value);
-    }
-
     private static function mapPropValue(mixed $value): mixed
     {
-        if ($value instanceof ComponentInterface) {
-            return $value;
-        }
-
         if (!is_array($value)) {
             return $value;
         }
@@ -134,15 +113,18 @@ final class CpxComponentFactory
         }
 
         if (self::isComponentConfiguration($value)) {
-            return self::createFromConfiguration($value);
+            return self::createComponentFromConfiguration($value);
         }
 
-        $mapped = [];
-        foreach ($value as $key => $item) {
-            $mapped[$key] = self::mapPropValue($item);
+        if (self::isStructConfiguration($value)) {
+            return self::createStructFromConfiguration($value);
         }
 
-        return $mapped;
+        if (self::isEnumConfiguration($value)) {
+            return self::createEnumFromConfiguration($value);
+        }
+
+        throw new \Exception('Unexpected props configuration is neither scalar, component, struct nur enum');
     }
 
     /**
@@ -150,35 +132,108 @@ final class CpxComponentFactory
      */
     private static function isComponentConfiguration(array $configuration): bool
     {
-        return array_key_exists('__type', $configuration)
-            && is_string($configuration['__type'])
-            && $configuration['__type'] !== '';
+        if (!array_key_exists('__type', $configuration) || !is_string($configuration['__type'])) {
+            return false;
+        }
+        $className = self::classNameFromIdentifier($configuration['__type']);
+        if (class_exists($className) && is_subclass_of($className, ComponentInterface::class)) {
+            return true;
+        }
+        return false;
     }
 
     /**
      * @param array<string, mixed> $configuration
      */
-    private static function createFromConfiguration(array $configuration): object
+    private static function isStructConfiguration(array $configuration): bool
     {
-        if (!self::isComponentConfiguration($configuration)) {
-            throw new \InvalidArgumentException('Component configuration requires a "__type" key');
+        if (!array_key_exists('__type', $configuration) || !is_string($configuration['__type'])) {
+            return false;
         }
+        $className = self::classNameFromIdentifier($configuration['__type']);
+        if (class_exists($className) && method_exists($className, 'create')) {
+            return true;
+        }
+        return false;
+    }
 
-        $props = [];
+    /**
+     * @param array<string, mixed> $configuration
+     */
+    private static function isEnumConfiguration(array $configuration): bool
+    {
+        if (!array_key_exists('__type', $configuration) || !array_key_exists('value', $configuration)) {
+            return false;
+        }
+        $className = self::classNameFromIdentifier($configuration['__type']);
+        if (enum_exists($className) && method_exists($className, 'from')) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param array<string, mixed> $configuration
+     */
+    private static function createComponentFromConfiguration(array $configuration): ComponentInterface
+    {
+        $propsFiltered = [];
         foreach ($configuration as $key => $value) {
             if (str_starts_with($key, '__')) {
                 continue;
             }
-            $props[$key] = self::mapPropValue($value);
+            $propsFiltered[$key] = self::mapPropValue($value);
         }
 
-        $type = $configuration['__type'];
-        if (is_subclass_of($type, ComponentInterface::class, true)) {
-            $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
-            return self::create($metadata, $props);
-        } else {
-            $className = CpxComponentMetadata::classNameFromIdentifier($type);
-            return $className::create(...$props);
+        $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
+        return self::create($metadata, $propsFiltered);
+    }
+
+    /**
+     * @param array<string, mixed> $configuration
+     */
+    private static function createStructFromConfiguration(array $configuration): object
+    {
+        $propsFiltered = [];
+        foreach ($configuration as $key => $value) {
+            if (str_starts_with($key, '__')) {
+                continue;
+            }
+            $propsFiltered[$key] = self::mapPropValue($value);
         }
+
+        $className = self::classNameFromIdentifier($configuration['__type']);
+        $arguments = self::mapPropsToArguments($className, $propsFiltered);
+        return $className::create(...$arguments);
+    }
+
+    /**
+     * @param array<string, mixed> $configuration
+     */
+    private static function createEnumFromConfiguration(array $configuration): \BackedEnum
+    {
+        $className = self::classNameFromIdentifier($configuration['__type']);
+        $value = $configuration['value'];
+        return $className::from($value);
+    }
+
+    /**
+     * @return class-string<ComponentInterface>
+     */
+    private static function classNameFromIdentifier(string $identifier): string
+    {
+        $componentId = str_replace('.cpx', '', $identifier);
+        if (!str_contains($componentId, '/')) {
+            throw new \InvalidArgumentException(sprintf('Invalid component identifier "%s"', $identifier));
+        }
+
+        [$package, $path] = explode('/', $componentId, 2);
+        $phpClass = str_replace('.', '\\', $package) . '\\Components\\' . str_replace('/', '\\', $path);
+
+        if (!class_exists($phpClass)) {
+            throw new \InvalidArgumentException(sprintf('Component class "%s" could not be resolved', $phpClass));
+        }
+
+        return $phpClass;
     }
 }

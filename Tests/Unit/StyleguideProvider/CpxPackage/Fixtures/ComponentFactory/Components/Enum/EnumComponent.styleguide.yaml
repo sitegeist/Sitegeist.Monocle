@@ -2,4 +2,5 @@ title: "Enum"
 description: "Enum component"
 props:
   status:
+    __type: "Sitegeist.Monocle.Tests/Enum/Status"
     value: "active"

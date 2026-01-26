@@ -79,26 +79,6 @@ readonly class CpxComponentMetadata
     /**
      * @return class-string<ComponentInterface>
      */
-    public static function classNameFromIdentifier(string $identifier): string
-    {
-        $componentId = str_replace('.cpx', '', $identifier);
-        if (!str_contains($componentId, '/')) {
-            throw new \InvalidArgumentException(sprintf('Invalid component identifier "%s"', $identifier));
-        }
-
-        [$package, $path] = explode('/', $componentId, 2);
-        $phpClass = str_replace('.', '\\', $package) . '\\Components\\' . str_replace('/', '\\', $path);
-
-        if (!class_exists($phpClass)) {
-            throw new \InvalidArgumentException(sprintf('Component class "%s" could not be resolved', $phpClass));
-        }
-
-        return $phpClass;
-    }
-
-    /**
-     * @return class-string<ComponentInterface>
-     */
     private static function classNameFromComponentIdentifier(string $identifier): string
     {
         $componentId = str_replace('.cpx', '', $identifier);
