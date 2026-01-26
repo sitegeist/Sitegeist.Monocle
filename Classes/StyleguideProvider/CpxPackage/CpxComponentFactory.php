@@ -186,7 +186,15 @@ final class CpxComponentFactory
         }
 
         $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
-        return self::create($metadata, $propsFiltered);
+        $useCase = $configuration['__useCase'] ?? null;
+        $propSet = $configuration['__propSet'] ?? null;
+
+        return self::create(
+            $metadata,
+            $propsFiltered,
+            $propSet ? PropSetName::fromString($propSet) : null,
+            $useCase ? UseCaseName::fromString($useCase) : null
+        );
     }
 
     /**
