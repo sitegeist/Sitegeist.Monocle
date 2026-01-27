@@ -21,8 +21,7 @@ final class CpxComponentFactory
         array $props = [],
         ?PropSetName $propSetName = null,
         ?UseCaseName $useCaseName = null
-    ): ComponentInterface
-    {
+    ): ComponentInterface {
         $componentClass = $metadata->componentPhpClassName;
         $styleguideProps = self::readStyleguidePropsFromConfigFile(
             $metadata->componentStyleguideConfigFile,
@@ -42,8 +41,7 @@ final class CpxComponentFactory
         string $styleguideFile,
         ?PropSetName $propSetName = null,
         ?UseCaseName $useCaseName = null
-    ): array
-    {
+    ): array {
         if (!is_file($styleguideFile)) {
             throw new \InvalidArgumentException(sprintf('Missing styleguide file "%s"', $styleguideFile));
         }
@@ -96,7 +94,7 @@ final class CpxComponentFactory
         }
 
         if (count($props) > 0) {
-            throw new \Exception(sprintf('Superficial props "%s" were given for "%s"', implode(', ',array_keys($props)), $className));
+            throw new \Exception(sprintf('Superficial props "%s" were given for "%s"', implode(', ', array_keys($props)), $className));
         }
 
         return $arguments;

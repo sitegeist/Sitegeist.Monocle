@@ -20,8 +20,7 @@ final readonly class PropValue implements \JsonSerializable
 {
     private function __construct(
         public mixed $value
-    )
-    {
+    ) {
         if (!self::isValid($value)) {
             throw new \UnexpectedValueException(
                 sprintf(
