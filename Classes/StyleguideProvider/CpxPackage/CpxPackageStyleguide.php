@@ -7,6 +7,7 @@ namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\FlowPackageInterface;
 use Neos\Flow\Package\PackageManager;
+use Neos\Flow\ResourceManagement\ResourceManager;
 use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfiguration;
 use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigurationLoader;
 use Sitegeist\Monocle\Domain\StyleguideAddress;
@@ -26,6 +27,9 @@ class CpxPackageStyleguide implements StyleguideInterface
 
     #[Flow\Inject]
     protected PackageManager $packageManager;
+
+    #[Flow\Inject]
+    protected ResourceManager $resourceManager;
 
     #[Flow\Inject]
     protected TranspilerConfigurationLoader $transpilerConfigurationLoader;
@@ -72,7 +76,30 @@ class CpxPackageStyleguide implements StyleguideInterface
     {
         $metadata = CpxComponentMetadata::fromComponentIdentifier($identifier);
         $component = CpxComponentFactory::create($metadata, $props, $propSet, $useCase);
-        return $component->render();
+
+        $styles = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.styles');
+        $styleTags = array_reduce(
+            is_array($styles) ? $styles : [],
+            fn(string $carry, string $path) => $carry . '<link rel="stylesheet" href="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></link>',
+            '');
+
+        $scripts = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.scripts');
+        $scriptTags = array_reduce(
+            is_array($scripts) ? $scripts : [],
+            fn(string $carry, string $path) => $carry . '<script async src="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></script>',
+            '');
+
+        return <<<EOL
+        <!DOCTYPE html>
+        <html lang="de">
+            <head>
+                <title>{$identifier->value}</title>
+                {$styleTags}
+                {$scriptTags}
+            </head>
+            <body>{$component->render()}</body>
+        <head>
+        EOL;
     }
 
     private function buildItemList(): CpxComponentMetadataCollection
