@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
+use org\bovigo\vfs\vfsStreamAbstractContentTestCase;
 use PackageFactory\PHPComponentEngine\ComponentInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
@@ -20,38 +21,38 @@ final class CpxComponentFactory
         CpxComponentMetadata $metadata,
         array $props = [],
         ?PropSetName $propSetName = null,
-        ?UseCaseName $useCaseName = null
+        ?UseCaseName $useCaseName = null,
+        bool $withContainer = false
     ): ComponentInterface {
         $componentClass = $metadata->componentPhpClassName;
-        $styleguideProps = self::readStyleguidePropsFromConfigFile(
-            $metadata->componentStyleguideConfigFile,
+        $styleguideConfiguration = self::readStyleguideConfiguration($metadata->componentStyleguideConfigFile);
+        $styleguideProps = self::readStyleguidePropsFromConfiguration(
+            $styleguideConfiguration,
             $propSetName,
             $useCaseName
         );
         $propsConfiguration = array_replace($styleguideProps, $props);
         $arguments = self::mapPropsToArguments($componentClass, $propsConfiguration);
 
-        return $componentClass::create(...$arguments);
+        $component = $componentClass::create(...$arguments);
+        if ($withContainer && array_key_exists('container', $styleguideConfiguration)) {
+            $containerConfiguration = $styleguideConfiguration['container'];
+            if (self::isComponentConfiguration($containerConfiguration)) {
+                $containerConfiguration['content'] = $component;
+                return self::createComponentFromConfiguration($containerConfiguration);
+            }
+        }
+        return $component;
     }
 
     /**
      * @return array<string, mixed>
      */
-    private static function readStyleguidePropsFromConfigFile(
-        string $styleguideFile,
+    private static function readStyleguidePropsFromConfiguration(
+        array $configuration,
         ?PropSetName $propSetName = null,
         ?UseCaseName $useCaseName = null
     ): array {
-        if (!is_file($styleguideFile)) {
-            throw new \InvalidArgumentException(sprintf('Missing styleguide file "%s"', $styleguideFile));
-        }
-
-        if (!array_key_exists($styleguideFile, self::$styleguideConfigurationCache)) {
-            $parsedConfiguration = Yaml::parseFile($styleguideFile);
-            self::$styleguideConfigurationCache[$styleguideFile] = is_array($parsedConfiguration) ? $parsedConfiguration : [];
-        }
-
-        $configuration = self::$styleguideConfigurationCache[$styleguideFile];
         $props = $configuration['props'] ?? [];
 
         $props = is_array($props) ? $props : [];
@@ -67,6 +68,23 @@ final class CpxComponentFactory
         }
 
         return $props;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function readStyleguideConfiguration(string $styleguideFile): array
+    {
+        if (!is_file($styleguideFile)) {
+            throw new \InvalidArgumentException(sprintf('Missing styleguide file "%s"', $styleguideFile));
+        }
+
+        if (!array_key_exists($styleguideFile, self::$styleguideConfigurationCache)) {
+            $parsedConfiguration = Yaml::parseFile($styleguideFile);
+            self::$styleguideConfigurationCache[$styleguideFile] = is_array($parsedConfiguration) ? $parsedConfiguration : [];
+        }
+
+        return self::$styleguideConfigurationCache[$styleguideFile];
     }
 
     /**

@@ -75,19 +75,21 @@ class CpxPackageStyleguide implements StyleguideInterface
     public function renderStyleguideObject(StyleguideObjectIdentifier $identifier, array $props, ?PropSetName $propSet, ?UseCaseName $useCase, array $locales): string
     {
         $metadata = CpxComponentMetadata::fromComponentIdentifier($identifier);
-        $component = CpxComponentFactory::create($metadata, $props, $propSet, $useCase);
+        $component = CpxComponentFactory::create($metadata, $props, $propSet, $useCase, true);
 
         $styles = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.styles');
         $styleTags = array_reduce(
             is_array($styles) ? $styles : [],
-            fn(string $carry, string $path) => $carry . '<link rel="stylesheet" href="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></link>',
-            '');
+            fn (string $carry, string $path) => $carry . '<link rel="stylesheet" href="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></link>',
+            ''
+        );
 
         $scripts = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.scripts');
         $scriptTags = array_reduce(
             is_array($scripts) ? $scripts : [],
-            fn(string $carry, string $path) => $carry . '<script async src="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></script>',
-            '');
+            fn (string $carry, string $path) => $carry . '<script async src="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></script>',
+            ''
+        );
 
         return <<<EOL
         <!DOCTYPE html>
