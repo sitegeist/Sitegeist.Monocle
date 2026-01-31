@@ -6,7 +6,7 @@ namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Reflection\ClassReflection;
-use PackageFactory\PHPComponentEngine\ComponentInterface;
+use PackageFactory\ComponentEngine\ComponentInterface;
 use ReflectionNamedType;
 use ReflectionParameter;
 use ReflectionType;

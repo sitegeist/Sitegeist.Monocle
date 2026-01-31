@@ -79,14 +79,14 @@ class CpxPackageStyleguide implements StyleguideInterface
 
         $styles = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.styles');
         $styleTags = array_reduce(
-            is_array($styles) ? $styles : [],
+            is_array($styles) ? array_filter($styles) : [],
             fn (string $carry, string $path) => $carry . '<link rel="stylesheet" href="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></link>',
             ''
         );
 
         $scripts = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'preview.scripts');
         $scriptTags = array_reduce(
-            is_array($scripts) ? $scripts : [],
+            is_array($scripts) ? array_filter($scripts) : [],
             fn (string $carry, string $path) => $carry . '<script async src="' . $this->resourceManager->getPublicPackageResourceUriByPath($path) . '"></script>',
             ''
         );
@@ -113,7 +113,6 @@ class CpxPackageStyleguide implements StyleguideInterface
              * @var TranspilerConfiguration $configuration
              */
             $identifier = StyleguideObjectIdentifier::fromString($configuration->moduleId);
-
             try {
                 $metadata = CpxComponentMetadata::fromComponentIdentifier($identifier);
             } catch (\InvalidArgumentException) {

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
+use Neos\Flow\Reflection\ParameterReflection;
 use org\bovigo\vfs\vfsStreamAbstractContentTestCase;
-use PackageFactory\PHPComponentEngine\ComponentInterface;
+use PackageFactory\ComponentEngine\ComponentInterface;
+use ReflectionNamedType;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
@@ -101,7 +103,7 @@ final class CpxComponentFactory
         foreach ($factoryMethodReflection->getParameters() as $parameterReflection) {
             $name = $parameterReflection->getName();
             if (array_key_exists($name, $props)) {
-                $arguments[$name] = self::mapPropValue($props[$name]);
+                $arguments[$name] = self::mapPropValue($props[$name], $parameterReflection);
             } elseif ($parameterReflection->isDefaultValueAvailable()) {
                 $arguments[$name] = $parameterReflection->getDefaultValue();
                 continue;
@@ -118,9 +120,20 @@ final class CpxComponentFactory
         return $arguments;
     }
 
-    private static function mapPropValue(mixed $value): mixed
+    private static function mapPropValue(mixed $value, ?\ReflectionParameter $reflection = null): mixed
     {
         if (!is_array($value)) {
+            if ($reflection !== null) {
+                $type = $reflection->getType();
+                if ($type instanceof \ReflectionNamedType) {
+                    $typeName = $type->getName();
+                    if (enum_exists($typeName)
+                        && method_exists($typeName, 'from')
+                    ) {
+                        return $typeName::from($value);
+                    }
+                }
+            }
             return $value;
         }
 
