@@ -1,7 +1,4 @@
 <?php
-declare(strict_types=1);
-
-namespace Sitegeist\Monocle\Domain;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -15,6 +12,9 @@ namespace Sitegeist\Monocle\Domain;
  * source code.
  */
 
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Domain;
 
 use Neos\Flow\I18n\LocaleCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;

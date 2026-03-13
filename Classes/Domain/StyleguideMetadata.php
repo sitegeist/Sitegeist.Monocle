@@ -1,7 +1,4 @@
 <?php
-declare(strict_types=1);
-
-namespace Sitegeist\Monocle\Domain;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -14,6 +11,10 @@ namespace Sitegeist\Monocle\Domain;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Domain;
 
 use Neos\Flow\Annotations as Flow;
 

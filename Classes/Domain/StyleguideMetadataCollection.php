@@ -1,7 +1,4 @@
 <?php
-declare(strict_types=1);
-
-namespace Sitegeist\Monocle\Domain;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -14,6 +11,10 @@ namespace Sitegeist\Monocle\Domain;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Domain;
 
 use Exception;
 use Neos\Flow\Annotations as Flow;
@@ -28,7 +29,7 @@ final readonly class StyleguideMetadataCollection implements \JsonSerializable, 
     public array $metadataItems;
 
     public function __construct(
-        StyleguideMetadata ... $metadata
+        StyleguideMetadata ...$metadata
     ) {
         $items = [];
         foreach ($metadata as $metadataItem) {
@@ -47,7 +48,7 @@ final readonly class StyleguideMetadataCollection implements \JsonSerializable, 
         return $this->metadataItems[array_key_first($this->metadataItems)] ?? null;
     }
 
-    public static function fromMultiple(StyleguideMetadataCollection ... $metadataCollection): self
+    public static function fromMultiple(StyleguideMetadataCollection ...$metadataCollection): self
     {
         $allItems = [];
         foreach ($metadataCollection as $metadata) {

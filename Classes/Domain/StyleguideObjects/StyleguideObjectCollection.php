@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-namespace Sitegeist\Monocle\Domain\StyleguideObjects;
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -14,6 +12,10 @@ namespace Sitegeist\Monocle\Domain\StyleguideObjects;
  * source code.
  */
 
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Domain\StyleguideObjects;
+
 use Neos\Flow\Annotations as Flow;
 
 #[Flow\Proxy(false)]
@@ -25,7 +27,7 @@ final readonly class StyleguideObjectCollection implements \JsonSerializable
     private array $styleguideObjects;
 
     public function __construct(
-        StyleguideObject ... $styleguideObject
+        StyleguideObject ...$styleguideObject
     ) {
         $this->styleguideObjects = $styleguideObject;
     }

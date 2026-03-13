@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sitegeist\Monocle\StyleguideProvider\NeosFusionSite;
@@ -24,7 +36,7 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectPath;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideStructure;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
-use \Sitegeist\Monocle\Fusion\FusionService;
+use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Service\ConfigurationService;
 use Sitegeist\Monocle\Service\DummyControllerContextTrait;
 
@@ -143,6 +155,7 @@ class NeosFusionSiteStyleguide implements StyleguideInterface
         if ($result instanceof StreamInterface) {
             return (string)$result;
         }
+        throw new \Exception("Unexpected result");
     }
 
     /**
