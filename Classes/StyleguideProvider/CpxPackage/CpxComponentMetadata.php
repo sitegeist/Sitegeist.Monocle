@@ -112,9 +112,20 @@ readonly class CpxComponentMetadata
         return $phpClass;
     }
 
+    public function isHidden(): bool
+    {
+        return (bool)($this->readStyleguideConfiguration()['hidden'] ?? false);
+    }
+
+    public function getGroup(): ?string
+    {
+        $group = $this->readStyleguideConfiguration()['group'] ?? null;
+        return is_string($group) && $group !== '' ? $group : null;
+    }
+
     public function prepareStyleguideObjectDetails(): StyleguideObjectDetails
     {
-        $config = Yaml::parseFile($this->componentStyleguideConfigFile);
+        $config = $this->readStyleguideConfiguration();
 
         $props = [];
 
@@ -225,5 +236,11 @@ readonly class CpxComponentMetadata
             new PropSetCollection(...$propSets),
             new UseCaseCollection(...$useCases)
         );
+    }
+
+    private function readStyleguideConfiguration(): array
+    {
+        $config = Yaml::parseFile($this->componentStyleguideConfigFile);
+        return is_array($config) ? $config : [];
     }
 }

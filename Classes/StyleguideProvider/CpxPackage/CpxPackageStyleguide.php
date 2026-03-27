@@ -136,9 +136,12 @@ class CpxPackageStyleguide implements StyleguideInterface
             if (!file_exists($metadata->componentStyleguideConfigFile)) {
                 continue;
             }
+            if ($metadata->isHidden()) {
+                continue;
+            }
 
             $items[] = new CpxComponentMetadata(
-                $this->resolveStyleguideObject($metadata->styleguideObject, is_array($prototypeStructures) ? $prototypeStructures : []),
+                $this->resolveStyleguideObject($metadata, is_array($prototypeStructures) ? $prototypeStructures : []),
                 $metadata->componentPhpClassName,
                 $metadata->componentStyleguideConfigFile
             );
@@ -146,13 +149,16 @@ class CpxPackageStyleguide implements StyleguideInterface
         return new CpxComponentMetadataCollection(...$items);
     }
 
-    private function resolveStyleguideObject(StyleguideObject $styleguideObject, array $prototypeStructures): StyleguideObject
+    private function resolveStyleguideObject(CpxComponentMetadata $metadata, array $prototypeStructures): StyleguideObject
     {
+        $styleguideObject = $metadata->styleguideObject;
+        $groupOrPath = $metadata->getGroup() ?? $styleguideObject->path->value;
+
         return new StyleguideObject(
             $styleguideObject->identifier,
             $styleguideObject->name,
             $styleguideObject->path,
-            $this->getStructureForComponentPath($prototypeStructures, $styleguideObject->path->value),
+            $this->getStructureForComponentPath($prototypeStructures, $groupOrPath),
             $styleguideObject->description
         );
     }
