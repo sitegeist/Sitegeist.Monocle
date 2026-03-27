@@ -16,10 +16,10 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
-use Neos\Flow\Reflection\ParameterReflection;
-use org\bovigo\vfs\vfsStreamAbstractContentTestCase;
+use PackageFactory\ComponentEngine\ComponentCollection;
+use PackageFactory\ComponentEngine\ComponentCollectionInterface;
 use PackageFactory\ComponentEngine\ComponentInterface;
-use ReflectionNamedType;
+use PackageFactory\ComponentEngine\StringComponent;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
@@ -136,6 +136,15 @@ final class CpxComponentFactory
     private static function mapPropValue(mixed $value, ?\ReflectionParameter $reflection = null): mixed
     {
         if (!is_array($value)) {
+            if (
+                is_string($value)
+                && $reflection !== null
+                && self::parameterSupportsComponentList($reflection)
+                && self::looksLikeHtml($value)
+            ) {
+                return StringComponent::fromHtmlString($value);
+            }
+
             if ($reflection !== null) {
                 $type = $reflection->getType();
                 if ($type instanceof \ReflectionNamedType) {
@@ -151,8 +160,15 @@ final class CpxComponentFactory
             return $value;
         }
 
+        if (array_is_list($value) && $reflection !== null && self::parameterSupportsComponentList($reflection)) {
+            return self::createComponentCollectionFromValues($value);
+        }
+
         if (array_is_list($value)) {
-            return array_map([self::class, 'mapPropValue'], $value);
+            return array_map(
+                static fn (mixed $item): mixed => self::mapPropValue($item),
+                $value
+            );
         }
 
         if (self::isComponentConfiguration($value)) {
@@ -225,7 +241,7 @@ final class CpxComponentFactory
             if (str_starts_with($key, '__')) {
                 continue;
             }
-            $propsFiltered[$key] = self::mapPropValue($value);
+            $propsFiltered[$key] = $value;
         }
 
         $metadata = CpxComponentMetadata::fromComponentIdentifier(StyleguideObjectIdentifier::fromString($configuration['__type']));
@@ -250,7 +266,7 @@ final class CpxComponentFactory
             if (str_starts_with($key, '__')) {
                 continue;
             }
-            $propsFiltered[$key] = self::mapPropValue($value);
+            $propsFiltered[$key] = $value;
         }
 
         $className = self::classNameFromIdentifier($configuration['__type']);
@@ -266,6 +282,58 @@ final class CpxComponentFactory
         $className = self::classNameFromIdentifier($configuration['__type']);
         $value = $configuration['value'];
         return $className::from($value);
+    }
+
+    private static function createComponentCollectionFromValues(array $values): ?ComponentCollectionInterface
+    {
+        $items = [];
+        foreach ($values as $value) {
+            $mappedValue = self::mapPropValue($value);
+            if (is_string($mappedValue)) {
+                $items[] = self::looksLikeHtml($mappedValue)
+                    ? StringComponent::fromHtmlString($mappedValue)
+                    : StringComponent::fromString($mappedValue);
+                continue;
+            }
+
+            if ($mappedValue instanceof ComponentInterface || $mappedValue === null) {
+                $items[] = $mappedValue;
+                continue;
+            }
+
+            throw new \InvalidArgumentException('List props must resolve to components or strings.');
+        }
+
+        return ComponentCollection::list(...$items);
+    }
+
+    private static function parameterSupportsComponentList(\ReflectionParameter $parameter): bool
+    {
+        return self::reflectionTypeSupportsComponentList($parameter->getType());
+    }
+
+    private static function reflectionTypeSupportsComponentList(?\ReflectionType $reflectionType): bool
+    {
+        if ($reflectionType instanceof \ReflectionNamedType) {
+            $typeName = $reflectionType->getName();
+            return $typeName === ComponentCollectionInterface::class
+                || $typeName === ComponentInterface::class;
+        }
+
+        if ($reflectionType instanceof \ReflectionUnionType) {
+            foreach ($reflectionType->getTypes() as $unionedType) {
+                if (self::reflectionTypeSupportsComponentList($unionedType)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static function looksLikeHtml(string $value): bool
+    {
+        return preg_match('/<[^>]+>/', $value) === 1;
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Sitegeist\Monocle\Tests\Unit\StyleguideProvider\CpxPackage;
 
 use PHPUnit\Framework\TestCase;
+use PackageFactory\ComponentEngine\ComponentCollectionInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObject;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectName;
@@ -13,16 +14,22 @@ use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\UseCases\UseCaseName;
 use Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxComponentMetadata;
 use Sitegeist\Monocle\StyleguideProvider\CpxPackage\CpxComponentFactory;
+use Sitegeist\Monocle\Tests\Components\CollectionHost\CollectionHostComponent;
 use Sitegeist\Monocle\Tests\Components\Enum\EnumComponent;
 use Sitegeist\Monocle\Tests\Components\Enum\Status;
 use Sitegeist\Monocle\Tests\Components\ListItem\ListItemComponent;
+use Sitegeist\Monocle\Tests\Components\ModernListItem\ModernListItemComponent;
 use Sitegeist\Monocle\Tests\Components\Nested\NestedComponent;
 use Sitegeist\Monocle\Tests\Components\Primary\PrimaryComponent;
+use Sitegeist\Monocle\Tests\Components\SlotHost\SlotHostComponent;
 
 require_once __DIR__ . '/Fixtures/ComponentFactory/Components/Enum/Status.php';
 require_once __DIR__ . '/Fixtures/ComponentFactory/Components/Enum/EnumComponent.php';
+require_once __DIR__ . '/Fixtures/ComponentFactory/Components/ModernListItem/ModernListItemComponent.php';
 require_once __DIR__ . '/Fixtures/ComponentFactory/Components/ListItem/ListItemComponent.php';
 require_once __DIR__ . '/Fixtures/ComponentFactory/Components/Nested/NestedComponent.php';
+require_once __DIR__ . '/Fixtures/ComponentFactory/Components/SlotHost/SlotHostComponent.php';
+require_once __DIR__ . '/Fixtures/ComponentFactory/Components/CollectionHost/CollectionHostComponent.php';
 require_once __DIR__ . '/Fixtures/ComponentFactory/Components/Primary/PrimaryComponent.php';
 
 final class CpxComponentFactoryTest extends TestCase
@@ -147,6 +154,87 @@ final class CpxComponentFactoryTest extends TestCase
         self::assertSame('compact', $component->items[0]);
         self::assertInstanceOf(NestedComponent::class, $component->nested);
         self::assertSame('Nested Compact', $component->nested->label);
+    }
+
+    public function testSlotPropSupportsDirectComponentConfiguration(): void
+    {
+        $component = CpxComponentFactory::create(
+            $this->createMetadata(
+                'Sitegeist.Monocle.Tests/SlotHost/SlotHostComponent',
+                SlotHostComponent::class,
+                __DIR__ . '/Fixtures/ComponentFactory/Components/SlotHost/SlotHostComponent.styleguide.yaml'
+            )
+        );
+
+        self::assertInstanceOf(SlotHostComponent::class, $component);
+        self::assertInstanceOf(ModernListItemComponent::class, $component->content);
+        self::assertSame('[item:single]', $component->render());
+    }
+
+    public function testSlotPropSupportsMultipleComponentConfigurations(): void
+    {
+        $component = CpxComponentFactory::create(
+            $this->createMetadata(
+                'Sitegeist.Monocle.Tests/SlotHost/SlotHostComponent',
+                SlotHostComponent::class,
+                __DIR__ . '/Fixtures/ComponentFactory/Components/SlotHost/SlotHostComponent.styleguide.yaml'
+            ),
+            [],
+            null,
+            UseCaseName::fromString('multipleComponents')
+        );
+
+        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertSame('[item:first][item:second]', $component->render());
+    }
+
+    public function testSlotPropSupportsMixedStringsAndComponents(): void
+    {
+        $component = CpxComponentFactory::create(
+            $this->createMetadata(
+                'Sitegeist.Monocle.Tests/SlotHost/SlotHostComponent',
+                SlotHostComponent::class,
+                __DIR__ . '/Fixtures/ComponentFactory/Components/SlotHost/SlotHostComponent.styleguide.yaml'
+            ),
+            [],
+            null,
+            UseCaseName::fromString('mixedList')
+        );
+
+        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertSame('alpha[item:middle]omega', $component->render());
+    }
+
+    public function testSlotPropSupportsPlainStringContent(): void
+    {
+        $component = CpxComponentFactory::create(
+            $this->createMetadata(
+                'Sitegeist.Monocle.Tests/SlotHost/SlotHostComponent',
+                SlotHostComponent::class,
+                __DIR__ . '/Fixtures/ComponentFactory/Components/SlotHost/SlotHostComponent.styleguide.yaml'
+            ),
+            [],
+            null,
+            UseCaseName::fromString('stringOnly')
+        );
+
+        self::assertSame('just text', $component->content);
+        self::assertSame('just text', $component->render());
+    }
+
+    public function testCollectionPropSupportsMultipleComponentConfigurations(): void
+    {
+        $component = CpxComponentFactory::create(
+            $this->createMetadata(
+                'Sitegeist.Monocle.Tests/CollectionHost/CollectionHostComponent',
+                CollectionHostComponent::class,
+                __DIR__ . '/Fixtures/ComponentFactory/Components/CollectionHost/CollectionHostComponent.styleguide.yaml'
+            )
+        );
+
+        self::assertInstanceOf(CollectionHostComponent::class, $component);
+        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertSame('[item:first][item:second]', $component->render());
     }
 
     private function createMetadata(string $identifier, string $className, string $styleguideFile): CpxComponentMetadata

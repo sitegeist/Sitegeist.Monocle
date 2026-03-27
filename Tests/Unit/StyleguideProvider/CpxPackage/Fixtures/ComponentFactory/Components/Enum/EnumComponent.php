@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Tests\Components\Enum;
 
-use PackageFactory\PHPComponentEngine\ComponentInterface;
+use PackageFactory\ComponentEngine\ComponentInterface;
 
 final class EnumComponent implements ComponentInterface
 {
