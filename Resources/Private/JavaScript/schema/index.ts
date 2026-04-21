@@ -4,6 +4,7 @@ export {
     ViewportPreset,
     LocalePreset,
     Hotkeys,
+    GridDefinition,
     StyleguideObject
 } from "./configuration";
 

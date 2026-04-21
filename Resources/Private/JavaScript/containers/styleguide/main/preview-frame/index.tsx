@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import { selectors, actions, State } from "../../../../state";
 import { visibility } from "../../../../components";
+import { PreviewGridOverlay } from "./grid-overlay";
 
 import style from "./style.module.css";
 
@@ -47,8 +48,7 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
     iframeLoaded = () => {
         const { onLoad, setCurrentHtml, sourceQuerySelector } = this.props;
         const html = this.iframe?.contentDocument?.querySelector(sourceQuerySelector)?.innerHTML ?? '';
-        const htmlWithoutGrids = html.replace(/<monocle-layout-grid[^>]*><\/monocle-layout-grid>/g, "");
-        setCurrentHtml(htmlWithoutGrids);
+        setCurrentHtml(html);
         onLoad();
     }
 
@@ -57,6 +57,7 @@ class PreviewFrameC extends PureComponent<PreviewFrameProps> {
 
         return (
             <div className={style.frameWrapper}>
+                <PreviewGridOverlay/>
                 <iframe
                     role="presentation"
                     id="preview-frame"

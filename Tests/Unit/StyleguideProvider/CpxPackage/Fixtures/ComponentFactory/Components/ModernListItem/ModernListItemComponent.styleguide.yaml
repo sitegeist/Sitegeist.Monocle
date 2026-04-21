@@ -1,0 +1,4 @@
+title: "Modern List Item"
+description: "Component item for current ComponentEngine fixtures"
+props:
+  label: "default"

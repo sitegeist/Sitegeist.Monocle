@@ -1,5 +1,16 @@
 <?php
-namespace Sitegeist\Monocle\Controller;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -13,13 +24,17 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Controller;
+
+
+
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Neos\Flow\ResourceManagement\ResourceManager;
-use Sitegeist\Monocle\Domain\Fusion\PrototypeRepository;
-use Sitegeist\Monocle\Domain\PrototypeDetails\PrototypeDetailsFactoryInterface;
-use Sitegeist\Monocle\Fusion\FusionService;
-use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Domain\StyleguideAddress;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
+use Sitegeist\Monocle\Domain\StyleguideRepository;
 use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
@@ -28,177 +43,54 @@ use Sitegeist\Monocle\Service\ConfigurationService;
  */
 class ApiController extends ActionController
 {
-    use PackageKeyTrait;
-
-    /**
-     * @var array
-     */
     protected $defaultViewObjectName = 'Neos\Flow\Mvc\View\JsonView';
 
-    /**
-     * @Flow\Inject
-     * @var FusionService
-     */
-    protected $fusionService;
+    #[Flow\Inject]
+    protected ConfigurationService $configurationService;
 
-    /**
-     * @Flow\Inject
-     * @var ResourceManager
-     */
-    protected $resourceManager;
-
-    /**
-     * @var array
-     * @Flow\InjectConfiguration("preview.additionalResources")
-     */
-    protected $additionalResources;
-
-    /**
-     * @Flow\Inject
-     * @var ConfigurationService
-     */
-    protected $configurationService;
-
-    /**
-     * @Flow\Inject
-     * @var PrototypeRepository
-     */
-    protected $prototypeRepository;
-
-    /**
-     * @Flow\Inject
-     * @var PrototypeDetailsFactoryInterface
-     */
-    protected $prototypeDetailsFactory;
+    #[Flow\Inject]
+    protected StyleguideRepository $styleguideRepository;
 
     /**
      * Get all configurations for this site package
-     *
-     * @param string $sitePackageKey
      */
-    public function configurationAction($sitePackageKey = null)
+    public function configurationAction(?string $sitePackageKey = null): void
     {
-        $sitePackageKey = $sitePackageKey ?: $this->getDefaultSitePackageKey();
+        if ($sitePackageKey) {
+            $styleguideAddress = StyleguideAddress::fromString($sitePackageKey);
+        } else {
+            $styleguideAddress = $this->styleguideRepository->getDefault()->address;
+        }
+
+        $allStyleguides = $this->styleguideRepository->getAllStyleGuides();
+        $styleguide = $this->styleguideRepository->getStyleGuide($styleguideAddress);
 
         $value = [];
-        $value['sitePackage'] = $sitePackageKey;
+        $value['styleguide'] = $styleguideAddress->toString();
+        $value['sitePackage'] = $styleguideAddress->toString();
         $value['ui'] = [
-            'sitePackages' =>  $this->getSitePackages(),
-            'viewportPresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets'),
-            'localePresets' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.localePresets'),
-            'hotkeys' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.hotkeys'),
-            'preview' => $this->configurationService->getSiteConfiguration($sitePackageKey, 'preview')
+            'sitePackages' => $allStyleguides,
+            'styleguides' => $allStyleguides,
+            'viewportPresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.viewportPresets'),
+            'localePresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.localePresets'),
+            'hotkeys' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.hotkeys'),
+            'preview' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'preview'),
+            'grids' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.grids')
         ];
-        $value['styleguideObjects'] = $this->getStyleguideObjects($sitePackageKey);
+        $value['styleguideObjects'] = $styleguide->getStyleguideObjectList();
 
+        $this->view->setVariablesToRender(['value']);
         $this->view->assign('value', $value);
     }
 
     /**
      * Render informations about the given prototype
-     *
-     * @Flow\SkipCsrfProtection
-     * @param string $sitePackageKey
-     * @param string $prototypeName
-     * @return void
      */
-    public function prototypeDetailsAction($sitePackageKey, $prototypeName)
+    public function prototypeDetailsAction(string $sitePackageKey, string $prototypeName): void
     {
-        $this->response->setContentType('application/json');
-
-        $prototype = $this->prototypeRepository
-            ->findOneByPrototypeNameInSitePackage(
-                $prototypeName,
-                $sitePackageKey
-            );
-        $prototypeDetails = $this->prototypeDetailsFactory
-            ->forPrototype($prototype);
-
-        return json_encode($prototypeDetails);
-    }
-
-    /**
-     * Render the given prototype
-     *
-     * @Flow\SkipCsrfProtection
-     * @param string $prototypeName
-     * @param string $sitePackageKey
-     * @return void
-     * @deprecated
-     */
-    public function renderPrototypeAction($prototypeName, $sitePackageKey = null)
-    {
-        return $this->prototypeDetailsAction($sitePackageKey, $prototypeName);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSitePackages(): array
-    {
-        $sitePackageKeys = $this->getActiveSitePackageKeys();
-        $result = [];
-
-        foreach ($sitePackageKeys as $sitePackageKey) {
-            $result[$sitePackageKey] = $this->configurationService->getSiteConfiguration($sitePackageKey, 'title') ?? $sitePackageKey;
-        }
-        return $result;
-    }
-
-    /**
-     * @param $sitePackageKey
-     * @param $styleguideObject
-     * @return array
-     * @throws \Neos\Neos\Domain\Exception
-     */
-    protected function getStyleguideObjects($sitePackageKey): array
-    {
-        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
-        $prototypeStructures = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.structure');
-
-        foreach ($styleguideObjects as $prototypeName => &$styleguideObject) {
-            $styleguideObject['structure'] = $this->getStructureForPrototypeName($prototypeStructures, $prototypeName);
-        }
-
-        $hiddenPrototypeNamePatterns = $this->configurationService->getSiteConfiguration($sitePackageKey, 'hiddenPrototypeNamePatterns');
-        if (is_array($hiddenPrototypeNamePatterns)) {
-            $alwaysShowPrototypes = $this->configurationService->getSiteConfiguration($sitePackageKey, 'alwaysShowPrototypes');
-            foreach ($hiddenPrototypeNamePatterns as $pattern) {
-                $styleguideObjects = array_filter(
-                    $styleguideObjects,
-                    function ($prototypeName) use ($pattern, $alwaysShowPrototypes) {
-                        if (in_array($prototypeName, $alwaysShowPrototypes, true)) {
-                            return true;
-                        }
-                        return fnmatch($pattern, $prototypeName) === false;
-                    },
-                    ARRAY_FILTER_USE_KEY
-                );
-            }
-        }
-        return $styleguideObjects;
-    }
-
-    /**
-     * Find the matching structure for a prototype
-     *
-     * @param $prototypeStructures
-     * @param $prototypeName
-     * @return array
-     */
-    protected function getStructureForPrototypeName($prototypeStructures, $prototypeName)
-    {
-        foreach ($prototypeStructures as $structure) {
-            if (preg_match(sprintf('!%s!', $structure['match']), $prototypeName)) {
-                return $structure;
-            }
-        }
-
-        return [
-            'label' => 'Other',
-            'icon' => 'icon-question',
-            'color' => 'white'
-        ];
+        $styleguideAddress = StyleguideAddress::fromString($sitePackageKey);
+        $styleguide = $this->styleguideRepository->getStyleGuide($styleguideAddress);
+        $styleguideObjectDetails = $styleguide->getStyleguideObjectDetails(StyleguideObjectIdentifier::fromString($prototypeName));
+        $this->view->assign('value', $styleguideObjectDetails);
     }
 }

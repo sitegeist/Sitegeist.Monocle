@@ -14,15 +14,19 @@ interface IGridDefinition {
     width: string
     maxWidth: string
     margin: string
+    matchMediaWindow?: Window
 }
 
 export class Grid extends Component<IGridDefinition, GridState> {
+    private mediaQueryList?: MediaQueryList;
+    private mediaQueryHandler?: (e: MediaQueryListEvent) => void;
 
     constructor(props: IGridDefinition) {
         super(props)
         const {mediaQuery} = this.props;
+        const matchMediaWindow = this.props.matchMediaWindow ?? window;
         if (props.mediaQuery) {
-            this.state = {isActive: window.matchMedia(mediaQuery).matches};
+            this.state = {isActive: matchMediaWindow.matchMedia(mediaQuery).matches};
         } else {
             this.state = {isActive: true};
         }
@@ -30,9 +34,17 @@ export class Grid extends Component<IGridDefinition, GridState> {
 
     componentDidMount() {
         const {mediaQuery} = this.props;
+        const matchMediaWindow = this.props.matchMediaWindow ?? window;
         if (mediaQuery) {
-            const handler = (e: MediaQueryListEvent) => this.setState({isActive: e.matches});
-            window.matchMedia(mediaQuery).addEventListener('change', handler);
+            this.mediaQueryHandler = (e: MediaQueryListEvent) => this.setState({isActive: e.matches});
+            this.mediaQueryList = matchMediaWindow.matchMedia(mediaQuery);
+            this.mediaQueryList.addEventListener('change', this.mediaQueryHandler);
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.mediaQueryList && this.mediaQueryHandler) {
+            this.mediaQueryList.removeEventListener('change', this.mediaQueryHandler);
         }
     }
 

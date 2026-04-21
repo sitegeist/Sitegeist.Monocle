@@ -13,7 +13,7 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
 
         defaultProps = Neos.Fusion:Case {
             directly {
-                condition = Sitegeist.Monocle:CanRender {
+                condition = Neos.Fusion:CanRender {
                     renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/props'}
                 }
                 renderer = Neos.Fusion:Renderer {
@@ -32,7 +32,7 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
         propsFromUseCase = Neos.Fusion:Case {
             @if.hasUseCase = ${props.useCase}
             directly {
-                condition = Sitegeist.Monocle:CanRender {
+                condition = Neos.Fusion:CanRender {
                     renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/useCases/' + props.useCase + '/props'}
                 }
                 renderer = Neos.Fusion:Renderer {
@@ -52,7 +52,7 @@ prototype(Sitegeist.Monocle:Preview.Prototype) < prototype(Neos.Fusion:Component
             @if.hasProSet = ${props.propSet}
             @if.hasNoUseCase = ${!props.useCase}
             directly {
-                condition = Sitegeist.Monocle:CanRender {
+                condition = Neos.Fusion:CanRender {
                     renderPath = ${'/<' + props.prototypeName + '>/__meta/styleguide/propSets/' + props.propSet}
                 }
                 renderer = Neos.Fusion:Renderer {
