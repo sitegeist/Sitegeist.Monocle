@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Sitegeist\Monocle\Tests\Components\Nested;
+namespace Sitegeist\Monocle\Tests\Components\ModernListItem;
 
 use PackageFactory\ComponentEngine\ComponentInterface;
 
-final class NestedComponent implements ComponentInterface
+final class ModernListItemComponent implements ComponentInterface
 {
     public function __construct(
         public readonly string $label,
@@ -19,6 +19,6 @@ final class NestedComponent implements ComponentInterface
 
     public function render(): string
     {
-        return '';
+        return sprintf('[item:%s]', $this->label);
     }
 }

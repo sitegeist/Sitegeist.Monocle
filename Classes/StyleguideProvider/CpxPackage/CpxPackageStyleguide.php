@@ -25,6 +25,8 @@ use PackageFactory\Neos\ComponentEngine\Application\Transpiler\TranspilerConfigu
 use Sitegeist\Monocle\Domain\StyleguideAddress;
 use Sitegeist\Monocle\Domain\StyleguideIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideInterface;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObject;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideStructure;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectCollection;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectDetails;
@@ -119,6 +121,7 @@ class CpxPackageStyleguide implements StyleguideInterface
     private function buildItemList(): CpxComponentMetadataCollection
     {
         $items = [];
+        $prototypeStructures = $this->configurationService->getStyleguideConfiguration($this->getStyleguideAddress(), 'ui.structure');
         $transpilerConfiguration = $this->transpilerConfigurationLoader->forPackage($this->package->getPackageKey());
         foreach ($transpilerConfiguration as $configuration) {
             /**
@@ -133,9 +136,53 @@ class CpxPackageStyleguide implements StyleguideInterface
             if (!file_exists($metadata->componentStyleguideConfigFile)) {
                 continue;
             }
+            if ($metadata->isHidden()) {
+                continue;
+            }
 
-            $items[] = $metadata;
+            $items[] = new CpxComponentMetadata(
+                $this->resolveStyleguideObject($metadata, is_array($prototypeStructures) ? $prototypeStructures : []),
+                $metadata->componentPhpClassName,
+                $metadata->componentStyleguideConfigFile
+            );
         }
         return new CpxComponentMetadataCollection(...$items);
+    }
+
+    private function resolveStyleguideObject(CpxComponentMetadata $metadata, array $prototypeStructures): StyleguideObject
+    {
+        $styleguideObject = $metadata->styleguideObject;
+        $groupOrPath = $metadata->getGroup() ?? $styleguideObject->path->value;
+
+        return new StyleguideObject(
+            $styleguideObject->identifier,
+            $styleguideObject->name,
+            $styleguideObject->path,
+            $this->getStructureForComponentPath($prototypeStructures, $groupOrPath),
+            $styleguideObject->description
+        );
+    }
+
+    private function getStructureForComponentPath(array $prototypeStructures, string $componentPath): StyleguideStructure
+    {
+        foreach ($prototypeStructures as $structure) {
+            if (!isset($structure['match'], $structure['label'], $structure['icon'], $structure['color'])) {
+                continue;
+            }
+
+            if (preg_match(sprintf('!%s!', $structure['match']), $componentPath)) {
+                return new StyleguideStructure(
+                    $structure['label'],
+                    $structure['icon'],
+                    $structure['color'],
+                );
+            }
+        }
+
+        return new StyleguideStructure(
+            'Other',
+            'icon-question',
+            'white'
+        );
     }
 }

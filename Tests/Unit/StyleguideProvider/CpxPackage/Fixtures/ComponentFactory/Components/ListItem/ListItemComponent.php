@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\Tests\Components\ListItem;
 
-use PackageFactory\PHPComponentEngine\ComponentInterface;
+use PackageFactory\ComponentEngine\ComponentInterface;
 
 final class ListItemComponent implements ComponentInterface
 {
