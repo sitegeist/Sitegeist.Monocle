@@ -1,0 +1,8 @@
+title: "Collection Host"
+description: "Component with collection content"
+props:
+  content:
+    - __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+      label: "first"
+    - __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+      label: "second"

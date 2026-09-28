@@ -1,0 +1,24 @@
+title: "Slot Host"
+description: "Component with slot-like content"
+props:
+  content:
+    __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+    label: "single"
+useCases:
+  multipleComponents:
+    props:
+      content:
+        - __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+          label: "first"
+        - __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+          label: "second"
+  mixedList:
+    props:
+      content:
+        - "alpha"
+        - __type: "Sitegeist.Monocle.Tests/ModernListItem/ModernListItemComponent"
+          label: "middle"
+        - "omega"
+  stringOnly:
+    props:
+      content: "just text"

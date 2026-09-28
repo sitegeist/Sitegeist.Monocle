@@ -41,7 +41,8 @@ export function createStore(env: Environment) {
             isOpen: false
         },
         gridPreview: {
-            isVisible: false
+            isVisible: false,
+            grids: {}
         },
         qrCode: {
             isVisible: false

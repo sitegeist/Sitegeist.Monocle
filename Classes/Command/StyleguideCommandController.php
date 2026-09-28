@@ -1,5 +1,28 @@
 <?php
-namespace Sitegeist\Monocle\Command;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -13,8 +36,15 @@ namespace Sitegeist\Monocle\Command;
  * source code.
  */
 
+namespace Sitegeist\Monocle\Command;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Sitegeist\Monocle\Domain\PrototypeDetails\PropSets\PropSetName;
+use Sitegeist\Monocle\Domain\PrototypeDetails\UseCases\UseCaseName;
+use Sitegeist\Monocle\Domain\StyleguideAddress;
+use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
+use Sitegeist\Monocle\Domain\StyleguideRepository;
 use Sitegeist\Monocle\Fusion\FusionService;
 use Sitegeist\Monocle\Fusion\FusionView;
 use Neos\Flow\Annotations as Flow;
@@ -30,30 +60,38 @@ use Sitegeist\Monocle\Service\ConfigurationService;
  */
 class StyleguideCommandController extends CommandController
 {
-    use DummyControllerContextTrait, PackageKeyTrait;
+    #[Flow\Inject]
+    protected StyleguideRepository $styleguideRepository;
+
+    #[Flow\Inject]
+    protected ConfigurationService $configurationService;
 
     /**
-     * @Flow\Inject
-     * @var FusionService
+     * Get a list of all available styleguides
+     *
+     * @param string $format Result encoding ``yaml`` and ``json`` are supported
      */
-    protected $fusionService;
+    public function listCommand($format = 'json'): void
+    {
+        $styleguides = $this->styleguideRepository->getAllStyleGuides();
 
-    /**
-     * @Flow\Inject
-     * @var ConfigurationService
-     */
-    protected $configurationService;
+        $data = [];
+        foreach ($styleguides as $styleguide) {
+            $data[$styleguide->address->toString()] = $styleguide->name->value;
+        }
+        $this->outputData($data, $format);
+    }
 
     /**
      * Get a list of all configured default styleguide viewports
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
-     * @param string $packageKey site-package (defaults to first found)
+     * @param string $styleguide site-package (defaults to first found)
      */
-    public function viewportsCommand($format = 'json', $packageKey = null)
+    public function viewportsCommand(string $format = 'json', ?string $styleguide = null): void
     {
-        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
-        $viewportPresets = $this->configurationService->getSiteConfiguration($sitePackageKey, 'ui.viewportPresets');
+        $styleguide =  $styleguide ? $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($styleguide)) : $this->styleguideRepository->getDefault();
+        $viewportPresets = $this->configurationService->getSiteConfiguration($styleguide->address->toString(), 'ui.viewportPresets');
         $this->outputData($viewportPresets, $format);
     }
 
@@ -61,71 +99,37 @@ class StyleguideCommandController extends CommandController
      * Get all styleguide items currently available
      *
      * @param string $format Result encoding ``yaml`` and ``json`` are supported
-     * @param string $packageKey site-package (defaults to first found)
+     * @param string $styleguide site-package (defaults to first found)
      */
-    public function itemsCommand($format = 'json', $packageKey = null)
+    public function itemsCommand(string $format = 'json', ?string $styleguide = null): void
     {
-        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
-
-        $fusionAst = $this->fusionService->getMergedFusionObjectTreeForSitePackage($sitePackageKey);
-        $styleguideObjects = $this->fusionService->getStyleguideObjectsFromFusionAst($fusionAst);
-
+        $styleguide =  $styleguide ? $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($styleguide)) : $this->styleguideRepository->getDefault();
+        $styleguideObjects =  $styleguide->getStyleguideObjectList();
+        $styleguideObjects = json_decode(json_encode($styleguideObjects, JSON_THROW_ON_ERROR), true, 512, JSON_THROW_ON_ERROR);
         $this->outputData($styleguideObjects, $format);
     }
 
     /**
      * Render a given fusion component to HTML
      *
-     * @param string $prototypeName The prototype name of the component
-     * @param string|null $packageKey site-package (defaults to first found)
+     * @param string $styleguide The prototype name of the component
+     * @param string $item site-package (defaults to first found)
      * @param string|null $useCase The useCase for the preview
      * @param string|null $propSet The propSet used for the preview
-     * @param string|null  $props Custom props for the preview
+     * @param string|null $props Custom props for the preview
      * @param string|null $locales Custom locales for the preview
      * @return void
      */
-    public function renderCommand($prototypeName, $packageKey = null, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
+    public function renderCommand(string $styleguide, string $item, ?string $useCase = '__default', ?string $propSet = '__default', ?string $props = '', ?string $locales = '')
     {
-        $sitePackageKey = $packageKey ?: $this->getDefaultSitePackageKey();
-        $convertedProps = json_decode($props, true) ?? [];
-        $convertedLocales = json_decode($locales, true) ?? [];
-
-        $controllerContext = $this->createDummyControllerContext();
-
-        $fusionView = new FusionView();
-        $fusionView->setControllerContext($controllerContext);
-        $fusionView->setPackageKey($sitePackageKey);
-
-        $fusionRootPath = $this->configurationService->getSiteConfiguration($sitePackageKey, ['cli', 'fusionRootPath']);
-
-        $fusionView->setPackageKey($sitePackageKey);
-        $fusionView->setFusionPath($fusionRootPath);
-
-        if ($useCase == '__default') {
-            $useCase = null;
-        }
-
-        if ($propSet == '__default') {
-            $propSet = null;
-        }
-
-        $fusionView->assignMultiple([
-            'sitePackageKey' => $packageKey,
-            'prototypeName' => $prototypeName,
-            'useCase' => $useCase,
-            'propSet' => $propSet,
-            'props' => $convertedProps,
-            'locales' => $convertedLocales
-        ]);
-        $result = $fusionView->render();
-        if ($result instanceof ResponseInterface) {
-            return (string) $result->getBody();
-        }
-        if ($result instanceof StreamInterface) {
-            return (string) $result;
-        }
-        // support for Neos 8.3
-        $this->output($result);
+        $styleguide = $this->styleguideRepository->getStyleGuide(StyleguideAddress::fromString($styleguide));
+        $styleguide->renderStyleguideObject(
+            StyleguideObjectIdentifier::fromString($item),
+            json_decode($props, true) ?? [],
+            $propSet ? PropSetName::fromString($propSet) : null,
+            $useCase ? UseCaseName::fromString($useCase) : null,
+            json_decode($locales, true) ?? []
+        );
     }
 
     protected function outputData($data, $format)

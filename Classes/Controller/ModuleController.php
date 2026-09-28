@@ -1,5 +1,16 @@
 <?php
-namespace Sitegeist\Monocle\Controller;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -13,10 +24,14 @@ namespace Sitegeist\Monocle\Controller;
  * source code.
  */
 
+namespace Sitegeist\Monocle\Controller;
+
+
+
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Mvc\Controller\ActionController;
-use Sitegeist\Monocle\Service\PackageKeyTrait;
+use Sitegeist\Monocle\Domain\StyleguideRepository;
 use Sitegeist\Monocle\Service\ConfigurationService;
 
 /**
@@ -25,13 +40,11 @@ use Sitegeist\Monocle\Service\ConfigurationService;
  */
 class ModuleController extends ActionController
 {
-    use PackageKeyTrait;
+    #[Flow\Inject]
+    protected StyleguideRepository $styleguideRepository;
 
-    /**
-     * @Flow\Inject
-     * @var ConfigurationService
-     */
-    protected $configurationService;
+    #[Flow\Inject]
+    protected ConfigurationService $configurationService;
 
     /**
      * Initialize the view
@@ -41,8 +54,10 @@ class ModuleController extends ActionController
      */
     public function initializeView(ViewInterface $view)
     {
-        $sitePackageKey = $this->getDefaultSitePackageKey();
-        $this->view->assign('defaultSitePackageKey', $sitePackageKey);
+        $defaultStyleguide = $this->styleguideRepository->getDefault();
+        $styleguideAddress = $defaultStyleguide->address->toString();
+
+        $this->view->assign('defaultStyleguideAddress', $styleguideAddress);
     }
 
     /**

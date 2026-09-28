@@ -17,6 +17,7 @@ import * as routing from "./routing";
 import * as qrcode from "./qrcode";
 import * as grid from "./grid";
 import { configurationSchema } from "../schema";
+import type { GridDefinition } from "../schema";
 
 interface AnatomyType {
     prototypeName: string
@@ -70,6 +71,9 @@ export interface State {
     }
     readonly gridPreview: {
         readonly isVisible: boolean
+        readonly grids: {
+            readonly [key: string]: GridDefinition
+        }
     }
     readonly sites: {
         readonly byName: {
@@ -214,7 +218,9 @@ function* loadConfiguration(): SagaIterator<void> {
         ? ''
         : window.location.pathname.substring(moduleUri.length + 1);
     const routePathSplitted = routePath.split('/');
-    let routePrototypeName: null | string = routePathSplitted[1];
+    let routePrototypeName: null | string = routePathSplitted[1]
+        ? decodeURIComponent(routePathSplitted[1])
+        : null;
 
     while (true) { // eslint-disable-line
         yield take(actions.sites.select);
@@ -244,6 +250,7 @@ function* loadConfiguration(): SagaIterator<void> {
                 yield put(actions.breakpoints.set(configuration.ui.viewportPresets));
                 yield put(actions.locales.set(configuration.ui.localePresets));
                 yield put(actions.preview.set(configuration.ui.preview));
+                yield put(actions.grid.set(configuration.ui.grids ?? {}));
 
                 if (!Array.isArray(configuration.styleguideObjects)) {
                     yield put(actions.prototypes.add(configuration.styleguideObjects));
@@ -316,7 +323,10 @@ export function* saga(): SagaIterator<void> {
         : moduleUri === '/'
             ? window.location.pathname.substring(1)
             : window.location.pathname.substring(moduleUri.length + 1);
-    const [routeSitePackageKey] = routePath.split('/');
+    const [routeSitePackageKeyEncoded] = routePath.split('/');
+    const routeSitePackageKey = routeSitePackageKeyEncoded
+        ? decodeURIComponent(routeSitePackageKeyEncoded)
+        : '';
 
     const defaultSitePackageKey: string = yield select(
         (state: State) => state.env.defaultSitePackageKey

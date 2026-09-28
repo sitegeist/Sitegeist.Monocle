@@ -25,6 +25,19 @@ const hotkeysSchema = z.object({
 
 export type Hotkeys = z.infer<typeof hotkeysSchema>;
 
+const gridDefinitionSchema = z.object({
+    label: z.string().optional().or(z.null()),
+    mediaQuery: z.string().optional().or(z.null()),
+    columns: z.number().optional().or(z.string()).or(z.null()),
+    gutter: z.string().optional().or(z.null()),
+    gap: z.string().optional().or(z.null()),
+    width: z.string().optional().or(z.null()),
+    maxWidth: z.string().optional().or(z.null()),
+    margin: z.string().optional().or(z.null())
+}).passthrough();
+
+export type GridDefinition = z.infer<typeof gridDefinitionSchema>;
+
 const styleguideObjectSchema = z.object({
     title: z.string(),
     path: z.string(),
@@ -50,6 +63,7 @@ export const configurationSchema = z.object({
         viewportPresets: z.record(viewportPresetSchema.or(z.null())),
         localePresets: z.record(localePresetSchema).or(z.null()),
         hotkeys: hotkeysSchema,
+        grids: z.record(gridDefinitionSchema).or(z.array(gridDefinitionSchema)).optional().or(z.null()),
         preview: z.object({
             fusionRootPath: z.string(),
             sourceQuerySelector: z.string(),

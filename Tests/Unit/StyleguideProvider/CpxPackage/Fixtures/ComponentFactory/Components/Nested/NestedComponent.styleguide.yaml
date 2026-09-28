@@ -1,0 +1,4 @@
+title: "Nested"
+description: "Nested component"
+props:
+  label: "Nested Default"

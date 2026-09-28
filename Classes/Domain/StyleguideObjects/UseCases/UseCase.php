@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
+declare(strict_types=1);
+
+namespace Sitegeist\Monocle\Domain\StyleguideObjects\UseCases;
+
+use Neos\Flow\Annotations as Flow;
+
+#[Flow\Proxy(false)]
+final readonly class UseCase implements \JsonSerializable
+{
+    /**
+     * @param UseCaseName $name
+     * @param array $overrides
+     */
+    public function __construct(
+        public UseCaseName $name,
+        public UseCaseTitle $title,
+        public array $overrides
+    ) {
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->name,
+            'title' => $this->title,
+            'overrides' => $this->overrides
+        ];
+    }
+}

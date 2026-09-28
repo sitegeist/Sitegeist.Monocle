@@ -1,5 +1,16 @@
 <?php
-namespace Sitegeist\Monocle\Fusion;
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 /**
  * This file is part of the Sitegeist.Monocle package
@@ -12,6 +23,8 @@ namespace Sitegeist\Monocle\Fusion;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+
+namespace Sitegeist\Monocle\Fusion;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Package\PackageManager;
@@ -89,6 +102,7 @@ class FusionService
 
     /**
      * Get all styleguide objects for the given fusion-ast
+     * @return array<string, array{title: string, path:string, description:string, options: null|string, propSets: null|string[], useCases: null|array<int, array{title:string, name:string}>}>
      */
     public function getStyleguideObjectsFromFusionAst(array|FusionConfiguration $fusionAst): array
     {

@@ -1,6 +1,20 @@
 <?php
+
+/**
+ * This file is part of the Sitegeist.Monocle package
+ *
+ * (c) 2020
+ * Martin Ficzel <ficzel@sitegeist.de>
+ * Wilhelm Behncke <behncke@sitegeist.de>
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 namespace Sitegeist\Monocle\Service;
 
+use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\ActionRequestFactory;
 use Neos\Flow\Mvc\ActionResponse;
@@ -8,8 +22,8 @@ use Neos\Flow\Mvc\Controller\Arguments;
 use Neos\Flow\Mvc\Routing\UriBuilder;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Http\Factories\ResponseFactory;
-use Neos\Http\Factories\ServerRequestFactory;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -17,6 +31,9 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 trait DummyControllerContextTrait
 {
+    #[Flow\Inject]
+    protected ServerRequestFactoryInterface $serverRequestFactory;
+
     /**
      * Create a dummy controller context
      *
@@ -25,10 +42,9 @@ trait DummyControllerContextTrait
     protected function createDummyControllerContext()
     {
         $actionRequestFactory = new ActionRequestFactory();
-        $serverRequestFactory = new ServerRequestFactory();
 
         /** @var ServerRequestInterface */
-        $httpRequest = $serverRequestFactory->createServerRequest('GET', 'http://neos.io');
+        $httpRequest = $this->serverRequestFactory->createServerRequest('GET', 'http://neos.io');
 
         /** @var ActionRequest */
         $actionRequest = $actionRequestFactory->createActionRequest($httpRequest);
