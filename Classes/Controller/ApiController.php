@@ -69,8 +69,8 @@ class ApiController extends ActionController
         $value['styleguide'] = $styleguideAddress->toString();
         $value['sitePackage'] = $styleguideAddress->toString();
         $value['ui'] = [
-            'sitePackages' => $allStyleguides,
-            'styleguides' => $allStyleguides,
+            'sitePackages' => $allStyleguides->jsonSerialize(),
+            'styleguides' => $allStyleguides->jsonSerialize(),
             'viewportPresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.viewportPresets'),
             'localePresets' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.localePresets'),
             'hotkeys' => $this->configurationService->getStyleguideConfiguration($styleguideAddress, 'ui.hotkeys'),
