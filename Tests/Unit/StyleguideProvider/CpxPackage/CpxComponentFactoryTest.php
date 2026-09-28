@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Sitegeist\Monocle\Tests\Unit\StyleguideProvider\CpxPackage;
 
 use PHPUnit\Framework\TestCase;
-use PackageFactory\ComponentEngine\ComponentCollectionInterface;
+use PackageFactory\ComponentEngine\ComponentListInterface;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObject;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectIdentifier;
 use Sitegeist\Monocle\Domain\StyleguideObjects\StyleguideObjectName;
@@ -184,7 +184,7 @@ final class CpxComponentFactoryTest extends TestCase
             UseCaseName::fromString('multipleComponents')
         );
 
-        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertInstanceOf(ComponentListInterface::class, $component->content);
         self::assertSame('[item:first][item:second]', $component->render());
     }
 
@@ -201,7 +201,7 @@ final class CpxComponentFactoryTest extends TestCase
             UseCaseName::fromString('mixedList')
         );
 
-        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertInstanceOf(ComponentListInterface::class, $component->content);
         self::assertSame('alpha[item:middle]omega', $component->render());
     }
 
@@ -233,7 +233,7 @@ final class CpxComponentFactoryTest extends TestCase
         );
 
         self::assertInstanceOf(CollectionHostComponent::class, $component);
-        self::assertInstanceOf(ComponentCollectionInterface::class, $component->content);
+        self::assertInstanceOf(ComponentListInterface::class, $component->content);
         self::assertSame('[item:first][item:second]', $component->render());
     }
 

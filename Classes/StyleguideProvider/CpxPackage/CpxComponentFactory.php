@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Sitegeist\Monocle\StyleguideProvider\CpxPackage;
 
-use PackageFactory\ComponentEngine\ComponentCollection;
-use PackageFactory\ComponentEngine\ComponentCollectionInterface;
+use PackageFactory\ComponentEngine\ComponentList;
+use PackageFactory\ComponentEngine\ComponentListInterface;
 use PackageFactory\ComponentEngine\ComponentInterface;
 use PackageFactory\ComponentEngine\StringComponent;
 use Sitegeist\Monocle\Domain\StyleguideObjects\PropSets\PropSetName;
@@ -161,7 +161,7 @@ final class CpxComponentFactory
         }
 
         if (array_is_list($value) && $reflection !== null && self::parameterSupportsComponentList($reflection)) {
-            return self::createComponentCollectionFromValues($value);
+            return self::createComponentListFromValues($value);
         }
 
         if (array_is_list($value)) {
@@ -284,7 +284,7 @@ final class CpxComponentFactory
         return $className::from($value);
     }
 
-    private static function createComponentCollectionFromValues(array $values): ?ComponentCollectionInterface
+    private static function createComponentListFromValues(array $values): ?ComponentListInterface
     {
         $items = [];
         foreach ($values as $value) {
@@ -304,7 +304,7 @@ final class CpxComponentFactory
             throw new \InvalidArgumentException('List props must resolve to components or strings.');
         }
 
-        return ComponentCollection::list(...$items);
+        return ComponentList::list(...$items);
     }
 
     private static function parameterSupportsComponentList(\ReflectionParameter $parameter): bool
@@ -316,7 +316,7 @@ final class CpxComponentFactory
     {
         if ($reflectionType instanceof \ReflectionNamedType) {
             $typeName = $reflectionType->getName();
-            return $typeName === ComponentCollectionInterface::class
+            return $typeName === ComponentListInterface::class
                 || $typeName === ComponentInterface::class;
         }
 
